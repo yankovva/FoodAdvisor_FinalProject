@@ -27,6 +27,16 @@ namespace FoodAdvisor.Data
         {
             base.OnModelCreating(builder);
 
+            builder
+               .Entity<Category>()
+               .HasData(
+               new Category {  Name = "Restaurant" },
+               new Category {  Name = "Cafe" },
+               new Category {  Name = "Bar & Dinner" },
+               new Category { Name = "Fast Food" },
+               new Category {  Name = "Bakery" },
+               new Category { Name = "Bistro" });
+
         }
     }
 }
