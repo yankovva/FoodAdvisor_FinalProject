@@ -1,7 +1,6 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.ViewModels.PlaceViewModels;
-using Humanizer.Localisation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,7 @@ using System.Security.Claims;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class PlaceController : BaseController 
     {
         private readonly FoodAdvisorDbContext dbContext;
@@ -79,20 +78,40 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            Guid movieGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(id, ref movieGuid);
+            Guid placeGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref placeGuid);
             if (!isGuidValid)
             {
                 //if the Guid(Id) is not valid, redirecting to index page
                 return this.RedirectToAction(nameof(Index));
             }
 
+            PlaceDetailsViewModel? model = await dbContext
+                .Places
+                .Where(p => p.Id == placeGuid)
+                .Select(p => new PlaceDetailsViewModel()
+                {
+                    Name = p.Name,
+                    Description = p.Description,
+                    ImageURL = p.ImageURL,
+                    Address = p.Address,
+                    Category = p.Category.Name,
+                    City = p.City.Name,
+                    Publisher = p.Publisher.UserName ?? string.Empty
+
+                })
+                .FirstOrDefaultAsync();
+
+            if (model == null)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
 
 
             return View(model);
         }
 
-		private string? GetCurrentUserId()
+        private string? GetCurrentUserId()
 		{
 			return User.FindFirstValue(ClaimTypes.NameIdentifier);
 		}
