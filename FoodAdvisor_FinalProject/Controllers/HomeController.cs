@@ -18,7 +18,7 @@ namespace FoodAdvisor_FinalProject.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
