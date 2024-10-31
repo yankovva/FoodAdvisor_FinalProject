@@ -34,6 +34,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="About">About</a>
                         </li>
+
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Place" asp-action="Index">Places</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
