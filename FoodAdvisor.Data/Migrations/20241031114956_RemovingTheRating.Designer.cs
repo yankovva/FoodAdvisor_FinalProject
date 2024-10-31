@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241031114956_RemovingTheRating")]
+    partial class RemovingTheRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,32 +111,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("16bae119-1c02-4df7-bfd5-a70e48202e2a"),
+                            Id = new Guid("7839c3c9-4dd8-412c-ac08-cd705563a165"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("1c7001a4-491c-4614-91b1-03143b585199"),
+                            Id = new Guid("929c1910-0aab-417e-aa11-14bc567d1896"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("1bab5412-87c7-4e87-b654-cb4e226684a9"),
+                            Id = new Guid("9a8cd056-b1bf-428e-863c-62249403c63b"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("cd4e4887-817f-4603-b820-14681499d61b"),
+                            Id = new Guid("0866e9b8-e9f2-47bc-b89a-91e6b344cb96"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("f88a935c-f67a-4af5-8876-befe3565c768"),
+                            Id = new Guid("ca02c771-9810-455d-b5c2-3d0ae14a0ab8"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("a14d425e-7fbf-41c2-bc71-a97f9aded01b"),
+                            Id = new Guid("616b185e-f85f-4cce-9cf7-d7c48292cd61"),
                             Name = "Bistro"
                         });
                 });

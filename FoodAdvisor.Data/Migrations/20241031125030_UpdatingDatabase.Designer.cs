@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241031125030_UpdatingDatabase")]
+    partial class UpdatingDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,32 +111,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("16bae119-1c02-4df7-bfd5-a70e48202e2a"),
+                            Id = new Guid("9807e338-d261-45bb-8259-c87defa289ab"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("1c7001a4-491c-4614-91b1-03143b585199"),
+                            Id = new Guid("e5884382-4b5a-4abf-bf4e-c01ff88dedb2"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("1bab5412-87c7-4e87-b654-cb4e226684a9"),
+                            Id = new Guid("74914725-016f-46e4-9125-028a9e2164e2"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("cd4e4887-817f-4603-b820-14681499d61b"),
+                            Id = new Guid("f7997730-4fa6-49c5-8056-d7f6d8313c76"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("f88a935c-f67a-4af5-8876-befe3565c768"),
+                            Id = new Guid("073d9d04-bbaf-4b28-a2b6-9a512c091103"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("a14d425e-7fbf-41c2-bc71-a97f9aded01b"),
+                            Id = new Guid("bdba7005-4063-4814-8279-7b1f767677e3"),
                             Name = "Bistro"
                         });
                 });
@@ -200,6 +203,10 @@ namespace FoodAdvisor.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("The City Id.");
 
+                    b.Property<Guid>("ConutryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Country Id.");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -226,6 +233,8 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("ConutryId");
 
                     b.HasIndex("PublisherId");
 
@@ -405,6 +414,12 @@ namespace FoodAdvisor.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FoodAdvisor.Data.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("ConutryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FoodAdvisor.Data.Models.ApplicationUser", "Publisher")
                         .WithMany()
                         .HasForeignKey("PublisherId")
@@ -414,6 +429,8 @@ namespace FoodAdvisor.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("City");
+
+                    b.Navigation("Country");
 
                     b.Navigation("Publisher");
                 });

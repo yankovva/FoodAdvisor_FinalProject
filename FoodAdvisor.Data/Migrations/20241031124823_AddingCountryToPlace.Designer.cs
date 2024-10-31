@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241031124823_AddingCountryToPlace")]
+    partial class AddingCountryToPlace
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,32 +111,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("16bae119-1c02-4df7-bfd5-a70e48202e2a"),
+                            Id = new Guid("dce529cd-6539-4581-ba9e-87a7836a34ad"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("1c7001a4-491c-4614-91b1-03143b585199"),
+                            Id = new Guid("9a57877e-7066-4107-802c-d82604d51257"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("1bab5412-87c7-4e87-b654-cb4e226684a9"),
+                            Id = new Guid("b165837b-b714-468f-abd7-7c7c127efec4"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("cd4e4887-817f-4603-b820-14681499d61b"),
+                            Id = new Guid("6d25b351-7673-4bbb-b19d-28c1c598256b"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("f88a935c-f67a-4af5-8876-befe3565c768"),
+                            Id = new Guid("a71ed52b-20c0-49ba-9dde-3078f439096b"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("a14d425e-7fbf-41c2-bc71-a97f9aded01b"),
+                            Id = new Guid("cd97169f-1a58-43bb-94d4-545b916b26e2"),
                             Name = "Bistro"
                         });
                 });
@@ -199,6 +202,10 @@ namespace FoodAdvisor.Data.Migrations
                     b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("The City Id.");
+
+                    b.Property<Guid>("ConutryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Country Id.");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -405,6 +412,12 @@ namespace FoodAdvisor.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FoodAdvisor.Data.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FoodAdvisor.Data.Models.ApplicationUser", "Publisher")
                         .WithMany()
                         .HasForeignKey("PublisherId")
@@ -414,6 +427,8 @@ namespace FoodAdvisor.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("City");
+
+                    b.Navigation("Country");
 
                     b.Navigation("Publisher");
                 });

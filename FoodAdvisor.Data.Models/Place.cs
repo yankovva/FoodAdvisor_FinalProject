@@ -31,10 +31,6 @@ namespace FoodAdvisor.Data.Models
         [Comment("The Address of the Place.")]
         public string Address { get; set; } = null!;
 
-        [Required]
-        [Comment("The Rating of the Place.")]
-        public double Rating { get; set; }
-
         [MaxLength(URLMaxLEnght)]
         [Comment("An Image Url of the Place.")]
         public string? ImageURL { get; set; }
@@ -47,7 +43,7 @@ namespace FoodAdvisor.Data.Models
 
         [Required]
         [Comment("The Publisher Id.")]
-        public Guid PublisherId { get; set; }
+        public Guid PublisherId { get; set; } 
 
         [ForeignKey(nameof(PublisherId))]
         public ApplicationUser Publisher { get; set; } = null!;
