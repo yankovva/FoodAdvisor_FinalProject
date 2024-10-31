@@ -1,4 +1,5 @@
 using FoodAdvisor.Data;
+using FoodAdvisor.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,11 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<FoodAdvisorDbContext>(options =>
     options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services
+    .AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 {
     options.Password.RequireDigit = builder.Configuration.GetValue<bool>("Identity:Password:RequireDigits");
     options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
@@ -25,7 +29,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
     options.User.RequireUniqueEmail = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireUniqueEmail");
 })
-    .AddEntityFrameworkStores<FoodAdvisorDbContext>();
+          .AddEntityFrameworkStores<FoodAdvisorDbContext>()
+          .AddRoles<IdentityRole<Guid>>()
+          .AddSignInManager<SignInManager<ApplicationUser>>()
+          .AddUserManager<UserManager<ApplicationUser>>();
+
+
+builder.Services.AddRazorPages();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -47,6 +58,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
