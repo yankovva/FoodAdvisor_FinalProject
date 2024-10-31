@@ -1,4 +1,4 @@
-namespace FoodAdvisor_FinalProject.Models
+namespace FoodAdvisor_FinalProject.ViewModels
 {
     public class ErrorViewModel
     {

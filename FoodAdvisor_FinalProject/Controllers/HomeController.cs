@@ -1,4 +1,4 @@
-using FoodAdvisor_FinalProject.Models;
+using FoodAdvisor_FinalProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
