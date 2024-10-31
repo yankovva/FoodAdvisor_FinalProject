@@ -10,7 +10,7 @@ using System.Security.Claims;
 namespace FoodAdvisor_FinalProject.Controllers
 {
     [Authorize]
-    public class PlaceController : Controller 
+    public class PlaceController : BaseController 
     {
         private readonly FoodAdvisorDbContext dbContext;
         public PlaceController(FoodAdvisorDbContext _dbContext)
@@ -29,7 +29,6 @@ namespace FoodAdvisor_FinalProject.Controllers
                     Name = p.Name,
                     Description = p.Description,
                     ImageURL = p.ImageURL,
-                    Publisher = p.Publisher.UserName ?? string.Empty,
                     Category = p.Category.Name
                 })
                 .AsNoTracking()
@@ -76,6 +75,22 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return RedirectToAction(nameof(Index));
 
 		}
+
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            Guid movieGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref movieGuid);
+            if (!isGuidValid)
+            {
+                //if the Guid(Id) is not valid, redirecting to index page
+                return this.RedirectToAction(nameof(Index));
+            }
+
+
+
+            return View(model);
+        }
 
 		private string? GetCurrentUserId()
 		{

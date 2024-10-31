@@ -8,7 +8,7 @@
 <h2>Places</h2>
 
 <!-- Button to add a new cinema -->
-<a asp-action="Create" class="btn btn-success mb-4">Add New Place</a>
+<a asp-action="Add" class="btn btn-success mb-4">Add New Place</a>
 
 <div class="row">
     @foreach (PlaceIndexViewModel place in Model)
@@ -21,6 +21,13 @@
                     <h6 class="card-subtitle mb-2 text-muted">@place.Category</h6>
                     <p class="card-text">@place.Description </p>
                     <a asp-action="Details" asp-route-id="@place.Id" class="btn btn-primary">View Details</a>
+                   @* @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form asp-controller="Wishlist" asp-action="AddToWishlist" method="post" class="d-inline">
+                            <input type="hidden" name="movieId" value="@place.Id" />
+                            <button type="submit" class="btn btn-warning">+Wishlist</button>
+                        </form>
+                }*@
                 </div>
             </div>
         </div>
