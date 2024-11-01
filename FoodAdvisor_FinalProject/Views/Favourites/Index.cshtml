@@ -1,4 +1,5 @@
-﻿@model IEnumerable<>
+﻿@using FoodAdvisor.ViewModels.FavouritesViewModel;
+@model IEnumerable<FavouritesIndexViewModel>
 
 
 @{
@@ -11,10 +12,9 @@
     <thead>
         <tr>
             <th>Image</th>
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Release Date</th>
-            <th>Actions</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Description</th>
         </tr>
     </thead>
     <tbody>
@@ -22,11 +22,11 @@
         {
             <tr>
                 <td>
-                    <img src="@movie.ImageUrl" alt="@movie.Title" width="100" />
+                    <img src="@movie.ImageUrl" alt="@movie.ImageUrl" width="100" />
                 </td>
-                <td>@movie.Title</td>
-                <td>@movie.Genre</td>
-                <td>@movie.ReleaseDate</td>
+                <td>@movie.Name</td>
+                <td>@movie.Category</td>
+                <td>@movie.Description</td>
                @* <td>
                     <form asp-controller="Watchlist" asp-action="RemoveFromWatchlist" method="post" class="d-inline">
                         <input type="hidden" name="movieId" value="@movie.MovieId" />
