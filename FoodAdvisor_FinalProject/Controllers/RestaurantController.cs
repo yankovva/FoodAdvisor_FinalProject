@@ -4,6 +4,7 @@ using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System.Security.Claims;
 
 namespace FoodAdvisor_FinalProject.Controllers
@@ -41,7 +42,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         public async Task<IActionResult> Add()
         {
             var model = new RestaurantAddViewModel();
-            model.Categories = await GetCategory();
+            model.Categories = await GetCategories();
 			model.Cities = await GetCities();
 
 			return View(model);
@@ -53,7 +54,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (ModelState.IsValid == false)
 			{
-				model.Categories = await GetCategory();
+				model.Categories = await GetCategories();
 				model.Cities = await GetCities();
 				return View(model);
 			}
@@ -157,6 +158,36 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return RedirectToAction(nameof(Index));
         }
 
+		[HttpGet]
+		public async Task<IActionResult> Edit(string id)
+		{
+			Guid restaurantGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
+			if (!isGuidValid)
+			{
+				//if the Guid(Id) is not valid, redirecting to index page
+				return this.RedirectToAction(nameof(Index));
+			}
+			RestaurantAddViewModel? model = await dbContext
+				.Restaurants
+				.Where(r => r.Id == restaurantGuid && r.IsDeleted == false)
+				.AsNoTracking()
+				.Select(g => new RestaurantAddViewModel()
+				{
+					Name = g.Name,
+					Description = g.Description,
+					ImageURL = g.ImageURL,
+					Address = g.Address
+
+				})
+				.FirstOrDefaultAsync();
+
+			model.Categories = await GetCategories();
+			model.Cities = await GetCities();
+
+			return View(model);
+		}
+
 
 		private string? GetCurrentUserId()
 		{
@@ -164,7 +195,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		//TODO: 
-		private async Task<List<Category>> GetCategory()
+		private async Task<List<Category>> GetCategories()
         {
             return await dbContext.Categories.ToListAsync();
         }
