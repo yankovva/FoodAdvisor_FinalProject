@@ -28,6 +28,8 @@
                 <td>@restaurant.Category</td>
                 <td>@restaurant.Description</td>
                 <td>
+                    <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-primary">View Details</a>
+
                     <form asp-controller="Favourites" asp-action="RemoveFromFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
                         <button type="submit" class="btn btn-danger">Remove</button>
