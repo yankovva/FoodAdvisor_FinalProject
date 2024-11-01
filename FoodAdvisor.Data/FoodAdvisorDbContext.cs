@@ -20,7 +20,7 @@ namespace FoodAdvisor.Data
         public virtual DbSet<Restaurant> Restaurants { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<UserPlace> UsersPlaces { get; set; }
+        public virtual DbSet<UserRestaurant> UsersRestaurants { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

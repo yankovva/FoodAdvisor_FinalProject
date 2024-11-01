@@ -14,7 +14,7 @@ namespace FoodAdvisor.Data.Models
             this.Id = Guid.NewGuid();
         }
 
-         public virtual ICollection<UserPlace> Locations { get; set; } = new HashSet<UserPlace>();
+         public virtual ICollection<UserRestaurant> Restaurants { get; set; } = new HashSet<UserRestaurant>();
 
     }
 }

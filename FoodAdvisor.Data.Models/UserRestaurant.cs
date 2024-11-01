@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FoodAdvisor.Data.Models
 {
     [PrimaryKey(nameof(ApplicationUserId), nameof(RestaurantId))]
-    public class UserPlace
+    public class UserRestaurant
     {
         [Comment("Identifier of the ApplicationUser")]
         public Guid ApplicationUserId { get; set; }
