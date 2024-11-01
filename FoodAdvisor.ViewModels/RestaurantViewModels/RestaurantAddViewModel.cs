@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FoodAdvisor.Common.EntityValidationConstants.Place;
+using static FoodAdvisor.Common.EntityValidationConstants.Restaurant;
 
-namespace FoodAdvisor.ViewModels.PlaceViewModels
+namespace FoodAdvisor.ViewModels.RestaurantViewModels
 {
-	public class PlaceAddViewModel
+	public class RestaurantAddViewModel
 	{
 		[MaxLength(NameMaxLenght)]
 		[MinLength(NameMinLenght)]

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Models
 {
-    [PrimaryKey(nameof(ApplicationUserId), nameof(PlaceId))]
+    [PrimaryKey(nameof(ApplicationUserId), nameof(RestaurantId))]
     public class UserPlace
     {
         [Comment("Identifier of the ApplicationUser")]
         public Guid ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; } = null!;
 
-        [Comment("Identifier of the Place")]
-        public Guid PlaceId { get; set; }
-        public Place Place { get; set; } = null!;
+        [Comment("Identifier of the Restaurant")]
+        public Guid RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; } = null!;
     }
 }

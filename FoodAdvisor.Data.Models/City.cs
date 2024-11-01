@@ -17,8 +17,8 @@ namespace FoodAdvisor.Data.Models
         [Comment("The name of the city.")]
         public string Name { get; set; } = null!;
 
-        [Comment("A collection of the Places in the cities.")]
-        public virtual ICollection<Place> Places { get; set; } = new List<Place>();
+        [Comment("A collection of the Restaurants in the cities.")]
+        public virtual ICollection<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
 
         [Comment("Identifier of the Country.")]
 

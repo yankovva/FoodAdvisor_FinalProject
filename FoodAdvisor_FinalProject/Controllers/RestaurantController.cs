@@ -1,6 +1,6 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
-using FoodAdvisor.ViewModels.PlaceViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,10 +9,10 @@ using System.Security.Claims;
 namespace FoodAdvisor_FinalProject.Controllers
 {
 	[Authorize]
-    public class PlaceController : BaseController 
+    public class RestaurantController : BaseController 
     {
         private readonly FoodAdvisorDbContext dbContext;
-        public PlaceController(FoodAdvisorDbContext _dbContext)
+        public RestaurantController(FoodAdvisorDbContext _dbContext)
         {
             this.dbContext = _dbContext;
         }
@@ -20,9 +20,9 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<PlaceIndexViewModel> model = await this.dbContext
-                .Places
-                .Select(p => new PlaceIndexViewModel()
+            IEnumerable<RestaurantIndexViewModel> model = await this.dbContext
+                .Restaurants
+				.Select(p => new RestaurantIndexViewModel()
                 {
                     Id = p.Id.ToString(),
                     Name = p.Name,
@@ -39,7 +39,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var model = new PlaceAddViewModel();
+            var model = new RestaurantAddViewModel();
             model.Categories = await GetCategory();
 			model.Cities = await GetCities();
 
@@ -47,7 +47,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> Add(PlaceAddViewModel model)
+		public async Task<IActionResult> Add(RestaurantAddViewModel model)
 		{
 
 			if (ModelState.IsValid == false)
@@ -56,8 +56,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 				model.Cities = await GetCities();
 				return View(model);
 			}
-			
-			Place place = new Place()
+
+			Restaurant place = new Restaurant()
 			{
 				Name = model.Name,
 				Description = model.Description,
@@ -68,7 +68,7 @@ namespace FoodAdvisor_FinalProject.Controllers
                 Address = model.Address,
 			};
 
-			await this.dbContext.Places.AddAsync(place);
+			await this.dbContext.Restaurants.AddAsync(place);
 			await this.dbContext.SaveChangesAsync();
 
 			return RedirectToAction(nameof(Index));
@@ -86,10 +86,10 @@ namespace FoodAdvisor_FinalProject.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            PlaceDetailsViewModel? model = await dbContext
-                .Places
-                .Where(p => p.Id == placeGuid)
-                .Select(p => new PlaceDetailsViewModel()
+			RestaurantDetailsViewModel? model = await dbContext
+                .Restaurants
+				.Where(p => p.Id == placeGuid)
+                .Select(p => new RestaurantDetailsViewModel()
                 {
                     Name = p.Name,
                     Description = p.Description,

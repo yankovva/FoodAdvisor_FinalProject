@@ -2,8 +2,8 @@
 {
     public class EntityValidationConstants
     {
-        public static class Place
-        {
+        public static class Restaurant
+		{
             public const int NameMinLenght = 2;
             public const int NameMaxLenght = 50;
 

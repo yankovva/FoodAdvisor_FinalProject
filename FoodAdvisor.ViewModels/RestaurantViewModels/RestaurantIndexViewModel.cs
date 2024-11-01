@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodAdvisor.ViewModels.PlaceViewModels
+namespace FoodAdvisor.ViewModels.RestaurantViewModels
 {
-    public class PlaceIndexViewModel
-    {
+    public class RestaurantIndexViewModel
+	{
         public required string Id { get; set; }
         public required string Name { get; set; } 
         public string? ImageURL { get; set; }

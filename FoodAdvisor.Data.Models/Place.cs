@@ -1,38 +1,33 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static FoodAdvisor.Common.EntityValidationConstants.Place;
+using System.ComponentModel.DataAnnotations.Schema;
+using static FoodAdvisor.Common.EntityValidationConstants.Restaurant;
 
 namespace FoodAdvisor.Data.Models
 {
-    public class Place
+    public class Restaurant
     {
         [Key]
-        [Comment("The Unique Identifier of the Place.")]
+        [Comment("The Unique Identifier of the Restaurant.")]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
         [MaxLength(NameMaxLenght)]
-        [Comment("The Name of the Place.")]
+        [Comment("The Name of the Restaurant.")]
         public string Name { get; set; } = null!;
 
         [Required]
         [MaxLength(DescriptionMaxLenght)]
-        [Comment("The Description of the Place.")]
+        [Comment("The Description of the Restaurant.")]
         public string Description { get; set; } = null!;
 
         [Required]
         [MaxLength(AddressMaxLenght)]
-        [Comment("The Address of the Place.")]
+        [Comment("The Address of the Restaurant.")]
         public string Address { get; set; } = null!;
 
         [MaxLength(URLMaxLEnght)]
-        [Comment("An Image Url of the Place.")]
+        [Comment("An Image Url of the Restaurant.")]
         public string? ImageURL { get; set; }
 
         [Required]

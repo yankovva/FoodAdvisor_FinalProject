@@ -15,7 +15,7 @@ namespace FoodAdvisor.Data.Models
         [Comment("The Name of the Category.")]
         public string Name { get; set; } = null!;
 
-        [Comment("A Collection of Places with the same Category.")]
-        public virtual ICollection<Place> Places { get; set; } = new List<Place>();
+        [Comment("A Collection of Restaurants with the same Category.")]
+        public virtual ICollection<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
     }
 }
