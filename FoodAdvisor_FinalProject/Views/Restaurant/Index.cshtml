@@ -21,13 +21,14 @@
                     <h6 class="card-subtitle mb-2 text-muted">@restaurant.Category</h6>
                     <p class="card-text">@restaurant.Description </p>
                     <a asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-primary">View Details</a>
-                   @* @if (User?.Identity?.IsAuthenticated ?? false)
+
+                  @if (User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <form asp-controller="Wishlist" asp-action="AddToWishlist" method="post" class="d-inline">
-                            <input type="hidden" name="movieId" value="@place.Id" />
-                            <button type="submit" class="btn btn-warning">+Wishlist</button>
+                        <form asp-controller="Favourites" asp-action="AddToFavourites" method="post" class="d-inline">
+                            <input type="hidden" name="movieId" value="@restaurant.Id" />
+                            <button type="submit" class="btn btn-warning">+Favourites</button>
                         </form>
-                }*@
+                }
                 </div>
             </div>
         </div>

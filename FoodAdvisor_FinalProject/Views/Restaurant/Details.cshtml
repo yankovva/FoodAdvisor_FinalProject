@@ -8,7 +8,7 @@
 <h2>@Model.Name</h2>
 <div .container-fluid>
 	<div class="row">
-		<img src="@Model.ImageURL" class="img-fluid" alt="Responsive image">
+		<img src="@Model.ImageURL" class="img-fluid" alt="Responsive image" width="300">
 		<p><strong>Name</strong> @Model.Name</p>
 		<p><strong>Category</strong> @Model.Category</p>
 		<p><strong>Description</strong> @Model.Description</p>
@@ -19,7 +19,7 @@
 </div>
 @if (User?.Identity?.Name == @Model.Publisher)
 {
-	<a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Edit</a>
+	@*<a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Edit</a>*@
 	<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
 }
 
