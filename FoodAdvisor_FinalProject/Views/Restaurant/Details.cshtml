@@ -8,7 +8,9 @@
 <h2>@Model.Name</h2>
 <div .container-fluid>
 	<div class="row">
-		<img src="@Model.ImageURL" class="img-fluid" alt="Responsive image" width="300">
+		<div class="text-center">
+			<img src="@Model.ImageURL" class="rounded" alt="Responsive image" width="400">
+		</div>
 		<p><strong>Name</strong> @Model.Name</p>
 		<p><strong>Category</strong> @Model.Category</p>
 		<p><strong>Description</strong> @Model.Description</p>
@@ -17,9 +19,9 @@
 		<p><strong>Publisher:</strong> @Model.Publisher</p>
 	</div>
 </div>
+<a asp-action="Index" class="btn btn-secondary">Back to All Restaurants</a>
 @if (User?.Identity?.Name == @Model.Publisher)
 {
-	<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
+	<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-rounded ">Delete</a>
 }
 
-<a asp-action="Index" class="btn btn-secondary">Back to All Restaurants</a>
