@@ -37,7 +37,7 @@ namespace FoodAdvisor_FinalProject.Controllers
                 .Where(ur => ur.Restaurant.IsDeleted == false && ur.ApplicationUserId.ToString().ToLower() == userId.ToLower())
                 .Select(ur => new FavouritesIndexViewModel()
                 {
-                    Id = ur.ApplicationUserId.ToString(),
+                    Id = ur.RestaurantId.ToString(),
                     Name = ur.Restaurant.Name,
                     Description = ur.Restaurant.Description,
                     Category = ur.Restaurant.Category.Name,
@@ -61,6 +61,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 
             Restaurant? restaurant = await this.dbContext
                 .Restaurants
+                .Where(r=>r.IsDeleted == false)
                 .FirstOrDefaultAsync(r => r.Id == restaurantGuid);
 
             if (restaurant == null)
@@ -87,6 +88,46 @@ namespace FoodAdvisor_FinalProject.Controllers
 
             return this.RedirectToAction(nameof(Index));
 
+        }
+        public async Task<IActionResult> RemoveFromFavourites(string? id)
+        {
+            Guid restaurantGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
+            if (!isGuidValid)
+            {
+                //if the Guid(Id) is not valid, redirecting to index page
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Restaurant? restaurant = await this.dbContext
+                .Restaurants
+                .Where(r => r.IsDeleted == false)
+                .FirstOrDefaultAsync(r => r.Id == restaurantGuid);
+
+            if (restaurant == null)
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+
+            Guid userguid = Guid.Parse(this.userManager.GetUserId(User)!);
+
+            UserRestaurant? userRestaurant = await this.dbContext
+              .UsersRestaurants
+              .FirstOrDefaultAsync(ur => ur.ApplicationUserId == userguid && ur.RestaurantId == restaurantGuid);
+
+            if ((userRestaurant == null))
+            {
+                return this.RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                this.dbContext.UsersRestaurants
+                    .Remove(userRestaurant);
+
+                await this.dbContext.SaveChangesAsync();
+            }
+
+            return this.RedirectToAction(nameof(Index));
         }
 
     }
