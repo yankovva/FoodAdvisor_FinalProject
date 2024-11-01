@@ -1,0 +1,29 @@
+﻿ @using FoodAdvisor.ViewModels.RestaurantViewModels;
+ @model RestaurantDeleteViewModel
+
+@{
+	ViewBag.Title = "Delete Restaurant";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-body">
+				<h3 class="card-title text-center">@Model.Name</h3>
+				<p class="mb-0"><strong>Category:</strong> @Model.Category</p>
+				<p class="mb-0"><strong>Published By:</strong> @Model.Publisher</p>
+				<p class="text-danger mt-3">Are you sure you want to delete @(Model.Name)?</p>
+			</div>
+			<div class="card-footer">
+				<form asp-action="Delete" method="post">
+					<input type="hidden" asp-for="Id" />
+					<button type="submit" class="btn btn-danger">Confirm Delete</button>
+					<a asp-action="All" class="btn btn-secondary">Cancel</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

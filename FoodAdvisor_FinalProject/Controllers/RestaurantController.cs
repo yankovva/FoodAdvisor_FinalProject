@@ -22,6 +22,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         {
             IEnumerable<RestaurantIndexViewModel> model = await this.dbContext
                 .Restaurants
+                .Where(r=>r.IsDeleted == false)
 				.Select(p => new RestaurantIndexViewModel()
                 {
                     Id = p.Id.ToString(),
@@ -78,8 +79,8 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
-            Guid placeGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(id, ref placeGuid);
+            Guid restaurantGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
             if (!isGuidValid)
             {
                 //if the Guid(Id) is not valid, redirecting to index page
@@ -88,9 +89,10 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			RestaurantDetailsViewModel? model = await dbContext
                 .Restaurants
-				.Where(p => p.Id == placeGuid)
+				.Where(p => p.Id == restaurantGuid && p.IsDeleted == false)
                 .Select(p => new RestaurantDetailsViewModel()
                 {
+                    Id = p.Id.ToString(),
                     Name = p.Name,
                     Description = p.Description,
                     ImageURL = p.ImageURL,
@@ -111,7 +113,52 @@ namespace FoodAdvisor_FinalProject.Controllers
             return View(model);
         }
 
-        private string? GetCurrentUserId()
+		[HttpGet]
+		public async Task<IActionResult> Delete(string id)
+        {
+			Guid restaurantGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
+			if (!isGuidValid)
+			{
+				//if the Guid(Id) is not valid, redirecting to index page
+				return this.RedirectToAction(nameof(Index));
+			}
+
+			RestaurantDeleteViewModel? model = await dbContext
+               .Restaurants
+			   .Where(r => r.Id == restaurantGuid && r.IsDeleted == false)
+			   .AsNoTracking()
+			   .Select(r => new RestaurantDeleteViewModel()
+			   {
+				   Id = restaurantGuid.ToString(),
+				   Name = r.Name,
+				   Publisher = r.Publisher.UserName ?? string.Empty,
+                   Category = r.Category.Name
+			   })
+			   .FirstOrDefaultAsync();
+
+			return View(model);
+        }
+        [HttpPost]
+		public async Task<IActionResult> Delete(RestaurantDeleteViewModel model)
+        {
+			Restaurant? restaurant = await dbContext
+				.Restaurants
+			   .Where(g => g.Id == Guid.Parse(model.Id))
+			   .Where(g => g.IsDeleted == false)
+			   .FirstOrDefaultAsync();
+
+			if (restaurant != null)
+			{
+				restaurant.IsDeleted = true;
+				await dbContext.SaveChangesAsync();
+			}
+
+			return RedirectToAction(nameof(Index));
+        }
+
+
+		private string? GetCurrentUserId()
 		{
 			return User.FindFirstValue(ClaimTypes.NameIdentifier);
 		}

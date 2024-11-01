@@ -17,5 +17,10 @@
 		<p><strong>Publisher:</strong> @Model.Publisher</p>
 	</div>
 </div>
+@if (User?.Identity?.Name == @Model.Publisher)
+{
+	<a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-dark-text btn-rounded mb-2 w-100 p-3 fw-bold">Edit</a>
+	<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-rounded mb-2 w-100 p-3 fw-bold">Delete</a>
+}
 
 <a asp-action="Index" class="btn btn-secondary">Back to All Restaurants</a>

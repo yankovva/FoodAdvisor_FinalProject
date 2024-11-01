@@ -49,5 +49,8 @@ namespace FoodAdvisor.Data.Models
 
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
+
+        [Comment("Shows wether the restaurant is deleted or not")]
+        public bool IsDeleted { get; set; } = false;
     }
 }
