@@ -24,8 +24,8 @@
 
                   @if (User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <form asp-controller="Favourites" asp-action="AddToFavourites" method="post" class="d-inline">
-                            <input type="hidden" name="movieId" value="@restaurant.Id" />
+                        <form asp-controller="Favourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+                            <input type="hidden" name="restaurantId" value="@restaurant.Id" />
                             <button type="submit" class="btn btn-warning">+Favourites</button>
                         </form>
                 }

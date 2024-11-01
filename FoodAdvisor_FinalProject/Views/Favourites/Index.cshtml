@@ -18,21 +18,21 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var movie in Model)
+        @foreach (var restaurant in Model)
         {
             <tr>
                 <td>
-                    <img src="@movie.ImageUrl" alt="@movie.ImageUrl" width="100" />
+                    <img src="@restaurant.ImageUrl" alt="@restaurant.Name" width="100" />
                 </td>
-                <td>@movie.Name</td>
-                <td>@movie.Category</td>
-                <td>@movie.Description</td>
-               @* <td>
-                    <form asp-controller="Watchlist" asp-action="RemoveFromWatchlist" method="post" class="d-inline">
-                        <input type="hidden" name="movieId" value="@movie.MovieId" />
+                <td>@restaurant.Name</td>
+                <td>@restaurant.Category</td>
+                <td>@restaurant.Description</td>
+                <td>
+                    <form asp-controller="Favourites" asp-action="RemoveFromFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
                         <button type="submit" class="btn btn-danger">Remove</button>
                     </form>
-            </td>*@
+            </td>
             </tr>
         }
     </tbody>

@@ -48,10 +48,46 @@ namespace FoodAdvisor_FinalProject.Controllers
 
             return View(favourites);
         }
-        //public async Task<IActionResult> AddToFavourites()
-        //{
+        [HttpPost]
+        public async Task<IActionResult> AddToFavourites(string? id)
+        {
+            Guid restaurantGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
+            if (!isGuidValid)
+            {
+                //if the Guid(Id) is not valid, redirecting to index page
+                return this.RedirectToAction(nameof(Index));
+            }
 
-        //}
+            Restaurant? restaurant = await this.dbContext
+                .Restaurants
+                .FirstOrDefaultAsync(r => r.Id == restaurantGuid);
+
+            if (restaurant == null)
+            {
+                return this.RedirectToAction(nameof (Index));
+            }
+
+            Guid userguid = Guid.Parse(this.userManager.GetUserId(User)!);
+
+            bool alreaduAddedToFavourites = await this.dbContext
+                .UsersRestaurants.AnyAsync(ur => ur.ApplicationUserId == userguid && ur.RestaurantId == restaurantGuid);
+
+            if (!alreaduAddedToFavourites)
+            {
+                UserRestaurant newFavoriteRestaurant = new UserRestaurant()
+                {
+                    ApplicationUserId = userguid,
+                    RestaurantId = restaurantGuid,
+                };
+
+                await this.dbContext.UsersRestaurants.AddAsync(newFavoriteRestaurant);
+                await this.dbContext.SaveChangesAsync();
+            }
+
+            return this.RedirectToAction(nameof(Index));
+
+        }
 
     }
 }
