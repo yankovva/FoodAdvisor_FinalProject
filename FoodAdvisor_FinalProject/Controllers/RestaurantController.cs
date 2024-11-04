@@ -76,7 +76,6 @@ namespace FoodAdvisor_FinalProject.Controllers
             bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
             if (!isGuidValid)
             {
-                //if the Guid(Id) is not valid, redirecting to index page
                 return this.RedirectToAction(nameof(Index));
             }
 
@@ -98,22 +97,11 @@ namespace FoodAdvisor_FinalProject.Controllers
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
 			{
-				//if the Guid(Id) is not valid, redirecting to index page
 				return this.RedirectToAction(nameof(Index));
 			}
 
-			RestaurantDeleteViewModel? model = await dbContext
-               .Restaurants
-			   .Where(r => r.Id == restaurantGuid && r.IsDeleted == false)
-			   .AsNoTracking()
-			   .Select(r => new RestaurantDeleteViewModel()
-			   {
-				   Id = restaurantGuid.ToString(),
-				   Name = r.Name,
-				   Publisher = r.Publisher.UserName ?? string.Empty,
-                   Category = r.Category.Name
-			   })
-			   .FirstOrDefaultAsync();
+			RestaurantDeleteViewModel? model = await this.restaurantService
+				.DeleteRestaurantViewAsync(restaurantGuid);
 
 			return View(model);
         }
