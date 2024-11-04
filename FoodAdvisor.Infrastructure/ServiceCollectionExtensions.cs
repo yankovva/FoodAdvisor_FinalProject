@@ -16,8 +16,7 @@ namespace FoodAdvisor.Infrastructure
 		public static void RegisterRepositories(this IServiceCollection services, Assembly modelsAssembly)
 		{
 			// to do: Re-write the implementation in such way that the user must create a single class for repositories
-			Type[] typesToExclude = new Type[] { typeof(ApplicationUser), typeof(City), typeof(Category), typeof(Country) };
-
+			Type[] typesToExclude = new Type[] { typeof(ApplicationUser) };
 			Type[] modelTypes = modelsAssembly
 				.GetTypes()
 				.Where(t => !t.IsAbstract && !t.IsInterface &&
@@ -32,7 +31,7 @@ namespace FoodAdvisor.Infrastructure
 					Type repositoryInstanceType = typeof(Repository<,>);
 					PropertyInfo? idPropInfo = type
 						.GetProperties()
-						.Where(p => p.Attributes.ToString().ToLower().Contains("key"))
+						.Where(p => p.Name.ToLower() == "id")
 						.SingleOrDefault();
 
 					Type[] constructArgs = new Type[2];

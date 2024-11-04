@@ -1,7 +1,10 @@
 ﻿using FoodAdvisor.Data.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Azure.Documents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,5 +29,8 @@ namespace FoodAdvisor.Data.Services
 
 			return true;
 		}
+	
+		
+		
 	}
 }

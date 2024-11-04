@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
@@ -20,5 +21,9 @@ namespace FoodAdvisor_FinalProject.Controllers
 
             return true;
         }
-    }
+		public string? GetCurrentUserId()
+		{
+			return User.FindFirstValue(ClaimTypes.NameIdentifier);
+		}
+	}
 }

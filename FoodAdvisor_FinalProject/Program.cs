@@ -1,6 +1,8 @@
 using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Repository;
+using FoodAdvisor.Data.Services;
+using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,8 +40,9 @@ builder.Services
 
 
 builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
+//builder.Services.AddScoped<IRepository<Restaurant, Guid>, Repository<Restaurant, Guid>>();
 
-
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 
 builder.Services.AddRazorPages();
 

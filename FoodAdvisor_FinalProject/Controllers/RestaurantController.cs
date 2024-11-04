@@ -1,5 +1,6 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
+using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,29 +14,20 @@ namespace FoodAdvisor_FinalProject.Controllers
     public class RestaurantController : BaseController 
     {
         private readonly FoodAdvisorDbContext dbContext;
-        public RestaurantController(FoodAdvisorDbContext _dbContext)
+		private readonly IRestaurantService restaurantService;
+        public RestaurantController(FoodAdvisorDbContext _dbContext, IRestaurantService restaurantService)
         {
             this.dbContext = _dbContext;
+			this.restaurantService = restaurantService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<RestaurantIndexViewModel> model = await this.dbContext
-                .Restaurants
-                .Where(r=>r.IsDeleted == false)
-				.Select(p => new RestaurantIndexViewModel()
-                {
-                    Id = p.Id.ToString(),
-                    Name = p.Name,
-                    ImageURL = p.ImageURL,
-                    Category = p.Category.Name,
-					Publisher = p.Publisher.UserName ?? string.Empty
-                })
-                .AsNoTracking()
-                .ToArrayAsync();
+			IEnumerable<RestaurantIndexViewModel> allRestaurants = await this.restaurantService
+				 .IndexGetAllRestaurants();
 
-            return View(model);
+            return View(allRestaurants);
         }
 
         [HttpGet]
@@ -229,10 +221,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		private string? GetCurrentUserId()
-		{
-			return User.FindFirstValue(ClaimTypes.NameIdentifier);
-		}
+		
 
 		//TODO: 
 		private async Task<List<Category>> GetCategories()

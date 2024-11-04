@@ -5,7 +5,7 @@ namespace FoodAdvisor.Data.Repository
 	{
 		private readonly FoodAdvisorDbContext dbContext;
 		private readonly DbSet<TType> dbSet;
-		public Repository(FoodAdvisorDbContext dbContext, DbSet<TType> dbSet)
+		public Repository(FoodAdvisorDbContext dbContext)
 		{
 			this.dbContext = dbContext;
 			this.dbSet = this.dbContext.Set<TType>();
@@ -59,7 +59,7 @@ namespace FoodAdvisor.Data.Repository
 			return await dbSet.ToArrayAsync();
 		}
 
-		public IEnumerable<TType> GetAllAttached()
+		public IQueryable<TType> GetAllAttached()
 		{
 			return dbSet.AsQueryable();
 		}
