@@ -1,5 +1,6 @@
 ﻿using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Repository;
+using FoodAdvisor.Data.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,7 +29,7 @@ namespace FoodAdvisor.Infrastructure
 				if (!typesToExclude.Contains(type))
 				{
 					Type repositoryInterface = typeof(IRepository<,>);
-					Type repositoryInstanceType = typeof(Repository<,>);
+					Type repositoryInstanceType = typeof(BaseRepository<,>);
 					PropertyInfo? idPropInfo = type
 						.GetProperties()
 						.Where(p => p.Name.ToLower() == "id")

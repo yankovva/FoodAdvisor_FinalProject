@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FoodAdvisor.Data.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 namespace FoodAdvisor.Data.Repository
 {
-	public class Repository<TType, TId> : IRepository<TType, TId> where TType : class
+    public class BaseRepository<TType, TId> : IRepository<TType, TId> where TType : class
 	{
 		private readonly FoodAdvisorDbContext dbContext;
 		private readonly DbSet<TType> dbSet;
-		public Repository(FoodAdvisorDbContext dbContext)
+		public BaseRepository(FoodAdvisorDbContext dbContext)
 		{
 			this.dbContext = dbContext;
 			this.dbSet = this.dbContext.Set<TType>();
@@ -36,6 +37,7 @@ namespace FoodAdvisor.Data.Repository
 			return true;
 		}
 
+	
 		public async Task<bool> DeleteAsync(TId id)
 		{
 			TType entity = await GetByIdAsync(id);
@@ -78,6 +80,11 @@ namespace FoodAdvisor.Data.Repository
 						   .FindAsync(id);
 
 			return entity;
+		}
+
+		public async  Task SaveChangesAsync()
+		{
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public bool Update(TType item)

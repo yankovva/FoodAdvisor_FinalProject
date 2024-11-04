@@ -1,12 +1,12 @@
 ﻿using FoodAdvisor.Data.Models;
-using FoodAdvisor.Data.Repository;
+using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class RestaurantService : IRestaurantService
+    public class RestaurantService : IRestaurantService
 	{
 		private IRepository<Restaurant, Guid> restaurantRepository;
 	
@@ -16,7 +16,7 @@ namespace FoodAdvisor.Data.Services
 			
         }
 
-		//ToDo:
+		//TODO:
         public async Task AddRestaurantAsync(RestaurantAddViewModel model)
 		{
 
@@ -34,9 +34,21 @@ namespace FoodAdvisor.Data.Services
 			//await this.restaurantRepository.AddAsync(place);
 		}
 
-		public Task DeleteRestaurantAsync(RestaurantDeleteViewModel model)
+		//Done
+		public async Task DeleteRestaurantAsync(RestaurantDeleteViewModel model)
 		{
-			throw new NotImplementedException();
+			Restaurant? restaurant = await this.restaurantRepository
+				.GetAllAttached()
+			   .Where(g => g.Id == Guid.Parse(model.Id))
+			   .Where(g => g.IsDeleted == false)
+			   .FirstOrDefaultAsync();
+			
+			if (restaurant != null)
+			{
+				 restaurant.IsDeleted = true;
+				await this.restaurantRepository.SaveChangesAsync();
+			}
+
 		}
 
 		//Done

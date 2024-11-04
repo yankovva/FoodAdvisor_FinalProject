@@ -108,17 +108,8 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpPost]
 		public async Task<IActionResult> Delete(RestaurantDeleteViewModel model)
         {
-			Restaurant? restaurant = await dbContext
-				.Restaurants
-			   .Where(g => g.Id == Guid.Parse(model.Id))
-			   .Where(g => g.IsDeleted == false)
-			   .FirstOrDefaultAsync();
-
-			if (restaurant != null)
-			{
-				restaurant.IsDeleted = true;
-				await dbContext.SaveChangesAsync();
-			}
+			await this.restaurantService
+				.DeleteRestaurantAsync(model);
 
 			return RedirectToAction(nameof(Index));
         }
