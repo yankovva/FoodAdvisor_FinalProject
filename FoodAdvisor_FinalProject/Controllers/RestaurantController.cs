@@ -31,7 +31,7 @@ namespace FoodAdvisor_FinalProject.Controllers
                     Description = p.Description,
                     ImageURL = p.ImageURL,
                     Category = p.Category.Name,
-					Publisher = p.Publisher.UserName ?? string.Empty
+					Publisher = p.Publisher.UserName ?? string.
                 })
                 .AsNoTracking()
                 .ToArrayAsync();
@@ -96,7 +96,9 @@ namespace FoodAdvisor_FinalProject.Controllers
                 {
                     Id = p.Id.ToString(),
                     Name = p.Name,
+                    Description = p.Description,
                     ImageURL = p.ImageURL,
+                    Address = p.Address,
                     Category = p.Category.Name,
                     City = p.City.Name,
                     Publisher = p.Publisher.UserName ?? string.Empty
