@@ -80,28 +80,13 @@ namespace FoodAdvisor_FinalProject.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-			RestaurantDetailsViewModel? model = await dbContext
-                .Restaurants
-				.Where(p => p.Id == restaurantGuid && p.IsDeleted == false)
-                .Select(p => new RestaurantDetailsViewModel()
-                {
-                    Id = p.Id.ToString(),
-                    Name = p.Name,
-                    Description = p.Description,
-                    ImageURL = p.ImageURL,
-                    Address = p.Address,
-                    Category = p.Category.Name,
-                    City = p.City.Name,
-                    Publisher = p.Publisher.UserName ?? string.Empty
-
-                })
-                .FirstOrDefaultAsync();
+			RestaurantDetailsViewModel? model = await this.restaurantService
+				.GetRestaurantDetailsAsync(restaurantGuid);
 
             if (model == null)
             {
                 return this.RedirectToAction(nameof(Index));
             }
-
 
             return View(model);
         }

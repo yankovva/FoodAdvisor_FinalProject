@@ -2,13 +2,7 @@
 using FoodAdvisor.Data.Repository;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services
 {
@@ -16,7 +10,7 @@ namespace FoodAdvisor.Data.Services
 	{
 		private IRepository<Restaurant, Guid> restaurantRepository;
 	
-		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository,)
+		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository)
         {
             this.restaurantRepository = restaurantRepository;
 			
@@ -55,9 +49,27 @@ namespace FoodAdvisor.Data.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid id)
+		public async Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			 
+			RestaurantDetailsViewModel? model = await this.restaurantRepository
+				.GetAllAttached()
+				.Where(p => p.Id == id && p.IsDeleted == false)
+				.Select(p => new RestaurantDetailsViewModel()
+				{
+					Id = p.Id.ToString(),
+					Name = p.Name,
+					Description = p.Description,
+					ImageURL = p.ImageURL,
+					Address = p.Address,
+					Category = p.Category.Name,
+					City = p.City.Name,
+					Publisher = p.Publisher.UserName ?? string.Empty
+
+				})
+				.FirstOrDefaultAsync();
+
+			return model;
 		}
 
 		public async Task<IEnumerable<RestaurantIndexViewModel>> IndexGetAllRestaurants()
