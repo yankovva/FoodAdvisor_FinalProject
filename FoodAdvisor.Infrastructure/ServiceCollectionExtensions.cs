@@ -32,7 +32,7 @@ namespace FoodAdvisor.Infrastructure
 					Type repositoryInstanceType = typeof(Repository<,>);
 					PropertyInfo? idPropInfo = type
 						.GetProperties()
-						.Where(p => p.Attributes.ToString().Contains("Key"))
+						.Where(p => p.Attributes.ToString().ToLower().Contains("key"))
 						.SingleOrDefault();
 
 					Type[] constructArgs = new Type[2];

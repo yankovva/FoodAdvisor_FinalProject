@@ -168,6 +168,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				//if the Guid(Id) is not valid, redirecting to index page
 				return this.RedirectToAction(nameof(Index));
 			}
+
 			RestaurantAddViewModel? model = await dbContext
 				.Restaurants
 				.Where(r => r.Id == restaurantGuid && r.IsDeleted == false)
@@ -197,6 +198,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				model.Cities = await GetCities();
 				return View(model);
 			}
+
 			Guid restaurantGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)

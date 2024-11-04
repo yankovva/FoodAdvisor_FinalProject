@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FoodAdvisor.Data.Models\FoodAdvisor.Data.Models.csproj" />
+    <ProjectReference Include="..\FoodAdvisor.Data\FoodAdvisor.Data.csproj" />
+    <ProjectReference Include="..\FoodAdvisor.ViewModels\FoodAdvisor.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>
