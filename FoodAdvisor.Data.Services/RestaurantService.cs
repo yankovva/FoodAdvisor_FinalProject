@@ -70,9 +70,27 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public Task<RestaurantAddViewModel> EditRestaurantasync(Guid id)
+		public Task<RestaurantAddViewModel> EditRestaurantAsync(Guid id)
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task<RestaurantAddViewModel> EditRestaurantViewAsync(Guid id)
+		{
+			RestaurantAddViewModel? model = await this.restaurantRepository
+				.GetAllAttached()
+				.Where(r => r.Id == id && r.IsDeleted == false)
+				.AsNoTracking()
+				.Select(g => new RestaurantAddViewModel()
+				{
+					Name = g.Name,
+					Description = g.Description,
+					ImageURL = g.ImageURL,
+					Address = g.Address
+
+				})
+				.FirstOrDefaultAsync();
+			return model;
 		}
 
 		//Done

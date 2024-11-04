@@ -121,23 +121,11 @@ namespace FoodAdvisor_FinalProject.Controllers
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
 			{
-				//if the Guid(Id) is not valid, redirecting to index page
 				return this.RedirectToAction(nameof(Index));
 			}
 
-			RestaurantAddViewModel? model = await dbContext
-				.Restaurants
-				.Where(r => r.Id == restaurantGuid && r.IsDeleted == false)
-				.AsNoTracking()
-				.Select(g => new RestaurantAddViewModel()
-				{
-					Name = g.Name,
-					Description = g.Description,
-					ImageURL = g.ImageURL,
-					Address = g.Address
-
-				})
-				.FirstOrDefaultAsync();
+			RestaurantAddViewModel? model = await this.restaurantService
+				.EditRestaurantViewAsync(restaurantGuid);
 
 			model.Categories = await GetCategories();
 			model.Cities = await GetCities();
