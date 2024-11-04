@@ -1,5 +1,7 @@
 using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
+using FoodAdvisor.Data.Repository;
+using FoodAdvisor.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,7 +37,12 @@ builder.Services
           .AddUserManager<UserManager<ApplicationUser>>();
 
 
+builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
+
+
+
 builder.Services.AddRazorPages();
+
 
 builder.Services.AddControllersWithViews();
 

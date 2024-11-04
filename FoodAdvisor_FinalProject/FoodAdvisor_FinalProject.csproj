@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FoodAdvisor.Data\FoodAdvisor.Data.csproj" />
+    <ProjectReference Include="..\FoodAdvisor.Infrastructure\FoodAdvisor.Infrastructure.csproj" />
     <ProjectReference Include="..\FoodAdvisor.ViewModels\FoodAdvisor.ViewModels.csproj" />
   </ItemGroup>
 
