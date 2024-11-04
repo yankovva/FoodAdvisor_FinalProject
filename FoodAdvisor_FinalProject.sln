@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor_FinalProject", "FoodAdvisor_FinalProject\FoodAdvisor_FinalProject.csproj", "{6EA9C4DC-8582-4E96-AE4C-2E8A6F0E5DFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor_FinalProject", "FoodAdvisor_FinalProject\FoodAdvisor_FinalProject.csproj", "{6EA9C4DC-8582-4E96-AE4C-2E8A6F0E5DFA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{A5A3DA50-AB40-4F50-9289-66D235CF3DF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor.Data", "FoodAdvisor.Data\FoodAdvisor.Data.csproj", "{C6DB0D1C-338C-45A7-AA5B-146C07134E84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor.Data", "FoodAdvisor.Data\FoodAdvisor.Data.csproj", "{C6DB0D1C-338C-45A7-AA5B-146C07134E84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor.Data.Models", "FoodAdvisor.Data.Models\FoodAdvisor.Data.Models.csproj", "{E189A465-8C75-4608-8909-3D8B34C91B1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor.Data.Models", "FoodAdvisor.Data.Models\FoodAdvisor.Data.Models.csproj", "{E189A465-8C75-4608-8909-3D8B34C91B1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor.Common", "FoodAdvisor.Common\FoodAdvisor.Common.csproj", "{1F43F6A0-ADA3-496C-A52F-1744FBE99340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor.Common", "FoodAdvisor.Common\FoodAdvisor.Common.csproj", "{1F43F6A0-ADA3-496C-A52F-1744FBE99340}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{54D33950-A076-4F96-9146-21C8A19BC716}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor.ViewModels", "FoodAdvisor.ViewModels\FoodAdvisor.ViewModels.csproj", "{659517AA-8367-4785-987F-B5DE80E47038}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor.ViewModels", "FoodAdvisor.ViewModels\FoodAdvisor.ViewModels.csproj", "{659517AA-8367-4785-987F-B5DE80E47038}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor.Infrastructure", "FoodAdvisor.Infrastructure\FoodAdvisor.Infrastructure.csproj", "{53F64559-126F-454C-937E-C59A479C712B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor.Infrastructure", "FoodAdvisor.Infrastructure\FoodAdvisor.Infrastructure.csproj", "{53F64559-126F-454C-937E-C59A479C712B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6C64485F-A8F0-4BAD-A7CF-5859D1F6BB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor.Data.Services", "FoodAdvisor.Data.Services\FoodAdvisor.Data.Services.csproj", "{A0B99D13-E470-476D-A738-98A434F79F46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor.Data.Services", "FoodAdvisor.Data.Services\FoodAdvisor.Data.Services.csproj", "{A0B99D13-E470-476D-A738-98A434F79F46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
