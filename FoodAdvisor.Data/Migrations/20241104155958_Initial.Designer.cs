@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241104155958_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,32 +111,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("55d244b7-0c7a-48a1-a64c-45f3c490e3af"),
+                            Id = new Guid("899ec41b-b57f-4bd1-8008-c1e64ad2e4aa"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("e4f28892-bff9-46b0-b5aa-9ff5351cf9cb"),
+                            Id = new Guid("76b67744-f579-4c47-a13c-b1fd238373b8"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("e6be95e2-53b7-4c60-912d-35f4c00be63e"),
+                            Id = new Guid("75a969ad-9ab0-4778-9801-41ff6dbf3081"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("f9e9fc0c-12a4-4ffb-954e-a059ffe6574e"),
+                            Id = new Guid("669c3527-ade7-4dda-872e-c96e8cabf9a1"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("1ce623a4-f1e2-4965-9054-edaaaa9b5c9e"),
+                            Id = new Guid("814b05c9-b967-47d3-a3b1-be699223b16f"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("3466d791-d55d-4ce7-9b12-056744670fcb"),
+                            Id = new Guid("b53bae73-88b2-4a1a-9649-228e5b8ae617"),
                             Name = "Bistro"
                         });
                 });
@@ -145,6 +148,10 @@ namespace FoodAdvisor.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Unique Identifier for the city.");
 
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Identifier of the Country.");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(56)
@@ -153,39 +160,26 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities");
+                    b.HasIndex("CountryId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("902d135c-87c4-4e3e-a991-bab284950732"),
-                            Name = "Plovdiv"
-                        },
-                        new
-                        {
-                            Id = new Guid("8e704fdb-679d-45ed-97fd-5f89a1cd1b4f"),
-                            Name = "Sofia"
-                        },
-                        new
-                        {
-                            Id = new Guid("2a02cf74-7f55-491a-9ecb-7b854510e6b9"),
-                            Name = "Varna"
-                        },
-                        new
-                        {
-                            Id = new Guid("cc019c80-6767-4d0f-8637-ad53ad77e707"),
-                            Name = "Burgas"
-                        },
-                        new
-                        {
-                            Id = new Guid("407e3d89-8ab6-4ecf-a304-3cf516c67d71"),
-                            Name = "Stara Zagora"
-                        },
-                        new
-                        {
-                            Id = new Guid("be3299fe-d5e1-47bd-a064-aa8fa2fee408"),
-                            Name = "Ruse"
-                        });
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("FoodAdvisor.Data.Models.Country", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("Identifier of the Country");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.Restaurant", b =>
@@ -393,6 +387,17 @@ namespace FoodAdvisor.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FoodAdvisor.Data.Models.City", b =>
+                {
+                    b.HasOne("FoodAdvisor.Data.Models.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
             modelBuilder.Entity("FoodAdvisor.Data.Models.Restaurant", b =>
                 {
                     b.HasOne("FoodAdvisor.Data.Models.Category", "Category")
@@ -503,6 +508,11 @@ namespace FoodAdvisor.Data.Migrations
             modelBuilder.Entity("FoodAdvisor.Data.Models.City", b =>
                 {
                     b.Navigation("Restaurants");
+                });
+
+            modelBuilder.Entity("FoodAdvisor.Data.Models.Country", b =>
+                {
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.Restaurant", b =>

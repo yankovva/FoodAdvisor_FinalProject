@@ -30,6 +30,7 @@ namespace FoodAdvisor_FinalProject.Controllers
             return View(allRestaurants);
         }
 
+		//TODO: Make in Service
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -134,6 +135,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
+		//TODO: Make in service
 		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id)
 		{
 			if (ModelState.IsValid == false)

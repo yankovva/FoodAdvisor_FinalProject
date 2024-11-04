@@ -21,7 +21,6 @@ namespace FoodAdvisor.Data
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<UserRestaurant> UsersRestaurants { get; set; }
-        public virtual DbSet<Country> Countries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -37,6 +36,16 @@ namespace FoodAdvisor.Data
                new Category {  Name = "Bakery" },
                new Category { Name = "Bistro" });
 
+
+            builder
+              .Entity<City>()
+              .HasData(
+              new City { Name = "Plovdiv" },
+              new City { Name = "Sofia" },
+              new City { Name = "Varna" },
+              new City { Name = "Burgas" },
+              new City { Name = "Stara Zagora" },
+              new City { Name = "Ruse" });
         }
-    }
+	}
 }

@@ -20,13 +20,6 @@ namespace FoodAdvisor.Data.Models
         [Comment("A collection of the Restaurants in the cities.")]
         public virtual ICollection<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
 
-        [Comment("Identifier of the Country.")]
-
-        [Required]
-        public Guid CountryId { get; set; }
-
-        [Required]
-        [ForeignKey(nameof(CountryId))]
-        public Country Country { get; set; } = null!;
     }
+        
 }

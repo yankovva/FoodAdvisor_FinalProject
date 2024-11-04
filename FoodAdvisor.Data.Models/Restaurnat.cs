@@ -50,6 +50,8 @@ namespace FoodAdvisor.Data.Models
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
 
+        public ICollection<UserRestaurant> UserRestaurants { get; set; } = new List<UserRestaurant>();
+
         [Comment("Shows wether the restaurant is deleted or not")]
         public bool IsDeleted { get; set; } = false;
     }

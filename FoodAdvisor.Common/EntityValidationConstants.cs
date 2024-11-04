@@ -29,11 +29,7 @@
             public const int NameMaxLenght = 20;
 
         }
-        public static class Country
-        {
-            public const int NameMinLenght = 3;
-            public const int NameMaxLenght = 60;
-        }
+     
 
     }
 }

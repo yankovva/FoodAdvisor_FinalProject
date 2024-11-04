@@ -70,11 +70,30 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public Task<RestaurantAddViewModel> EditRestaurantAsync(Guid id)
+		//TODO:
+		public async Task EditRestaurantAsync(Guid id)
 		{
-			throw new NotImplementedException();
+
+			Restaurant? editedRestaurant = await this.restaurantRepository
+				.GetByIdAsync(id);
+				
+			if (editedRestaurant == null)
+			{
+				throw new ArgumentException("Invalid ID");
+			}
+			
+			//editedRestaurant.Name = model.Name;
+			//editedRestaurant.Address = model.Address;
+			//editedRestaurant.ImageURL = model.ImageURL;
+			//editedRestaurant.CategoryId = model.CategoryId;
+			//editedRestaurant.PublisherId = Guid.Parse(GetCurrentUserId());
+			//editedRestaurant.Description = model.Description;
+			//editedRestaurant.CityId = model.CityId;
+
+			//await this.dbContext.SaveChangesAsync();
 		}
 
+		//Done
 		public async Task<RestaurantAddViewModel> EditRestaurantViewAsync(Guid id)
 		{
 			RestaurantAddViewModel? model = await this.restaurantRepository

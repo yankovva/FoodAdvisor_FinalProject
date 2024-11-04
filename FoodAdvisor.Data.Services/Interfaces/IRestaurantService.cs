@@ -16,7 +16,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 
 		Task<RestaurantDeleteViewModel> DeleteRestaurantViewAsync(Guid id);
 		Task DeleteRestaurantAsync(RestaurantDeleteViewModel model);
-		Task<RestaurantAddViewModel> EditRestaurantAsync(Guid id);
+		Task EditRestaurantAsync(Guid id);
 		Task<RestaurantAddViewModel> EditRestaurantViewAsync(Guid id);
 	}
 }
