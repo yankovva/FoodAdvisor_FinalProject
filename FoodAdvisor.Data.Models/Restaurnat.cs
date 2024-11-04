@@ -51,8 +51,9 @@ namespace FoodAdvisor.Data.Models
         public Category Category { get; set; } = null!;
 
         public ICollection<UserRestaurant> UserRestaurants { get; set; } = new List<UserRestaurant>();
+        public ICollection<RestaurantComment> RestaurantsComments { get; set; } = new List<RestaurantComment>();
 
-        [Comment("Shows wether the restaurant is deleted or not")]
+		[Comment("Shows wether the restaurant is deleted or not")]
         public bool IsDeleted { get; set; } = false;
     }
 }
