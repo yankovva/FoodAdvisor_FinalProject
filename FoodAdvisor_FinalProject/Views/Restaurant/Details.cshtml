@@ -19,8 +19,7 @@
 		<p><strong>City:</strong> @Model.City</p>
 		<p><strong>Publisher:</strong> @Model.Publisher</p>
 		<p><strong>Comments:</strong></p>
-		<a asp-controller="RestaurantComment" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-rounded ">Add comment</a>
-
+		<a asp-controller="RestaurantComment" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-success mb-4">Add New Comment</a>
 		<div class="list-group">
 			@foreach (CommentAllViewModel comment in Model.AllComment)
 			{
