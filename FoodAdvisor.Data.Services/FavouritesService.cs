@@ -70,9 +70,29 @@ namespace FoodAdvisor.Data.Services
 			return favourites;
 		}
 
-		public Task RemoveFromFavouritesAsync(Guid userId, Guid restaurantId)
+		public async Task RemoveFromFavouritesAsync(Guid userId, Guid restaurantId)
 		{
-			throw new NotImplementedException();
+			Restaurant? restaurant = await this.restaurantRepository
+				.GetAllAttached()
+				.Where(r => r.IsDeleted == false)
+				.FirstOrDefaultAsync(r => r.Id == restaurantId);
+
+			if (restaurant == null)
+			{
+				throw new ArgumentException("Invalid Id");
+			}
+
+
+			UserRestaurant? userRestaurant = await this.userRestaurantRepository
+			  .GetAllAttached()
+			  .FirstOrDefaultAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantId);
+
+			if (userRestaurant != null)
+			{
+				await this.userRestaurantRepository.DeleteAsync(userRestaurant);
+			}
+		}
+
 		}
 	}
-}
+

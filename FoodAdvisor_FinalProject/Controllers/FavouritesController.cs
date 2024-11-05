@@ -66,37 +66,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
 			{
-				//if the Guid(Id) is not valid, redirecting to index page
 				return this.RedirectToAction(nameof(Index));
 			}
 			Guid userguid = Guid.Parse(this.userManager.GetUserId(User)!);
-
-			Restaurant? restaurant = await this.dbContext
-				.Restaurants
-				.Where(r => r.IsDeleted == false)
-				.FirstOrDefaultAsync(r => r.Id == restaurantGuid);
-
-			if (restaurant == null)
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
-
-
-			UserRestaurant? userRestaurant = await this.dbContext
-			  .UsersRestaurants
-			  .FirstOrDefaultAsync(ur => ur.ApplicationUserId == userguid && ur.RestaurantId == restaurantGuid);
-
-			if ((userRestaurant == null))
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
-			else
-			{
-				this.dbContext.UsersRestaurants
-					.Remove(userRestaurant);
-
-				await this.dbContext.SaveChangesAsync();
-			}
+			
+			await this.favouritesService
+				.RemoveFromFavouritesAsync(userguid, restaurantGuid);
 
 			return this.RedirectToAction(nameof(Index));
 		}
