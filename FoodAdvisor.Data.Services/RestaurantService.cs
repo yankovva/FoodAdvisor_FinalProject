@@ -131,6 +131,7 @@ namespace FoodAdvisor.Data.Services
 					City = p.City.Name,
 					Publisher = p.Publisher.UserName ?? string.Empty,
 					AllComment = p.RestaurantsComments
+					.Where(rc=>rc.IsDeleted == false)
 					.Select(rc=> new CommentAllViewModel()
 					{
 						Message = rc.Message,

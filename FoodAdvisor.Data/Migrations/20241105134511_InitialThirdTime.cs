@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FoodAdvisor.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class INItialThirdtime : Migration
+    public partial class InitialThirdTime : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,17 +58,45 @@ namespace FoodAdvisor.Data.Migrations
                 name: "CountryId",
                 table: "Cities");
 
+            migrationBuilder.CreateTable(
+                name: "RestaurantsComments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "Identifier of the Comment."),
+                    Message = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false, comment: "The message of the Comment."),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RestaurantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of creation of the Comment.")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RestaurantsComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RestaurantsComments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_RestaurantsComments_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1ce623a4-f1e2-4965-9054-edaaaa9b5c9e"), "Bakery" },
-                    { new Guid("3466d791-d55d-4ce7-9b12-056744670fcb"), "Bistro" },
-                    { new Guid("55d244b7-0c7a-48a1-a64c-45f3c490e3af"), "Restaurant" },
-                    { new Guid("e4f28892-bff9-46b0-b5aa-9ff5351cf9cb"), "Cafe" },
-                    { new Guid("e6be95e2-53b7-4c60-912d-35f4c00be63e"), "Bar & Dinner" },
-                    { new Guid("f9e9fc0c-12a4-4ffb-954e-a059ffe6574e"), "Fast Food" }
+                    { new Guid("36a7f3e3-3a37-48fa-8e19-97d8bd59858e"), "Fast Food" },
+                    { new Guid("47c6f1b1-89c6-458e-8951-e04989a6d251"), "Cafe" },
+                    { new Guid("48e9b14c-e849-4f4a-9c9c-64485ac331a9"), "Bar & Dinner" },
+                    { new Guid("5c8f1a6c-4a97-4288-be83-98d889c9727f"), "Restaurant" },
+                    { new Guid("85b7e7f1-3df2-481d-8faa-8159d754794f"), "Bistro" },
+                    { new Guid("b1eae2a3-5504-4243-94b5-e255ab5dcd01"), "Bakery" }
                 });
 
             migrationBuilder.InsertData(
@@ -76,77 +104,90 @@ namespace FoodAdvisor.Data.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("2a02cf74-7f55-491a-9ecb-7b854510e6b9"), "Varna" },
-                    { new Guid("407e3d89-8ab6-4ecf-a304-3cf516c67d71"), "Stara Zagora" },
-                    { new Guid("8e704fdb-679d-45ed-97fd-5f89a1cd1b4f"), "Sofia" },
-                    { new Guid("902d135c-87c4-4e3e-a991-bab284950732"), "Plovdiv" },
-                    { new Guid("be3299fe-d5e1-47bd-a064-aa8fa2fee408"), "Ruse" },
-                    { new Guid("cc019c80-6767-4d0f-8637-ad53ad77e707"), "Burgas" }
+                    { new Guid("26cb9f8c-a5e8-4e2c-a3a1-85c48fdfb9df"), "Sofia" },
+                    { new Guid("353e3d1e-4917-4330-9747-c7d7c63ffd78"), "Varna" },
+                    { new Guid("410cd642-86d5-4c26-97e0-d37a0645defa"), "Plovdiv" },
+                    { new Guid("df0aceaa-da1d-45c5-9dcc-6d86c531ca2d"), "Ruse" },
+                    { new Guid("e27162c4-326f-4b39-8c89-37c0ed102e36"), "Burgas" },
+                    { new Guid("e79f5d13-0c34-42a1-a171-7836db553770"), "Stara Zagora" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RestaurantsComments_RestaurantId",
+                table: "RestaurantsComments",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RestaurantsComments_UserId",
+                table: "RestaurantsComments",
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("1ce623a4-f1e2-4965-9054-edaaaa9b5c9e"));
+            migrationBuilder.DropTable(
+                name: "RestaurantsComments");
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("3466d791-d55d-4ce7-9b12-056744670fcb"));
+                keyValue: new Guid("36a7f3e3-3a37-48fa-8e19-97d8bd59858e"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("55d244b7-0c7a-48a1-a64c-45f3c490e3af"));
+                keyValue: new Guid("47c6f1b1-89c6-458e-8951-e04989a6d251"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("e4f28892-bff9-46b0-b5aa-9ff5351cf9cb"));
+                keyValue: new Guid("48e9b14c-e849-4f4a-9c9c-64485ac331a9"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("e6be95e2-53b7-4c60-912d-35f4c00be63e"));
+                keyValue: new Guid("5c8f1a6c-4a97-4288-be83-98d889c9727f"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("f9e9fc0c-12a4-4ffb-954e-a059ffe6574e"));
+                keyValue: new Guid("85b7e7f1-3df2-481d-8faa-8159d754794f"));
+
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: new Guid("b1eae2a3-5504-4243-94b5-e255ab5dcd01"));
 
             migrationBuilder.DeleteData(
                 table: "Cities",
                 keyColumn: "Id",
-                keyValue: new Guid("2a02cf74-7f55-491a-9ecb-7b854510e6b9"));
+                keyValue: new Guid("26cb9f8c-a5e8-4e2c-a3a1-85c48fdfb9df"));
 
             migrationBuilder.DeleteData(
                 table: "Cities",
                 keyColumn: "Id",
-                keyValue: new Guid("407e3d89-8ab6-4ecf-a304-3cf516c67d71"));
+                keyValue: new Guid("353e3d1e-4917-4330-9747-c7d7c63ffd78"));
 
             migrationBuilder.DeleteData(
                 table: "Cities",
                 keyColumn: "Id",
-                keyValue: new Guid("8e704fdb-679d-45ed-97fd-5f89a1cd1b4f"));
+                keyValue: new Guid("410cd642-86d5-4c26-97e0-d37a0645defa"));
 
             migrationBuilder.DeleteData(
                 table: "Cities",
                 keyColumn: "Id",
-                keyValue: new Guid("902d135c-87c4-4e3e-a991-bab284950732"));
+                keyValue: new Guid("df0aceaa-da1d-45c5-9dcc-6d86c531ca2d"));
 
             migrationBuilder.DeleteData(
                 table: "Cities",
                 keyColumn: "Id",
-                keyValue: new Guid("be3299fe-d5e1-47bd-a064-aa8fa2fee408"));
+                keyValue: new Guid("e27162c4-326f-4b39-8c89-37c0ed102e36"));
 
             migrationBuilder.DeleteData(
                 table: "Cities",
                 keyColumn: "Id",
-                keyValue: new Guid("cc019c80-6767-4d0f-8637-ad53ad77e707"));
+                keyValue: new Guid("e79f5d13-0c34-42a1-a171-7836db553770"));
 
             migrationBuilder.AddColumn<Guid>(
                 name: "CountryId",

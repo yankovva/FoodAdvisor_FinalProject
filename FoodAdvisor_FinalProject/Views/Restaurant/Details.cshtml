@@ -29,6 +29,14 @@
 						<small class="disabled">@comment.CreatedOn</small>
 					</div>
 					<p class="mb-1">@comment.Message</p>
+					@if (User?.Identity?.Name == @Model.Publisher)
+					{
+						<form asp-controller="RestaurantComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+							<input type="hidden" name="restaurantId" value="@comment.Id" />
+							<button type="submit" class="btn btn-danger">Remove</button>
+						</form>
+					}
+
 				</div>
 			}
 

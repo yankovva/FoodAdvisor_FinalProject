@@ -108,32 +108,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("157be899-8a49-4113-a083-190b8071855c"),
+                            Id = new Guid("5c8f1a6c-4a97-4288-be83-98d889c9727f"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("f6d383d7-df26-4bdd-a071-7cdfe29c020e"),
+                            Id = new Guid("47c6f1b1-89c6-458e-8951-e04989a6d251"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("5c72a95d-aaa7-43a1-9d1b-73737edba986"),
+                            Id = new Guid("48e9b14c-e849-4f4a-9c9c-64485ac331a9"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("3623d70a-01d2-4d0d-b42c-86023356b76f"),
+                            Id = new Guid("36a7f3e3-3a37-48fa-8e19-97d8bd59858e"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("007ed785-222e-469f-b44e-c97b528f7865"),
+                            Id = new Guid("b1eae2a3-5504-4243-94b5-e255ab5dcd01"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("af24d032-e95f-46be-8135-b393cfd50b3b"),
+                            Id = new Guid("85b7e7f1-3df2-481d-8faa-8159d754794f"),
                             Name = "Bistro"
                         });
                 });
@@ -158,32 +158,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cece4785-6925-4f9c-8a5b-b924928d7454"),
+                            Id = new Guid("410cd642-86d5-4c26-97e0-d37a0645defa"),
                             Name = "Plovdiv"
                         },
                         new
                         {
-                            Id = new Guid("59302d13-3153-401d-8a81-9bee97efac69"),
+                            Id = new Guid("26cb9f8c-a5e8-4e2c-a3a1-85c48fdfb9df"),
                             Name = "Sofia"
                         },
                         new
                         {
-                            Id = new Guid("3eacbca8-2fa3-4e93-a8c2-f809e6baa22d"),
+                            Id = new Guid("353e3d1e-4917-4330-9747-c7d7c63ffd78"),
                             Name = "Varna"
                         },
                         new
                         {
-                            Id = new Guid("38ddeafe-4b7d-4f8f-88b4-f0747c14a52c"),
+                            Id = new Guid("e27162c4-326f-4b39-8c89-37c0ed102e36"),
                             Name = "Burgas"
                         },
                         new
                         {
-                            Id = new Guid("d227a09e-5c1f-42ba-b4ee-8f1c8ae1b634"),
+                            Id = new Guid("e79f5d13-0c34-42a1-a171-7836db553770"),
                             Name = "Stara Zagora"
                         },
                         new
                         {
-                            Id = new Guid("1fa7690a-40e7-41f2-9063-a8e0d0aecf84"),
+                            Id = new Guid("df0aceaa-da1d-45c5-9dcc-6d86c531ca2d"),
                             Name = "Ruse"
                         });
                 });
@@ -247,12 +247,10 @@ namespace FoodAdvisor.Data.Migrations
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.RestaurantComment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasComment("Identifier of the Comment.");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")

@@ -2,6 +2,7 @@
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
@@ -23,7 +24,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Add(AddCommentViewModel model, string id)
 		{
-
 			if (!this.ModelState.IsValid)
 			{
 				return this.View(model);
@@ -49,5 +49,30 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			return RedirectToAction("Details", "Restaurant");
 		}
+
+		public async Task<IActionResult> Delete(string id)
+		{
+			Guid commentGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(id, ref commentGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
+			RestaurantComment? comment = await this.dbContext
+				.RestaurantsComments
+				.Where(c => c.IsDeleted == false)
+				.FirstOrDefaultAsync(c => c.Id == commentGuid);
+			
+			if (comment == null)
+			{
+				throw new ArgumentException("Invalid Id");
+			}
+
+			comment.IsDeleted = true;
+			await this.dbContext.SaveChangesAsync();
+
+			return RedirectToAction("Index", "Restaurant");
+		}
+
 	}
 }
