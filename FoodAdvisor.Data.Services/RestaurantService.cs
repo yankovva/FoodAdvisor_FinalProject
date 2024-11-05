@@ -18,21 +18,21 @@ namespace FoodAdvisor.Data.Services
         }
 
 		//TODO:
-        public async Task AddRestaurantAsync(RestaurantAddViewModel model)
+        public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId)
 		{
 
-			//Restaurant place = new Restaurant()
-			//{
-			//	Name = model.Name,
-			//	Description = model.Description,
-			//	ImageURL = model.ImageURL,
-			//	CategoryId = model.CategoryId,
-			//	PublisherId = userManager.,
-			//	CityId = model.CityId,
-			//	Address = model.Address,
-			//};
+			Restaurant place = new Restaurant()
+			{
+				Name = model.Name,
+				Description = model.Description,
+				ImageURL = model.ImageURL,
+				CategoryId = model.CategoryId,
+				PublisherId = userId,
+				CityId = model.CityId,
+				Address = model.Address,
+			};
 
-			//await this.restaurantRepository.AddAsync(place);
+			await this.restaurantRepository.AddAsync(place);
 		}
 
 		//Done

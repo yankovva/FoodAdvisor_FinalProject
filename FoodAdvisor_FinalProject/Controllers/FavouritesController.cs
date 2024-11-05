@@ -13,16 +13,13 @@ namespace FoodAdvisor_FinalProject.Controllers
 	public class FavouritesController : BaseController
 	{
 		private readonly FoodAdvisorDbContext dbContext;
-		private readonly UserManager<ApplicationUser> userManager;
 		private readonly IFavouritesService favouritesService;
 
 
 		public FavouritesController(FoodAdvisorDbContext dbContext,
-			UserManager<ApplicationUser> userManager,
 			IFavouritesService favouritesService)
 		{
 			this.dbContext = dbContext;
-			this.userManager = userManager;
 			this.favouritesService = favouritesService;
 		}
 
@@ -50,7 +47,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			{
 				return this.RedirectToAction(nameof(Index));
 			}
-			Guid userguid = Guid.Parse(this.userManager.GetUserId(User)!);
+			Guid userguid = Guid.Parse(GetCurrentUserId());
 
 			await this.favouritesService
 				.AddToFavouritesAsync(userguid, restaurantGuid);
@@ -68,7 +65,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			{
 				return this.RedirectToAction(nameof(Index));
 			}
-			Guid userguid = Guid.Parse(this.userManager.GetUserId(User)!);
+			Guid userguid = Guid.Parse(GetCurrentUserId());
 			
 			await this.favouritesService
 				.RemoveFromFavouritesAsync(userguid, restaurantGuid);

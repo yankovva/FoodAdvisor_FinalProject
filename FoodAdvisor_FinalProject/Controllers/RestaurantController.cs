@@ -44,27 +44,15 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Add(RestaurantAddViewModel model)
 		{
-
 			if (ModelState.IsValid == false)
 			{
 				model.Categories = await GetCategories();
 				model.Cities = await GetCities();
 				return View(model);
 			}
+			Guid userId = Guid.Parse(GetCurrentUserId());
 
-			Restaurant place = new Restaurant()
-			{
-				Name = model.Name,
-				Description = model.Description,
-				ImageURL = model.ImageURL,
-				CategoryId = model.CategoryId,
-				PublisherId = Guid.Parse(GetCurrentUserId()),
-				CityId = model.CityId,
-                Address = model.Address,
-			};
-
-			await this.dbContext.Restaurants.AddAsync(place);
-			await this.dbContext.SaveChangesAsync();
+			await this.restaurantService.AddRestaurantAsync(model, userId);
 
 			return RedirectToAction(nameof(Index));
 
