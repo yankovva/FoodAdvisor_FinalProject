@@ -43,6 +43,8 @@ builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
 //builder.Services.AddScoped<IRepository<Restaurant, Guid>, Repository<Restaurant, Guid>>();
 
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<IFavouritesService, FavouritesService>();
+
 
 builder.Services.AddRazorPages();
 
