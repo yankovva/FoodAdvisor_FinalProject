@@ -32,7 +32,7 @@
 						}
 						<form asp-controller="Favourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
 							<input type="hidden" name="restaurantId" value="@restaurant.Id" />
-							<button type="submit" class="btn btn-warning">+Favourites</button>
+							<button type="submit"><img style="width:40px " src="~/assets/img/AddFavourites.png" /></button>
 						</form>
 					}
 				</div>
