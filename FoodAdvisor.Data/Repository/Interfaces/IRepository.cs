@@ -23,8 +23,9 @@ namespace FoodAdvisor.Data.Repository.Interfaces
 
         bool Delete(TId id);
         Task<bool> DeleteAsync(TId id);
+        Task DeleteAsync(TType entity);
 
-        bool Update(TType item);
+		bool Update(TType item);
         Task<bool> UpdateAsync(TType item);
 
     }

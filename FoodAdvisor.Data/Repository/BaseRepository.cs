@@ -50,6 +50,14 @@ namespace FoodAdvisor.Data.Repository
 
 			return true;
 		}
+		public async Task DeleteAsync(TType entity)
+		{
+			dbSet.Remove(entity);
+			await dbContext.SaveChangesAsync();
+
+		}
+
+
 
 		public IEnumerable<TType> GetAll()
 		{

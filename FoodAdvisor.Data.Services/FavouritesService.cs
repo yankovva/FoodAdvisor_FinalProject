@@ -82,7 +82,6 @@ namespace FoodAdvisor.Data.Services
 				throw new ArgumentException("Invalid Id");
 			}
 
-
 			UserRestaurant? userRestaurant = await this.userRestaurantRepository
 			  .GetAllAttached()
 			  .FirstOrDefaultAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantId);

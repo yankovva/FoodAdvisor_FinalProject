@@ -30,7 +30,7 @@ namespace FoodAdvisor_FinalProject.Controllers
             return View(allRestaurants);
         }
 
-		//TODO: Make in Service
+		
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -132,7 +132,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 				model.Cities = await GetCities();
 				return View(model);
 			}
-
 			Guid restaurantGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
@@ -140,25 +139,10 @@ namespace FoodAdvisor_FinalProject.Controllers
 				//if the Guid(Id) is not valid, redirecting to index page
 				return this.RedirectToAction(nameof(Index));
 			}
-
-			Restaurant? editedRestaurant = await this.dbContext
-				.Restaurants
-				.FindAsync(restaurantGuid);
-
-			if (editedRestaurant == null && editedRestaurant.IsDeleted == true)
-			{
-				throw new ArgumentException("Invalid ID");
-			}
-
-			editedRestaurant.Name = model.Name;
-			editedRestaurant.Address = model.Address;
-			editedRestaurant.ImageURL = model.ImageURL;
-			editedRestaurant.CategoryId = model.CategoryId;
-			editedRestaurant.PublisherId = Guid.Parse(GetCurrentUserId()) ;
-			editedRestaurant.Description = model.Description;
-			editedRestaurant.CityId = model.CityId;
-
-			await this.dbContext.SaveChangesAsync();
+			Guid userGuid = Guid.Parse(GetCurrentUserId());
+			
+			await this.restaurantService
+				.EditRestaurantAsync(model,restaurantGuid,userGuid);
 
 			return RedirectToAction(nameof(Index));
 		}

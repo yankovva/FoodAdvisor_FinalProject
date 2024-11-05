@@ -17,7 +17,7 @@ namespace FoodAdvisor.Data.Services
 			
         }
 
-		//TODO:
+		//Done
         public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId)
 		{
 
@@ -72,26 +72,27 @@ namespace FoodAdvisor.Data.Services
 		}
 
 		//TODO:
-		public async Task EditRestaurantAsync(Guid id)
+		public async Task EditRestaurantAsync(RestaurantAddViewModel model, Guid restaurantId, Guid userId)
 		{
 
 			Restaurant? editedRestaurant = await this.restaurantRepository
-				.GetByIdAsync(id);
+				.GetByIdAsync(restaurantId);
 				
 			if (editedRestaurant == null)
 			{
 				throw new ArgumentException("Invalid ID");
 			}
-			
-			//editedRestaurant.Name = model.Name;
-			//editedRestaurant.Address = model.Address;
-			//editedRestaurant.ImageURL = model.ImageURL;
-			//editedRestaurant.CategoryId = model.CategoryId;
-			//editedRestaurant.PublisherId = Guid.Parse(GetCurrentUserId());
-			//editedRestaurant.Description = model.Description;
-			//editedRestaurant.CityId = model.CityId;
 
-			//await this.dbContext.SaveChangesAsync();
+			editedRestaurant.Name = model.Name;
+			editedRestaurant.Address = model.Address;
+			editedRestaurant.ImageURL = model.ImageURL;
+			editedRestaurant.CategoryId = model.CategoryId;
+			editedRestaurant.PublisherId = userId;
+			editedRestaurant.Description = model.Description;
+			editedRestaurant.CityId = model.CityId;
+
+			bool isUpdated = await this.restaurantRepository.UpdateAsync(editedRestaurant);
+			
 		}
 
 		//Done

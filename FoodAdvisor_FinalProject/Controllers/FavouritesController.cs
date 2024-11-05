@@ -26,7 +26,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			string? userId = userManager.GetUserId(User)!;
+			string userId = GetCurrentUserId();
 
 			//if (string.IsNullOrEmpty(userId))
 			//{
