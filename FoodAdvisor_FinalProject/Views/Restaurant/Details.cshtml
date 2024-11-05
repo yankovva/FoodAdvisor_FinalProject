@@ -1,4 +1,5 @@
 ﻿@using FoodAdvisor.ViewModels.RestaurantViewModels;
+@using FoodAdvisor.ViewModels.CommentViewModel;
 @model RestaurantDetailsViewModel
 
 @{
@@ -17,11 +18,26 @@
 		<p><strong>Address:</strong> @Model.Address</p>
 		<p><strong>City:</strong> @Model.City</p>
 		<p><strong>Publisher:</strong> @Model.Publisher</p>
+		<p><strong>Comments:</strong></p>
+		<a asp-controller="RestaurantComment" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-rounded ">Add comment</a>
+
+		<div class="list-group">
+			@foreach (CommentAllViewModel comment in Model.AllComment)
+			{
+				<div class="list-group-item-secondary flex-column align-items-start ">
+					<div class="d-flex w-30 justify-content-between">
+						<p class="mb-1">Publisher: @comment.UserName</p>
+						<small class="disabled">@comment.CreatedOn</small>
+					</div>
+					<p class="mb-1">@comment.Message</p>
+				</div>
+			}
+
+		</div>
 	</div>
-</div>
-<a asp-action="Index" class="btn btn-secondary">Back to All Restaurants</a>
-@if (User?.Identity?.Name == @Model.Publisher)
-{
-	<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-rounded ">Delete</a>
-}
+	<a asp-action="Index" class="btn btn-secondary">Back to All Restaurants</a>
+	@if (User?.Identity?.Name == @Model.Publisher)
+	{
+		<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-rounded ">Delete</a>
+	}
 

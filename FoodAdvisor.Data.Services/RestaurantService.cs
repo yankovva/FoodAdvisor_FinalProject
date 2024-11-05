@@ -2,6 +2,7 @@
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
+using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodAdvisor.Data.Services
@@ -128,7 +129,16 @@ namespace FoodAdvisor.Data.Services
 					Address = p.Address,
 					Category = p.Category.Name,
 					City = p.City.Name,
-					Publisher = p.Publisher.UserName ?? string.Empty
+					Publisher = p.Publisher.UserName ?? string.Empty,
+					AllComment = p.RestaurantsComments
+					.Select(rc=> new CommentAllViewModel()
+					{
+						Message = rc.Message,
+						CreatedOn = rc.CreatedDate,
+						UserId = rc.UserId.ToString(),
+						Id = rc.Id.ToString(),
+						UserName = rc.User.UserName ?? string.Empty
+					})
 
 				})
 				.FirstOrDefaultAsync();

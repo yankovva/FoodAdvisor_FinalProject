@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodAdvisor.ViewModels.CommentViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,6 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
         public required string Category { get; set; }
         public required string City { get; set; }
         public required string Address { get; set; }
+        public IEnumerable<CommentAllViewModel> AllComment { get; set; } = new List<CommentAllViewModel>(); 
     }
 }
