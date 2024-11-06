@@ -10,8 +10,8 @@ namespace FoodAdvisor.Data.Services.Interfaces
     public interface IFavouritesService 
     {
         Task<IEnumerable<FavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId);
-		Task AddToFavouritesAsync(Guid userId ,Guid restaurantId);
-        Task RemoveFromFavouritesAsync(Guid userId,Guid restaurantId);
+		Task<bool> AddToFavouritesAsync(Guid userId ,string restaurantId);
+        Task<bool> RemoveFromFavouritesAsync(Guid userId,string restaurantId);
 
 	}
 }

@@ -11,46 +11,53 @@ using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class FavouritesService : IFavouritesService
+	public class RestaurantFavouritesService : BaseService, IFavouritesService
 	{
 		private IRepository<Restaurant, Guid> restaurantRepository;
 		private IRepository<UserRestaurant, object> userRestaurantRepository;
 
 
-		public FavouritesService(IRepository<Restaurant, Guid> restaurantRepository,
+		public RestaurantFavouritesService(IRepository<Restaurant, Guid> restaurantRepository,
 			IRepository<UserRestaurant, object> userRestaurantRepository)
 		{
 			this.restaurantRepository = restaurantRepository;
 			this.userRestaurantRepository = userRestaurantRepository;
 		}
-		public async Task AddToFavouritesAsync(Guid userId, Guid restaurantId)
+		public async Task<bool> AddToFavouritesAsync(Guid userId, string restaurantId)
 		{
+			Guid restaurantGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(restaurantId, ref restaurantGuid);
+			if (!isGuidValid)
+			{
+				return false;
+			}
 			Restaurant? restaurant = await this.restaurantRepository
 			   .GetAllAttached()
 			   .Where(r => r.IsDeleted == false)
-			   .FirstOrDefaultAsync(r => r.Id == restaurantId);
+			   .FirstOrDefaultAsync(r => r.Id == restaurantGuid);
 
 			if (restaurant == null)
 			{
-				throw new ArgumentException("Invalid Id");
+				return false;
 			}
 
 			bool alreaduAddedToFavourites = await this.userRestaurantRepository
 				.GetAllAttached()
-				.AnyAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantId);
+				.AnyAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantGuid);
 
-			UserRestaurant newFavoriteRestaurant = null;
+			UserRestaurant newFavoriteRestaurant = new UserRestaurant();
 
 			if (!alreaduAddedToFavourites)
 			{
-				 newFavoriteRestaurant = new UserRestaurant()
+				newFavoriteRestaurant = new UserRestaurant()
 				{
 					ApplicationUserId = userId,
-					RestaurantId = restaurantId,
+					RestaurantId = restaurantGuid,
 				};
 			};
 
-			await this.userRestaurantRepository.AddAsync(newFavoriteRestaurant);
+			await this.userRestaurantRepository.AddAsync(newFavoriteRestaurant!);
+			return true;
 
 		}
 		public async Task<IEnumerable<FavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId)
@@ -70,28 +77,34 @@ namespace FoodAdvisor.Data.Services
 			return favourites;
 		}
 
-		public async Task RemoveFromFavouritesAsync(Guid userId, Guid restaurantId)
+		public async Task<bool> RemoveFromFavouritesAsync(Guid userId, string restaurantId)
 		{
+			Guid restaurantGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(restaurantId, ref restaurantGuid);
+			if (!isGuidValid)
+			{
+				return false;
+			}
 			Restaurant? restaurant = await this.restaurantRepository
 				.GetAllAttached()
 				.Where(r => r.IsDeleted == false)
-				.FirstOrDefaultAsync(r => r.Id == restaurantId);
+				.FirstOrDefaultAsync(r => r.Id == restaurantGuid);
 
 			if (restaurant == null)
 			{
-				throw new ArgumentException("Invalid Id");
+				return false;
 			}
 
 			UserRestaurant? userRestaurant = await this.userRestaurantRepository
-			  .GetAllAttached()
-			  .FirstOrDefaultAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantId);
+			  .FirstorDefaultAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantGuid);
 
 			if (userRestaurant != null)
 			{
 				await this.userRestaurantRepository.DeleteAsync(userRestaurant);
 			}
+			return true;
 		}
 
-		}
 	}
+}
 

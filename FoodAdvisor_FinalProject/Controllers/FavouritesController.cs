@@ -26,12 +26,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			string userId = GetCurrentUserId();
+			string userId = GetCurrentUserId()!;
 
-			//if (string.IsNullOrEmpty(userId))
-			//{
-			//    return RedirectToRoute("/Identity/Account/Login");
-			//}
+			if (string.IsNullOrEmpty(userId))
+			{
+				return RedirectToPage("/Identity/Account/Login");
+			}
 
 			IEnumerable<FavouritesIndexViewModel> favourites = await this.favouritesService
 				.InedexGetAllFavouritesAsync(userId);
@@ -39,37 +39,31 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return View(favourites);
 		}
 		[HttpPost]
-		public async Task<IActionResult> AddToFavourites(string? id)
+		public async Task<IActionResult> AddToFavourites(string? restaurantId)
 		{
-			Guid restaurantGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
-			if (!isGuidValid)
+			Guid userguid = Guid.Parse(GetCurrentUserId()!);
+			bool isAdded = await this.favouritesService
+				.AddToFavouritesAsync(userguid, restaurantId!);
+			if (!isAdded)
 			{
-				return this.RedirectToAction(nameof(Index));
+				//TODO: Add some message
+				return RedirectToAction(nameof(Index));
 			}
-			Guid userguid = Guid.Parse(GetCurrentUserId());
-
-			await this.favouritesService
-				.AddToFavouritesAsync(userguid, restaurantGuid);
 
 			return RedirectToAction(nameof(Index));
-
 		}
 
 
-		public async Task<IActionResult> RemoveFromFavourites(string? id)
+		public async Task<IActionResult> RemoveFromFavourites(string? restaurantId)
 		{
-			Guid restaurantGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
-			if (!isGuidValid)
+			Guid userguid = Guid.Parse(GetCurrentUserId()!);
+			bool isDeleted = await this.favouritesService
+				.RemoveFromFavouritesAsync(userguid, restaurantId!);
+			if (!isDeleted)
 			{
+				//TODO: Add some message
 				return this.RedirectToAction(nameof(Index));
 			}
-			Guid userguid = Guid.Parse(GetCurrentUserId());
-			
-			await this.favouritesService
-				.RemoveFromFavouritesAsync(userguid, restaurantGuid);
-
 			return this.RedirectToAction(nameof(Index));
 		}
 

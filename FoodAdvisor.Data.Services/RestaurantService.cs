@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodAdvisor.Data.Services
 {
-    public class RestaurantService : IRestaurantService
+    public class RestaurantService : BaseService,IRestaurantService
 	{
 		private IRepository<Restaurant, Guid> restaurantRepository;
 	
@@ -55,6 +55,7 @@ namespace FoodAdvisor.Data.Services
 		//Done
 		public async Task<RestaurantDeleteViewModel> DeleteRestaurantViewAsync(Guid id)
 		{
+
 			RestaurantDeleteViewModel? model = await this.restaurantRepository
 				.GetAllAttached()
 			   .Where(r => r.Id == id && r.IsDeleted == false)
@@ -71,7 +72,7 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		//TODO:
+		//Done
 		public async Task EditRestaurantAsync(RestaurantAddViewModel model, Guid restaurantId, Guid userId)
 		{
 
@@ -115,12 +116,12 @@ namespace FoodAdvisor.Data.Services
 		}
 
 		//Done
-		public async Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid id)
+		public async Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid restaurnatId)
 		{
 			 
 			RestaurantDetailsViewModel? model = await this.restaurantRepository
 				.GetAllAttached()
-				.Where(p => p.Id == id && p.IsDeleted == false)
+				.Where(p => p.Id == restaurnatId && p.IsDeleted == false)
 				.Select(p => new RestaurantDetailsViewModel()
 				{
 					Id = p.Id.ToString(),

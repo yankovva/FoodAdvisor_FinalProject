@@ -123,7 +123,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
-		//TODO: Make in service
 		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id)
 		{
 			if (ModelState.IsValid == false)
@@ -136,7 +135,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
 			{
-				//if the Guid(Id) is not valid, redirecting to index page
 				return this.RedirectToAction(nameof(Index));
 			}
 			Guid userGuid = Guid.Parse(GetCurrentUserId());
