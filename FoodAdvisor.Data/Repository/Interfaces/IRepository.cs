@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Formats.Tar;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,10 @@ namespace FoodAdvisor.Data.Repository.Interfaces
         Task<IEnumerable<TType>> GetAllAsync();
         IQueryable<TType> GetAllAttached();
 
-        void Add(TType item);
+		TType FirstorDefault(Func<TType, bool> predicate);
+		Task<TType> FirstorDefaultAsync(Expression<Func<TType, bool>> predicate);
+
+		void Add(TType item);
         Task AddAsync(TType item);
 
         Task SaveChangesAsync();

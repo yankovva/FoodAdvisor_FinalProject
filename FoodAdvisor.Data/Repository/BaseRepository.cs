@@ -1,5 +1,6 @@
 ﻿using FoodAdvisor.Data.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 namespace FoodAdvisor.Data.Repository
 {
     public class BaseRepository<TType, TId> : IRepository<TType, TId> where TType : class
@@ -125,6 +126,21 @@ namespace FoodAdvisor.Data.Repository
 			{
 				return false;
 			}
+		}
+
+		public TType FirstorDefault(Func<TType, bool> predicate)
+		{
+			TType entity = this.dbSet
+				.FirstOrDefault(predicate)!;
+
+			return entity;
+		}
+		public async Task<TType> FirstorDefaultAsync(Expression<Func<TType, bool>> predicate)
+		{
+			TType entity = await this.dbSet
+				.FirstOrDefaultAsync(predicate);
+
+			return entity;
 		}
 	}
 }
