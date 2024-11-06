@@ -38,6 +38,12 @@ builder.Services
           .AddSignInManager<SignInManager<ApplicationUser>>()
           .AddUserManager<UserManager<ApplicationUser>>();
 
+builder.Services.ConfigureApplicationCookie(cfg =>
+{
+	cfg.LoginPath = "/Identity/Account/Login";
+});
+
+
 
 builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
 //builder.Services.AddScoped<IRepository<Restaurant, Guid>, Repository<Restaurant, Guid>>();
