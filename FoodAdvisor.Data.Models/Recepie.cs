@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using static FoodAdvisor.Common.EntityValidationConstants.Recepie;
 namespace FoodAdvisor.Data.Models
 {
 	public class Recepie
@@ -14,14 +10,26 @@ namespace FoodAdvisor.Data.Models
         public Guid Id { get; set; }
 
 		[Required]
-
+		[MaxLength(NameMaxLenght)]
+		[Comment("Name of the Recepie.")]
 		public string Name { get; set; } = null!;
+
 		[Required]
-        public int CookingTime { get; set; }
+		[Comment("Cooking time of the Recepie.")]
+
+		public int CookingTime { get; set; }
 		[Required]
+		[Comment("Date of creation of the Recepie.")]
 		public DateTime CreatedOn { get; set; }
+
 		[Required]
-		public string RecepieSteps { get; set; } = null!;
+		[MaxLength(DescriptionMaxLenght)]
+		[Comment("Description of the Recepie.")]
+		public string Description { get; set; } = null!;
+
+		[MaxLength(URLMaxLEnght)]
+        public string? ImageURL { get; set; }
+
         public Guid PublisherId { get; set; }
 		[ForeignKey(nameof(PublisherId))]
 		public ApplicationUser Publisher { get; set; } = null!;

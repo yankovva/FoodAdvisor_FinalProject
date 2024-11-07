@@ -45,5 +45,17 @@
 			public const int AddressMaxLenght = 40;
 		}
         
+        public static class Recepie
+        {
+			public const int NameMinLenght = 3;
+			public const int NameMaxLenght = 30;
+
+			public const int DescriptionMinLenght = 20;
+			public const int DescriptionMaxLenght = 400;
+
+			public const int URLMaxLEnght = 2083;
+			public const int URLMinLenght = 8;
+
+		}
 	}
 }
