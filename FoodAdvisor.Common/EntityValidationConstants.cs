@@ -44,5 +44,6 @@
 			public const int AddressMinLenght = 5;
 			public const int AddressMaxLenght = 40;
 		}
+        
 	}
 }

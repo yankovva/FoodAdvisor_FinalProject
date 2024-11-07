@@ -23,6 +23,10 @@ namespace FoodAdvisor.Data
         public virtual DbSet<UserRestaurant> UsersRestaurants { get; set; }
 		public virtual DbSet<RestaurantComment> RestaurantsComments { get; set; }
 		public virtual DbSet<Manager> Managers { get; set; }
+		public virtual DbSet<Recepie> Recepies { get; set; }
+		public virtual DbSet<UserRecepie> UsersRecepies { get; set; }
+
+
 
 
 
