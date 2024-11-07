@@ -1,0 +1,49 @@
+﻿@using FoodAdvisor.ViewModels.RecepiesViewModels;
+@model IEnumerable<RecepieIndexViewModel>;
+@using FoodAdvisor.Data.Services.Interfaces;
+@using FoodAdvisor.Infrastructure;
+@inject IManagerService managerService
+
+
+@{
+	ViewBag.Title = "All Recepies";
+}
+
+<h2>Restaurants</h2>
+
+<!-- Button to add a new cinema -->
+
+	<a asp-action="Add" class="btn btn-success mb-4">Add Your Recepie!</a>
+
+
+
+<div class="row">
+	@foreach (RecepieIndexViewModel restaurant in Model)
+	{
+		<div class="col-md-4">
+			<div class="card mb-4 border-dark shadow-sm">
+				<img class="card-img-top" src="@restaurant.ImageURL" alt="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" style="height: 200px; object-fit: cover;">
+				<div class="card-body">
+					<h5 class="card-title">@restaurant.Name</h5>
+					<h6 class="card-subtitle mb-2 text-muted">@restaurant.CookingTime</h6>
+					<a asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-primary">View Details</a>
+
+					@if (User?.Identity?.IsAuthenticated ?? false)
+					{
+						@if (User?.Identity?.Name == restaurant.Publisher)
+						{
+							<form asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+								<input type="hidden" name="restaurantId" value="@restaurant.Id" />
+								<button type="submit" class="btn btn-warning">Edit</button>
+							</form>
+						}
+						<form asp-controller="Favourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+							<input type="hidden" name="restaurantId" value="@restaurant.Id" />
+							<button type="submit"><img style="width:40px " src="~/assets/img/AddFavourites.png" /></button>
+						</form>
+					}
+				</div>
+			</div>
+		</div>
+	}
+</div>
