@@ -22,6 +22,8 @@ namespace FoodAdvisor.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<UserRestaurant> UsersRestaurants { get; set; }
 		public virtual DbSet<RestaurantComment> RestaurantsComments { get; set; }
+		public virtual DbSet<Manager> Managers { get; set; }
+
 
 
 		protected override void OnModelCreating(ModelBuilder builder)

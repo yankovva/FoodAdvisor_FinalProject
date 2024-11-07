@@ -36,6 +36,13 @@
 
 		}
 
+        public static class Manager
+        {
+			public const int PhoneNumberMinLenght = 6;
+			public const int PhoneNumberMaxLenght = 15;
 
+			public const int AddressMinLenght = 5;
+			public const int AddressMaxLenght = 40;
+		}
 	}
 }

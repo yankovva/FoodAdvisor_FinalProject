@@ -34,7 +34,10 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var model = new RestaurantAddViewModel();
+			string? userId = this.GetCurrentUserId();
+
+
+			var model = new RestaurantAddViewModel();
             model.Categories = await GetCategories();
 			model.Cities = await GetCities();
 
