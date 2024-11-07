@@ -1,5 +1,9 @@
 ﻿@using FoodAdvisor.ViewModels.RestaurantViewModels;
 @model IEnumerable<RestaurantIndexViewModel>;
+@using FoodAdvisor.Data.Services.Interfaces;
+@using FoodAdvisor.Infrastructure;
+@inject IManagerService managerService
+
 
 @{
 	ViewBag.Title = "All Restauranrs";
@@ -8,7 +12,11 @@
 <h2>Restaurants</h2>
 
 <!-- Button to add a new cinema -->
+@if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()))
+{
 <a asp-action="Add" class="btn btn-success mb-4">Add New Restaurant</a>
+	
+}
 
 <div class="row">
 	@foreach (RestaurantIndexViewModel restaurant in Model)

@@ -10,16 +10,30 @@ namespace FoodAdvisor.Data.Services
     public class RestaurantService : BaseService,IRestaurantService
 	{
 		private IRepository<Restaurant, Guid> restaurantRepository;
+		private IRepository<City, Guid> cityRepository;
 	
-		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository)
+		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository, IRepository<City, Guid> cityRepository)
         {
             this.restaurantRepository = restaurantRepository;
+			this.cityRepository = cityRepository;
 			
         }
 
 		//Done
         public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId)
 		{
+			City? city = await this.cityRepository
+				.GetAllAttached()
+				.FirstOrDefaultAsync(c => c.Name.ToLower() == model.City.ToLower());
+			if (city == null)
+			{
+				 city = new City()
+				{
+					Name = model.City
+				};
+				await this.cityRepository.AddAsync(city);
+
+			}
 
 			Restaurant place = new Restaurant()
 			{
@@ -28,11 +42,12 @@ namespace FoodAdvisor.Data.Services
 				ImageURL = model.ImageURL,
 				CategoryId = model.CategoryId,
 				PublisherId = userId,
-				CityId = model.CityId,
+				City = city,
 				Address = model.Address,
 			};
 
 			await this.restaurantRepository.AddAsync(place);
+
 		}
 
 		//Done
@@ -75,14 +90,17 @@ namespace FoodAdvisor.Data.Services
 		//Done
 		public async Task EditRestaurantAsync(RestaurantAddViewModel model, Guid restaurantId, Guid userId)
 		{
-
 			Restaurant? editedRestaurant = await this.restaurantRepository
 				.GetByIdAsync(restaurantId);
-				
 			if (editedRestaurant == null)
 			{
 				throw new ArgumentException("Invalid ID");
 			}
+
+			City city = new City()
+			{
+				Name = model.City
+			};
 
 			editedRestaurant.Name = model.Name;
 			editedRestaurant.Address = model.Address;
@@ -90,8 +108,9 @@ namespace FoodAdvisor.Data.Services
 			editedRestaurant.CategoryId = model.CategoryId;
 			editedRestaurant.PublisherId = userId;
 			editedRestaurant.Description = model.Description;
-			editedRestaurant.CityId = model.CityId;
+			editedRestaurant.City = city;
 
+			await this.cityRepository.AddAsync(city);
 			bool isUpdated = await this.restaurantRepository.UpdateAsync(editedRestaurant);
 			
 		}

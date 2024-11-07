@@ -21,11 +21,9 @@
 		<span asp-validation-for="@Model.Address" class="text-danger"></span>
 	</div>
 	<div class="form-group">
-		 <label asp-for="@Model.CityId" class="form-label-add-edit">Select City</label>
-		 <select asp-for="@Model.CityId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Cities, "Id", "Name"))">
-		 	<option value="">Select City...</option>
-		 </select>
-		 <span asp-validation-for="@Model.CityId" class="text-danger"></span>
+		<label asp-for="@Model.City" class="form-label-add-edit">City</label>
+		<input asp-for="@Model.City" class="form-control" aria-required="true" placeholder="Enter City of the Restaurant" />
+		<span asp-validation-for="@Model.City" class="text-danger"></span>
 	</div>
 	
 	<div class="form-group">

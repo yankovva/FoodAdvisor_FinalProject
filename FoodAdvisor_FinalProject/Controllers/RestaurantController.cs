@@ -15,11 +15,16 @@ namespace FoodAdvisor_FinalProject.Controllers
     {
         private readonly FoodAdvisorDbContext dbContext;
 		private readonly IRestaurantService restaurantService;
-        public RestaurantController(FoodAdvisorDbContext _dbContext, IRestaurantService restaurantService)
+		private readonly IManagerService managerService;
+        public RestaurantController(FoodAdvisorDbContext _dbContext, 
+			IRestaurantService restaurantService,
+			IManagerService managerService)
         {
             this.dbContext = _dbContext;
 			this.restaurantService = restaurantService;
-        }
+			this.managerService = managerService;
+
+		}
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -35,11 +40,16 @@ namespace FoodAdvisor_FinalProject.Controllers
         public async Task<IActionResult> Add()
         {
 			string? userId = this.GetCurrentUserId();
-
-
+			bool isManager = await this.managerService
+				.IsUserManagerAsync (userId!);
+			if (!isManager)
+			{
+				//TODO: Add some messages;
+				return RedirectToAction(nameof(Index));
+			}
 			var model = new RestaurantAddViewModel();
             model.Categories = await GetCategories();
-			model.Cities = await GetCities();
+			
 
 			return View(model);
         }
@@ -47,15 +57,21 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Add(RestaurantAddViewModel model)
 		{
+			string? userId = this.GetCurrentUserId();
+			bool isManager = await this.managerService
+				.IsUserManagerAsync(userId!);
+			if (!isManager)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
 			if (ModelState.IsValid == false)
 			{
 				model.Categories = await GetCategories();
-				model.Cities = await GetCities();
 				return View(model);
 			}
-			Guid userId = Guid.Parse(GetCurrentUserId());
 
-			await this.restaurantService.AddRestaurantAsync(model, userId);
+			await this.restaurantService.AddRestaurantAsync(model, Guid.Parse(userId!));
 
 			return RedirectToAction(nameof(Index));
 
@@ -85,6 +101,14 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(string id)
         {
+			string? userId = this.GetCurrentUserId();
+			bool isManager = await this.managerService
+				.IsUserManagerAsync(userId!);
+			if (!isManager)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
 			Guid restaurantGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
@@ -100,6 +124,13 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpPost]
 		public async Task<IActionResult> Delete(RestaurantDeleteViewModel model)
         {
+			string? userId = this.GetCurrentUserId();
+			bool isManager = await this.managerService
+				.IsUserManagerAsync(userId!);
+			if (!isManager)
+			{
+				return RedirectToAction(nameof(Index));
+			}
 			await this.restaurantService
 				.DeleteRestaurantAsync(model);
 
@@ -109,6 +140,14 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(string id)
 		{
+			string? userId = this.GetCurrentUserId();
+			bool isManager = await this.managerService
+				.IsUserManagerAsync(userId!);
+			if (!isManager)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
 			Guid restaurantGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
@@ -120,7 +159,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 				.EditRestaurantViewAsync(restaurantGuid);
 
 			model.Categories = await GetCategories();
-			model.Cities = await GetCities();
 
 			return View(model);
 		}
@@ -128,10 +166,17 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id)
 		{
+			string? userId = this.GetCurrentUserId();
+			bool isManager = await this.managerService
+				.IsUserManagerAsync(userId!);
+			if (!isManager)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
 			if (ModelState.IsValid == false)
 			{
 				model.Categories = await GetCategories();
-				model.Cities = await GetCities();
 				return View(model);
 			}
 			Guid restaurantGuid = Guid.Empty;

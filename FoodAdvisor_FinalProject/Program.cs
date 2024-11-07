@@ -50,6 +50,8 @@ builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
 
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<IFavouritesService, RestaurantFavouritesService>();
+builder.Services.AddScoped<IManagerService, ManagerService>();
+
 
 
 builder.Services.AddRazorPages();
