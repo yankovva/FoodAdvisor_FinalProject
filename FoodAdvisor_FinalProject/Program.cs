@@ -46,12 +46,12 @@ builder.Services.ConfigureApplicationCookie(cfg =>
 
 
 builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-//builder.Services.AddScoped<IRepository<Restaurant, Guid>, Repository<Restaurant, Guid>>();
 
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
-builder.Services.AddScoped<IFavouritesService, RestaurantFavouritesService>();
+builder.Services.AddScoped<IRestaurantFavouritesService, RestaurantFavouritesService>();
 builder.Services.AddScoped<IRecepieService, RecepieService>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
+builder.Services.AddScoped<IRecepieFavouritesService, RecepieFavouritesService>();
 
 
 

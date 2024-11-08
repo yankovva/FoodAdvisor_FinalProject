@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class RestaurantFavouritesService : BaseService, IFavouritesService
+	public class RestaurantFavouritesService : BaseService, IRestaurantFavouritesService
 	{
 		private IRepository<Restaurant, Guid> restaurantRepository;
 		private IRepository<UserRestaurant, object> userRestaurantRepository;
@@ -47,25 +47,26 @@ namespace FoodAdvisor.Data.Services
 
 			UserRestaurant newFavoriteRestaurant = new UserRestaurant();
 
-			if (!alreaduAddedToFavourites)
+			if (alreaduAddedToFavourites == false)
 			{
 				newFavoriteRestaurant = new UserRestaurant()
 				{
 					ApplicationUserId = userId,
 					RestaurantId = restaurantGuid,
 				};
+				await this.userRestaurantRepository.AddAsync(newFavoriteRestaurant!);
+				return true;
 			};
 
-			await this.userRestaurantRepository.AddAsync(newFavoriteRestaurant!);
-			return true;
+			return false;
 
 		}
-		public async Task<IEnumerable<FavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId)
+		public async Task<IEnumerable<RestaurantFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId)
 		{
-			IEnumerable<FavouritesIndexViewModel> favourites = await this.userRestaurantRepository
+			IEnumerable<RestaurantFavouritesIndexViewModel> favourites = await this.userRestaurantRepository
 				.GetAllAttached()
 			   .Where(ur => ur.Restaurant.IsDeleted == false && ur.ApplicationUserId.ToString().ToLower() == userId.ToLower())
-			   .Select(ur => new FavouritesIndexViewModel()
+			   .Select(ur => new RestaurantFavouritesIndexViewModel()
 			   {
 				   Id = ur.RestaurantId.ToString(),
 				   Name = ur.Restaurant.Name,
@@ -98,10 +99,12 @@ namespace FoodAdvisor.Data.Services
 			UserRestaurant? userRestaurant = await this.userRestaurantRepository
 			  .FirstorDefaultAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantGuid);
 
-			if (userRestaurant != null)
+			if (userRestaurant == null)
 			{
-				await this.userRestaurantRepository.DeleteAsync(userRestaurant);
+				return false;
 			}
+
+			await this.userRestaurantRepository.DeleteAsync(userRestaurant);
 			return true;
 		}
 

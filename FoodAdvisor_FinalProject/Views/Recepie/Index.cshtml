@@ -9,7 +9,7 @@
 	ViewBag.Title = "All Recepies";
 }
 
-<h2>Restaurants</h2>
+<h2>Recepies</h2>
 
 <!-- Button to add a new cinema -->
 
@@ -37,7 +37,7 @@
 								<button type="submit" class="btn btn-warning">Edit</button>
 							</form>
 						}
-						<form asp-controller="Favourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+						<form asp-controller="RecepieFavourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
 							<input type="hidden" name="restaurantId" value="@restaurant.Id" />
 							<button type="submit"><img style="width:40px " src="~/assets/img/AddFavourites.png" /></button>
 						</form>

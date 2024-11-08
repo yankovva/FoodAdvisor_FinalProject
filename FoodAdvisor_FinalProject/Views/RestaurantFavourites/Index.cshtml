@@ -1,12 +1,12 @@
 ﻿@using FoodAdvisor.ViewModels.FavouritesViewModel;
-@model IEnumerable<FavouritesIndexViewModel>
+@model IEnumerable<RestaurantFavouritesIndexViewModel>
 
 
 @{
     ViewData["Title"] = "Favourites";
 }
 
-<h2>Your Favourites</h2>
+<h2>Your Restaurant Favourites</h2>
 
 <table class="table table-striped">
     <thead>
@@ -30,7 +30,7 @@
                 <td>
                     <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-primary">View Details</a>
 
-                    <form asp-controller="Favourites" asp-action="RemoveFromFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+                    <form asp-controller="RestaurantFavourites" asp-action="RemoveFromFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
                         <button type="submit" class="btn btn-danger">Remove</button>
                     </form>

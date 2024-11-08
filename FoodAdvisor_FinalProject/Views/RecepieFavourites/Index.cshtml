@@ -1,0 +1,41 @@
+﻿@using FoodAdvisor.ViewModels.RecepieFavouritesViewModels;
+@model IEnumerable<RecepieFavouritesIndexViewModel>
+
+
+@{
+    ViewData["Title"] = " RecepieFavourites";
+}
+
+<h2>Your Restaurant Favourites</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Cooking Time</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recepie in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@recepie.ImageUrl" alt="@recepie.Name" width="100" />
+                </td>
+                <td>@recepie.Name</td>
+                <td>@recepie.CookingTime</td>
+                <td>@recepie.Description</td>
+                <td>
+                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" class="btn btn-primary">View Details</a>
+
+                    <form asp-controller="RecepieFavourites" asp-action="RemoveFromFavourites" asp-route-id="@recepie.Id" method="post" class="d-inline">
+                        <input type="hidden" name="recepieId" value="@recepie.Id" />
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

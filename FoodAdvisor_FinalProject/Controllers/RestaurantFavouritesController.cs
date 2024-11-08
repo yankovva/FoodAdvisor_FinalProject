@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore;
 namespace FoodAdvisor_FinalProject.Controllers
 {
 	[Authorize]
-	public class FavouritesController : BaseController
+	public class RestaurantFavouritesController : BaseController
 	{
 		private readonly FoodAdvisorDbContext dbContext;
-		private readonly IFavouritesService favouritesService;
+		private readonly IRestaurantFavouritesService favouritesService;
 
 
-		public FavouritesController(FoodAdvisorDbContext dbContext,
-			IFavouritesService favouritesService)
+		public RestaurantFavouritesController(FoodAdvisorDbContext dbContext,
+			IRestaurantFavouritesService favouritesService)
 		{
 			this.dbContext = dbContext;
 			this.favouritesService = favouritesService;
@@ -32,7 +32,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return RedirectToPage("/Identity/Account/Login");
 			}
 
-			IEnumerable<FavouritesIndexViewModel> favourites = await this.favouritesService
+			IEnumerable<RestaurantFavouritesIndexViewModel> favourites = await this.favouritesService
 				.InedexGetAllFavouritesAsync(userId);
 
 			return View(favourites);

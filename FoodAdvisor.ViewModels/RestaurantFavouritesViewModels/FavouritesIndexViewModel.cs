@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoodAdvisor.ViewModels.FavouritesViewModel
 {
-    public class FavouritesIndexViewModel
+    public class RestaurantFavouritesIndexViewModel
     {
         public required string Id { get; set; }
         public required string Name { get; set; }

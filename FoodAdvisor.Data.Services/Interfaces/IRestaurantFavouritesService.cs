@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services.Interfaces
 {
-    public interface IFavouritesService 
+    public interface IRestaurantFavouritesService 
     {
-        Task<IEnumerable<FavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId);
+        Task<IEnumerable<RestaurantFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId);
 		Task<bool> AddToFavouritesAsync(Guid userId ,string restaurantId);
         Task<bool> RemoveFromFavouritesAsync(Guid userId,string restaurantId);
 
