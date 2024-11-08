@@ -103,7 +103,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			bool isDeleted = await this.recepieService
 				.DeleteRecepieAsync(model);
-			if (!isDeleted)
+			if (isDeleted == false)
 			{
 				//TODO: ADD MESSAGE
 				return View(model);
@@ -126,6 +126,35 @@ namespace FoodAdvisor_FinalProject.Controllers
 				.EditRecepieViewAsync (recepieGuid);
 
 			return View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(AddRecepieViewModel model, string id)
+		{
+			if (ModelState.IsValid == false)
+			{
+				return View(model);
+			}
+
+			Guid recepieGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(id, ref recepieGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
+
+			Guid userGuid = Guid.Parse(GetCurrentUserId());
+
+			bool isUpdated = await this.recepieService
+				.EditRecepieAsync(model,recepieGuid, userGuid);
+
+			if (isUpdated == false)
+			{
+				//TODO: ADD MESSAGE
+				return View(model);
+			}
+
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }

@@ -131,8 +131,14 @@ namespace FoodAdvisor_FinalProject.Controllers
 			{
 				return RedirectToAction(nameof(Index));
 			}
-			await this.restaurantService
+
+			bool isDeleted = await this.restaurantService
 				.DeleteRestaurantAsync(model);
+			if (isDeleted == false)
+			{
+				//TODO: ADD MESSAGE
+				return View(model);
+			}
 
 			return RedirectToAction(nameof(Index));
         }
@@ -187,9 +193,13 @@ namespace FoodAdvisor_FinalProject.Controllers
 			}
 			Guid userGuid = Guid.Parse(GetCurrentUserId());
 			
-			await this.restaurantService
+			bool isEdited=await this.restaurantService
 				.EditRestaurantAsync(model,restaurantGuid,userGuid);
-
+			if (isEdited == false)
+			{
+				// TODO: ADD MESSAGE
+				return View(model);
+			}
 			return RedirectToAction(nameof(Index));
 		}
 

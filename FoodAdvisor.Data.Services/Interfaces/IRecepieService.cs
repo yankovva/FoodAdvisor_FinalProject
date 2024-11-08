@@ -17,6 +17,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 
 		Task<bool> DeleteRecepieAsync(DeleteRecepieViewModel model);
 		Task<AddRecepieViewModel> EditRecepieViewAsync(Guid id);
+		Task<bool> EditRecepieAsync(AddRecepieViewModel model, Guid recepieId, Guid userId);
 
 	}
 }

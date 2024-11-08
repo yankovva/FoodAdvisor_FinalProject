@@ -51,17 +51,18 @@ namespace FoodAdvisor.Data.Services
 		}
 
 		//Done
-		public async Task DeleteRestaurantAsync(RestaurantDeleteViewModel model)
+		public async Task<bool> DeleteRestaurantAsync(RestaurantDeleteViewModel model)
 		{
 			Restaurant? restaurant = await this.restaurantRepository
 				.GetByIdAsync(Guid.Parse(model.Id));
 
-			if (restaurant != null)
+			if (restaurant == null)
 			{
-				 restaurant.IsDeleted = true;
-				await this.restaurantRepository.SaveChangesAsync();
+				return false;
 			}
-
+			restaurant.IsDeleted = true;
+			await this.restaurantRepository.SaveChangesAsync();
+			return true;
 		}
 
 		//Done
@@ -85,13 +86,13 @@ namespace FoodAdvisor.Data.Services
 		}
 
 		//Done
-		public async Task EditRestaurantAsync(RestaurantAddViewModel model, Guid restaurantId, Guid userId)
+		public async Task<bool> EditRestaurantAsync(RestaurantAddViewModel model, Guid restaurantId, Guid userId)
 		{
 			Restaurant? editedRestaurant = await this.restaurantRepository
 				.GetByIdAsync(restaurantId);
 			if (editedRestaurant == null)
 			{
-				throw new ArgumentException("Invalid ID");
+				return false;
 			}
 
 			City city = new City()
@@ -109,6 +110,7 @@ namespace FoodAdvisor.Data.Services
 
 			await this.cityRepository.AddAsync(city);
 			bool isUpdated = await this.restaurantRepository.UpdateAsync(editedRestaurant);
+			return true;
 			
 		}
 

@@ -115,5 +115,25 @@ namespace FoodAdvisor.Data.Services
 
 			return model;
 		}
+
+		public async Task<bool> EditRecepieAsync(AddRecepieViewModel model, Guid recepieId, Guid userId)
+		{
+			Recepie? editedRecepie = await this.recepieRepository
+				.GetByIdAsync(recepieId);
+
+			if (editedRecepie == null)
+			{
+				return false;
+			}
+
+
+			editedRecepie.Name = model.Name;
+			editedRecepie.ImageURL = model.ImageURL;
+			editedRecepie.Description = model.Description;
+			editedRecepie.CookingTime = model.CookingTime;
+
+			await this.recepieRepository.UpdateAsync(editedRecepie);
+			return true;
+		}
 	}
 }
