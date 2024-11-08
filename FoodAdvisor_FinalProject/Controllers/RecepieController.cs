@@ -1,10 +1,10 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
-using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static FoodAdvisor.Infrastructure.ClaimsPrincipalExtension;
+
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
@@ -12,17 +12,54 @@ namespace FoodAdvisor_FinalProject.Controllers
 	{
 		private readonly FoodAdvisorDbContext dbContext;
 		private readonly IRecepieService recepieService;
+		private readonly IManagerService managerService;
 
-		public RecepieController(FoodAdvisorDbContext dbContext, IRecepieService recepieService)
+		public RecepieController(FoodAdvisorDbContext dbContext, 
+			IRecepieService recepieService,
+			IManagerService managerService)
 		{
 			this.dbContext = dbContext;
 			this.recepieService = recepieService;
+			this.managerService = managerService;
 		}
 		public async Task<IActionResult> Index()
 		{
 			IEnumerable<RecepieIndexViewModel> model = await this.recepieService
 				.IndexGetAllRecepiesAsync();
 			return View(model);
+		}
+		[HttpGet]
+		public async Task<IActionResult> Add()
+		{
+			string? userId = this.GetCurrentUserId();
+			bool isManager = await this.managerService
+				.IsUserManagerAsync(userId!);
+			if (!isManager)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
+			AddRecepieViewModel model = new AddRecepieViewModel();
+			return View(model);
+		}
+		[HttpPost]
+		public async Task<IActionResult> Add(AddRecepieViewModel model)
+		{
+			string? userId = this.GetCurrentUserId();
+			bool isManager = await this.managerService
+				.IsUserManagerAsync(userId!);
+			if (!isManager)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+			await this.recepieService.AddRecepiesAsync(model, Guid.Parse(userId!));
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }

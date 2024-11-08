@@ -10,5 +10,6 @@ namespace FoodAdvisor.Data.Services.Interfaces
 	public interface IRecepieService 
 	{
 		Task<IEnumerable<RecepieIndexViewModel>> IndexGetAllRecepiesAsync();
+		Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId);
 	}
 }

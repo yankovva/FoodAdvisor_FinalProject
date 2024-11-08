@@ -19,6 +19,21 @@ namespace FoodAdvisor.Data.Services
                 this.recepieRepository = recepieRepository;
         }
 
+		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId)
+		{
+			Recepie recepie = new Recepie()
+			{
+				Name = model.Name,
+				Description = model.Description,
+				ImageURL = model.ImageURL,
+				CookingTime = model.CookingTime,
+				PublisherId = userId,
+				CreatedOn = DateTime.Now
+			};
+
+			await this.recepieRepository.AddAsync(recepie);
+		}
+
 		public async Task<IEnumerable<RecepieIndexViewModel>> IndexGetAllRecepiesAsync()
 		{
 			IEnumerable<RecepieIndexViewModel> recepies = await this.recepieRepository
