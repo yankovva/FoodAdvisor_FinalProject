@@ -27,7 +27,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 		public async Task<IActionResult> Index()
 		{
 			string userId = GetCurrentUserId()!;
-
 			if (string.IsNullOrEmpty(userId))
 			{
 				return RedirectToPage("/Identity/Account/Login");

@@ -39,8 +39,18 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Recepie" asp-action="Index">Recepies</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Favourites" asp-action="Index">Favourites</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="favouritesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Favourites
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="favouritesDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Favourites" asp-action="Index">Restaurants</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Recepie" asp-action="Index">Recepies</a>
+                                    </li>
+                                </ul>
                             </li>
                         }
                         <li class="nav-item">
