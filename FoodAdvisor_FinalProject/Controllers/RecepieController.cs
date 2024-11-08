@@ -14,7 +14,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		private readonly IRecepieService recepieService;
 		private readonly IManagerService managerService;
 
-		public RecepieController(FoodAdvisorDbContext dbContext, 
+		public RecepieController(FoodAdvisorDbContext dbContext,
 			IRecepieService recepieService,
 			IManagerService managerService)
 		{
@@ -65,15 +65,15 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Details(string id)
 		{
-			Guid restaurantGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
+			Guid recepieGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(id, ref recepieGuid);
 			if (!isGuidValid)
 			{
 				return this.RedirectToAction(nameof(Index));
 			}
 
 			DetailsRecepieViewModel model = await this.recepieService
-				.GetRecepietDetailsAsync(restaurantGuid);
+				.GetRecepietDetailsAsync(recepieGuid);
 
 			if (model == null)
 			{
@@ -81,6 +81,35 @@ namespace FoodAdvisor_FinalProject.Controllers
 			}
 
 			return View(model);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Delete(string id)
+		{
+			Guid recepieGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(id, ref recepieGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
+			DeleteRecepieViewModel model = await this.recepieService
+				.DeleteRestaurantViewAsync(recepieGuid);
+			return View(model);
+		}
+
+
+		[HttpPost]
+		public async Task<IActionResult> Delete(DeleteRecepieViewModel model)
+		{
+			bool isDeleted = await this.recepieService
+				.DeleteRestaurantAsync(model);
+			if (!isDeleted)
+			{
+				//TODO: ADD MESSAGE
+				return View(model);
+			}
+
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using FoodAdvisor.ViewModels.RecepiesViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,8 @@ namespace FoodAdvisor.Data.Services.Interfaces
 		Task<IEnumerable<RecepieIndexViewModel>> IndexGetAllRecepiesAsync();
 		Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId);
 		Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId);
+		Task<DeleteRecepieViewModel> DeleteRestaurantViewAsync(Guid recepieId);
+
+		Task<bool> DeleteRestaurantAsync(DeleteRecepieViewModel model);
 	}
 }

@@ -200,10 +200,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         {
             return await dbContext.Categories.ToListAsync();
         }
-		private async Task<List<City>> GetCities()
-		{
-			return await dbContext.Cities.ToListAsync();
-		}
+		
 
 
 	}

@@ -2,13 +2,7 @@
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
-using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services
 {
@@ -56,7 +50,7 @@ namespace FoodAdvisor.Data.Services
 		{
 			DetailsRecepieViewModel? model =await this.recepieRepository
 				.GetAllAttached()
-				.Where(r => r.IsDeleted == false)
+				.Where(r => r.IsDeleted == false && r.Id == recepieId)
 				.Select(r => new DetailsRecepieViewModel()
 				{
 					Id = recepieId,
@@ -72,5 +66,38 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
+		public async Task<DeleteRecepieViewModel> DeleteRestaurantViewAsync(Guid recepieId)
+		{
+
+			DeleteRecepieViewModel? model = await this.recepieRepository
+				.GetAllAttached()
+			   .Where(r => r.Id == recepieId && r.IsDeleted == false)
+			   .AsNoTracking()
+			   .Select(r => new DeleteRecepieViewModel()
+			   {
+				   Id = recepieId.ToString(),
+				   Name = r.Name,
+				   Publisher = r.Publisher.UserName ?? string.Empty,
+				   CreatedOn = r.CreatedOn
+			   })
+			   .FirstOrDefaultAsync();
+
+			return model;
+		}
+
+		public async Task<bool> DeleteRestaurantAsync(DeleteRecepieViewModel model)
+		{
+			Recepie? recepie = await this.recepieRepository
+				.GetByIdAsync(Guid.Parse(model.Id));
+
+			if (recepie != null)
+			{
+				recepie.IsDeleted = true;
+				await this.recepieRepository.SaveChangesAsync();
+				return true;
+			}
+			return false;
+
+		}
 	}
 }

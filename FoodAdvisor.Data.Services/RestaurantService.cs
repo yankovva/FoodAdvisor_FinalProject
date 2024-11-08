@@ -54,11 +54,8 @@ namespace FoodAdvisor.Data.Services
 		public async Task DeleteRestaurantAsync(RestaurantDeleteViewModel model)
 		{
 			Restaurant? restaurant = await this.restaurantRepository
-				.GetAllAttached()
-			   .Where(g => g.Id == Guid.Parse(model.Id))
-			   .Where(g => g.IsDeleted == false)
-			   .FirstOrDefaultAsync();
-			
+				.GetByIdAsync(Guid.Parse(model.Id));
+
 			if (restaurant != null)
 			{
 				 restaurant.IsDeleted = true;
