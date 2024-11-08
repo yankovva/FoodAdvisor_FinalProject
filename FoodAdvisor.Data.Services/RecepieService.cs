@@ -2,6 +2,7 @@
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -51,5 +52,25 @@ namespace FoodAdvisor.Data.Services
 
 			return recepies;
 		}
+		 public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId)
+		{
+			DetailsRecepieViewModel? model =await this.recepieRepository
+				.GetAllAttached()
+				.Where(r => r.IsDeleted == false)
+				.Select(r => new DetailsRecepieViewModel()
+				{
+					Id = recepieId,
+					Name = r.Name,
+					Description = r.Description,
+					CreatetOn = r.CreatedOn,
+					CookingTime = r.CookingTime,
+					Publisher = r.Publisher.UserName!,
+					ImageURL = r.ImageURL
+
+				}).FirstOrDefaultAsync();
+
+			return model;
+		}
+
 	}
 }

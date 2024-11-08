@@ -61,5 +61,26 @@ namespace FoodAdvisor_FinalProject.Controllers
 			await this.recepieService.AddRecepiesAsync(model, Guid.Parse(userId!));
 			return RedirectToAction(nameof(Index));
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> Details(string id)
+		{
+			Guid restaurantGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
+			if (!isGuidValid)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
+
+			DetailsRecepieViewModel model = await this.recepieService
+				.GetRecepietDetailsAsync(restaurantGuid);
+
+			if (model == null)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
+			return View(model);
+		}
 	}
 }
