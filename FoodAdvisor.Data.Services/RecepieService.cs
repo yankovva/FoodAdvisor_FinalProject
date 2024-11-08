@@ -66,7 +66,7 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public async Task<DeleteRecepieViewModel> DeleteRestaurantViewAsync(Guid recepieId)
+		public async Task<DeleteRecepieViewModel> DeleteRecepieViewAsync(Guid recepieId)
 		{
 
 			DeleteRecepieViewModel? model = await this.recepieRepository
@@ -85,7 +85,7 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public async Task<bool> DeleteRestaurantAsync(DeleteRecepieViewModel model)
+		public async Task<bool> DeleteRecepieAsync(DeleteRecepieViewModel model)
 		{
 			Recepie? recepie = await this.recepieRepository
 				.GetByIdAsync(Guid.Parse(model.Id));
@@ -98,6 +98,22 @@ namespace FoodAdvisor.Data.Services
 			}
 			return false;
 
+		}
+
+		public async Task<AddRecepieViewModel> EditRecepieViewAsync(Guid id)
+		{
+			AddRecepieViewModel? model = await this.recepieRepository
+				.GetAllAttached()
+				.Where(r=>r.Id == id)
+				.Select(r=> new AddRecepieViewModel()
+				{
+					ImageURL = r.ImageURL,
+					Name = r.Name,
+					Description= r.Description,
+					CookingTime = r.CookingTime,
+				}).FirstOrDefaultAsync();
+
+			return model;
 		}
 	}
 }
