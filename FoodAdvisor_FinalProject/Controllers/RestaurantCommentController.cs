@@ -15,41 +15,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 			this.dbContext = _dbContext;
 
 		}
-		[HttpGet]
-		public async Task<IActionResult> Add()
-		{
-			return View();
-		}
 
 		[HttpPost]
-		public async Task<IActionResult> Add(AddCommentViewModel model, string id)
-		{
-			if (!this.ModelState.IsValid)
-			{
-				return this.View(model);
-			}
-
-			Guid restaurantGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
-			if (!isGuidValid)
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
-
-			RestaurantComment comment = new RestaurantComment()
-			{
-				Message = model.Message,
-				UserId = Guid.Parse(GetCurrentUserId()),
-				RestaurantId = restaurantGuid,
-				CreatedDate = DateTime.Now
-			};
-
-			await this.dbContext.RestaurantsComments.AddAsync(comment);
-			await this.dbContext.SaveChangesAsync();
-
-			return RedirectToAction("Details", "Restaurant");
-		}
-
 		public async Task<IActionResult> Delete(string id)
 		{
 			Guid commentGuid = Guid.Empty;
@@ -70,6 +37,25 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			comment.IsDeleted = true;
 			await this.dbContext.SaveChangesAsync();
+
+			return RedirectToAction("Index", "Restaurant");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Add(string restaurantid, [Bind("Message")] AddCommentViewModel model )
+		{
+			Guid userguid = Guid.Parse(GetCurrentUserId()!);
+
+			RestaurantComment comment = new()
+			{
+				RestaurantId = Guid.Parse(restaurantid),
+				Message = model.Message,
+				CreatedDate = DateTime.Now,
+				UserId = userguid
+			};
+
+			 await this.dbContext.RestaurantsComments.AddAsync(comment);
+			 await this.dbContext.SaveChangesAsync();
 
 			return RedirectToAction("Index", "Restaurant");
 		}
