@@ -49,11 +49,9 @@ namespace FoodAdvisor.Data.Services
 
 			if (alreaduAddedToFavourites == false)
 			{
-				newFavoriteRestaurant = new UserRestaurant()
-				{
-					ApplicationUserId = userId,
-					RestaurantId = restaurantGuid,
-				};
+				newFavoriteRestaurant.ApplicationUserId = userId;
+				newFavoriteRestaurant.RestaurantId = restaurantGuid;
+				
 				await this.userRestaurantRepository.AddAsync(newFavoriteRestaurant!);
 				return true;
 			};
