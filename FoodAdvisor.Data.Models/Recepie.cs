@@ -16,8 +16,8 @@ namespace FoodAdvisor.Data.Models
 
 		[Required]
 		[Comment("Cooking time of the Recepie.")]
-
 		public int CookingTime { get; set; }
+
 		[Required]
 		[Comment("Date of creation of the Recepie.")]
 		public DateTime CreatedOn { get; set; }
