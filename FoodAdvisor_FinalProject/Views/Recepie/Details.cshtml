@@ -13,9 +13,11 @@
 		</div>
 		<p><strong>Name</strong> @Model.Name</p>
 		<p><strong>Cooking Time:</strong> @Model.CookingTime minutes</p>
-		<p><strong>Description</strong> @Model.Description</p>
+		<p><strong>Description:</strong> @Model.Description</p>
+		<p><strong>Products:</strong> @Model.Products</p>
 		<p><strong>Published On:</strong> @Model.CreatetOn.ToString("dd/MM/yyyy")</p>
 		<p><strong>Publisher:</strong> @Model.Publisher</p>
+		<p><strong>Category:</strong> @Model.Category</p>
 		<p><strong>Comments:</strong></p>
 		@if (User!.Identity!.IsAuthenticated == true)
 		{
