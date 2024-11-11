@@ -4,7 +4,6 @@
 @using FoodAdvisor.Infrastructure;
 @inject IManagerService managerService
 
-
 @{
 	ViewBag.Title = "All Recepies";
 }
@@ -15,6 +14,7 @@
 <div class="row">
 	@foreach (RecepieIndexViewModel recepie in Model)
 	{
+		
 		<div class="col-md-4">
 			<div class="card mb-4 border-dark shadow-sm">
 				<img class="card-img-top" src="@recepie.ImageURL" alt="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" style="height: 200px; object-fit: cover;">

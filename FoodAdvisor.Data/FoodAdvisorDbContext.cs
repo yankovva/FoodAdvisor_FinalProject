@@ -26,6 +26,8 @@ namespace FoodAdvisor.Data
         public virtual DbSet<Manager> Managers { get; set; }
 		public virtual DbSet<Recepie> Recepies { get; set; }
 		public virtual DbSet<UserRecepie> UsersRecepies { get; set; }
+		public virtual DbSet<RecepieCategory> RecepiesCategories { get; set; }
+
 
 
 
@@ -47,14 +49,15 @@ namespace FoodAdvisor.Data
 
 
             builder
-              .Entity<City>()
+              .Entity<RecepieCategory>()
               .HasData(
-              new City { Name = "Plovdiv" },
-              new City { Name = "Sofia" },
-              new City { Name = "Varna" },
-              new City { Name = "Burgas" },
-              new City { Name = "Stara Zagora" },
-              new City { Name = "Ruse" });
+              new RecepieCategory { Name = "Breakfast" },
+              new RecepieCategory { Name = "Lunch" },
+              new RecepieCategory { Name = "Dinner" },
+              new RecepieCategory { Name = "Dessert" },
+              new RecepieCategory { Name = "Snack" },
+              new RecepieCategory { Name = "Side dish" },
+              new RecepieCategory { Name = "Starter" });
         }
 	}
 }

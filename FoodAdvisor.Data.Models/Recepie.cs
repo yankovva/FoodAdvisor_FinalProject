@@ -27,12 +27,21 @@ namespace FoodAdvisor.Data.Models
 		[Comment("Description of the Recepie.")]
 		public string Description { get; set; } = null!;
 
+		[Required]
+		[MaxLength(ProductsMaxLenght)]
+		[Comment("Needed products for the Recepie.")]
+		public string Products { get; set; } = null!;
+
 		[MaxLength(URLMaxLEnght)]
         public string? ImageURL { get; set; }
 
         public Guid PublisherId { get; set; }
 		[ForeignKey(nameof(PublisherId))]
 		public ApplicationUser Publisher { get; set; } = null!;
+
+		public Guid RecepieCategoryId { get; set; }
+		[ForeignKey(nameof(RecepieCategoryId))]
+		public RecepieCategory RecepieCategory { get; set; } = null!;
 
 		public virtual ICollection<UserRecepie> UsersRecepies{ get; set; } = new List<UserRecepie>();
         public ICollection<RecepieComment> RecepieComments { get; set; } = new List<RecepieComment>();

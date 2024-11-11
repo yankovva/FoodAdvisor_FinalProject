@@ -51,6 +51,9 @@
 			public const int DescriptionMinLenght = 20;
 			public const int DescriptionMaxLenght = 400;
 
+			public const int ProductsMinLengt = 10;
+			public const int ProductsMaxLenght = 200;
+
 			public const int URLMaxLEnght = 2083;
 			public const int URLMinLenght = 8;
 

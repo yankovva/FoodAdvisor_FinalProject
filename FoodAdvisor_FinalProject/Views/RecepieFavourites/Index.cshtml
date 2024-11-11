@@ -28,7 +28,7 @@
                 <td>@recepie.CookingTime</td>
                 <td>@recepie.Description</td>
                 <td>
-                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" class="btn btn-outline-dark"><i class="fa-solid fa-circle-info"></i></a>
 
                     <form asp-controller="RecepieFavourites" asp-action="RemoveFromFavourites" asp-route-id="@recepie.Id" method="post" class="d-inline">
                         <input type="hidden" name="recepieId" value="@recepie.Id" />
