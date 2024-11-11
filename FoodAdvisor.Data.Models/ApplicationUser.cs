@@ -16,8 +16,9 @@ namespace FoodAdvisor.Data.Models
 
 		public virtual ICollection<UserRestaurant> Restaurants { get; set; } = new HashSet<UserRestaurant>();
 		public virtual ICollection<UserRecepie> Recepies { get; set; } = new HashSet<UserRecepie>();
-
 		public virtual ICollection<RestaurantComment> RestaurantsComments { get; set; } = new List<RestaurantComment>();
+        public virtual ICollection<RecepieComment> RecepiesComments { get; set; } = new List<RecepieComment>();
 
-	}
+
+    }
 }

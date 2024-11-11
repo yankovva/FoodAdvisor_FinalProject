@@ -29,13 +29,11 @@
             public const int NameMaxLenght = 20;
 
         }
-		public static class RestaurantComment
+		public static class Comment
 		{
 			public const int MessageMinLenght = 1;
 			public const int MessageMaxLenght = 300;
-
 		}
-
         public static class Manager
         {
 			public const int PhoneNumberMinLenght = 6;

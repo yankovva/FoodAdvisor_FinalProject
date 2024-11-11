@@ -35,6 +35,8 @@ namespace FoodAdvisor.Data.Models
 		public ApplicationUser Publisher { get; set; } = null!;
 
 		public virtual ICollection<UserRecepie> UsersRecepies{ get; set; } = new List<UserRecepie>();
+        public ICollection<RecepieComment> RecepieComments { get; set; } = new List<RecepieComment>();
+
         public bool IsDeleted { get; set; }
     }
 }

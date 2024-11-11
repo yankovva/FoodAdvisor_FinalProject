@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static FoodAdvisor.Common.EntityValidationConstants.RestaurantComment;
+using static FoodAdvisor.Common.EntityValidationConstants.Comment;
 
 namespace FoodAdvisor.ViewModels.CommentViewModel
 {
