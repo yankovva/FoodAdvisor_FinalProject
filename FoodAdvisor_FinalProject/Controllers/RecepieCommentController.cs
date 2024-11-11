@@ -36,7 +36,5 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			return RedirectToAction("Index", "Recepie");
 		}
-
-
 	}
 }

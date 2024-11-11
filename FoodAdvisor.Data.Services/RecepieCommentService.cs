@@ -13,13 +13,10 @@ namespace FoodAdvisor.Data.Services
 	public class RecepieCommentService : BaseService, IRecepieCommentService
 	{
 		private readonly IRepository<RecepieComment, Guid> recepieCommentRepository;
-		private readonly IRepository<Recepie, Guid> recepieRepository;
 
-		public RecepieCommentService(IRepository<RecepieComment, Guid> recepieCommentRepository,
-			IRepository<Recepie, Guid> recepieRepository)
+		public RecepieCommentService(IRepository<RecepieComment, Guid> recepieCommentRepository)
 		{
 			this.recepieCommentRepository = recepieCommentRepository;
-			this.recepieRepository = recepieRepository;
 		}
 
 		public async Task AddAsync(string recepieId, Guid userId, AddCommentViewModel model)
@@ -46,7 +43,7 @@ namespace FoodAdvisor.Data.Services
 			}
 
 			RecepieComment? comment = await  this.recepieCommentRepository
-				.GetByIdAsync(Guid.Parse(recepieId));
+				.GetByIdAsync(recepieGuid);
 			
 			if (comment == null || comment.IsDeleted == true)
 			{
