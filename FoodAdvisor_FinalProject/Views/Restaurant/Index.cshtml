@@ -4,7 +4,6 @@
 @using FoodAdvisor.Infrastructure;
 @inject IManagerService managerService
 
-
 @{
 	ViewBag.Title = "All Restauranrs";
 }
@@ -27,7 +26,7 @@
 				<div class="card-body">
 					<h5 class="card-title">@restaurant.Name</h5>
 					<h6 class="card-subtitle mb-2 text-muted">@restaurant.Category</h6>
-					<a asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-primary">View Details</a>
+					<a asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-outline-dark"><i class="fa-solid fa-circle-info"></i></a>
 
 					@if (User?.Identity?.IsAuthenticated ?? false)
 					{
@@ -35,12 +34,12 @@
 						{
 							<form asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurant.Id" method="post" class="d-inline">
 								<input type="hidden" name="restaurantId" value="@restaurant.Id" />
-								<button type="submit" class="btn btn-warning">Edit</button>
+								<button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></button>
 							</form>
 						}
 						<form asp-controller="RestaurantFavourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
 							<input type="hidden" name="restaurantId" value="@restaurant.Id" />
-							<button type="submit"><img style="width:40px " src="~/assets/img/AddFavourites.png" /></button>
+							<button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-heart"></i></button>
 						</form>
 					}
 				</div>

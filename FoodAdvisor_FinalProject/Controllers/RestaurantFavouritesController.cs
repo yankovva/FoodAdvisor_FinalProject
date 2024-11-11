@@ -1,11 +1,8 @@
 ﻿using FoodAdvisor.Data;
-using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.FavouritesViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
