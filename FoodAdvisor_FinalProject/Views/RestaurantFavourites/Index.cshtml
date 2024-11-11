@@ -28,7 +28,7 @@
                 <td>@restaurant.Category</td>
                 <td>@restaurant.Description</td>
                 <td>
-                    <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-outline-dark"><i class="fa-solid fa-circle-info"></i></a>
 
                     <form asp-controller="RestaurantFavourites" asp-action="RemoveFromFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
                        <input type="hidden" name="restaurantId" value="@restaurant.Id" />
