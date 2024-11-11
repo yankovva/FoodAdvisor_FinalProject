@@ -1,4 +1,5 @@
 ﻿@using FoodAdvisor.ViewModels.RecepiesViewModels;
+@using FoodAdvisor.ViewModels.CommentViewModel;
 @model DetailsRecepieViewModel
 @{
 	ViewBag.Title = "Recepie Details";
@@ -16,7 +17,19 @@
 		<p><strong>Published On:</strong> @Model.CreatetOn.ToString("dd/MM/yyyy")</p>
 		<p><strong>Publisher:</strong> @Model.Publisher</p>
 		<p><strong>Comments:</strong></p>
-		@*<a asp-controller="RestaurantComment" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-outline-success">Add New Comment</a>
+		@if (User!.Identity!.IsAuthenticated == true)
+		{
+			<div class="container">
+				<form asp-controller="RecepieComment" asp-action="Add" method="post">
+					<h6>Add Comment!</h6>
+					<textarea class="form-control" aria-label="With textarea" name="Message" style="width: 40%; vertical-align:top;"></textarea>
+					<input type="hidden" name="recepieId" class="form-control" value="@Model.Id" />
+					<button type="submit" class="btn btn-primary" style="display: inline-block; margin-top:10px;">Submit</button>
+
+				</form>
+
+			</div>
+		}
 		<div class="list-group"></div>
 		@foreach (CommentAllViewModel comment in Model.AllComment)
 		{
@@ -28,13 +41,13 @@
 			</div>
 			@if (User?.Identity?.Name == @Model.Publisher)
 			{
-				<form asp-controller="RestaurantComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
-					<input type="hidden" name="restaurantId" value="@comment.Id" />
-					<button type="submit" class="btn btn-danger">Remove</button>
+				<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+					<input type="hidden" name="rcepieId" value="@comment.Id" />
+					<button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-trash"></i></button>
 				</form>
 			}
 		}
-		*@
+
 	</div>
 </div>
 <a asp-action="Index" class="btn btn-secondary">Back to All Recepies</a>

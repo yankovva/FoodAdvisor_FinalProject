@@ -10,12 +10,7 @@
 }
 
 <h2>Recepies</h2>
-
-<!-- Button to add a new cinema -->
-
-	<a asp-action="Add" class="btn btn-success mb-4">Add Your Recepie!</a>
-
-
+<a asp-controller="Recepie" asp-action="Add" method="get"  class="btn btn-success mb-4">Add Your Recepie!</a>
 
 <div class="row">
 	@foreach (RecepieIndexViewModel recepie in Model)
