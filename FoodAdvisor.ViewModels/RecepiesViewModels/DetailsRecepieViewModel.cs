@@ -12,11 +12,13 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
+		public string Products { get; set; } = null!;
 		public DateTime CreatetOn { get; set; }
         public string Publisher { get; set; } = null!;
 		public string ImageURL { get; set; } = null!;
 		public int CookingTime { get; set; }
-		public IEnumerable<CommentAllViewModel> AllComment { get; set; } = new List<CommentAllViewModel>();
+		public string Category { get; set; } = null!;
+        public IEnumerable<CommentAllViewModel> AllComment { get; set; } = new List<CommentAllViewModel>();
 
 	}
 }

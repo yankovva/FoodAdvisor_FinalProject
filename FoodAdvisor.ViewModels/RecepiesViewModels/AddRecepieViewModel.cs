@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodAdvisor.Data.Models;
+using System.ComponentModel.DataAnnotations;
 using static FoodAdvisor.Common.EntityValidationConstants.Recepie;
 namespace FoodAdvisor.ViewModels.RecepiesViewModels
 {
@@ -18,5 +19,14 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         [MinLength(DescriptionMinLenght)]
         [MaxLength(DescriptionMaxLenght)]
         public string Description { get; set; } = null!;
-    }
+		[Required]
+		[MinLength(ProductsMinLengt)]
+		[MaxLength(ProductsMaxLenght)]
+		public string Products { get; set; } = null!;
+
+		[Required]
+		public Guid CategoryId { get; set; }
+		public List<RecepieCategory> Categories { get; set; } = new List<RecepieCategory>();
+
+	}
 }

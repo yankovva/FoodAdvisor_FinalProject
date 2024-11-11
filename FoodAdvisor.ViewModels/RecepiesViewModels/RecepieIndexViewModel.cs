@@ -13,5 +13,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         public int CookingTime { get; set; }
         public string Publisher { get; set; } = null!;
         public string? ImageURL { get; set; }
-    }
+        public string Category { get; set; } = null!;
+
+	}
 }

@@ -3,6 +3,7 @@ using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static FoodAdvisor.Infrastructure.ClaimsPrincipalExtension;
 
 
@@ -33,6 +34,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			string? userId = this.GetCurrentUserId();
 			AddRecepieViewModel model = new AddRecepieViewModel();
+			model.Categories = await GetCategories();
 			return View(model);
 		}
 		[HttpPost]
@@ -42,6 +44,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (!ModelState.IsValid)
 			{
+				model.Categories = await GetCategories();
 				return View(model);
 			}
 
@@ -111,6 +114,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			AddRecepieViewModel model = await this.recepieService
 				.EditRecepieViewAsync (recepieGuid);
+			model.Categories = await GetCategories();
+
 
 			return View(model);
 		}
@@ -120,6 +125,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			if (ModelState.IsValid == false)
 			{
+				model.Categories = await GetCategories();
 				return View(model);
 			}
 
@@ -142,6 +148,11 @@ namespace FoodAdvisor_FinalProject.Controllers
 			}
 
 			return RedirectToAction(nameof(Index));
+		}
+
+		private async Task<List<RecepieCategory>> GetCategories()
+		{
+			return await dbContext.RecepiesCategories.ToListAsync();
 		}
 	}
 }

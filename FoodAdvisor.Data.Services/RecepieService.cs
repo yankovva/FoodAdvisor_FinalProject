@@ -24,7 +24,9 @@ namespace FoodAdvisor.Data.Services
 				ImageURL = model.ImageURL,
 				CookingTime = model.CookingTime,
 				PublisherId = userId,
-				CreatedOn = DateTime.Now
+				CreatedOn = DateTime.Now,
+				RecepieCategoryId = model.CategoryId,
+				Products = model.Products
 			};
 
 			await this.recepieRepository.AddAsync(recepie);
@@ -41,7 +43,8 @@ namespace FoodAdvisor.Data.Services
 					Name = r.Name,
 					CookingTime = r.CookingTime,
 					ImageURL = r.ImageURL,
-					Publisher = r.Publisher.UserName
+					Publisher = r.Publisher.UserName!,
+					Category = r.RecepieCategory.Name
 				})
 				.ToArrayAsync();
 
@@ -60,6 +63,8 @@ namespace FoodAdvisor.Data.Services
 					CreatetOn = r.CreatedOn,
 					CookingTime = r.CookingTime,
 					Publisher = r.Publisher.UserName!,
+					Category = r.RecepieCategory.Name,
+					Products = r.Products,
 					ImageURL = r.ImageURL,
 					AllComment = r.RecepieComments
 					.Where(rc => rc.IsDeleted == false)
@@ -122,6 +127,8 @@ namespace FoodAdvisor.Data.Services
 					Name = r.Name,
 					Description= r.Description,
 					CookingTime = r.CookingTime,
+					Products = r.Products,
+					CategoryId = r.RecepieCategoryId
 				}).FirstOrDefaultAsync();
 
 			return model;
@@ -142,6 +149,8 @@ namespace FoodAdvisor.Data.Services
 			editedRecepie.ImageURL = model.ImageURL;
 			editedRecepie.Description = model.Description;
 			editedRecepie.CookingTime = model.CookingTime;
+			editedRecepie.Products = model.Products;
+			editedRecepie.RecepieCategoryId = model.CategoryId;
 
 			await this.recepieRepository.UpdateAsync(editedRecepie);
 			return true;
