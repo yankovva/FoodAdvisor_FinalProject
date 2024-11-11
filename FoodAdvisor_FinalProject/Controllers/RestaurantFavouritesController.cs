@@ -9,14 +9,11 @@ namespace FoodAdvisor_FinalProject.Controllers
 	[Authorize]
 	public class RestaurantFavouritesController : BaseController
 	{
-		private readonly FoodAdvisorDbContext dbContext;
 		private readonly IRestaurantFavouritesService favouritesService;
 
 
-		public RestaurantFavouritesController(FoodAdvisorDbContext dbContext,
-			IRestaurantFavouritesService favouritesService)
+		public RestaurantFavouritesController(IRestaurantFavouritesService favouritesService)
 		{
-			this.dbContext = dbContext;
 			this.favouritesService = favouritesService;
 		}
 

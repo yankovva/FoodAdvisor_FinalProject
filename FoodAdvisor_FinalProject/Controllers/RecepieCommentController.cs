@@ -1,5 +1,6 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
+using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,11 +10,12 @@ namespace FoodAdvisor_FinalProject.Controllers
     public class RecepieCommentController : BaseController
     {
         private readonly FoodAdvisorDbContext dbContext;
+		private readonly IRecepieCommentService commentServie;
 
-        public RecepieCommentController(FoodAdvisorDbContext _dbContext)
+        public RecepieCommentController(FoodAdvisorDbContext _dbContext, IRecepieCommentService commentServie)
         {
             this.dbContext = _dbContext;
-
+			this.commentServie = commentServie;
         }
 
 		[HttpPost]
@@ -21,16 +23,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			Guid userguid = Guid.Parse(GetCurrentUserId()!);
 
-			RecepieComment comment = new()
-			{
-				RecepieId = Guid.Parse(recepieId),
-				Message = model.Message,
-				CreatedDate = DateTime.Now,
-				UserId = userguid
-			};
-
-			await this.dbContext.RecepiesComments.AddAsync(comment);
-			await this.dbContext.SaveChangesAsync();
+			await this.commentServie.AddAsync(recepieId, userguid, model);
 
 			return RedirectToAction("Index", "Recepie");
 		}
@@ -38,24 +31,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Delete(string id)
 		{
-			Guid commentGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref commentGuid);
-			if (!isGuidValid)
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
-			RecepieComment? comment = await this.dbContext
-				.RecepiesComments
-				.Where(c => c.IsDeleted == false)
-				.FirstOrDefaultAsync(c => c.Id == commentGuid);
-
-			if (comment == null)
-			{
-				throw new ArgumentException("Invalid Id");
-			}
-
-			comment.IsDeleted = true;
-			await this.dbContext.SaveChangesAsync();
+			bool isDeleted = await this.commentServie
+				.DeleteAsync(id);
 
 			return RedirectToAction("Index", "Recepie");
 		}

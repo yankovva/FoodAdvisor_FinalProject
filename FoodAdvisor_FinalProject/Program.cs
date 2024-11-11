@@ -52,6 +52,8 @@ builder.Services.AddScoped<IRestaurantFavouritesService, RestaurantFavouritesSer
 builder.Services.AddScoped<IRecepieService, RecepieService>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IRecepieFavouritesService, RecepieFavouritesService>();
+builder.Services.AddScoped<IRecepieCommentService, RecepieCommentService>();
+
 
 
 
