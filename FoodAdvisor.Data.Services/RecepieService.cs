@@ -1,6 +1,7 @@
 ﻿using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
+using FoodAdvisor.ViewModels.CommentViewModel;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,7 +60,17 @@ namespace FoodAdvisor.Data.Services
 					CreatetOn = r.CreatedOn,
 					CookingTime = r.CookingTime,
 					Publisher = r.Publisher.UserName!,
-					ImageURL = r.ImageURL
+					ImageURL = r.ImageURL,
+					AllComment = r.RecepieComments
+					.Where(rc => rc.IsDeleted == false)
+					.Select(rc => new CommentAllViewModel()
+					{
+						Message = rc.Message,
+						CreatedOn = rc.CreatedDate,
+						UserId = rc.UserId.ToString(),
+						Id = rc.Id.ToString(),
+						UserName = rc.User.UserName ?? string.Empty
+					})
 
 				}).FirstOrDefaultAsync();
 

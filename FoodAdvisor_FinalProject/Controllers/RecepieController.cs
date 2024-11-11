@@ -32,13 +32,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 		public async Task<IActionResult> Add()
 		{
 			string? userId = this.GetCurrentUserId();
-			bool isManager = await this.managerService
-				.IsUserManagerAsync(userId!);
-			if (!isManager)
-			{
-				return RedirectToAction(nameof(Index));
-			}
-
 			AddRecepieViewModel model = new AddRecepieViewModel();
 			return View(model);
 		}
@@ -46,12 +39,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 		public async Task<IActionResult> Add(AddRecepieViewModel model)
 		{
 			string? userId = this.GetCurrentUserId();
-			bool isManager = await this.managerService
-				.IsUserManagerAsync(userId!);
-			if (!isManager)
-			{
-				return RedirectToAction(nameof(Index));
-			}
 
 			if (!ModelState.IsValid)
 			{
