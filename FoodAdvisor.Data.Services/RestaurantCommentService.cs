@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace FoodAdvisor.Data.Services
 {
 	public class RestaurantCommentService : BaseService, IRestaurantCommentService
-	{
+    {
 		private readonly IRepository<RestaurantComment, Guid> restaurantRepository;
         public RestaurantCommentService(IRepository<RestaurantComment, Guid> restaurantRepository)
         {

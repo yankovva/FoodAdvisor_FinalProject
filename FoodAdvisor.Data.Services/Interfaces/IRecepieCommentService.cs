@@ -10,7 +10,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 {
 	public interface IRecepieCommentService
 	{
-		Task AddAsync(string recepieId, Guid userId,AddCommentViewModel model);
+		Task<bool> AddAsync(string recepieId, Guid userId,AddCommentViewModel model);
 		Task<bool> DeleteAsync(string recepieId);
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
+using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,56 +9,42 @@ namespace FoodAdvisor_FinalProject.Controllers
 {
 	public class RestaurantCommentController : BaseController
 	{
-		private readonly FoodAdvisorDbContext dbContext;
+		private readonly IRestaurantCommentService commentService;
 
-		public RestaurantCommentController(FoodAdvisorDbContext _dbContext)
+
+		public RestaurantCommentController(IRestaurantCommentService commentService)
 		{
-			this.dbContext = _dbContext;
+			this.commentService = commentService;
 
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Delete(string id)
 		{
-			Guid commentGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref commentGuid);
-			if (!isGuidValid)
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
-			RestaurantComment? comment = await this.dbContext
-				.RestaurantsComments
-				.Where(c => c.IsDeleted == false)
-				.FirstOrDefaultAsync(c => c.Id == commentGuid);
-			
-			if (comment == null)
-			{
-				throw new ArgumentException("Invalid Id");
-			}
+            bool isDeleted = await this.commentService
+                .DeleteAsync(id);
+            if (isDeleted == false)
+            {
+                //TODO: Add a message
+                return RedirectToAction("Index", "Restaurant");
+            }
 
-			comment.IsDeleted = true;
-			await this.dbContext.SaveChangesAsync();
-
-			return RedirectToAction("Index", "Restaurant");
+            return RedirectToAction("Index", "Restaurant");
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Add(string restaurantid, [Bind("Message")] AddCommentViewModel model )
 		{
-			Guid userguid = Guid.Parse(GetCurrentUserId()!);
+            Guid userguid = Guid.Parse(GetCurrentUserId()!);
+			bool isAdded = await this.commentService
+				.AddAsync(restaurantid, userguid, model);
+            if (isAdded == false)
+            {
+                //TODO: Add a message
+                return RedirectToAction("Index", "Restaurant");
+            }
 
-			RestaurantComment comment = new()
-			{
-				RestaurantId = Guid.Parse(restaurantid),
-				Message = model.Message,
-				CreatedDate = DateTime.Now,
-				UserId = userguid
-			};
-
-			 await this.dbContext.RestaurantsComments.AddAsync(comment);
-			 await this.dbContext.SaveChangesAsync();
-
-			return RedirectToAction("Index", "Restaurant");
+            return RedirectToAction("Index", "Restaurant");
 		}
 
 	}

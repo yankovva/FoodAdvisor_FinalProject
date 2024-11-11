@@ -9,12 +9,10 @@ namespace FoodAdvisor_FinalProject.Controllers
 {
     public class RecepieCommentController : BaseController
     {
-        private readonly FoodAdvisorDbContext dbContext;
 		private readonly IRecepieCommentService commentServie;
 
-        public RecepieCommentController(FoodAdvisorDbContext _dbContext, IRecepieCommentService commentServie)
+        public RecepieCommentController(IRecepieCommentService commentServie)
         {
-            this.dbContext = _dbContext;
 			this.commentServie = commentServie;
         }
 
@@ -23,7 +21,14 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			Guid userguid = Guid.Parse(GetCurrentUserId()!);
 
-			await this.commentServie.AddAsync(recepieId, userguid, model);
+			bool isAdded = await this.commentServie
+				.AddAsync(recepieId, userguid, model);
+
+			if (isAdded == false)
+			{
+				//TODO: Add a message
+                return RedirectToAction("Index", "Recepie");
+            }
 
 			return RedirectToAction("Index", "Recepie");
 		}
@@ -33,8 +38,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			bool isDeleted = await this.commentServie
 				.DeleteAsync(id);
-
-			return RedirectToAction("Index", "Recepie");
+            if (isDeleted == false)
+            {
+                //TODO: Add a message
+                return RedirectToAction("Index", "Recepie");
+            }
+            return RedirectToAction("Index", "Recepie");
 		}
 	}
 }

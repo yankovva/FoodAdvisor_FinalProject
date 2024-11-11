@@ -10,27 +10,34 @@ using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class RecepieCommentService : BaseService, IRecepieCommentService
-	{
-		private readonly IRepository<RecepieComment, Guid> recepieCommentRepository;
+    public class RecepieCommentService : BaseService, IRecepieCommentService
+    {
+		private readonly IRepository<RecepieComment, Guid> commentRepository;
 
-		public RecepieCommentService(IRepository<RecepieComment, Guid> recepieCommentRepository)
+		public RecepieCommentService(IRepository<RecepieComment, Guid> commentRepository)
 		{
-			this.recepieCommentRepository = recepieCommentRepository;
+			this.commentRepository = commentRepository;
 		}
 
-		public async Task AddAsync(string recepieId, Guid userId, AddCommentViewModel model)
+		public async Task<bool> AddAsync(string recepieId, Guid userId, AddCommentViewModel model)
 		{
+            Guid recepieGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
+            if (!isGuidValid)
+            {
+                return false;
+            }
 
-			RecepieComment comment = new()
+            RecepieComment comment = new()
 			{
-				RecepieId = Guid.Parse(recepieId),
+				RecepieId = recepieGuid,
 				Message = model.Message,
 				CreatedDate = DateTime.Now,
 				UserId = userId
 			};
 
-			await this.recepieCommentRepository.AddAsync(comment);
+			await this.commentRepository.AddAsync(comment);
+			return true;
 		}
 
 		public async Task<bool> DeleteAsync(string recepieId)
@@ -42,15 +49,15 @@ namespace FoodAdvisor.Data.Services
 				return false;
 			}
 
-			RecepieComment? comment = await  this.recepieCommentRepository
-				.GetByIdAsync(recepieGuid);
+			RecepieComment? comment = await  this.commentRepository
+                .GetByIdAsync(recepieGuid);
 			
 			if (comment == null || comment.IsDeleted == true)
 			{
 				return false;
 			}
 			comment.IsDeleted = true;
-			await this.recepieCommentRepository.SaveChangesAsync();
+			await this.commentRepository.SaveChangesAsync();
 
 			return true;
 		}
