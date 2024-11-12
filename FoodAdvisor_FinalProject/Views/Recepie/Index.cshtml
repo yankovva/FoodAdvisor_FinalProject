@@ -1,4 +1,5 @@
 ﻿@using FoodAdvisor.ViewModels.RecepiesViewModels;
+@using static FoodAdvisor.Common.ApplicationConstants;
 @model IEnumerable<RecepieIndexViewModel>;
 @using FoodAdvisor.Data.Services.Interfaces;
 @using FoodAdvisor.Infrastructure;
@@ -17,7 +18,7 @@
 		
 		<div class="col-md-4">
 			<div class="card mb-4 border-dark shadow-sm">
-				<img class="card-img-top" src="@recepie.ImageURL" alt="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" style="height: 200px; object-fit: cover;">
+				<img class="card-img-top" src="@recepie.ImageURL" alt="/@NoImage" style="height: 200px; object-fit: cover;">
 				<div class="card-body">
 					<h5 class="card-title">@recepie.Name</h5>
 					<h6 class="card-title">@recepie.Category</h6>

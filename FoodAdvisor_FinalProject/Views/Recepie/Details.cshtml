@@ -1,5 +1,6 @@
 ﻿@using FoodAdvisor.ViewModels.RecepiesViewModels;
 @using FoodAdvisor.ViewModels.CommentViewModel;
+@using static FoodAdvisor.Common.ApplicationConstants;
 @model DetailsRecepieViewModel
 @{
 	ViewBag.Title = "Recepie Details";
@@ -9,7 +10,7 @@
 <div .container-fluid>
 	<div class="row">
 		<div class="text-center">
-			<img src="@Model.ImageURL" class="rounded" alt="Responsive image" width="400">
+			<img src="/@Model.ImagePath" alt="@NoImage" style="width: 300px">
 		</div>
 		<p><strong>Name</strong> @Model.Name</p>
 		<p><strong>Cooking Time:</strong> @Model.CookingTime minutes</p>
