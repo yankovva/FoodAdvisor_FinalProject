@@ -134,16 +134,21 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public async Task<bool> EditRecepieAsync(AddRecepieViewModel model, Guid recepieId, Guid userId)
+		public async Task<bool> EditRecepieAsync(AddRecepieViewModel model, string recepieId, Guid userId)
 		{
-			Recepie? editedRecepie = await this.recepieRepository
-				.GetByIdAsync(recepieId);
+            Guid recepieGuid = Guid.Empty;
+            bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
+			if (!isGuidValid)
+			{
+				return false;
+			}
+            Recepie? editedRecepie = await this.recepieRepository
+				.GetByIdAsync(recepieGuid);
 
 			if (editedRecepie == null)
 			{
 				return false;
 			}
-
 
 			editedRecepie.Name = model.Name;
 			editedRecepie.ImageURL = model.ImageURL;
@@ -155,5 +160,7 @@ namespace FoodAdvisor.Data.Services
 			await this.recepieRepository.UpdateAsync(editedRecepie);
 			return true;
 		}
+
+		
 	}
 }

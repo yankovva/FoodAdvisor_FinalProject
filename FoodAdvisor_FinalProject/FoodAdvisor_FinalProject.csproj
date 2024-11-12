@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\assets\img\no-image-found-360x260.png\**" />
+    <Content Remove="wwwroot\assets\img\no-image-found-360x260.png\**" />
+    <EmbeddedResource Remove="wwwroot\assets\img\no-image-found-360x260.png\**" />
+    <None Remove="wwwroot\assets\img\no-image-found-360x260.png\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.10" />
@@ -25,6 +32,10 @@
     <ProjectReference Include="..\FoodAdvisor.Data\FoodAdvisor.Data.csproj" />
     <ProjectReference Include="..\FoodAdvisor.Infrastructure\FoodAdvisor.Infrastructure.csproj" />
     <ProjectReference Include="..\FoodAdvisor.ViewModels\FoodAdvisor.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
