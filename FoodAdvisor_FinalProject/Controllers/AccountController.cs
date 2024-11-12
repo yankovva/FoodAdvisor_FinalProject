@@ -34,7 +34,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 					BirthDay = DateTime.Now,
 					AboutMe = u.AboutMe,
 					Email = u.Email,
-					ProfilePricture = u.ProfilePricture,
+					ProfilePricture = u.ProfilePricturePath,
 				}).FirstOrDefaultAsync();
 			if (model == null)
 			{
@@ -60,7 +60,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 					LastName = u.LastName,
 					BirthDay = u.Birthday,
 					AboutMe = u.AboutMe,
-					ProfilePricturePath = u.ProfilePricture,
+					ProfilePricturePath = u.ProfilePricturePath,
 					UserName = u.UserName!
 				}).FirstOrDefaultAsync();
 
@@ -107,7 +107,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			user.LastName = model.LastName;
 			user.AboutMe = model.AboutMe;
 			user.Birthday = model.BirthDay;
-			user.ProfilePricture= fileSavePath;
+			user.ProfilePricturePath = fileSavePath;
 			user.UserName = model.UserName;
 			user.NormalizedUserName = model.UserName.ToUpper();
 

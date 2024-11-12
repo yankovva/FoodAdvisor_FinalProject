@@ -43,7 +43,7 @@ namespace FoodAdvisor.Data
                 .HasDefaultValue(DateTime.Now);
 
             builder.Entity<ApplicationUser>()
-                .Property(u => u.ProfilePricture)
+                .Property(u => u.ProfilePricturePath)
                 .HasDefaultValue(NoImageAccount);
                 
 
