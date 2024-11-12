@@ -129,17 +129,10 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return View(model);
 			}
 
-			Guid recepieGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref recepieGuid);
-			if (!isGuidValid)
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
-
 			Guid userGuid = Guid.Parse(GetCurrentUserId());
 
 			bool isUpdated = await this.recepieService
-				.EditRecepieAsync(model,recepieGuid, userGuid);
+				.EditRecepieAsync(model,id, userGuid);
 
 			if (isUpdated == false)
 			{

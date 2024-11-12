@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static FoodAdvisor.Common.EntityValidationConstants.Restaurant;
+//TODO
 //using static FoodAdvisor.Common.EntityValidationConstants.City;
 
 
@@ -16,20 +17,20 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[MaxLength(NameMaxLenght)]
 		[MinLength(NameMinLenght)]
 		[Required]
-        public  string Name { get; set; } = string.Empty;
+		public string Name { get; set; } = null!;
 
 		[MaxLength(DescriptionMaxLenght)]
 		[MinLength(DescriptionMinLenght)]
 		[Required]
-        public  string Description { get; set; } = string.Empty;
+        public  string Description { get; set; } = null!;
 
-        [Required]
+		[Required]
 		[MinLength(AddressMinLenght)]
 		[MaxLength(AddressMaxLenght)]
-        public  string Address { get; set; } = string.Empty;
+        public  string Address { get; set; } = null!;
 
 
-        public string? ImageURL { get; set; }
+		public string? ImageURL { get; set; }
 
 		[Required]
 		public Guid CategoryId { get; set; }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using static FoodAdvisor.Common.ApplicationConstants;
 
 namespace FoodAdvisor.Data
 {
@@ -36,6 +37,15 @@ namespace FoodAdvisor.Data
 		protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.Createdon)
+                .HasDefaultValue(DateTime.Now);
+
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.ProfilePricture)
+                .HasDefaultValue(NoImageAccount);
+                
 
             builder
                .Entity<Category>()
