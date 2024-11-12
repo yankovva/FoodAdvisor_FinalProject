@@ -4,6 +4,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using static FoodAdvisor.Infrastructure.ClaimsPrincipalExtension;
 
 
@@ -14,6 +15,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 		private readonly FoodAdvisorDbContext dbContext;
 		private readonly IRecepieService recepieService;
 		private readonly IManagerService managerService;
+		private readonly IWebHostEnvironment enviorment;
+
 
 		public RecepieController(FoodAdvisorDbContext dbContext,
 			IRecepieService recepieService,
@@ -38,7 +41,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return View(model);
 		}
 		[HttpPost]
-		public async Task<IActionResult> Add(AddRecepieViewModel model)
+		public async Task<IActionResult> Add(AddRecepieViewModel model, IFormFile file)
 		{
 			string? userId = this.GetCurrentUserId();
 
@@ -48,7 +51,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return View(model);
 			}
 
-			await this.recepieService.AddRecepiesAsync(model, Guid.Parse(userId!));
+			await this.recepieService.AddRecepiesAsync(model, Guid.Parse(userId!),file);
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -121,7 +124,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(AddRecepieViewModel model, string id)
+		public async Task<IActionResult> Edit(AddRecepieViewModel model, string id, IFormFile file)
 		{
 			if (ModelState.IsValid == false)
 			{
@@ -132,7 +135,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			Guid userGuid = Guid.Parse(GetCurrentUserId());
 
 			bool isUpdated = await this.recepieService
-				.EditRecepieAsync(model,id, userGuid);
+				.EditRecepieAsync(model,id, userGuid,file);
 
 			if (isUpdated == false)
 			{

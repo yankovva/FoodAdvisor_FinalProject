@@ -3,27 +3,48 @@ using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class RecepieService: BaseService, IRecepieService
+	public class RecepieService : BaseService, IRecepieService
 	{
 		private readonly IRepository<Recepie, Guid> recepieRepository;
-        public RecepieService(IRepository<Recepie, Guid> recepieRepository)
-        {
-                this.recepieRepository = recepieRepository;
-        }
+		private readonly IWebHostEnvironment enviorment;
 
-		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId)
+		public RecepieService(IRepository<Recepie, Guid> recepieRepository, IWebHostEnvironment enviorment)
 		{
+			this.recepieRepository = recepieRepository;
+			this.enviorment = enviorment;
+		}
+
+		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file)
+		{
+			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RecepiePictures");
+
+			if (!Directory.Exists(uploadFolder))
+			{
+				Directory.CreateDirectory(uploadFolder);
+			}
+
+			string fileName = Path.GetFileName(file.FileName);
+			string fileSavePath = Path.Combine("RecepiePictures", fileName);
+
+			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
+			{
+				await file.CopyToAsync(stream);
+			}
+
 			Recepie recepie = new Recepie()
 			{
 				Name = model.Name,
 				Description = model.Description,
-				ImageURL = model.ImageURL,
 				CookingTime = model.CookingTime,
 				PublisherId = userId,
+				ImageURL = fileSavePath,
 				CreatedOn = DateTime.Now,
 				RecepieCategoryId = model.CategoryId,
 				Products = model.Products
@@ -50,9 +71,9 @@ namespace FoodAdvisor.Data.Services
 
 			return recepies;
 		}
-		 public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId)
+		public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId)
 		{
-			DetailsRecepieViewModel? model =await this.recepieRepository
+			DetailsRecepieViewModel? model = await this.recepieRepository
 				.GetAllAttached()
 				.Where(r => r.IsDeleted == false && r.Id == recepieId)
 				.Select(r => new DetailsRecepieViewModel()
@@ -65,7 +86,7 @@ namespace FoodAdvisor.Data.Services
 					Publisher = r.Publisher.UserName!,
 					Category = r.RecepieCategory.Name,
 					Products = r.Products,
-					ImageURL = r.ImageURL,
+					ImagePath = r.ImageURL,
 					AllComment = r.RecepieComments
 					.Where(rc => rc.IsDeleted == false)
 					.Select(rc => new CommentAllViewModel()
@@ -120,12 +141,12 @@ namespace FoodAdvisor.Data.Services
 		{
 			AddRecepieViewModel? model = await this.recepieRepository
 				.GetAllAttached()
-				.Where(r=>r.Id == id)
-				.Select(r=> new AddRecepieViewModel()
+				.Where(r => r.Id == id)
+				.Select(r => new AddRecepieViewModel()
 				{
-					ImageURL = r.ImageURL,
+					ImagePath = r.ImageURL,
 					Name = r.Name,
-					Description= r.Description,
+					Description = r.Description,
 					CookingTime = r.CookingTime,
 					Products = r.Products,
 					CategoryId = r.RecepieCategoryId
@@ -134,15 +155,29 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public async Task<bool> EditRecepieAsync(AddRecepieViewModel model, string recepieId, Guid userId)
+		public async Task<bool> EditRecepieAsync(AddRecepieViewModel model, string recepieId, Guid userId, IFormFile file)
 		{
-            Guid recepieGuid = Guid.Empty;
-            bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
+			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RecepiePictures");
+
+			if (!Directory.Exists(uploadFolder))
+			{
+				Directory.CreateDirectory(uploadFolder);
+			}
+
+			string fileName = Path.GetFileName(file.FileName);
+			string fileSavePath = Path.Combine("RecepiePictures", fileName);
+
+			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
+			{
+				await file.CopyToAsync(stream);
+			}
+			Guid recepieGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
 			if (!isGuidValid)
 			{
 				return false;
 			}
-            Recepie? editedRecepie = await this.recepieRepository
+			Recepie? editedRecepie = await this.recepieRepository
 				.GetByIdAsync(recepieGuid);
 
 			if (editedRecepie == null)
@@ -151,7 +186,7 @@ namespace FoodAdvisor.Data.Services
 			}
 
 			editedRecepie.Name = model.Name;
-			editedRecepie.ImageURL = model.ImageURL;
+			editedRecepie.ImageURL = fileSavePath;
 			editedRecepie.Description = model.Description;
 			editedRecepie.CookingTime = model.CookingTime;
 			editedRecepie.Products = model.Products;
@@ -161,6 +196,6 @@ namespace FoodAdvisor.Data.Services
 			return true;
 		}
 
-		
+
 	}
 }

@@ -12,7 +12,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 
         [MinLength(URLMinLenght)]
         [MaxLength(URLMaxLEnght)]
-        public string? ImageURL { get; set; }
+        public string? ImagePath { get; set; }
         [Required]
         public int CookingTime { get; set; }
         [Required]
