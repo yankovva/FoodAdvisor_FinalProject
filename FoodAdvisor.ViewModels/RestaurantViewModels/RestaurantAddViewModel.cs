@@ -30,7 +30,7 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
         public  string Address { get; set; } = null!;
 
 
-		public string? ImageURL { get; set; }
+		public string? ImagePath { get; set; }
 
 		[Required]
 		public Guid CategoryId { get; set; }

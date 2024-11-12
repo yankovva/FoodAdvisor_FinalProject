@@ -16,7 +16,8 @@ namespace FoodAdvisor_FinalProject.Controllers
         private readonly FoodAdvisorDbContext dbContext;
 		private readonly IRestaurantService restaurantService;
 		private readonly IManagerService managerService;
-        public RestaurantController(FoodAdvisorDbContext _dbContext, 
+		
+		public RestaurantController(FoodAdvisorDbContext _dbContext, 
 			IRestaurantService restaurantService,
 			IManagerService managerService)
         {
@@ -55,7 +56,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> Add(RestaurantAddViewModel model)
+		public async Task<IActionResult> Add(RestaurantAddViewModel model, IFormFile file)
 		{
 			string? userId = this.GetCurrentUserId();
 			bool isManager = await this.managerService
@@ -71,7 +72,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return View(model);
 			}
 
-			await this.restaurantService.AddRestaurantAsync(model, Guid.Parse(userId!));
+			await this.restaurantService.AddRestaurantAsync(model, Guid.Parse(userId!),file);
 
 			return RedirectToAction(nameof(Index));
 
@@ -170,7 +171,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id)
+		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id, IFormFile file)
 		{
 			string? userId = this.GetCurrentUserId();
 			bool isManager = await this.managerService
@@ -194,7 +195,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			Guid userGuid = Guid.Parse(GetCurrentUserId());
 			
 			bool isEdited=await this.restaurantService
-				.EditRestaurantAsync(model,restaurantGuid,userGuid);
+				.EditRestaurantAsync(model,restaurantGuid,userGuid,file);
 			if (isEdited == false)
 			{
 				// TODO: ADD MESSAGE

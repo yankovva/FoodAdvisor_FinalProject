@@ -4,6 +4,9 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FoodAdvisor.Data.Services
 {
@@ -11,17 +14,35 @@ namespace FoodAdvisor.Data.Services
 	{
 		private IRepository<Restaurant, Guid> restaurantRepository;
 		private IRepository<City, Guid> cityRepository;
-	
-		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository, IRepository<City, Guid> cityRepository)
+		private readonly IWebHostEnvironment enviorment;
+
+		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository,
+			IRepository<City, Guid> cityRepository,
+			IWebHostEnvironment enviorment)
         {
             this.restaurantRepository = restaurantRepository;
 			this.cityRepository = cityRepository;
+			this.enviorment = enviorment;
 			
         }
 
 		//Done
-        public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId)
+        public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file)
 		{
+			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RestaurantPictures");
+
+			if (!Directory.Exists(uploadFolder))
+			{
+				Directory.CreateDirectory(uploadFolder);
+			}
+
+			string fileName = Path.GetFileName(file.FileName);
+			string fileSavePath = Path.Combine("RestaurantPictures", fileName);
+
+			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
+			{
+				await file.CopyToAsync(stream);
+			}
 			City? city = await this.cityRepository
 				.GetAllAttached()
 				.FirstOrDefaultAsync(c => c.Name.ToLower() == model.City.ToLower());
@@ -39,7 +60,7 @@ namespace FoodAdvisor.Data.Services
 			{
 				Name = model.Name,
 				Description = model.Description,
-				ImageURL = model.ImageURL,
+				ImageURL = fileSavePath,
 				CategoryId = model.CategoryId,
 				PublisherId = userId,
 				City = city,
@@ -86,8 +107,23 @@ namespace FoodAdvisor.Data.Services
 		}
 
 		//Done
-		public async Task<bool> EditRestaurantAsync(RestaurantAddViewModel model, Guid restaurantId, Guid userId)
+		public async Task<bool> EditRestaurantAsync(RestaurantAddViewModel model, Guid restaurantId, Guid userId, IFormFile file)
 		{
+
+			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RestaurantPictures");
+
+			if (!Directory.Exists(uploadFolder))
+			{
+				Directory.CreateDirectory(uploadFolder);
+			}
+
+			string fileName = Path.GetFileName(file.FileName);
+			string fileSavePath = Path.Combine("RestaurantPictures", fileName);
+
+			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
+			{
+				await file.CopyToAsync(stream);
+			}
 			Restaurant? editedRestaurant = await this.restaurantRepository
 				.GetByIdAsync(restaurantId);
 			if (editedRestaurant == null)
@@ -102,7 +138,7 @@ namespace FoodAdvisor.Data.Services
 
 			editedRestaurant.Name = model.Name;
 			editedRestaurant.Address = model.Address;
-			editedRestaurant.ImageURL = model.ImageURL;
+			editedRestaurant.ImageURL = fileSavePath;
 			editedRestaurant.CategoryId = model.CategoryId;
 			editedRestaurant.PublisherId = userId;
 			editedRestaurant.Description = model.Description;
@@ -125,7 +161,7 @@ namespace FoodAdvisor.Data.Services
 				{
 					Name = g.Name,
 					Description = g.Description,
-					ImageURL = g.ImageURL,
+					ImagePath = g.ImageURL,
 					Address = g.Address
 
 				})
