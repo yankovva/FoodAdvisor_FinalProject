@@ -1,75 +1,72 @@
 ﻿@using FoodAdvisor.ViewModels.AccountViemModels;
 @model EditUserViewModel
 @{
-    ViewBag.Title = " Edit Account";
+	ViewBag.Title = " Edit Account";
 }
 <div class="container-xl px-4 mt-4">
-    <hr class="mt-0 mb-4">
-    <div class="row">
-        <div class="col-xl-4">
-            <!-- Profile picture card-->
-            <div class="card mb-4 mb-xl-0">
-                <div class="card-header">Profile Picture</div>
-                <div class="card-body text-center">
-                    <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2" src="@Model.ProfilePricture" alt="">
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                    <!-- Profile picture upload button-->
-                    <button class="btn btn-primary" type="button">Upload new image</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-8">
-            <!-- Account details card-->
-            <div class="card mb-4">
-                <div class="card-header">Account Details</div>
-                <div class="card-body">
-                    <form asp-action="Edit" method="post">
-                        <!-- Form Group (username)-->
-                        <div class="mb-3">
-                            <label  asp-for="@Model.UserName" class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
-                            <input asp-for="@Model.UserName" class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="username">
-                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-                        </div>
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
-                            <div class="col-md-6">
-                                <label asp-for="@Model.FirstName" class="small mb-1" for="inputFirstName">First name</label>
-                                <input asp-for="@Model.FirstName" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="Valerie">
-                                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
-                            </div>
-                            <!-- Form Group (last name)-->
-                            <div class="col-md-6">
-                                <label asp-for="@Model.LastName" class="small mb-1" for="inputLastName">Last name</label>
-                                <input asp-for="@Model.LastName" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="Luna">
-                                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <!-- Form Row-->
-                        <div class="row gx-3 mb-3">
-                            <!-- Form Group (organization name)-->
-                            <div class="col-md-6">
-                                <label asp-for="@Model.BirthDay" class="small mb-1" for="inputOrgName">Birthday</label>
-                                <input asp-for="@Model.BirthDay" class="form-control" id="inputOrgName" type="text" placeholder="Enter your birthday" value="06/10/1988" >
-                                <span asp-validation-for="@Model.BirthDay" class="text-danger"></span>
+	<hr class="mt-0 mb-4">
+	<div class="row">
+		<div class="col-xl-8">
+			<!-- Account details card-->
+			<div class="card mb-4">
+				<div class="card-header">Account Details</div>
+				<div class="card-body">
+					<form asp-action="Edit" asp-controller="Account" method="post" enctype="multipart/form-data">
+						<div class="card mb-4 mb-xl-0">
+							<div class="card-header">Profile Picture</div>
+							<div class="card-body text-center">
+								<!-- Profile picture image-->
+								<img class="img-account-profile rounded-circle mb-2" src="@Model.ProfilePricturePath" alt="">
+								<!-- Profile picture help block-->
+								<div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+								<!-- Profile picture upload button-->
+								<input name="file" type="file" class="form-controll"/>
+							</div>
+						</div>
+						<!-- Form Group (username)-->
+						<div class="mb-3">
+							<label asp-for="@Model.UserName" class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+							<input asp-for="@Model.UserName" class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="username">
+							<span asp-validation-for="@Model.UserName" class="text-danger"></span>
+						</div>
+						<!-- Form Row-->
+						<div class="row gx-3 mb-3">
+							<!-- Form Group (first name)-->
+							<div class="col-md-6">
+								<label asp-for="@Model.FirstName" class="small mb-1" for="inputFirstName">First name</label>
+								<input asp-for="@Model.FirstName" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="Valerie">
+								<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+							</div>
+							<!-- Form Group (last name)-->
+							<div class="col-md-6">
+								<label asp-for="@Model.LastName" class="small mb-1" for="inputLastName">Last name</label>
+								<input asp-for="@Model.LastName" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="Luna">
+								<span asp-validation-for="@Model.LastName" class="text-danger"></span>
+							</div>
+						</div>
+						<!-- Form Row-->
+						<div class="row gx-3 mb-3">
+							<!-- Form Group (organization name)-->
+							<div class="col-md-6">
+								<label asp-for="@Model.BirthDay" class="small mb-1" for="inputOrgName">Birthday</label>
+								<input asp-for="@Model.BirthDay" class="form-control" id="inputOrgName" type="text" placeholder="Enter your birthday" value="06/10/1988">
+								<span asp-validation-for="@Model.BirthDay" class="text-danger"></span>
 
-                            </div>
-                            <!-- Form Group ( about me)-->
-                        </div>
-                        <div class="row gx-3 mb-3">
-                            <div class="mb-3">
-                                <label asp-for="@Model.AboutMe" class="small mb-1" for="inputEmailAddress">About Me</label>
-                                <textarea asp-for="@Model.AboutMe" class="form-control" id="inputAboutMe" type="email" placeholder="Enter your your About me info" value="Hello, my name is..."></textarea>
-                                <span asp-validation-for="@Model.AboutMe" class="text-danger"></span>
-                            </div>
-                            </div>
-                        <!-- Save changes button-->
-                        <input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Confirm" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+							</div>
+							<!-- Form Group ( about me)-->
+						</div>
+						<div class="row gx-3 mb-3">
+							<div class="mb-3">
+								<label asp-for="@Model.AboutMe" class="small mb-1" for="inputEmailAddress">About Me</label>
+								<textarea asp-for="@Model.AboutMe" class="form-control" id="inputAboutMe" type="email" placeholder="Enter your your About me info" value="Hello, my name is..."></textarea>
+								<span asp-validation-for="@Model.AboutMe" class="text-danger"></span>
+							</div>
+						</div>
+						<!-- Save changes button-->
+						<input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Confirm" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

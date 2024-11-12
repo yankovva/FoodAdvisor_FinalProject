@@ -12,7 +12,7 @@ namespace FoodAdvisor.ViewModels.AccountViemModels
 		public string? LastName { get; set; }
 		public DateTime? BirthDay { get; set; }
 		public string? AboutMe { get; set; }
-		public string? ProfilePricture { get; set; }
+		public string? ProfilePricturePath { get; set; }
 		public string UserName { get; set; } = null!;
     }
 }

@@ -12,15 +12,17 @@ namespace FoodAdvisor_FinalProject.Controllers
 	public class AccountController : BaseController
 	{
 		private readonly FoodAdvisorDbContext dbContext;
-        public AccountController(FoodAdvisorDbContext dbContext)
-        {
-				this.dbContext = dbContext;
-        }
-        [HttpGet]
+		private readonly IWebHostEnvironment enviorment;
+		public AccountController(FoodAdvisorDbContext dbContext, IWebHostEnvironment enviorment)
+		{
+			this.dbContext = dbContext;
+			this.enviorment = enviorment;
+		}
+		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-            Guid userId = Guid.Parse(this.GetCurrentUserId()!);
-			var model = await  this.dbContext
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			var model = await this.dbContext
 				.Users
 				.Where(u => u.Id == userId)
 				.Select(u => new IndexGetUserInfoViewModel()
@@ -53,12 +55,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 				.Where(u => u.Id == userId)
 				.Select(u => new EditUserViewModel()
 				{
-					
+
 					FirstName = u.FirstName,
 					LastName = u.LastName,
 					BirthDay = u.Birthday,
 					AboutMe = u.AboutMe,
-					ProfilePricture = u.ProfilePricture,
+					ProfilePricturePath = u.ProfilePricture,
 					UserName = u.UserName!
 				}).FirstOrDefaultAsync();
 
@@ -66,7 +68,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(EditUserViewModel model,string id)
+		public async Task<IActionResult> Edit(EditUserViewModel model, string id, IFormFile file)
 		{
 			Guid userGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(id, ref userGuid);
@@ -75,10 +77,25 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
+			string uploadFolder = Path.Combine(enviorment.WebRootPath, "ProfilePictures");
+
+			if (!Directory.Exists(uploadFolder))
+			{
+				Directory.CreateDirectory(uploadFolder);
+			}
+
+			string fileName = Path.GetFileName(file.FileName);
+			string fileSavePath = Path.Combine("ProfilePictures", fileName);
+
+			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
+			{
+				await file.CopyToAsync(stream);
+			}
+
 			ApplicationUser? user = await this.dbContext
 				.Users
 				.FindAsync(userGuid);
-			  
+
 
 			if (user == null)
 			{
@@ -90,12 +107,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 			user.LastName = model.LastName;
 			user.AboutMe = model.AboutMe;
 			user.Birthday = model.BirthDay;
-			user.ProfilePricture = model.ProfilePricture;
+			user.ProfilePricture= fileSavePath;
 			user.UserName = model.UserName;
-            user.NormalizedUserName = model.UserName.ToUpper();
+			user.NormalizedUserName = model.UserName.ToUpper();
 
 
-            await this.dbContext.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 
 			return RedirectToAction(nameof(Index));
 		}
