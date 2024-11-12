@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241112121747_AddingBirthdayAndAboutMeInApplicationUser")]
+    partial class AddingBirthdayAndAboutMeInApplicationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +47,7 @@ namespace FoodAdvisor.Data.Migrations
                     b.Property<DateTime>("Createdon")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 12, 14, 44, 3, 160, DateTimeKind.Local).AddTicks(6861));
+                        .HasDefaultValue(new DateTime(2024, 11, 12, 14, 17, 45, 650, DateTimeKind.Local).AddTicks(3398));
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -83,9 +86,7 @@ namespace FoodAdvisor.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilePricture")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("/assets/img/no-image-account.jfif");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -130,32 +131,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0fe09dbe-da31-4866-81e1-8a003e697526"),
+                            Id = new Guid("070cafab-b66f-4e07-98f8-a801b673b073"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("efa6b877-fc0a-41e9-9074-8ff440bfe535"),
+                            Id = new Guid("acbabe28-5a87-496a-b89d-0181df7832ab"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("60dfb753-e592-4c15-ae16-6e3893103535"),
+                            Id = new Guid("148183fd-c46f-4fa9-b639-1e98048de1e4"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("d17b9250-cc16-4379-905f-83a7a205d89a"),
+                            Id = new Guid("f4d24a5a-ef07-44a7-97df-bb468e9c29c2"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("4c8eef3e-2c48-4d72-8d10-f455bd9cede3"),
+                            Id = new Guid("ee76812b-71c8-4da5-8011-6b0e9be7ea9d"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("e0e77684-07a6-41ca-931e-53ec26cfc1a8"),
+                            Id = new Guid("08f5b1f0-4648-4b78-8859-7f8832ac06e2"),
                             Name = "Bistro"
                         });
                 });
@@ -280,37 +281,37 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("faccfcd7-3928-4bfb-86a6-064e5637d7fa"),
+                            Id = new Guid("44c9775c-58e4-40a4-aa3e-cc47bb1a513f"),
                             Name = "Breakfast"
                         },
                         new
                         {
-                            Id = new Guid("3aac5bbf-f974-4379-9c6f-06a8ad3af0df"),
+                            Id = new Guid("2bd6f404-1b58-4279-b62b-102962e8c95f"),
                             Name = "Lunch"
                         },
                         new
                         {
-                            Id = new Guid("e9d02fe4-c0ae-468b-90f4-d0476a37d4e9"),
+                            Id = new Guid("8a780959-1b3c-4fd3-8fe6-656c1b7c5c07"),
                             Name = "Dinner"
                         },
                         new
                         {
-                            Id = new Guid("4af2afd1-45ad-480a-acfc-411edda055bf"),
+                            Id = new Guid("3c23a033-9592-4835-b9db-4a186fd192fb"),
                             Name = "Dessert"
                         },
                         new
                         {
-                            Id = new Guid("cc0f5a71-e6c4-466a-a19b-79761de400cb"),
+                            Id = new Guid("d7cb51df-adcd-42f9-8656-71f1d10ba0c5"),
                             Name = "Snack"
                         },
                         new
                         {
-                            Id = new Guid("f0a25165-a0db-4665-89c3-dd8f0003bc4c"),
+                            Id = new Guid("5d4c539e-b75b-47ac-a83e-c3a39302661f"),
                             Name = "Side dish"
                         },
                         new
                         {
-                            Id = new Guid("388fc9f4-97d4-4f98-b783-fb8d4a82d27b"),
+                            Id = new Guid("b4fc6c1c-365e-4500-b86c-d985403e8564"),
                             Name = "Starter"
                         });
                 });
