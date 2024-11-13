@@ -57,20 +57,19 @@ namespace FoodAdvisor_FinalProject.Controllers
 				.Where(u => u.Id == userId)
 				.Select(u => new EditUserViewModel()
 				{
-
 					FirstName = u.FirstName,
 					LastName = u.LastName,
 					BirthDay = u.Birthday,
 					AboutMe = u.AboutMe,
-					ProfilePricturePath = u.ProfilePricturePath,
-					UserName = u.UserName!
+					UserName = u.UserName!,
+					ProfilePicture = u.ProfilePricturePath
 				}).FirstOrDefaultAsync();
 
 			return View(model);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(EditUserViewModel model, string id, IFormFile file)
+		public async Task<IActionResult> Edit(EditUserViewModel model, string id)
 		{
 			Guid userGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(id, ref userGuid);
@@ -94,13 +93,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
-			string uploadFolder = Path.Combine(enviorment.WebRootPath, "ProfilePictures");
-
-			if (!Directory.Exists(uploadFolder))
-			{
-				Directory.CreateDirectory(uploadFolder);
-			}
-
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.AboutMe = model.AboutMe;
@@ -108,23 +100,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 			user.UserName = model.UserName;
 			user.NormalizedUserName = model.UserName.ToUpper();
 
-			if (file != null)
-			{
-				string filePath = enviorment.WebRootPath;
-				string imageToDelete = $"{filePath}\\{user.ProfilePricturePath}";
-
-				System.IO.File.Delete(imageToDelete);
-
-				string fileName = Path.GetFileName(file.FileName);
-				string NewImagePath = Path.Combine("ProfilePictures", fileName);
-
-				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NewImagePath), FileMode.Create))
-				{
-					await file.CopyToAsync(stream);
-				}
-
-				user.ProfilePricturePath = NewImagePath;
-			}
 
 			await this.dbContext.SaveChangesAsync();
 
@@ -154,9 +129,13 @@ namespace FoodAdvisor_FinalProject.Controllers
 			
 			if (file != null)
 			{
-				string filePath = enviorment.WebRootPath;
-				string imageToDelete = $"{filePath}\\{user.ProfilePricturePath}";
-				System.IO.File.Delete(imageToDelete);
+				if (user.ProfilePricturePath != null)
+				{
+					string filePath = enviorment.WebRootPath;
+					string imageToDelete = $"{filePath}\\{user.ProfilePricturePath}";
+
+					System.IO.File.Delete(imageToDelete);
+				}
 
 				string fileName = Path.GetFileName(file.FileName);
 				string NewImagePath = Path.Combine("ProfilePictures", fileName);

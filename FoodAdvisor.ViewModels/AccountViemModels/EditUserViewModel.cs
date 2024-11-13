@@ -11,20 +11,21 @@ namespace FoodAdvisor.ViewModels.AccountViemModels
 	public class EditUserViewModel
 	{
 		[MaxLength(FirstNameMaxLenght)]
-		[MinLength(FirstNameMaxLenght)]
+		[MinLength(FirstNameMinLenght)]
 		public string? FirstName { get; set; }
 
 		[MaxLength(LastNameMaxLenght)]
-		[MinLength(LastNameMaxLenght)]
+		[MinLength(LastNameMinLenght)]
 		public string? LastName { get; set; }
 		public DateTime? BirthDay { get; set; }
 
 		[MaxLength(AboutMeMaxLenght)]
 		[MinLength(AboutMeMinLenght)]
 		public string? AboutMe { get; set; }
-		public string? ProfilePricturePath { get; set; }
 
 		[MaxLength(UsernameMaxLenght)]
 		public string UserName { get; set; } = null!;
+
+        public string? ProfilePicture { get; set; }
     }
 }

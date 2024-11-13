@@ -3,15 +3,83 @@
 @{
 	ViewBag.Title = " Edit Account";
 }
+<style>
+	body {
+		margin-top: 20px;
+		background-color: rgb(234,230,229); 
+	}
+
+	.img-account-profile {
+		height: 10rem;
+	}
+
+	.rounded-circle {
+		border-radius: 50% !important;
+	}
+
+	.card {
+		box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+	}
+
+		.card .card-header {
+			font-weight: 500;
+		}
+
+	.card-header:first-child {
+		border-radius: 0.35rem 0.35rem 0 0;
+	}
+
+	.card-header {
+		padding: 1rem 1.35rem;
+		margin-bottom: 0;
+		background-color: rgba(33, 40, 50, 0.03);
+		border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+	}
+
+	.form-control, .dataTable-input {
+		display: block;
+		width: 100%;
+		padding: 0.875rem 1.125rem;
+		font-size: 0.875rem;
+		font-weight: 400;
+		line-height: 1;
+		color: #69707a;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #c5ccd6;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		border-radius: 0.35rem;
+		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	}
+</style>
 <div class="container-xl px-4 mt-4">
 	<hr class="mt-0 mb-4">
 	<div class="row">
+		<div class="col-xl-4">
+			<!-- Profile picture card-->
+			<form method="post" asp-action="UpdateImage" method="post" enctype="multipart/form-data">
+			<div class="card mb-4 mb-xl-0">
+				<div class="card-header">Profile Picture</div>
+				<div class="card-body text-center">
+					<!-- Profile picture image-->
+						<img class="img-account-profile rounded-circle mb-2"  src="\@Model.ProfilePicture" alt="" />
+						<!-- Profile picture help block-->
+					<div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+					<!-- Profile picture upload button-->
+						<input name="file" type="file" class="form-controll" />
+					<input class="btn btn-primary" type="submit" value="Upload New Image">
+				</div>
+			</div>
+			</form>
+		</div>
 		<div class="col-xl-8">
 			<!-- Account details card-->
 			<div class="card mb-4">
 				<div class="card-header">Account Details</div>
 				<div class="card-body">
-					<form asp-action="Edit" asp-controller="Account" method="post" enctype="multipart/form-data">
+					<form asp-action="Edit" asp-controller="Account" method="post" >
 						<!-- Form Group (username)-->
 						<div class="mb-3">
 							<label asp-for="@Model.UserName" class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
