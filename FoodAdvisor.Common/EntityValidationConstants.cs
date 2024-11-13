@@ -20,8 +20,8 @@
 
         public static class City
         {
-            public const int NameMinLenght = 4;
-            public const int NameMaxLenght = 56;
+            public const int CityNameMinLenght = 4;
+            public const int CityNameMaxLenght = 56;
         }
         public static class Category
         {

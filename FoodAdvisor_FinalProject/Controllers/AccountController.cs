@@ -4,6 +4,7 @@ using FoodAdvisor.ViewModels.AccountViemModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 using static FoodAdvisor.Common.EntityValidationConstants;
 
 namespace FoodAdvisor_FinalProject.Controllers
@@ -77,25 +78,9 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
-			string uploadFolder = Path.Combine(enviorment.WebRootPath, "ProfilePictures");
-
-			if (!Directory.Exists(uploadFolder))
-			{
-				Directory.CreateDirectory(uploadFolder);
-			}
-
-			string fileName = Path.GetFileName(file.FileName);
-			string fileSavePath = Path.Combine("ProfilePictures", fileName);
-
-			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
-			{
-				await file.CopyToAsync(stream);
-			}
-
 			ApplicationUser? user = await this.dbContext
 				.Users
 				.FindAsync(userGuid);
-
 
 			if (user == null)
 			{
@@ -103,14 +88,37 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
+			string uploadFolder = Path.Combine(enviorment.WebRootPath, "ProfilePictures");
+
+			if (!Directory.Exists(uploadFolder))
+			{
+				Directory.CreateDirectory(uploadFolder);
+			}
+
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.AboutMe = model.AboutMe;
 			user.Birthday = model.BirthDay;
-			user.ProfilePricturePath = fileSavePath;
 			user.UserName = model.UserName;
 			user.NormalizedUserName = model.UserName.ToUpper();
 
+			if (file != null)
+			{
+				string filePath = enviorment.WebRootPath;
+				string imageToDelete = $"{filePath}\\{user.ProfilePricturePath}";
+
+				System.IO.File.Delete(imageToDelete);
+
+				string fileName = Path.GetFileName(file.FileName);
+				string NewImagePath = Path.Combine("ProfilePictures", fileName);
+
+				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NewImagePath), FileMode.Create))
+				{
+					await file.CopyToAsync(stream);
+				}
+
+				user.ProfilePricturePath = NewImagePath;
+			}
 
 			await this.dbContext.SaveChangesAsync();
 

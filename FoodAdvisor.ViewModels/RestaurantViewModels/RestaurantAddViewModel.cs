@@ -6,8 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static FoodAdvisor.Common.EntityValidationConstants.Restaurant;
-//TODO
-//using static FoodAdvisor.Common.EntityValidationConstants.City;
+using static FoodAdvisor.Common.EntityValidationConstants.City;
 
 
 namespace FoodAdvisor.ViewModels.RestaurantViewModels
@@ -38,9 +37,9 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		public List<Category> Categories { get; set; } = new List<Category>();
 
 		[Required]
-		[MaxLength(56)]
-		[MinLength(4)]
-		public string City { get; set; } = string.Empty;
+		[MaxLength(CityNameMaxLenght)]
+		[MinLength(CityNameMinLenght)]
+		public string City { get; set; } = null!;
 
 
     }

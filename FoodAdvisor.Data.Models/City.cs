@@ -13,7 +13,7 @@ namespace FoodAdvisor.Data.Models
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [MaxLength(NameMaxLenght)]
+        [MaxLength(CityNameMaxLenght)]
         [Comment("The name of the city.")]
         public string Name { get; set; } = null!;
 

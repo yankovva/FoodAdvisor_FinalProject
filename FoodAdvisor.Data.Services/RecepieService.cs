@@ -31,9 +31,9 @@ namespace FoodAdvisor.Data.Services
 			}
 
 			string fileName = Path.GetFileName(file.FileName);
-			string fileSavePath = Path.Combine("RecepiePictures", fileName);
+			string NemImagePath = Path.Combine("RecepiePictures", fileName);
 
-			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
+			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
 			{
 				await file.CopyToAsync(stream);
 			}
@@ -44,7 +44,7 @@ namespace FoodAdvisor.Data.Services
 				Description = model.Description,
 				CookingTime = model.CookingTime,
 				PublisherId = userId,
-				ImageURL = fileSavePath,
+				ImageURL = NemImagePath,
 				CreatedOn = DateTime.Now,
 				RecepieCategoryId = model.CategoryId,
 				Products = model.Products
@@ -115,7 +115,8 @@ namespace FoodAdvisor.Data.Services
 				   Id = recepieId.ToString(),
 				   Name = r.Name,
 				   Publisher = r.Publisher.UserName ?? string.Empty,
-				   CreatedOn = r.CreatedOn
+				   CreatedOn = r.CreatedOn,
+				   ImagePath = r.ImageURL
 			   })
 			   .FirstOrDefaultAsync();
 
@@ -127,9 +128,13 @@ namespace FoodAdvisor.Data.Services
 			Recepie? recepie = await this.recepieRepository
 				.GetByIdAsync(Guid.Parse(model.Id));
 
+			string filePath = enviorment.WebRootPath;
+			string imageToDelete = $"{filePath}\\{recepie.ImageURL}";
+
 			if (recepie != null)
 			{
 				recepie.IsDeleted = true;
+				File.Delete(imageToDelete);
 				await this.recepieRepository.SaveChangesAsync();
 				return true;
 			}
@@ -157,40 +162,49 @@ namespace FoodAdvisor.Data.Services
 
 		public async Task<bool> EditRecepieAsync(AddRecepieViewModel model, string recepieId, Guid userId, IFormFile file)
 		{
-			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RecepiePictures");
 
-			if (!Directory.Exists(uploadFolder))
-			{
-				Directory.CreateDirectory(uploadFolder);
-			}
-
-			string fileName = Path.GetFileName(file.FileName);
-			string fileSavePath = Path.Combine("RecepiePictures", fileName);
-
-			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, fileSavePath), FileMode.Create))
-			{
-				await file.CopyToAsync(stream);
-			}
 			Guid recepieGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
 			if (!isGuidValid)
 			{
 				return false;
 			}
-			Recepie? editedRecepie = await this.recepieRepository
-				.GetByIdAsync(recepieGuid);
 
+			Recepie? editedRecepie = await this.recepieRepository
+			.GetByIdAsync(recepieGuid);
 			if (editedRecepie == null)
 			{
 				return false;
 			}
 
+			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RecepiePictures");
+
+			if (!Directory.Exists(uploadFolder))
+			{
+				Directory.CreateDirectory(uploadFolder);
+			}
 			editedRecepie.Name = model.Name;
-			editedRecepie.ImageURL = fileSavePath;
 			editedRecepie.Description = model.Description;
 			editedRecepie.CookingTime = model.CookingTime;
 			editedRecepie.Products = model.Products;
 			editedRecepie.RecepieCategoryId = model.CategoryId;
+
+			if (file != null)
+			{
+				string filePath = enviorment.WebRootPath;
+				string imageToDelete = $"{filePath}\\{editedRecepie.ImageURL}";
+				File.Delete(imageToDelete);
+
+				string fileName = Path.GetFileName(file.FileName);
+				string NemImagePath = Path.Combine("RecepiePictures", fileName);
+
+				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
+				{
+					await file.CopyToAsync(stream);
+				}
+				editedRecepie.ImageURL = NemImagePath;
+
+			}
 
 			await this.recepieRepository.UpdateAsync(editedRecepie);
 			return true;
