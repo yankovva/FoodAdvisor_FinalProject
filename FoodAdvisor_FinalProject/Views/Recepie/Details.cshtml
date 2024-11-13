@@ -26,7 +26,7 @@
 				<form asp-controller="RecepieComment" asp-action="Add" method="post">
 					<h6>Add Comment!</h6>
 					<textarea class="form-control" aria-label="With textarea" name="Message" style="width: 40%; vertical-align:top;"></textarea>
-					<input type="hidden" name="recepieId" class="form-control" value="@Model.Id" />
+					<input type="hidden" name="recepieId" value="@Model.Id" />
 					<button type="submit" class="btn btn-primary" style="display: inline-block; margin-top:10px;">Submit</button>
 
 				</form>

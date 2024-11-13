@@ -32,7 +32,7 @@
 					{
 						@if (User?.Identity?.Name == restaurant.Publisher)
 						{
-							<form asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+							<form asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurant.Id" method="get" class="d-inline">
 								<input type="hidden" name="restaurantId" value="@restaurant.Id" />
 								<button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></button>
 							</form>

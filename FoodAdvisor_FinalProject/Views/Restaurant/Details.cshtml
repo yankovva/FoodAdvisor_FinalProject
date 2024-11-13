@@ -3,6 +3,7 @@
 @using FoodAdvisor.ViewModels.RestaurantViewModels;
 @using FoodAdvisor.ViewModels.CommentViewModel;
 @using Microsoft.AspNetCore.Identity
+@using static FoodAdvisor.Common.ApplicationConstants;
 @model RestaurantDetailsViewModel
 @inject UserManager<ApplicationUser> userManager
 
@@ -14,7 +15,7 @@
 <div .container-fluid>
 	<div class="row">
 		<div class="text-center">
-			<img src="@Model.ImageURL" class="rounded" alt="Responsive image" width="400">
+			<img src="/@Model.ImageURL" class="rounded" alt="@NoImage" width="400">
 		</div>
 		<p><strong>Name</strong> @Model.Name</p>
 		<p><strong>Category</strong> @Model.Category</p>

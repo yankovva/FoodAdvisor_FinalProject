@@ -26,7 +26,7 @@
 						<!-- Form Group (username)-->
 						<div class="mb-3">
 							<label asp-for="@Model.UserName" class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
-							<input asp-for="@Model.UserName" class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="username">
+							<input asp-for="@Model.UserName" class="form-control" id="inputUsername" type="text" placeholder="Enter your username">
 							<span asp-validation-for="@Model.UserName" class="text-danger"></span>
 						</div>
 						<!-- Form Row-->
@@ -34,13 +34,13 @@
 							<!-- Form Group (first name)-->
 							<div class="col-md-6">
 								<label asp-for="@Model.FirstName" class="small mb-1" for="inputFirstName">First name</label>
-								<input asp-for="@Model.FirstName" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="Valerie">
+								<input asp-for="@Model.FirstName" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" >
 								<span asp-validation-for="@Model.FirstName" class="text-danger"></span>
 							</div>
 							<!-- Form Group (last name)-->
 							<div class="col-md-6">
 								<label asp-for="@Model.LastName" class="small mb-1" for="inputLastName">Last name</label>
-								<input asp-for="@Model.LastName" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="Luna">
+								<input asp-for="@Model.LastName" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" >
 								<span asp-validation-for="@Model.LastName" class="text-danger"></span>
 							</div>
 						</div>
@@ -49,7 +49,7 @@
 							<!-- Form Group (organization name)-->
 							<div class="col-md-6">
 								<label asp-for="@Model.BirthDay" class="small mb-1" for="inputOrgName">Birthday</label>
-								<input asp-for="@Model.BirthDay" class="form-control" id="inputOrgName" type="text" placeholder="Enter your birthday" value="06/10/1988">
+								<input asp-for="@Model.BirthDay" class="form-control" id="inputOrgName" type="text" placeholder="Enter your birthday" >
 								<span asp-validation-for="@Model.BirthDay" class="text-danger"></span>
 
 							</div>
@@ -58,7 +58,7 @@
 						<div class="row gx-3 mb-3">
 							<div class="mb-3">
 								<label asp-for="@Model.AboutMe" class="small mb-1" for="inputEmailAddress">About Me</label>
-								<textarea asp-for="@Model.AboutMe" class="form-control" id="inputAboutMe" type="email" placeholder="Enter your your About me info" value="Hello, my name is..."></textarea>
+								<textarea asp-for="@Model.AboutMe" class="form-control" id="inputAboutMe" type="text" placeholder="Enter your your About me info" ></textarea>
 								<span asp-validation-for="@Model.AboutMe" class="text-danger"></span>
 							</div>
 						</div>
