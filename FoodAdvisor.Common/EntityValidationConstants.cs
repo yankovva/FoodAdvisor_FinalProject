@@ -58,5 +58,20 @@
 			public const int URLMinLenght = 8;
 
 		}
+
+        public static class User
+        {
+			public const int FirstNameMinLenght = 2;
+			public const int FirstNameMaxLenght = 50;
+
+			public const int LastNameMinLenght = 2;
+			public const int LastNameMaxLenght = 50;
+
+			public const int AboutMeMinLenght = 5;
+			public const int AboutMeMaxLenght = 200;
+
+			public const int UsernameMaxLenght = 30;
+
+		}
 	}
 }

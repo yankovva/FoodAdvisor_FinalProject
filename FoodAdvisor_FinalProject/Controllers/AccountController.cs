@@ -4,6 +4,7 @@ using FoodAdvisor.ViewModels.AccountViemModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 using System.IO;
 using static FoodAdvisor.Common.EntityValidationConstants;
 
@@ -78,6 +79,11 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
+			if (ModelState.IsValid == false)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
 			ApplicationUser? user = await this.dbContext
 				.Users
 				.FindAsync(userGuid);
@@ -124,5 +130,50 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			return RedirectToAction(nameof(Index));
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> UpdateImage(IFormFile file)
+		{
+			string userId =  GetCurrentUserId()!;
+			Guid userGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(userId, ref userGuid);
+			if (!isGuidValid)
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
+			ApplicationUser? user = await this.dbContext
+				.Users
+				.FindAsync(userGuid);
+
+			if (user == null)
+			{
+				//TODO:Add message
+				return RedirectToAction(nameof(Index));
+			}
+			
+			if (file != null)
+			{
+				string filePath = enviorment.WebRootPath;
+				string imageToDelete = $"{filePath}\\{user.ProfilePricturePath}";
+				System.IO.File.Delete(imageToDelete);
+
+				string fileName = Path.GetFileName(file.FileName);
+				string NewImagePath = Path.Combine("ProfilePictures", fileName);
+
+				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NewImagePath), FileMode.Create))
+				{
+					await file.CopyToAsync(stream);
+				}
+
+				user.ProfilePricturePath = NewImagePath;
+
+				await this.dbContext.SaveChangesAsync();
+			}
+			
+
+			return RedirectToAction(nameof(Index));
+		}
 	}
+	
 }

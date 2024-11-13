@@ -122,12 +122,15 @@
 }
 
 <div class="container emp-profile">
-	<form method="post">
 		<div class="row">
-			<div class="col-md-4">
+		<div class="col-md-4">
+			<form method="post" asp-action="UpdateImage" method="post" enctype="multipart/form-data">
 				<div class="profile-img">
 					<img src="@Model.ProfilePricture" alt="" />
+					<input name="file" type="file" class="form-controll" />
+					<input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Confirm" />
 				</div>
+			</form>
 			</div>
 			<div class="col-md-6">
 				<div class="profile-head">
@@ -202,5 +205,4 @@
 				</div>
 			</div>
 		</div>
-	</form>
 </div>

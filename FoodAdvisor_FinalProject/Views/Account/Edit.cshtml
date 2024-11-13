@@ -12,17 +12,6 @@
 				<div class="card-header">Account Details</div>
 				<div class="card-body">
 					<form asp-action="Edit" asp-controller="Account" method="post" enctype="multipart/form-data">
-						<div class="card mb-4 mb-xl-0">
-							<div class="card-header">Profile Picture</div>
-							<div class="card-body text-center">
-								<!-- Profile picture image-->
-								<img class="img-account-profile rounded-circle mb-2" src="@Model.ProfilePricturePath" alt="">
-								<!-- Profile picture help block-->
-								<div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-								<!-- Profile picture upload button-->
-								<input name="file" type="file" class="form-controll"/>
-							</div>
-						</div>
 						<!-- Form Group (username)-->
 						<div class="mb-3">
 							<label asp-for="@Model.UserName" class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
