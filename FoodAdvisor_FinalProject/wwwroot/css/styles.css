@@ -10535,7 +10535,9 @@ textarea.form-control-lg {
     margin-top: 0.25rem !important;
   }
   .mt-xxl-2 {
-    margin-top: 0.5rem !important;
+   
+      
+      margin-top: 0.5rem !important;
   }
   .mt-xxl-3 {
     margin-top: 1rem !important;
@@ -10824,9 +10826,14 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+
 .bg-image-full {
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center;
   background-size: cover;
 }
+
+
+ 
