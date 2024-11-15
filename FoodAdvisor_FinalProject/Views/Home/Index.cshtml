@@ -1,4 +1,7 @@
-﻿@{
+﻿@using FoodAdvisor.ViewModels.AccountViemModels
+@model LoginViewModel
+
+@{
 	ViewData["Title"] = "Home Page";
 }
 <div class="content">
@@ -8,27 +11,12 @@
 		expedita atque eveniet <br> quis nesciunt. Quos nulla vero consequuntur, fugit nemo ad delectus
 		<br> a quae totam ipsa illum minus laudantium?
 	</p>
-
-	<button class="cn"><a href="#">JOIN US</a></button>
-
 	@if (User?.Identity?.IsAuthenticated == false)
 	{
-		<form class="form-login" >
-			<h3>Login Here</h3>
+		<a asp-area="Identity" asp-page="/Account/Register"  class="cn">JOIN US</a>
 
-			<label class="label-form">Username</label>
-			<input class="input-form" type="text" placeholder="Email or Phone" id="username">
-
-			<label for="label-form">Password</label>
-			<input class="input-form" type="password" placeholder="Password" id="password">
-
-			<button class="button-form">Log In</button>
-			<div class="social">
-				<div class="go"><i class="fab fa-google"></i>  Google</div>
-				<div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
-			</div>
-		</form>
 	}
+
 </div>
 
 <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
