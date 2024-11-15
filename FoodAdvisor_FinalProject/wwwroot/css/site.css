@@ -85,26 +85,30 @@
     }
 
     .content .cn {
-        width: 160px;
-        height: 40px;
+        width: 150px;
+        height: 45px;
         background: #ff7200;
         border: none;
         margin-bottom: 10px;
         margin-left: 20px;
-        font-size: 18px;
-        border-radius: 10px;
+        font-size: 25px;
+        border-radius: 20px;
         cursor: pointer;
         transition: .4s ease;
+        text-decoration: none;
+        color: #fff;
+        transition: .3s ease;
+        display: block;
+        text-align: center;
+        font-weight:600;
+        padding-top:2px;
     }
 
-        .content .cn a {
-            text-decoration: none;
-            color: #000;
-            transition: .3s ease;
-        }
+
 
 .cn:hover {
     background-color: #fff;
+    color: #ff7200;
 }
 
 .content span {
@@ -151,34 +155,19 @@
     text-align: center;
 }
 
-.icons a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.icons ion-icon {
-    color: #fff;
-    font-size: 30px;
-    padding-left: 14px;
-    padding-top: 5px;
-    transition: 0.3s ease;
-}
-
-    .icons ion-icon:hover {
-        color: #ff7200;
-    }
-
 .navbar {
     background-color: rgba(56, 55, 55, 0.5);
 }
+
+
 .form-login {
-    height: 500px;
+    height: 550px;
     width: 380px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 60%;
-    left: 90%;
+    top: 50%;
+    left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
@@ -200,6 +189,34 @@
         line-height: 42px;
         text-align: center;
     }
+.form-register {
+    height: 680px;
+    width: 380px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 55%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+    .form-register * {
+        font-family: 'Poppins',sans-serif;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        outline: none;
+        border: none;
+    }
+
+    .form-register h3 {
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 42px;
+        text-align: center;
+    }
 
 .label-form {
     display: block;
@@ -208,16 +225,24 @@
     font-weight: 500;
 }
 
+.label-form-register {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
 .input-form {
     display: block;
     height: 50px;
     width: 100%;
-    background-color: rgba(255,255,255,0.07);
+    background-color: rgb(157, 156, 156, 0,09);
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 300;
+    color:black;
 }
 
 ::placeholder {
@@ -235,30 +260,14 @@
     border-radius: 5px;
     cursor: pointer;
 }
-
-.social {
+.button-form-register {
     margin-top: 30px;
-    display: flex;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
 }
-
-    .social div {
-        background: red;
-        width: 150px;
-        border-radius: 3px;
-        padding: 5px 10px 10px 5px;
-        background-color: rgba(255,255,255,0.27);
-        color: #eaf0fb;
-        text-align: center;
-    }
-
-        .social div:hover {
-            background-color: rgba(255,255,255,0.47);
-        }
-
-    .social .fb {
-        margin-left: 25px;
-    }
-
-    .social i {
-        margin-right: 4px;
-    }
