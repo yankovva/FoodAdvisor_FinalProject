@@ -14,6 +14,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         public string Publisher { get; set; } = null!;
         public string? ImageURL { get; set; }
         public string Category { get; set; } = null!;
+		public string AuthorPicturePath { get; set; } = null!;
 
 	}
 }

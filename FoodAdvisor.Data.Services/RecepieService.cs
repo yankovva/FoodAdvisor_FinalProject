@@ -57,6 +57,7 @@ namespace FoodAdvisor.Data.Services
 		{
 			IEnumerable<RecepieIndexViewModel> recepies = await this.recepieRepository
 				.GetAllAttached()
+				.Include(r=>r.Publisher)
 				.Where(r => r.IsDeleted == false)
 				.Select(r => new RecepieIndexViewModel()
 				{
@@ -65,7 +66,9 @@ namespace FoodAdvisor.Data.Services
 					CookingTime = r.CookingTime,
 					ImageURL = r.ImageURL,
 					Publisher = r.Publisher.UserName!,
-					Category = r.RecepieCategory.Name
+					Category = r.RecepieCategory.Name,
+					AuthorPicturePath = r.Publisher.ProfilePricturePath,
+					
 				})
 				.ToArrayAsync();
 
