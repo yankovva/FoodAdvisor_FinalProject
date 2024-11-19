@@ -20,9 +20,9 @@
 			<div class="card">
 				<div>
 					<img class="header" src="@recepie.ImageURL" alt="/@NoImage">
-					<form asp-controller="RecepieFavourites" asp-action="AddToFavourites" asp-route-id="@recepie.Id" method="post" class="icon">
+					<form method="post" asp-controller="RecepieFavourites" asp-action="AddToFavourites" asp-route-id="@recepie.Id">
 						<input type="hidden" name="id" value="@recepie.Id" />
-						<i type="submit" class="fa-solid fa-heart"></i>
+						<button type="submit" class="icon"><i class="fa-solid fa-heart"></i></button>
 					</form>
 
 				</div>
@@ -32,7 +32,7 @@
 					</h1>
 					<div id="recepie-details-wrapper">
 						<i class="fa bi-clock"> @recepie.CookingTime</i>
-						<i class="fa fa-users"> @recepie.Category</i>
+						<i class="fa fa-users"> @recepie.Servings</i>
 						<i class="fa bi-layout-text-sidebar"> @recepie.Category</i>
 
 					</div>
