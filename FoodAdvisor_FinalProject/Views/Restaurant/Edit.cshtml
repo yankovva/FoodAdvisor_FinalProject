@@ -16,6 +16,11 @@
 		<span asp-validation-for="@Model.ImagePath" class="text-danger"></span>
 	</div>
 	<div class="form-group">
+		<label asp-for="@Model.PriceRange" class="form-label-add-edit">Price Range - $</label>
+		<input asp-for="@Model.PriceRange" name="file" type="file" class="form-controll" aria-required="false" />
+		<span asp-validation-for="@Model.PriceRange" class="text-danger"></span>
+	</div>
+	<div class="form-group">
 		<label asp-for="@Model.Address" class="form-label-add-edit">Restaurant Address</label>
 		<input asp-for="@Model.Address" class="form-control" aria-required="true" />
 		<span asp-validation-for="@Model.Address" class="text-danger"></span>
