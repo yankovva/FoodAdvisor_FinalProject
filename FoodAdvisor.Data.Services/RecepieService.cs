@@ -14,11 +14,15 @@ namespace FoodAdvisor.Data.Services
 	{
 		private readonly IRepository<Recepie, Guid> recepieRepository;
 		private readonly IWebHostEnvironment enviorment;
+		private IRepository<UserRecepie, object> userRecepieRepository;
 
-		public RecepieService(IRepository<Recepie, Guid> recepieRepository, IWebHostEnvironment enviorment)
+
+		public RecepieService(IRepository<Recepie, Guid> recepieRepository, IWebHostEnvironment enviorment,
+			IRepository<UserRecepie, object> userRecepieRepository)
 		{
 			this.recepieRepository = recepieRepository;
 			this.enviorment = enviorment;
+			this.userRecepieRepository = userRecepieRepository;
 		}
 
 		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file)
@@ -47,7 +51,9 @@ namespace FoodAdvisor.Data.Services
 				ImageURL = NemImagePath,
 				CreatedOn = DateTime.Now,
 				RecepieCategoryId = model.CategoryId,
-				Products = model.Products
+				Products = model.Products,
+				NumberOfServing = model.Servings
+				
 			};
 
 			await this.recepieRepository.AddAsync(recepie);
@@ -67,8 +73,8 @@ namespace FoodAdvisor.Data.Services
 					ImageURL = r.ImageURL,
 					Publisher = r.Publisher.UserName!,
 					Category = r.RecepieCategory.Name,
-					AuthorPicturePath = r.Publisher.ProfilePricturePath,
-					
+					AuthorPicturePath = r.Publisher.ProfilePricturePath!,
+					Servings = r.NumberOfServing
 				})
 				.ToArrayAsync();
 
@@ -90,6 +96,7 @@ namespace FoodAdvisor.Data.Services
 					Category = r.RecepieCategory.Name,
 					Products = r.Products,
 					ImagePath = r.ImageURL,
+					Servings = r.NumberOfServing,
 					AllComment = r.RecepieComments
 					.Where(rc => rc.IsDeleted == false)
 					.Select(rc => new CommentAllViewModel()
@@ -157,7 +164,9 @@ namespace FoodAdvisor.Data.Services
 					Description = r.Description,
 					CookingTime = r.CookingTime,
 					Products = r.Products,
-					CategoryId = r.RecepieCategoryId
+					CategoryId = r.RecepieCategoryId,
+					Servings = r.NumberOfServing
+
 				}).FirstOrDefaultAsync();
 
 			return model;
@@ -191,6 +200,7 @@ namespace FoodAdvisor.Data.Services
 			editedRecepie.CookingTime = model.CookingTime;
 			editedRecepie.Products = model.Products;
 			editedRecepie.RecepieCategoryId = model.CategoryId;
+			editedRecepie.NumberOfServing = model.Servings;
 
 			if (file != null)
 			{

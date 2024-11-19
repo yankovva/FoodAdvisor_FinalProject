@@ -44,10 +44,9 @@ img {
     min-height: 200px;
     width:300px;
     height:200px;
-} 
+}
 
-.icon
-{
+.icon {
     position: absolute;
     left: 80%;
     bottom: 55%;
@@ -58,6 +57,7 @@ img {
     padding: 13px;
     border-radius: 100%;
     box-shadow: 0px 0px 10px 1px #17BEBB;
+    border-style: none;
 }
 
 }
@@ -80,6 +80,9 @@ img {
 }
 
 .fa-users {
+    color: #9B9B9B;
+}
+.bi-cash {
     color: #9B9B9B;
 }
 
