@@ -13,6 +13,8 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
         public string? ImageURL { get; set; }
 		public required string Publisher { get; set; } 
         public required string Category { get; set; }
+		public required string PriceRange { get; set; }
 
-    }
+
+	}
 }

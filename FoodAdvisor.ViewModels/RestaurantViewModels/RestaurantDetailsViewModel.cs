@@ -17,6 +17,8 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
         public required string Category { get; set; }
         public required string City { get; set; }
         public required string Address { get; set; }
-        public IEnumerable<CommentAllViewModel> AllComment { get; set; } = new List<CommentAllViewModel>(); 
+		public required string PriceRange { get; set; }
+
+		public IEnumerable<CommentAllViewModel> AllComment { get; set; } = new List<CommentAllViewModel>(); 
     }
 }

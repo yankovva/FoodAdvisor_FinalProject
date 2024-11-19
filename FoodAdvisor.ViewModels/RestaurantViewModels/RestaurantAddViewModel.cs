@@ -1,12 +1,7 @@
 ﻿using FoodAdvisor.Data.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static FoodAdvisor.Common.EntityValidationConstants.Restaurant;
 using static FoodAdvisor.Common.EntityValidationConstants.City;
+using static FoodAdvisor.Common.EntityValidationConstants.Restaurant;
 
 
 namespace FoodAdvisor.ViewModels.RestaurantViewModels
@@ -40,7 +35,10 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[MaxLength(CityNameMaxLenght)]
 		[MinLength(CityNameMinLenght)]
 		public string City { get; set; } = null!;
-
-
+		[Required]
+		[MaxLength(PriceRangeMaxLenght)]
+		[MinLength(PriceRangeMinLenght)]
+		[RegularExpression(PriceRangeAllowedValue)]
+		public string PriceRange { get; set; } = null!;
     }
 }
