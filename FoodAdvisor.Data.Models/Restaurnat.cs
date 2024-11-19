@@ -55,5 +55,9 @@ namespace FoodAdvisor.Data.Models
 
 		[Comment("Shows wether the restaurant is deleted or not")]
         public bool IsDeleted { get; set; } = false;
+
+        [Comment("Shows the price range of the restaurant.")]
+        [Required]
+        public string PricaRange { get; set; } = null!;
     }
 }
