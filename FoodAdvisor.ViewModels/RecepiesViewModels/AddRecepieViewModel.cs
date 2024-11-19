@@ -23,6 +23,8 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 		[MinLength(ProductsMinLengt)]
 		[MaxLength(ProductsMaxLenght)]
 		public string Products { get; set; } = null!;
+		[Required]
+		public int Servings { get; set; } 
 
 		[Required]
 		public Guid CategoryId { get; set; }

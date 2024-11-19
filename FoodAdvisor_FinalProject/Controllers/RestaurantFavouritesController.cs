@@ -32,11 +32,11 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return View(favourites);
 		}
 		[HttpPost]
-		public async Task<IActionResult> AddToFavourites(string? restaurantId)
+		public async Task<IActionResult> AddToFavourites(string? id)
 		{
 			Guid userguid = Guid.Parse(GetCurrentUserId()!);
 			bool isAdded = await this.favouritesService
-				.AddToFavouritesAsync(userguid, restaurantId!);
+				.AddToFavouritesAsync(userguid, id!);
 			if (!isAdded)
 			{
 				//TODO: Add some message

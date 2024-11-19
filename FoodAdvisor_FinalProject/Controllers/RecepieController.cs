@@ -16,15 +16,18 @@ namespace FoodAdvisor_FinalProject.Controllers
 		private readonly IRecepieService recepieService;
 		private readonly IManagerService managerService;
 		private readonly IWebHostEnvironment enviorment;
+		private readonly IRecepieFavouritesService recepieFavouritesService;
 
 
 		public RecepieController(FoodAdvisorDbContext dbContext,
 			IRecepieService recepieService,
-			IManagerService managerService)
+			IManagerService managerService,
+			IRecepieFavouritesService recepieFavouritesService)
 		{
 			this.dbContext = dbContext;
 			this.recepieService = recepieService;
 			this.managerService = managerService;
+			this.recepieFavouritesService = recepieFavouritesService;
 		}
 		public async Task<IActionResult> Index()
 		{

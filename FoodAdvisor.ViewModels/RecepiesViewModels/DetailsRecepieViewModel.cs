@@ -18,6 +18,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 		public string ImagePath { get; set; } = null!;
 		public int CookingTime { get; set; }
 		public string Category { get; set; } = null!;
+        public int  Servings { get; set; }
         public IEnumerable<CommentAllViewModel> AllComment { get; set; } = new List<CommentAllViewModel>();
 
 	}
