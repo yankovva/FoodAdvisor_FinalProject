@@ -66,6 +66,7 @@ namespace FoodAdvisor.Data.Services
 				PublisherId = userId,
 				City = city,
 				Address = model.Address,
+				PricaRange = model.PriceRange
 			};
 
 			await this.restaurantRepository.AddAsync(place);
@@ -133,6 +134,7 @@ namespace FoodAdvisor.Data.Services
 			editedRestaurant.PublisherId = userId;
 			editedRestaurant.Description = model.Description;
 			editedRestaurant.City = city;
+			editedRestaurant.PricaRange = model.PriceRange;
 
 			if (file != null)
 			{
@@ -175,7 +177,8 @@ namespace FoodAdvisor.Data.Services
 					Name = g.Name,
 					Description = g.Description,
 					ImagePath = g.ImageURL,
-					Address = g.Address
+					Address = g.Address,
+					PriceRange = g.PricaRange
 				})
 				.FirstOrDefaultAsync();
 			return model;
@@ -196,6 +199,7 @@ namespace FoodAdvisor.Data.Services
 					ImageURL = p.ImageURL,
 					Address = p.Address,
 					Category = p.Category.Name,
+					PriceRange = p.PricaRange,
 					City = p.City.Name,
 					Publisher = p.Publisher.UserName ?? string.Empty,
 					AllComment = p.RestaurantsComments
@@ -227,7 +231,8 @@ namespace FoodAdvisor.Data.Services
 				   Name = p.Name,
 				   ImageURL = p.ImageURL,
 				   Category = p.Category.Name,
-				   Publisher = p.Publisher.UserName ?? string.Empty
+				   Publisher = p.Publisher.UserName ?? string.Empty,
+				   PriceRange = p.PricaRange
 			   })
 			   .ToArrayAsync();
 

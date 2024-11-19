@@ -16,7 +16,11 @@
             public const int URLMaxLEnght = 2083;
             public const int URLMinLenght = 8;
 
-        }
+			public const int PriceRangeMinLenght = 1;
+			public const int PriceRangeMaxLenght = 5;
+			public const string PriceRangeAllowedValue = "\\$";
+
+		}
 
         public static class City
         {
