@@ -4,7 +4,7 @@
 @{
 	ViewBag.Title = "Add Recepie";
 }
-<form asp-action="Add" method="post" enctype="multipart/form-data">
+<form asp-action="Add" method="post" enctype="multipart/form-data" id="form-add-recepie">
 	<div class="form-group">
 		<label asp-for="@Model.Name" class="form-label-add-edit">Recepie Name</label>
 		<input asp-for="@Model.Name" class="form-control" aria-required="true" />

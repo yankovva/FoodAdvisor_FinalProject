@@ -6,6 +6,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,8 @@ builder.Services
 builder.Services.ConfigureApplicationCookie(cfg =>
 {
 	cfg.LoginPath = "/Identity/Account/Login";
+	cfg.LogoutPath = "/Home/Index";
+	cfg.ExpireTimeSpan = TimeSpan.FromDays(2);
 });
 
 
@@ -73,7 +76,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
