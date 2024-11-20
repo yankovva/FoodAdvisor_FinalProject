@@ -2,13 +2,14 @@
 @model IEnumerable<RecepieFavouritesIndexViewModel>
 
 
+
 @{
     ViewData["Title"] = " RecepieFavourites";
 }
 
 <h2>Your Restaurant Favourites</h2>
 
-<button class="bt">Show recepie favourites</button>
+<button class="btn" id="switch" onclick="">Show recepie favourites</button>
 
 <table class="table table-striped">
     <thead>
@@ -19,7 +20,7 @@
             <th>Description</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="mainElement">
         @foreach (var recepie in Model)
         {
             <tr>
@@ -41,3 +42,12 @@
         }
     </tbody>
 </table>
+
+
+
+ <script>
+    const button = document.getElementById("switch");
+    const mainElement = document.getElementById("mainElement");
+
+</script>
+
