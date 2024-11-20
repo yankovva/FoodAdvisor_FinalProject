@@ -34,7 +34,7 @@ namespace FoodAdvisor.Data.Services
 				Directory.CreateDirectory(uploadFolder);
 			}
 
-			string fileName = Path.GetFileName(file.FileName);
+			string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
 			string NemImagePath = Path.Combine("RecepiePictures", fileName);
 
 			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
@@ -221,7 +221,7 @@ namespace FoodAdvisor.Data.Services
 				string imageToDelete = $"{filePath}\\{editedRecepie.ImageURL}";
 				File.Delete(imageToDelete);
 
-				string fileName = Path.GetFileName(file.FileName);
+				string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
 				string NemImagePath = Path.Combine("RecepiePictures", fileName);
 
 				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))

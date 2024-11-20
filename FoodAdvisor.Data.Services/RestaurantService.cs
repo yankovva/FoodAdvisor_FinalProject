@@ -38,7 +38,7 @@ namespace FoodAdvisor.Data.Services
 				Directory.CreateDirectory(uploadFolder);
 			}
 
-			string fileName = Path.GetFileName(file.FileName);
+			string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
 			string NemImagePath = Path.Combine("RestaurantPictures", fileName);
 
 			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
@@ -150,7 +150,7 @@ namespace FoodAdvisor.Data.Services
 					Directory.CreateDirectory(uploadFolder);
 				}
 
-				string fileName = Path.GetFileName(file.FileName);
+				string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
 				string NemImagePath = Path.Combine("RestaurantPictures", fileName);
 
 				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
@@ -162,8 +162,8 @@ namespace FoodAdvisor.Data.Services
 			}
 			await this.cityRepository.AddAsync(city);
 			bool isUpdated = await this.restaurantRepository.UpdateAsync(editedRestaurant);
+
 			return true;
-			
 		}
 
 		//Done

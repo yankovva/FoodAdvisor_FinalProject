@@ -100,7 +100,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 			user.UserName = model.UserName;
 			user.NormalizedUserName = model.UserName.ToUpper();
 
-
 			await this.dbContext.SaveChangesAsync();
 
 			return RedirectToAction(nameof(Index));
@@ -137,7 +136,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 					System.IO.File.Delete(imageToDelete);
 				}
 
-				string fileName = Path.GetFileName(file.FileName);
+				string fileName = userId.ToString() + "_" + user.UserName + "_" + Path.GetFileName(file.FileName);
 				string NewImagePath = Path.Combine("ProfilePictures", fileName);
 
 				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NewImagePath), FileMode.Create))
@@ -149,7 +148,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 				await this.dbContext.SaveChangesAsync();
 			}
-			
 
 			return RedirectToAction(nameof(Index));
 		}
