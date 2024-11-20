@@ -242,7 +242,8 @@ namespace FoodAdvisor.Data.Services
 					ImageURL = r.ImageURL,
 					Publisher = r.Publisher.UserName!,
 					Category = r.Category.Name,
-					PriceRange = r.PricaRange
+					PriceRange = r.PricaRange,
+					City = r.City.Name,
 				})
 				.Skip((currentPage - 1) * maxRecepiesPerPage)
 				.Take(maxRecepiesPerPage)

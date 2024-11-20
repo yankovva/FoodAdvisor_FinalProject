@@ -8,7 +8,8 @@
 @{
 	ViewBag.Title = "All Recepies";
 }
-<link rel="stylesheet" href="~/css/site-recepie-index.css" asp-append-version="true" />
+
+<link rel="stylesheet" href="~/css/site-entity-index.css" asp-append-version="true" />
 
 <h2>Recepies</h2>
 <a asp-controller="Recepie" asp-action="Add" method="get" class="btn btn-success mb-4">Add Your Recepie!</a>
@@ -23,7 +24,7 @@
 					<img class="header" src="@recepie.ImageURL" alt="/@NoImage">
 					<form method="post" asp-controller="RecepieFavourites" asp-action="AddToFavourites" asp-route-id="@recepie.Id">
 						<input type="hidden" name="id" value="@recepie.Id" />
-						<button type="submit" class="icon"><i class="fa-solid fa-heart"></i></button>
+						<button type="submit" class="icon-heart"><i class="fa-solid fa-heart"></i></button>
 					</form>
 
 				</div>
@@ -31,7 +32,7 @@
 					<h1 class="food">
 						@recepie.Name
 					</h1>
-					<div id="recepie-details-wrapper">
+					<div class="icon-details-wrapper">
 						<i class="fa bi-clock"> @recepie.CookingTime</i>
 						<i class="fa fa-users"> @recepie.Servings</i>
 						<i class="fa bi-layout-text-sidebar"> @recepie.Category</i>
@@ -39,19 +40,19 @@
 					</div>
 					<p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, temporibus.</p>
 				</div>
-				<div class="row">
+				<div id="publisher-info">
 					<div class="col-5" style="padding-left:50px">
 						<img src="@recepie.AuthorPicturePath" id="author-image" />
 					</div>
 					<div class="col-5"><p style="font-size:0.8rem">Published by: <b>@recepie.Publisher</b></p></div>
 				</div>
-				<a asp-action="Details" asp-route-id="@recepie.Id" class="btn">Let's Cook!</a>
+				<a asp-action="Details" asp-route-id="@recepie.Id" class="card-details-btn">Let's Cook!</a>
 			</div>
 		</div>
 
 	}
 </div>
-<ul class="pagination">
+<ul class="pagination justify-content-center">
 	@for (int i = 1; i <= Model.PageCount; i++)
 	{
 		<li class="page-item">

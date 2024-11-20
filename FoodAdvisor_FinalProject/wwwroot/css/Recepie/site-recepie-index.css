@@ -1,7 +1,5 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Roboto');
 
-
-
 img {
     max-width: 100%;
 }
@@ -82,22 +80,10 @@ img {
 .fa-users {
     color: #9B9B9B;
 }
-.bi-cash {
-    color: #9B9B9B;
-}
-
-
-
-.stars {
-    margin: 10px 30px;
-}
-    .stars li a i {
-        color: #FFE500;
-    }
 
 .info {
     margin: 10px 30px;
-    font-size:0.9rem;
+    font-size: 0.9rem;
 }
 
 a.btn {
@@ -111,7 +97,6 @@ a.btn {
     transition: 250ms;
     width:100%;
 }
-
 
 #author-image {
     width: 50px;

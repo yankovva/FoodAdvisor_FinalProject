@@ -4,7 +4,8 @@
 @using static FoodAdvisor.Common.ApplicationConstants;
 @model RestaurantPaginatonIndexViewModel
 @inject IManagerService managerService
-<link rel="stylesheet" href="~/css/site-recepie-index.css" asp-append-version="true" />
+
+<link rel="stylesheet" href="~/css/site-entity-index.css" asp-append-version="true" />
 
 
 @{
@@ -14,7 +15,7 @@
 <h2 style="color:white;">Restaurants</h2>
 
 <!-- Button to add a new restaurant -->
-@if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()))
+@if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()!))
 {
 <a asp-action="Add" class="btn btn-success mb-4">Add New Restaurant</a>
 }
@@ -29,7 +30,7 @@
 					<img class="header" src="@restaurant.ImageURL" alt="/@NoImage">
 					<form asp-controller="RestaurantFavourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post">
 						<input type="hidden" name="id" value="@restaurant.Id" />
-						<button type="submit" class="icon"><i type="submit" class="fa-solid fa-heart"></i></button>
+						<button type="submit" class="icon-heart"><i type="submit" class="fa-solid fa-heart"></i></button>
 					</form>
 
 				</div>
@@ -37,20 +38,20 @@
 					<h1 class="food">
 						@restaurant.Name
 					</h1>
-					<div id="recepie-details-wrapper">
+					<div class="icon-details-wrapper">
 						<i class="fa bi-cash">@restaurant.PriceRange</i>
 						<i class="fa fa-users"> @restaurant.Category</i>
-						<i class="fa bi-layout-text-sidebar"> @restaurant.Category</i>
+						<i class="fa bi-geo-alt"> @restaurant.City</i>
 
 					</div>
 					<p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, temporibus.</p>
 				</div>
-				<a asp-action="Details" asp-route-id="@restaurant.Id" class="btn">Details</a>
+				<a asp-action="Details" asp-route-id="@restaurant.Id" class="card-details-btn">Details</a>
 			</div>
 		</div>
 	}
 </div>
-<ul class="pagination">
+<ul class="pagination justify-content-center">
 	@for (int i = 1; i <= Model.PageCount; i++)
 	{
 		<li class="page-item">

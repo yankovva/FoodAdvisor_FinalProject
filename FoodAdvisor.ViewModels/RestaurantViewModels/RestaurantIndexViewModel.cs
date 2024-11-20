@@ -14,7 +14,8 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		public required string Publisher { get; set; } 
         public required string Category { get; set; }
 		public required string PriceRange { get; set; }
+        public required string City { get; set; } 
 
 
-	}
+    }
 }
