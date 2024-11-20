@@ -30,14 +30,18 @@ namespace FoodAdvisor_FinalProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-			IEnumerable<RestaurantIndexViewModel> allRestaurants = await this.restaurantService
-				 .IndexGetAllRestaurants();
-
-            return View(allRestaurants);
+			RestaurantPaginatonIndexViewModel model = await this.restaurantService.IndexGetAllRestaurants(1);
+            return View(model);
         }
+		[HttpPost]
+		public async Task<IActionResult> Index(int index)
+		{
+			RestaurantPaginatonIndexViewModel model = await this.restaurantService.IndexGetAllRestaurants(index);
+			return View(model);
+		}
 
-		
-        [HttpGet]
+
+		[HttpGet]
         public async Task<IActionResult> Add()
         {
 			string? userId = this.GetCurrentUserId();

@@ -9,7 +9,6 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 {
     public class RecepiePaginationIndexViewModel
     {
-        [BindProperty]
         public int CurrentPageIndex { get; set; }
 
         public int PageCount { get; set; }

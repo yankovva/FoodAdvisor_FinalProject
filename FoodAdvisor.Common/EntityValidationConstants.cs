@@ -18,7 +18,7 @@
 
 			public const int PriceRangeMinLenght = 1;
 			public const int PriceRangeMaxLenght = 5;
-			public const string PriceRangeAllowedValue = "\\$";
+			public const string PriceRangeAllowedValue = "\\$+";
 
 		}
 

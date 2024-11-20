@@ -10,7 +10,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 {
 	public interface IRestaurantService 
 	{
-		Task<IEnumerable<RestaurantIndexViewModel>> IndexGetAllRestaurants();
+		Task<RestaurantPaginatonIndexViewModel> IndexGetAllRestaurants(int currentPage);
 
 		Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file);
 		Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid restaurnatId);

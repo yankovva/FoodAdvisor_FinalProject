@@ -57,13 +57,10 @@
 		<li class="page-item">
 			@if (i != Model.CurrentPageIndex)
 			{
-				
 					<form asp-action="Index" asp-controller="Recepie" id="theForm" method="post">
 						<input type="hidden" id="hiddenCurrentPageIndex" value=@i name="index" />
 						<button type="submit" style="border:none; height:25px;"><p class="page-link">@i</p></button>
 					</form>
-				
-				
 			}
 			else
 			{
@@ -71,11 +68,9 @@
 			}
 		</li>
 	}
-
 </ul>
 
 
-<script type="text/javascript" src="/js/paginationScript.js"></script>
 <!--<script>
 
 	function PagerClick(index) {

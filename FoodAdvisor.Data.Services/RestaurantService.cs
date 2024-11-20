@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Hosting;
+using FoodAdvisor.ViewModels.RecepiesViewModels;
 
 
 namespace FoodAdvisor.Data.Services
@@ -220,21 +221,35 @@ namespace FoodAdvisor.Data.Services
 		}
 
 		//Done
-		public async Task<IEnumerable<RestaurantIndexViewModel>> IndexGetAllRestaurants()
+		public async Task<RestaurantPaginatonIndexViewModel> IndexGetAllRestaurants(int currentPage)
 		{
-			IEnumerable<RestaurantIndexViewModel> model = await this.restaurantRepository
-			   .GetAllAttached()
-			   .Where(r => r.IsDeleted == false)
-			   .Select(p => new RestaurantIndexViewModel()
-			   {
-				   Id = p.Id.ToString(),
-				   Name = p.Name,
-				   ImageURL = p.ImageURL,
-				   Category = p.Category.Name,
-				   Publisher = p.Publisher.UserName ?? string.Empty,
-				   PriceRange = p.PricaRange
-			   })
-			   .ToArrayAsync();
+			int maxRecepiesPerPage = 16;
+			double pageCount = (double)((decimal)await this.restaurantRepository
+				.GetAllAttached()
+				.Where(r => r.IsDeleted == false)
+				.CountAsync()
+				/ Convert.ToDecimal(maxRecepiesPerPage));
+
+			RestaurantPaginatonIndexViewModel model = new RestaurantPaginatonIndexViewModel();
+
+			model.Restaurants = await this.restaurantRepository
+				.GetAllAttached()
+				.Where(r => r.IsDeleted == false)
+				.Select(r => new RestaurantIndexViewModel()
+				{
+					Id = r.Id.ToString(),
+					Name = r.Name,
+					ImageURL = r.ImageURL,
+					Publisher = r.Publisher.UserName!,
+					Category = r.Category.Name,
+					PriceRange = r.PricaRange
+				})
+				.Skip((currentPage - 1) * maxRecepiesPerPage)
+				.Take(maxRecepiesPerPage)
+				.ToArrayAsync();
+
+			model.PageCount = (int)Math.Ceiling(pageCount);
+			model.CurrentPageIndex = currentPage;
 
 			return model;
 		}

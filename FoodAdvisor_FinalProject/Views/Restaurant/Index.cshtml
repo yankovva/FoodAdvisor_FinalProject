@@ -2,7 +2,7 @@
 @using FoodAdvisor.Data.Services.Interfaces;
 @using FoodAdvisor.Infrastructure;
 @using static FoodAdvisor.Common.ApplicationConstants;
-@model IEnumerable<RestaurantIndexViewModel>;
+@model RestaurantPaginatonIndexViewModel
 @inject IManagerService managerService
 <link rel="stylesheet" href="~/css/site-recepie-index.css" asp-append-version="true" />
 
@@ -21,7 +21,7 @@
 
 
 <div class="row">
-	@foreach (RestaurantIndexViewModel restaurant in Model)
+	@foreach (RestaurantIndexViewModel restaurant in Model.Restaurants)
 	{
 		<div class="col-md-3" style="min-width:300px;">
 			<div class="card">
@@ -50,3 +50,21 @@
 		</div>
 	}
 </div>
+<ul class="pagination">
+	@for (int i = 1; i <= Model.PageCount; i++)
+	{
+		<li class="page-item">
+			@if (i != Model.CurrentPageIndex)
+			{
+				<form asp-action="Index" asp-controller="Restaurant" id="theForm" method="post">
+					<input type="hidden" id="hiddenCurrentPageIndex" value=@i name="index" />
+					<button type="submit" style="border:none; height:25px;"><p class="page-link">@i</p></button>
+				</form>
+			}
+			else
+			{
+				<a class="page-link">@i</a>
+			}
+		</li>
+	}
+</ul>
