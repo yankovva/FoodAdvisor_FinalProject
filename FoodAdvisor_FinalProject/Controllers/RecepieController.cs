@@ -1,6 +1,7 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
+using FoodAdvisor.ViewModels.CommentViewModel;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,12 +30,22 @@ namespace FoodAdvisor_FinalProject.Controllers
 			this.managerService = managerService;
 			this.recepieFavouritesService = recepieFavouritesService;
 		}
+		[HttpGet]
 		public async Task<IActionResult> Index()
 		{
-			IEnumerable<RecepieIndexViewModel> model = await this.recepieService
-				.IndexGetAllRecepiesAsync();
-			return View(model);
+			RecepiePaginationIndexViewModel model = await recepieService.IndexGetAllRecepiesAsync(1);
+
+            return View(model);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> Index(int index)
+		{
+            RecepiePaginationIndexViewModel viewmodel = await recepieService.IndexGetAllRecepiesAsync(index);
+
+			return View(viewmodel);
+        }
+
 		[HttpGet]
 		public async Task<IActionResult> Add()
 		{
@@ -149,9 +160,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
+
 		private async Task<List<RecepieCategory>> GetCategories()
 		{
 			return await dbContext.RecepiesCategories.ToListAsync();
 		}
+
+		
 	}
 }
