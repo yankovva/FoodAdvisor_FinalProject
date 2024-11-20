@@ -59,11 +59,19 @@ namespace FoodAdvisor.Data.Services
 			await this.recepieRepository.AddAsync(recepie);
 		}
 
-		public async Task<IEnumerable<RecepieIndexViewModel>> IndexGetAllRecepiesAsync()
+		public async Task<RecepiePaginationIndexViewModel> IndexGetAllRecepiesAsync(int currentPage)
 		{
-			IEnumerable<RecepieIndexViewModel> recepies = await this.recepieRepository
+			int maxRecepiesPerPage = 16;
+			double pageCount = (double)((decimal) await this.recepieRepository
 				.GetAllAttached()
-				.Include(r=>r.Publisher)
+				.Where(r => r.IsDeleted == false)
+				.CountAsync()
+				/ Convert.ToDecimal(maxRecepiesPerPage));
+
+			RecepiePaginationIndexViewModel model = new RecepiePaginationIndexViewModel();
+
+			model.Recepies = await this.recepieRepository
+				.GetAllAttached()
 				.Where(r => r.IsDeleted == false)
 				.Select(r => new RecepieIndexViewModel()
 				{
@@ -76,9 +84,14 @@ namespace FoodAdvisor.Data.Services
 					AuthorPicturePath = r.Publisher.ProfilePricturePath!,
 					Servings = r.NumberOfServing
 				})
+				.Skip((currentPage - 1) * maxRecepiesPerPage)
+				.Take(maxRecepiesPerPage)
 				.ToArrayAsync();
+			model.PageCount = (int)Math.Ceiling(pageCount);
+			model.CurrentPageIndex = currentPage;
 
-			return recepies;
+			return model;
+
 		}
 		public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId)
 		{
