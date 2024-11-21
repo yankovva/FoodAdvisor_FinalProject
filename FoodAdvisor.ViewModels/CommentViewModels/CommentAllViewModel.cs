@@ -13,6 +13,8 @@ namespace FoodAdvisor.ViewModels.CommentViewModel
 		public DateTime CreatedOn { get; set; }
 		public required string UserId { get; set; }
 		public required string UserName { get; set; }
+		public required string ProfilePicture { get; set; }
+
 
 	}
 }

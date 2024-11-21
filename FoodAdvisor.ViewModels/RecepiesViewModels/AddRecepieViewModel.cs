@@ -28,7 +28,11 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 
 		[Required]
 		public Guid CategoryId { get; set; }
+
+		[Required]
+		public int DificultyId { get; set; }
 		public List<RecepieCategory> Categories { get; set; } = new List<RecepieCategory>();
+		public List<RecepieDificulty> Dificulty { get; set; } = new List<RecepieDificulty>();
 
 	}
 }
