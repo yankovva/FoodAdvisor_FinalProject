@@ -41,12 +41,10 @@ namespace FoodAdvisor.Data.Services
 				return false;
 			}
 			
-			
-
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.AboutMe = model.AboutMe;
-			user.Birthday = model.BirthDay;
+			user.Country = model.Country;
 			user.UserName = model.UserName;
 
 			await userManager.SetUserNameAsync(user, model.UserName);
@@ -65,8 +63,8 @@ namespace FoodAdvisor.Data.Services
 				{
 					FirstName = u.FirstName,
 					LastName = u.LastName,
-					BirthDay = u.Birthday,
 					AboutMe = u.AboutMe,
+					Country = u.Country,
 					UserName = u.UserName!,
 					ProfilePicture = u.ProfilePricturePath
 				}).FirstOrDefaultAsync();
@@ -85,8 +83,9 @@ namespace FoodAdvisor.Data.Services
 					Id = userId.ToString(),
 					FirstName = u.FirstName,
 					LastName = u.LastName,
+					UserName = u.UserName,
 					CreatedOn = DateTime.Now,
-					BirthDay = DateTime.Now,
+					Country = u.Country,
 					AboutMe = u.AboutMe,
 					Email = u.Email,
 					ProfilePricture = u.ProfilePricturePath,

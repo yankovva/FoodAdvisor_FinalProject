@@ -17,7 +17,10 @@ namespace FoodAdvisor.ViewModels.AccountViemModels
 		[MaxLength(LastNameMaxLenght)]
 		[MinLength(LastNameMinLenght)]
 		public string? LastName { get; set; }
-		public DateTime? BirthDay { get; set; }
+
+		[MaxLength(CountryMaxLenght)]
+		[MinLength(CountryMinLenght)]
+		public string? Country { get; set; }
 
 		[MaxLength(AboutMeMaxLenght)]
 		[MinLength(AboutMeMinLenght)]
