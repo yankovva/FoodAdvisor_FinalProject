@@ -52,8 +52,9 @@ namespace FoodAdvisor.Data.Services
 				CreatedOn = DateTime.Now,
 				RecepieCategoryId = model.CategoryId,
 				Products = model.Products,
-				NumberOfServing = model.Servings
-				
+				NumberOfServing = model.Servings,
+				RecepieDificultyId = model.DificultyId
+
 			};
 
 			await this.recepieRepository.AddAsync(recepie);
@@ -108,7 +109,10 @@ namespace FoodAdvisor.Data.Services
 					Publisher = r.Publisher.UserName!,
 					Category = r.RecepieCategory.Name,
 					Products = r.Products,
+					PublisherFullName = $"{r.Publisher.FirstName} {r.Publisher.LastName}",
+					PublisherPicture = r.Publisher.ProfilePricturePath,
 					ImagePath = r.ImageURL,
+					Dificulty = r.RecepieDificulty.DificultyName,
 					Servings = r.NumberOfServing,
 					AllComment = r.RecepieComments
 					.Where(rc => rc.IsDeleted == false)
@@ -118,7 +122,9 @@ namespace FoodAdvisor.Data.Services
 						CreatedOn = rc.CreatedDate,
 						UserId = rc.UserId.ToString(),
 						Id = rc.Id.ToString(),
-						UserName = rc.User.UserName ?? string.Empty
+						UserName = rc.User.UserName ?? string.Empty,
+						ProfilePicture = rc.User.ProfilePricturePath!
+
 					})
 
 				}).FirstOrDefaultAsync();
@@ -178,7 +184,9 @@ namespace FoodAdvisor.Data.Services
 					CookingTime = r.CookingTime,
 					Products = r.Products,
 					CategoryId = r.RecepieCategoryId,
-					Servings = r.NumberOfServing
+					Servings = r.NumberOfServing,
+					DificultyId = r.RecepieDificultyId
+
 
 				}).FirstOrDefaultAsync();
 
@@ -213,6 +221,7 @@ namespace FoodAdvisor.Data.Services
 			editedRecepie.CookingTime = model.CookingTime;
 			editedRecepie.Products = model.Products;
 			editedRecepie.RecepieCategoryId = model.CategoryId;
+			editedRecepie.RecepieDificultyId = model.DificultyId;
 			editedRecepie.NumberOfServing = model.Servings;
 
 			if (file != null)

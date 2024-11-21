@@ -211,7 +211,9 @@ namespace FoodAdvisor.Data.Services
 						CreatedOn = rc.CreatedDate,
 						UserId = rc.UserId.ToString(),
 						Id = rc.Id.ToString(),
-						UserName = rc.User.UserName ?? string.Empty
+						UserName = rc.User.UserName ?? string.Empty,
+						ProfilePicture = rc.User.ProfilePricturePath!
+
 					})
 
 				})

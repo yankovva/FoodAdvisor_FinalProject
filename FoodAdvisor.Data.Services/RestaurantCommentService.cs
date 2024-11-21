@@ -26,6 +26,11 @@ namespace FoodAdvisor.Data.Services
 				return false;
 			}
 
+			if (model.Message == null)
+			{
+				return false;
+			}
+
 			RestaurantComment comment = new()
 			{
 				RestaurantId = Guid.Parse(restaurantId),

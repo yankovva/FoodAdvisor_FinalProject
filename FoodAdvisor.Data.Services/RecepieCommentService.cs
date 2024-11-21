@@ -28,6 +28,10 @@ namespace FoodAdvisor.Data.Services
                 return false;
             }
 
+			if (model.Message == null) 
+			{
+				return false;
+			}
             RecepieComment comment = new()
 			{
 				RecepieId = recepieGuid,
