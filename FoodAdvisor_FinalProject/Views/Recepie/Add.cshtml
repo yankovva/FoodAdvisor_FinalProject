@@ -33,6 +33,13 @@
 		<span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
 	</div>
 	<div class="form-group">
+		<label asp-for="@Model.DificultyId" class="form-label-add-edit">Select Dificulty level</label>
+		<select asp-for="@Model.DificultyId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Dificulty, "Id", "DificultyName"))">
+			<option value="">Select Level...</option>
+		</select>
+		<span asp-validation-for="@Model.DificultyId" class="text-danger"></span>
+	</div>
+	<div class="form-group">
 		<label asp-for="@Model.Products" class="form-label-add-edit">Products</label>
 		<textarea asp-for="@Model.Products" class="form-control" aria-required="true" rows="5" placeholder="Write a list of the products"></textarea>
 		<span asp-validation-for="@Model.Products" class="text-danger"></span>

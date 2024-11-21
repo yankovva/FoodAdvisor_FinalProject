@@ -5,58 +5,103 @@
 @{
 	ViewBag.Title = "Recepie Details";
 }
+<link rel="stylesheet" href="~/css/Recepie/recepie-details.css" asp-append-version="true" />
 
-<h2>@Model.Name</h2>
-<div .container-fluid>
-	<div class="row">
-		<div class="text-center">
-			<img src="/@Model.ImagePath" alt="@NoImage" style="width: 300px">
+<div class="container">
+	<div class="top-section">
+		<div class="div-top-section-recepie-name">
+			<h1>@Model.Name</h1>
+			<p>@Model.CreatetOn</p>
 		</div>
-		<p><strong>Name</strong> @Model.Name</p>
-		<p><strong>Cooking Time:</strong> @Model.CookingTime minutes</p>
-		<p><strong>Description:</strong> @Model.Description</p>
-		<p><strong>Products:</strong> @Model.Products</p>
-		<p><strong>Published On:</strong> @Model.CreatetOn.ToString("dd/MM/yyyy")</p>
-		<p><strong>Publisher:</strong> @Model.Publisher</p>
-		<p><strong>Category:</strong> @Model.Category</p>
-		<p><strong>Servings:</strong> @Model.Servings</p>
-		<p><strong>Comments:</strong></p>
-		@if (User!.Identity!.IsAuthenticated == true)
-		{
-			<div class="container">
-				<form asp-controller="RecepieComment" asp-action="Add" method="post">
-					<h6>Add Comment!</h6>
-					<textarea class="form-control" aria-label="With textarea" name="Message" style="width: 40%; vertical-align:top;"></textarea>
-					<input type="hidden" name="recepieId" value="@Model.Id" />
-					<button type="submit" class="btn btn-primary" style="display: inline-block; margin-top:10px;">Submit</button>
+		<a asp-action="Index" class="btn btn-secondary" style="background-color:dimgrey; color:white"><i class="bi bi-arrow-90deg-left"> Back to all</i></a>
+	</div>
 
-				</form>
-
+	<div class="wrapper">
+		<div id="creator-wrapper">
+			<div class="creator">
+				<img src="/@Model.PublisherPicture" alt="@NoImage" id="creator-img">
+				<p> @Model.Publisher</p>
+				<p>@Model.PublisherFullName</p>
+				<p><i class="bi bi-geo-alt"></i>Plovdiv</p>
 			</div>
-		}
-		<div class="list-group"></div>
-		@foreach (CommentAllViewModel comment in Model.AllComment)
-		{
-			<div class="commented-section mt-2">
-				<div class="d-flex flex-row align-items-center commented-user">
-					<h6 class="mr-2">@comment.UserName</h6><span class="dot mb-1"></span><span class="mb-1 ml-2">@comment.CreatedOn</span>
+			<div class="creator-buttons">
+				<div>
+					@if (User?.Identity?.Name == @Model.Publisher)
+					{
+						<a asp-controller="Recepie" asp-action="Delete" asp-route-id="@Model.Id"><i class="bi bi-trash"></i></a>
+						<a asp-controller="Recepie" asp-action="Edit" asp-route-id="@Model.Id" method="get" style="background-color:yellow" ><i class="bi bi-pencil-square"></i> </a>
+					}
 				</div>
-				<div class="comment-text-sm"><span>@comment.Message</span></div>
+				
 			</div>
-			@if (User?.Identity?.Name == @Model.Publisher)
-			{
-				<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
-					<input type="hidden" name="rcepieId" value="@comment.Id" />
-					<button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-trash"></i></button>
-				</form>
-			}
-		}
+			
+		</div>
 
+		<div id="recepie-wrapper">
+			<img id="recepie-img" src="/@Model.ImagePath" alt="@NoImage">
+
+			<div id="icon-wrapper">
+				<div class="fa bi-clock">@Model.CookingTime min </div>
+				<div class="fa fa-users">@Model.Servings servings</div>
+				<div class="fa bi-layout-text-sidebar">@Model.Category</div>
+			</div>
+			<div class="w3-panel w3-leftbar w3-light-grey">
+				<p class="w3-xxlarge w3-serif">
+					<i>"Make it as simple as possible, but not simpler."</i>
+				</p>
+				<p>@Model.Publisher</p>
+			</div>
+			<div class="recepie-products">
+				<div style="background-color: rgb(252, 165, 35); border-radius: 5px;">
+					<h3 class="product-h3">Products:</h3>
+				</div>
+				<div style="padding: 0.5em;">
+					<p>
+						@Model.Products
+					</p>
+				</div>
+			</div>
+			<div class="recepie-products">
+				<div style="background-color: rgb(252, 165, 35); border-radius: 5px;">
+					<h3 class="product-h3">Cooking steps:</h3>
+				</div>
+				<div style="padding: 0.5em;">
+					<p>
+						@Model.Description
+					</p>
+				</div>
+			</div>
+			@if (User!.Identity!.IsAuthenticated == true)
+			{
+				<div id="comment-form">
+					<form asp-controller="RecepieComment" asp-action="Add" method="post">
+						<h6>Add Comment!</h6>
+						<textarea class="form-control" aria-label="With textarea" name="Message" style="width: 30em; vertical-align:top;"></textarea>
+						<input type="hidden" name="recepieId" value="@Model.Id" />
+						<button type="submit" class="btn btn-success" style="align-self: flex-start; margin-top:10px;">Submit</button>
+					</form>
+				</div>
+			}
+			@foreach (CommentAllViewModel comment in Model.AllComment)
+			{
+				<div class="comment-wrapper">
+					<div class="commenteer-info">
+						<img class="commenter-img" src="/@Model.PublisherPicture">
+						<p style="margin-bottom: 0;">@Model.Publisher</p>
+						<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+							<input type="hidden" name="rcepieId" value="@comment.Id" />
+							<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
+						</form>
+					</div>
+					<div class="comment-message">
+						<div class="comment-date">@comment.CreatedOn</div>
+						<p>@comment.Message</p>
+					</div>
+				</div>
+			}
+		</div>
 	</div>
 </div>
-<a asp-action="Index" class="btn btn-secondary">Back to All Recepies</a>
-@if (User?.Identity?.Name == @Model.Publisher)
-{
-	<a asp-controller="Recepie" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-rounded ">Delete</a>
-}
+
+
 
