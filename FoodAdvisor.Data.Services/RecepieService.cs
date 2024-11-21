@@ -83,7 +83,9 @@ namespace FoodAdvisor.Data.Services
 					Publisher = r.Publisher.UserName!,
 					Category = r.RecepieCategory.Name,
 					AuthorPicturePath = r.Publisher.ProfilePricturePath!,
-					Servings = r.NumberOfServing
+					Servings = r.NumberOfServing,
+					CreatedOn = r.CreatedOn.ToString("dd/MM/yyyy HH:mm"),
+					DificultyLevel = r.RecepieDificultyId.ToString(),
 				})
 				.Skip((currentPage - 1) * maxRecepiesPerPage)
 				.Take(maxRecepiesPerPage)

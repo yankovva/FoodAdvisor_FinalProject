@@ -31,11 +31,41 @@ namespace FoodAdvisor_FinalProject.Controllers
 			this.recepieFavouritesService = recepieFavouritesService;
 		}
 		[HttpGet]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string sortOrder)
 		{
+			ViewData["DateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+			ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
+			ViewData["DificultySortParm"] = sortOrder == "Dificulty" ? "dificulty_desc" : "Dificulty";
+			
+
 			RecepiePaginationIndexViewModel model = await recepieService.IndexGetAllRecepiesAsync(1);
 
-            return View(model);
+			switch (sortOrder)
+			{
+				case "Name":
+					model.Recepies = model.Recepies.OrderBy(r => r.Name);
+					break;
+				case "name_desc":
+					model.Recepies = model.Recepies.OrderByDescending(s => s.Name);
+					break;
+				case "Dificulty":
+					model.Recepies = model.Recepies.OrderBy(r => r.DificultyLevel);
+					break;
+				case "dificulty_desc":
+					model.Recepies = model.Recepies.OrderByDescending(s => s.DificultyLevel);
+					break;
+
+				case "date_desc":
+					model.Recepies = model.Recepies.OrderByDescending(r => r.CreatedOn);
+					break;
+
+					default:
+						model.Recepies = model.Recepies.OrderBy(r=>r.CreatedOn);
+					break;
+
+			}
+
+			return View(model);
 		}
 
 		[HttpPost]

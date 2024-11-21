@@ -73,7 +73,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				//TODO: add message
 				return RedirectToAction("Index", "Home");
 			}
-		
+
 			return RedirectToAction(nameof(Index));
 		}
 
