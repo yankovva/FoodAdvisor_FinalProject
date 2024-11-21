@@ -4,11 +4,6 @@
 	ViewBag.Title = " Edit Account";
 }
 <style>
-	body {
-		margin-top: 20px;
-		background-color: rgb(234,230,229); 
-	}
-
 	.img-account-profile {
 		height: 10rem;
 	}
@@ -105,9 +100,9 @@
 						<div class="row gx-3 mb-3">
 							<!-- Form Group (organization name)-->
 							<div class="col-md-6">
-								<label asp-for="@Model.BirthDay" class="small mb-1" for="inputOrgName">Birthday</label>
-								<input asp-for="@Model.BirthDay" class="form-control" id="inputOrgName" type="text" placeholder="Enter your birthday" >
-								<span asp-validation-for="@Model.BirthDay" class="text-danger"></span>
+								<label asp-for="@Model.Country" class="small mb-1" for="inputOrgName">Birthday</label>
+								<input asp-for="@Model.Country" class="form-control" id="inputOrgName" type="text" placeholder="Enter your Country" >
+								<span asp-validation-for="@Model.Country" class="text-danger"></span>
 
 							</div>
 							<!-- Form Group ( about me)-->

@@ -10,6 +10,7 @@ img {
     background-size: cover;
     margin-top: 20px;
     background-color: rgba(255,255,255,0.7);
+    padding:10px;
 }
 
 .row {
@@ -72,8 +73,10 @@ img {
     text-align: left;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin: 10px 30px;
+    letter-spacing: 0.05em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 1.45em;
 }
 
 .bi-clock {
@@ -130,9 +133,7 @@ img {
     align-items: center;
 }
 
-.food {
-    font-size: 1.5rem;
-}
+
 
 .icon-details-wrapper {
     display: flex;
@@ -141,4 +142,59 @@ img {
     justify-content: center;
     font-size: 0.8rem;
     gap: 15px;
+}
+
+/*drop down filter*/
+.dropbtn {
+    background-color: #cd5c5c;
+    color: white;
+    padding: 3px 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: white;
+    color: #cd5c5c;
+}
+.order-div{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
 }

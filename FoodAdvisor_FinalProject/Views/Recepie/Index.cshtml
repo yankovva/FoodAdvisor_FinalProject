@@ -14,6 +14,19 @@
 <h2>Recepies</h2>
 <a asp-controller="Recepie" asp-action="Add" method="get" class="btn btn-success mb-4">Add Your Recepie!</a>
 
+<div class="order-div">
+	<p>Order by: </p>
+	<div class="dropdown">
+		<button class="dropbtn"><i class="bi bi-border-width"></i></button>
+		<div class="dropdown-content">
+			<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]"><i class="bi bi-arrows-vertical"></i>Name</a>
+			<a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]"><i class="bi bi-arrows-vertical"></i>Date</a>
+			<a asp-action="Index" asp-route-sortOrder="@ViewData["DificultySortParm"]"><i class="bi bi-arrows-vertical"></i>DificultyLevel</a>
+		</div>
+	</div>
+</div>
+	
+
 
 <div class="row">
 	@foreach (RecepieIndexViewModel recepie in Model.Recepies)
