@@ -4,6 +4,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.AccountViemModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -13,10 +14,13 @@ namespace FoodAdvisor.Data.Services
 	{
 		private readonly IRepository<ApplicationUser, Guid> accountRepository;
 		private readonly IWebHostEnvironment enviorment;
-		public AccountService(IRepository<ApplicationUser, Guid> accountRepository, IWebHostEnvironment enviorment)
+		private readonly UserManager<ApplicationUser> userManager;	
+		public AccountService(IRepository<ApplicationUser, Guid> accountRepository, IWebHostEnvironment enviorment,
+			UserManager<ApplicationUser> userManager)
         {
 			this.accountRepository = accountRepository;
 			this.enviorment = enviorment;
+			this.userManager = userManager;
 		}
 
         public async Task<bool> EditUserAsync(EditUserViewModel model, string userId)
@@ -36,14 +40,18 @@ namespace FoodAdvisor.Data.Services
 				//TODO:Add message
 				return false;
 			}
+			
+			
 
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.AboutMe = model.AboutMe;
 			user.Birthday = model.BirthDay;
 			user.UserName = model.UserName;
-			user.NormalizedUserName = model.UserName.ToUpper();
 
+			await userManager.SetUserNameAsync(user, model.UserName);
+			await userManager.UpdateNormalizedUserNameAsync(user);
+			
 			await this.accountRepository.UpdateAsync(user);
 			return true;
 		}
