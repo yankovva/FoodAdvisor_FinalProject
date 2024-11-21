@@ -50,7 +50,7 @@
         public static class Recepie
         {
 			public const int NameMinLenght = 3;
-			public const int NameMaxLenght = 30;
+			public const int NameMaxLenght = 20;
 
 			public const int DescriptionMinLenght = 20;
 			public const int DescriptionMaxLenght = 400;
@@ -74,7 +74,10 @@
 			public const int AboutMeMinLenght = 5;
 			public const int AboutMeMaxLenght = 200;
 
-			public const int UsernameMaxLenght = 30;
+			public const int UsernameMaxLenght = 20;
+
+			public const int CountryMinLenght = 4;
+			public const int CountryMaxLenght = 56;
 
 		}
 	}
