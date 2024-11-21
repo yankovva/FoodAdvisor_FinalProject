@@ -4,6 +4,7 @@ using FoodAdvisor.Data.Repository;
 using FoodAdvisor.Data.Services;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.Infrastructure;
+using FoodAdvisor.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -19,7 +20,7 @@ builder.Services.AddDbContext<FoodAdvisorDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
+    .AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
     options.Password.RequireDigit = builder.Configuration.GetValue<bool>("Identity:Password:RequireDigits");
     options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
@@ -35,7 +36,7 @@ builder.Services
     options.User.RequireUniqueEmail = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireUniqueEmail");
 })
           .AddEntityFrameworkStores<FoodAdvisorDbContext>()
-          .AddRoles<IdentityRole<Guid>>()
+          .AddRoles<ApplicationRole>()
           .AddSignInManager<SignInManager<ApplicationUser>>()
           .AddUserManager<UserManager<ApplicationUser>>();
 

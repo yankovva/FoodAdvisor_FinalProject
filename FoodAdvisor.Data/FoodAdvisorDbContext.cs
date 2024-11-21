@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using static FoodAdvisor.Common.ApplicationConstants;
+using FoodAdvisor.ViewModels;
+
 
 namespace FoodAdvisor.Data
 {
-    public class FoodAdvisorDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+    public class FoodAdvisorDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public FoodAdvisorDbContext()
         {
