@@ -28,6 +28,8 @@ namespace FoodAdvisor.Data
 		public virtual DbSet<Recepie> Recepies { get; set; }
 		public virtual DbSet<UserRecepie> UsersRecepies { get; set; }
 		public virtual DbSet<RecepieCategory> RecepiesCategories { get; set; }
+		public virtual DbSet<RecepieDificulty> RecepiesDificulties { get; set; }
+
 
 
 
@@ -72,6 +74,15 @@ namespace FoodAdvisor.Data
               new RecepieCategory { Name = "Snack" },
               new RecepieCategory { Name = "Side dish" },
               new RecepieCategory { Name = "Starter" });
-        }
+
+            builder
+              .Entity<RecepieDificulty>()
+              .HasData(
+              new RecepieDificulty { Id =1, DificultyName = "Easy" },
+              new RecepieDificulty { Id = 2,DificultyName = "Medium" },
+              new RecepieDificulty { Id = 3, DificultyName = "Hard" },
+              new RecepieDificulty { Id = 4, DificultyName = "Expert" });
+
+		}
 	}
 }

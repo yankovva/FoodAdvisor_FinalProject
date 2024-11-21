@@ -31,7 +31,11 @@ namespace FoodAdvisor.Data.Models
 		[Comment("Number of servings for the Recepie")]
         public int NumberOfServing { get; set; }
 
-        [Required]
+		public int RecepieDificultyId { get; set; }
+		[ForeignKey(nameof(RecepieDificultyId))]
+		public RecepieDificulty RecepieDificulty { get; set; } = null!;
+
+		[Required]
 		[MaxLength(ProductsMaxLenght)]
 		[Comment("Needed products for the Recepie.")]
 		public string Products { get; set; } = null!;
