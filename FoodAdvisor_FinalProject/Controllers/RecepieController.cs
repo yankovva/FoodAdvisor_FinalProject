@@ -52,6 +52,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			string? userId = this.GetCurrentUserId();
 			AddRecepieViewModel model = new AddRecepieViewModel();
 			model.Categories = await GetCategories();
+			model.Dificulty = await GetDificulty();
 			return View(model);
 		}
 		[HttpPost]
@@ -62,6 +63,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			if (!ModelState.IsValid)
 			{
 				model.Categories = await GetCategories();
+				model.Dificulty = await GetDificulty();
 				return View(model);
 			}
 
@@ -132,7 +134,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			AddRecepieViewModel model = await this.recepieService
 				.EditRecepieViewAsync (recepieGuid);
 			model.Categories = await GetCategories();
-
+			model.Dificulty = await GetDificulty();
 
 			return View(model);
 		}
@@ -143,6 +145,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			if (ModelState.IsValid == false)
 			{
 				model.Categories = await GetCategories();
+				model.Dificulty = await GetDificulty();
 				return View(model);
 			}
 
@@ -166,6 +169,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return await dbContext.RecepiesCategories.ToListAsync();
 		}
 
-		
+		private async Task<List<RecepieDificulty>> GetDificulty()
+		{
+			return await dbContext.RecepiesDificulties.ToListAsync();
+		}
+
+
+
 	}
 }

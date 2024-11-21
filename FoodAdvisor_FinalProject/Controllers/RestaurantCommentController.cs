@@ -41,10 +41,10 @@ namespace FoodAdvisor_FinalProject.Controllers
             if (isAdded == false)
             {
                 //TODO: Add a message
-                return RedirectToAction("Index", "Restaurant");
+                return RedirectToAction("Index", "Restaurant", new { id = restaurantid });
             }
 
-            return RedirectToAction("Index", "Restaurant");
+            return RedirectToAction("Index", "Restaurant", new { id = restaurantid } );
 		}
 
 	}

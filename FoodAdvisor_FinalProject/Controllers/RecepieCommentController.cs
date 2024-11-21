@@ -4,6 +4,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static FoodAdvisor.Common.EntityValidationConstants;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
@@ -23,14 +24,13 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			bool isAdded = await this.commentServie
 				.AddAsync(recepieId, userguid, model);
-
 			if (isAdded == false)
 			{
 				//TODO: Add a message
-                return RedirectToAction("Index", "Recepie");
+                return RedirectToAction("Details", "Recepie", new { id = recepieId });
             }
 
-			return RedirectToAction("Index", "Recepie");
+			return RedirectToAction("Details", "Recepie", new { id = recepieId });
 		}
 
 		[HttpPost]
@@ -41,9 +41,9 @@ namespace FoodAdvisor_FinalProject.Controllers
             if (isDeleted == false)
             {
                 //TODO: Add a message
-                return RedirectToAction("Index", "Recepie");
+                return RedirectToAction("Details", "Recepie", new { id = id });
             }
-            return RedirectToAction("Index", "Recepie");
+            return RedirectToAction("Details", "Recepie", new { id = id });
 		}
 	}
 }
