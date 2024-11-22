@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using static FoodAdvisor.Common.EntityValidationConstants.City;
 using static FoodAdvisor.Common.EntityValidationConstants.Restaurant;
+using static FoodAdvisor.Common.EntityValidationConstants.Cuisine;
+
 
 
 namespace FoodAdvisor.ViewModels.RestaurantViewModels
@@ -53,6 +55,11 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[MaxLength(CityNameMaxLenght)]
 		[MinLength(CityNameMinLenght)]
 		public string City { get; set; } = null!;
+
+		[Required]
+		[MaxLength(CuisineNameMaxLenght)]
+		[MinLength(CuisineNameMinLenght)]
+		public string CuisineName { get; set; } = null!;
 		[Required]
 		[MaxLength(PriceRangeMaxLenght)]
 		[MinLength(PriceRangeMinLenght)]

@@ -4,6 +4,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static FoodAdvisor.Common.EntityValidationConstants;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
@@ -19,17 +20,17 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(string id)
+		public async Task<IActionResult> Delete(string commentId , string restaurantId)
 		{
             bool isDeleted = await this.commentService
-                .DeleteAsync(id);
+                .DeleteAsync(commentId);
             if (isDeleted == false)
             {
                 //TODO: Add a message
-                return RedirectToAction("Index", "Restaurant");
-            }
+                return RedirectToAction("Index", "Restaurant", new { id = restaurantId });
+			}
 
-            return RedirectToAction("Index", "Restaurant");
+            return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
 		}
 
 		[HttpPost]
@@ -38,13 +39,14 @@ namespace FoodAdvisor_FinalProject.Controllers
             Guid userguid = Guid.Parse(GetCurrentUserId()!);
 			bool isAdded = await this.commentService
 				.AddAsync(restaurantid, userguid, model);
+
             if (isAdded == false)
             {
                 //TODO: Add a message
                 return RedirectToAction("Index", "Restaurant", new { id = restaurantid });
             }
 
-            return RedirectToAction("Index", "Restaurant", new { id = restaurantid } );
+            return RedirectToAction("Details", "Restaurant", new { id = restaurantid } );
 		}
 
 	}

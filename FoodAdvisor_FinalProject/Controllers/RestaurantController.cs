@@ -175,7 +175,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id, IFormFile file)
+		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id, IFormFile file, IFormFile fileDish)
 		{
 			string? userId = this.GetCurrentUserId();
 			bool isManager = await this.managerService
@@ -199,7 +199,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			Guid userGuid = Guid.Parse(GetCurrentUserId());
 			
 			bool isEdited=await this.restaurantService
-				.EditRestaurantAsync(model,restaurantGuid,userGuid,file);
+				.EditRestaurantAsync(model,restaurantGuid,userGuid,file, fileDish);
 			if (isEdited == false)
 			{
 				// TODO: ADD MESSAGE

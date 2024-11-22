@@ -34,16 +34,16 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Delete(string id)
+		public async Task<IActionResult> Delete(string commentId, string recepieId)
 		{
 			bool isDeleted = await this.commentServie
-				.DeleteAsync(id);
+				.DeleteAsync(commentId);
             if (isDeleted == false)
             {
                 //TODO: Add a message
-                return RedirectToAction("Details", "Recepie", new { id = id });
+                return RedirectToAction("Index", "Recepie", new { id = recepieId });
             }
-            return RedirectToAction("Details", "Recepie", new { id = id });
+            return RedirectToAction("Details", "Recepie", new { id = recepieId });
 		}
 	}
 }
