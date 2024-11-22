@@ -12,7 +12,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 	{
 		Task<RestaurantPaginatonIndexViewModel> IndexGetAllRestaurants(int currentPage);
 
-		Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file);
+		Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish);
 		Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid restaurnatId);
 
 		Task<RestaurantDeleteViewModel> DeleteRestaurantViewAsync(Guid id);
