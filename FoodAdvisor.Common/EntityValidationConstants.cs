@@ -27,7 +27,13 @@
             public const int CityNameMinLenght = 4;
             public const int CityNameMaxLenght = 56;
         }
-        public static class Category
+		public static class Cuisine
+		{
+			public const int CuisineNameMinLenght = 4;
+			public const int CuisineNameMaxLenght = 20;
+		}
+
+		public static class Category
         {
             public const int NameMinLenght = 3;
             public const int NameMaxLenght = 20;

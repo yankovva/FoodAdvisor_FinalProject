@@ -4,6 +4,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Security.Claims;
@@ -28,10 +29,25 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
+			ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
 			RestaurantPaginatonIndexViewModel model = await this.restaurantService.IndexGetAllRestaurants(1);
-            return View(model);
+
+			switch (sortOrder)
+			{
+
+				case "name_desc":
+					model.Restaurants = model.Restaurants.OrderByDescending(s => s.Name);
+					break;
+
+				default:
+					model.Restaurants = model.Restaurants.OrderBy(r => r.Name);
+					break;
+			}	
+			
+			return View(model);
         }
 		[HttpPost]
 		public async Task<IActionResult> Index(int index)
