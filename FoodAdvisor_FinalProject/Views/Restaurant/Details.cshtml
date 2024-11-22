@@ -40,7 +40,7 @@
 			</div>
 			<div class="info-wrapper">
 				<h4>Menu</h4> <i class="fa-solid fa-utensils"></i>
-				<h5>Cucine: Mediteranean</h5>
+				<h5>Cucine: @Model.CuisineName</h5>
 				<h5>Shefs special: @Model.ChefsDishName</h5>
 				<img src="/@Model.ChefsDishImage">
 				<p>
@@ -68,10 +68,11 @@
 			{
 				<div class="comment-wrapper">
 					<div class="commenteer-info">
-						<img class="commenter-img" src="/@comment.ProfilePicture">
+						<img class="commenter-img" src="@comment.ProfilePicture">
 						<p style="margin-bottom: 0;">@comment.UserName</p>
-						<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
-							<input type="hidden" name="restaurantId" value="@comment.Id" />
+						<form asp-controller="RestaurantComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+							<input type="hidden" name="commentId" value="@comment.Id" />
+							<input type="hidden" name="restaurantId" value="@Model.Id" />
 							<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
 						</form>
 					</div>

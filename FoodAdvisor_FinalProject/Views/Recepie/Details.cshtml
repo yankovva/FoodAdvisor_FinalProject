@@ -18,7 +18,7 @@
 	<div class="wrapper">
 		<div id="creator-wrapper">
 			<div class="creator">
-				<img src="/@Model.PublisherPicture" alt="@NoImage" id="creator-img">
+				<img src="@Model.PublisherPicture" alt="@NoImageAccount" id="creator-img">
 				<p> @Model.Publisher</p>
 				<p>@Model.PublisherFullName</p>
 				<p><i class="bi bi-geo-alt"></i>Plovdiv</p>
@@ -37,7 +37,7 @@
 		</div>
 
 		<div id="recepie-wrapper">
-			<img id="recepie-img" src="/@Model.ImagePath" alt="@NoImage">
+			<img id="recepie-img" src="@Model.ImagePath" alt="@NoImage">
 
 			<div id="icon-wrapper">
 				<div class="fa bi-clock">@Model.CookingTime min </div>
@@ -85,10 +85,11 @@
 			{
 				<div class="comment-wrapper">
 					<div class="commenteer-info">
-						<img class="commenter-img" src="/@Model.PublisherPicture">
-						<p style="margin-bottom: 0;">@Model.Publisher</p>
+						<img class="commenter-img" src="@comment.ProfilePicture">
+						<p style="margin-bottom: 0;">@comment.ProfilePicture</p>
 						<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
-							<input type="hidden" name="rcepieId" value="@comment.Id" />
+							<input type="hidden" name="commentId" value="@comment.Id" />
+							<input type="hidden" name="recepieId" value="@Model.Id" />
 							<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
 						</form>
 					</div>
