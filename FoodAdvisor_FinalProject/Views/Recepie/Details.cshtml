@@ -75,9 +75,9 @@
 				<div id="comment-form">
 					<form asp-controller="RecepieComment" asp-action="Add" method="post">
 						<h6>Add Comment!</h6>
-						<textarea class="form-control" aria-label="With textarea" name="Message" style="width: 30em; vertical-align:top;"></textarea>
+						<textarea class="form-control" aria-label="With textarea" name="Message" style="width:700px;"></textarea>
 						<input type="hidden" name="recepieId" value="@Model.Id" />
-						<button type="submit" class="btn btn-success" style="align-self: flex-start; margin-top:10px;">Submit</button>
+						<button type="submit" class="btn btn-secondary" style="align-self: flex-start; margin-top:10px;">Submit</button>
 					</form>
 				</div>
 			}

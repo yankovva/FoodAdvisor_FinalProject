@@ -10,57 +10,103 @@
 @{
 	ViewBag.Title = "Restaurnat Details";
 }
+<link rel="stylesheet" href="~/css/Restaurant/restaurant-details.css" asp-append-version="true" />
 
-<h2>@Model.Name</h2>
-<div .container-fluid>
-	<div class="row">
-		<div class="text-center">
-			<img src="/@Model.ImageURL" class="rounded" alt="@NoImage" width="400">
+<div class="container">
+	<div class="top-section">
+		<h1>@Model.Name</h1>
+		<div>
+			<img src="/@Model.ImageURL">
 		</div>
-		<p><strong>Name</strong> @Model.Name</p>
-		<p><strong>Category</strong> @Model.Category</p>
-		<p><strong>Description</strong> @Model.Description</p>
-		<p><strong>Price Range</strong> @Model.PriceRange</p>
-		<p><strong>Address:</strong> @Model.Address</p>
-		<p><strong>City:</strong> @Model.City</p>
-		<p><strong>Publisher:</strong> @Model.Publisher</p>
-		<p><strong>Comments:</strong></p>	
-		@if (User!.Identity!.IsAuthenticated == true)
-		{
-			<div class="container">
-				<form asp-controller="RestaurantComment" asp-action="Add" method="post">
-					<h6>Add Comment!</h6>
-					<textarea class="form-control" aria-label="With textarea" name="Message" style="width: 40%; vertical-align:top;"></textarea>
-					<input type="hidden" name="restaurantid" class="form-control" value="@Model.Id" />
-					<button type="submit" class="btn btn-primary" style="display: inline-block; margin-top:10px;">Submit</button>
-
-				</form>
-
-			</div>
-		}
-		<div class="list-group"></div>
-			@foreach (CommentAllViewModel comment in Model.AllComment)
-			{
-				<div class="commented-section mt-2">
-					<div class="d-flex flex-row align-items-center commented-user">
-						<h6 class="mr-2">@comment.UserName</h6><span class="dot mb-1"></span><span class="mb-1 ml-2">@comment.CreatedOn</span>
-					</div>
-					<div class="comment-text-sm"><span>@comment.Message</span></div>
-				</div>
-				@if (User?.Identity?.Name == @Model.Publisher)
-				{
-					<form asp-controller="RestaurantComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
-						<input type="hidden" name="restaurantId" value="@comment.Id" />
-					<button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-trash"></i></button>
-					</form>
-				}
-		}
-	
+		<div id="location-div">
+			<h3><i class="bi bi-geo-alt"></i> "@Model.Address" , @Model.City</h3>
+			<h3><i class="bi bi-card-text"></i>@Model.Category </h3>
+			<h3><i class="bi bi-heart"></i>23 likes</h3>
 		</div>
 	</div>
-	<a asp-action="Index" class="btn btn-secondary">Back to All Restaurants</a>
-	@if (User?.Identity?.Name == @Model.Publisher)
-	{
-		<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-rounded ">Delete</a>
-	}
+	<div class="main-section">
+		<div id="left-side">
+			<div class="info-wrapper">
+				<h4> Overall</h4>
+				<p>
+					@Model.Description
+				</p>
+			</div>
+			<div class="info-wrapper">
+				<h4> Athmosfere</h4>
+				<p>
+					@Model.Description
+				</p>
+			</div>
+			<div class="info-wrapper">
+				<h4>Menu</h4> <i class="fa-solid fa-utensils"></i>
+				<h5>Cucine: Mediteranean</h5>
+				<h5>Shefs special: Shells with withe wine</h5>
+				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl0DbJcmNoOHAHoep6MxYuCCCznooCYoeVAg&s">
+				<p>
+					@Model.Description
+				</p>
+			</div>
+			<div class="info-wrapper">
+				<h4>Price range</h4>
+				<h5>@Model.PriceRange - 40$-50$ per person</h5>
+			</div>
 
+
+			@if (User!.Identity!.IsAuthenticated == true)
+			{
+				<div id="comment-form">
+					<form asp-controller="RestaurantComment" asp-action="Add" method="post">
+						<h6>Add Comment!</h6>
+						<textarea class="form-control" aria-label="With textarea" name="Message" style="width:700px;"></textarea>
+						<input type="hidden" name="restaurantid" class="form-control" value="@Model.Id" />
+						<button type="submit" class="btn btn-secondary" style="align-self: flex-start; margin-top:10px;">Submit</button>
+					</form>
+				</div>
+			}
+			@foreach (CommentAllViewModel comment in Model.AllComment)
+			{
+				<div class="comment-wrapper">
+					<div class="commenteer-info">
+						<img class="commenter-img" src="/@comment.ProfilePicture">
+						<p style="margin-bottom: 0;">@comment.UserName</p>
+						<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+							<input type="hidden" name="restaurantId" value="@comment.Id" />
+							<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
+						</form>
+					</div>
+					<div class="comment-message">
+						<div class="comment-date">@comment.CreatedOn</div>
+						<p>@comment.Message</p>
+					</div>
+				</div>
+			}
+		</div>
+
+		<div id="right-side">
+			<div class="socials">
+				<h6>Follow Rumblemonos</h6>
+				<div class="restaurant-social-icons">
+					<div><i class="bi bi-instagram"></i></div>
+					<div><i class="bi bi-facebook"></i></div>
+					<div><i class="fa-brands fa-square-whatsapp"></i></div>
+				</div>
+				<div class="w3-panel w3-leftbar w3-light-grey" id="authors-opinion">
+					<p class="w3-xlarge w3-serif">
+						<i>"Make it as simple as possible, but not simpler."</i>
+					</p>
+					<p>Author</p>
+				</div>
+			</div>
+			<div class="socials">
+				<h6>Follow Food Advisor</h6>
+				<div class="restaurant-social-icons">
+					<div><i class="bi bi-instagram"></i></div>
+					<div><i class="bi bi-facebook"></i></div>
+					<div><i class="fa-brands fa-square-whatsapp"></i></div>
+				</div>
+				<img src="https://www.creativefabrica.com/wp-content/uploads/2020/02/11/Food-Logo-Graphics-1-71-580x386.jpg">
+			</div>
+		</div>
+	</div>
+</div>

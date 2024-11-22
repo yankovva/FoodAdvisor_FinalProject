@@ -119,10 +119,13 @@
     flex-wrap: wrap;
     flex-direction: row;
     gap: 0.3em;
+    align-items: center;
+    justify-content: center;
     margin-top: 1em;
-    width: 100%;
-    border: 1px solid #bcbcbc;
+    width: 80%;
+    border: 2px solid #bcbcbc;
     border-radius: 10px;
+    align-self: center;
 }
 
 .commenteer-info {

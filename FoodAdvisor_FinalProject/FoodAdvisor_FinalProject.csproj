@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\Restaurant\" />
     <Folder Include="wwwroot\ProfilePictures\" />
     <Folder Include="wwwroot\RecepiePictures\" />
     <Folder Include="wwwroot\RestaurantPictures\" />

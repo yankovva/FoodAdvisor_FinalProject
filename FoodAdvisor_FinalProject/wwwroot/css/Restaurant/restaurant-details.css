@@ -1,0 +1,201 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 10px;
+}
+
+.top-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 15px;
+}
+
+    .top-section img {
+        height: auto;
+        width: 100%;
+        max-width: 900px;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        border: 2px solid lightgrey;
+        min-width:800px;
+    }
+
+h1 {
+    font-family: "Lucida Handwriting", cursive;
+}
+
+#location-div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 2em;
+}
+
+.main-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#left-side {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    border-right: 2px solid lightgray;
+    padding-right: 10px;
+}
+
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid lightgrey;
+    background-color: beige;
+    width: 90%;
+}
+
+h4 {
+    text-decoration: underline;
+    font-family: ui-sans-serif;
+}
+
+.info-wrapper p {
+    width: 80%;
+}
+
+.info-wrapper img {
+    height: auto;
+    width: 100%;
+    max-width: 300px;
+    border: 4px solid white;
+    padding: 10px;
+}
+
+#right-side {
+    width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    align-self: flex-start;
+    position: sticky;
+    top: 0;
+}
+
+.socials {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    border-bottom: 2px solid lightgrey;
+    padding: 8px;
+}
+
+.restaurant-social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2em;
+}
+
+    .restaurant-social-icons div {
+        font-size: 2em;
+    }
+
+.socials img {
+    height: auto;
+    max-width: 150px;
+}
+
+#comment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 2em;
+}
+
+.comment-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.3em;
+    align-items: center;
+    margin-top: 1em;
+    border: 2px solid #bcbcbc;
+    border-radius: 10px;
+    align-self: flex-start;
+    width: 80%;
+    align-self: center;
+}
+
+.commenteer-info {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.1em;
+    padding: 10px;
+    width: 25%;
+    align-items: center;
+    border-right: 1px solid grey;
+}
+
+.comment-message {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.comment-message p {
+    padding-left:10px;
+}
+
+.commenter-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-position: center;
+    object-fit: cover;
+}
+
+.comment-date {
+    color: grey;
+    font-size: 0.8em;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.delete-comment-button {
+    border: none;
+    height: 10px;
+    background: white;
+    font-size: 1em;
+    padding-bottom: 1em;
+}
