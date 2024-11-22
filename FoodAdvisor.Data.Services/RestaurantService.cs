@@ -29,22 +29,38 @@ namespace FoodAdvisor.Data.Services
         }
 
 		//Done
-        public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file)
+        public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish)
 		{
 			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RestaurantPictures");
+			string uploadFolderChefsDish = Path.Combine(enviorment.WebRootPath, "ChefDishes");
 
 			if (!Directory.Exists(uploadFolder))
 			{
 				Directory.CreateDirectory(uploadFolder);
 			}
 
+			if (!Directory.Exists(uploadFolderChefsDish))
+			{
+				Directory.CreateDirectory(uploadFolderChefsDish);
+			}
+
 			string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
+			string fileNameChefsDish = userId.ToString() + "_" + model.ChefsDishName + "_" + Path.GetFileName(fileDish.FileName);
+
+
 			string NemImagePath = Path.Combine("RestaurantPictures", fileName);
+			string NemImagePathChefsDish = Path.Combine("RestaurantPictures", fileNameChefsDish);
 
 			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
 			{
 				await file.CopyToAsync(stream);
 			}
+			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePathChefsDish), FileMode.Create))
+			{
+				await fileDish.CopyToAsync(stream);
+			}
+
+			//
 			City? city = await this.cityRepository
 				.GetAllAttached()
 				.FirstOrDefaultAsync(c => c.Name.ToLower() == model.City.ToLower());
@@ -55,7 +71,6 @@ namespace FoodAdvisor.Data.Services
 					Name = model.City
 				};
 				await this.cityRepository.AddAsync(city);
-
 			}
 
 			Restaurant place = new Restaurant()
@@ -67,7 +82,11 @@ namespace FoodAdvisor.Data.Services
 				PublisherId = userId,
 				City = city,
 				Address = model.Address,
-				PricaRange = model.PriceRange
+				PricaRange = model.PriceRange,
+				MenuDescription = model.MenuDescription,
+				AtmosphereDescription = model.AtmosphereDescription,
+				ChefsSpecial = model.ChefsDishName,
+				ChefsSpecialImage = NemImagePathChefsDish
 			};
 
 			await this.restaurantRepository.AddAsync(place);
@@ -197,7 +216,11 @@ namespace FoodAdvisor.Data.Services
 					Id = p.Id.ToString(),
 					Name = p.Name,
 					Description = p.Description,
+					MenuDescription = p.MenuDescription,
+					AtmosphereDescription = p.AtmosphereDescription,
 					ImageURL = p.ImageURL,
+					ChefsDishName = p.ChefsSpecial,
+					ChefsDishImage = p.ChefsSpecialImage,
 					Address = p.Address,
 					Category = p.Category.Name,
 					PriceRange = p.PricaRange,
@@ -213,7 +236,6 @@ namespace FoodAdvisor.Data.Services
 						Id = rc.Id.ToString(),
 						UserName = rc.User.UserName ?? string.Empty,
 						ProfilePicture = rc.User.ProfilePricturePath!
-
 					})
 
 				})
