@@ -10,15 +10,18 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         [MaxLength(NameMaxLenght)]
         public string Name { get; set; } = null!;
 
-        [MinLength(URLMinLenght)]
-        [MaxLength(URLMaxLEnght)]
-        public string? ImagePath { get; set; }
-        [Required]
-        public int CookingTime { get; set; }
+		[Required]
+		public string ImagePath { get; set; } = null!;
+		
+		[Required]
+		[MinLength(NameMinLenght)]
+		[MaxLength(NameMaxLenght)]
+		public int CookingTime { get; set; }
         [Required]
         [MinLength(DescriptionMinLenght)]
         [MaxLength(DescriptionMaxLenght)]
         public string Description { get; set; } = null!;
+		
 		[Required]
 		[MinLength(ProductsMinLengt)]
 		[MaxLength(ProductsMaxLenght)]

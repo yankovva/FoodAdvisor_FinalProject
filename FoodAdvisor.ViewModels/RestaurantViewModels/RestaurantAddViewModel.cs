@@ -19,12 +19,30 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
         public  string Description { get; set; } = null!;
 
 		[Required]
+		[MinLength(DescriptionMinLenght)]
+		[MaxLength(DescriptionMaxLenght)]
+		public string AtmosphereDescription { get; set; } = null!;
+
+		[Required]
+		[MinLength(DescriptionMinLenght)]
+		[MaxLength(DescriptionMaxLenght)]
+		public string MenuDescription { get; set; } = null!;
+
+		[Required]
 		[MinLength(AddressMinLenght)]
 		[MaxLength(AddressMaxLenght)]
         public  string Address { get; set; } = null!;
 
+		
+		public string? ChefsDishImagePath { get; set; } 
 
-		public string? ImagePath { get; set; }
+		[Required]
+		[MinLength(NameMinLenght)]
+		[MaxLength(NameMaxLenght)]
+		public string ChefsDishName { get; set; } = null!;
+
+		
+		public string? ImagePath { get; set; } 
 
 		[Required]
 		public Guid CategoryId { get; set; }
