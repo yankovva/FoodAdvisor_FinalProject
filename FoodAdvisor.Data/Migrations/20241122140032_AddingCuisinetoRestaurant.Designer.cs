@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241122140032_AddingCuisinetoRestaurant")]
+    partial class AddingCuisinetoRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace FoodAdvisor.Data.Migrations
                     b.Property<DateTime>("Createdon")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 22, 17, 29, 3, 228, DateTimeKind.Local).AddTicks(6034))
+                        .HasDefaultValue(new DateTime(2024, 11, 22, 16, 0, 29, 869, DateTimeKind.Local).AddTicks(4214))
                         .HasComment("Date of creation of the User.");
 
                     b.Property<string>("Email")
@@ -95,7 +98,7 @@ namespace FoodAdvisor.Data.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("/assets/img/no-pfp.png")
+                        .HasDefaultValue("/assets/img/no-image-account.jfif")
                         .HasComment("Path for the Profile picture of the User.");
 
                     b.Property<string>("SecurityStamp")
@@ -141,32 +144,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("55a54e42-0215-4ff1-b320-333ddc164d0f"),
+                            Id = new Guid("ee0a65df-54ac-4be5-ba3e-724348f8d76c"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("086f6c2c-e726-4753-83ae-9ce493607dfe"),
+                            Id = new Guid("bd7ca129-f37c-424a-85c2-8e0bc0858af1"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("eaf354da-3f24-448b-bc63-44c1015bd7a1"),
+                            Id = new Guid("75220d4b-0e83-4815-bec2-4b5778b8dc86"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("bf94d541-c0da-4c45-a8bb-2dab58b5dbc1"),
+                            Id = new Guid("45d8cb81-0ab7-45f2-8227-3255ec39a28c"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("c4bbe80b-04ae-4fb8-a766-d88487055ba5"),
+                            Id = new Guid("17b226b9-f4bc-4d8e-8b18-6bd9b2e7ab27"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("8e8acbb0-161b-43a5-9a62-af1e17c8a2e9"),
+                            Id = new Guid("091ff470-c970-41ef-b368-b16b0aa4c959"),
                             Name = "Bistro"
                         });
                 });
@@ -300,37 +303,37 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0123fef5-d679-4bac-84a0-69442117a920"),
+                            Id = new Guid("a01e44e4-a3c4-4c9a-aab1-0e0a0bc3728b"),
                             Name = "Breakfast"
                         },
                         new
                         {
-                            Id = new Guid("bd91cd58-02d6-4c41-9f3b-b3e6a769ec12"),
+                            Id = new Guid("bf29ae9e-be81-4655-a829-0aab2bf7decf"),
                             Name = "Lunch"
                         },
                         new
                         {
-                            Id = new Guid("c467002f-aaad-49e7-a1cf-17f99bd22482"),
+                            Id = new Guid("5e1c73fd-fc63-4d88-9549-6aacf92e203c"),
                             Name = "Dinner"
                         },
                         new
                         {
-                            Id = new Guid("7d8bd8ed-c42e-4c2d-b866-c7677ca7368b"),
+                            Id = new Guid("bbf31729-851f-46e4-a29b-5fb9f40bd589"),
                             Name = "Dessert"
                         },
                         new
                         {
-                            Id = new Guid("f5e4e699-8fe2-4e5b-9338-8faf1965780c"),
+                            Id = new Guid("730a7a36-ac02-49e6-ba00-064c16def614"),
                             Name = "Snack"
                         },
                         new
                         {
-                            Id = new Guid("aae9877b-8d34-43f4-9fdb-4e9bb90d0a35"),
+                            Id = new Guid("4b6a29e6-81aa-4578-b5a9-d270cd25fdba"),
                             Name = "Side dish"
                         },
                         new
                         {
-                            Id = new Guid("de21ad46-c3b4-4def-b3df-8c1efbe034cc"),
+                            Id = new Guid("9338faa0-5dc7-4485-ae6d-73bf53a7e839"),
                             Name = "Starter"
                         });
                 });
@@ -558,42 +561,42 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8fa7149c-7805-47d5-b5bc-12c1e7704bd4"),
+                            Id = new Guid("c70e3310-90ea-49e8-b2eb-75825ad99612"),
                             Name = "Mediteranean"
                         },
                         new
                         {
-                            Id = new Guid("0ccbd527-0248-49d4-aeb2-abd07bca9a41"),
+                            Id = new Guid("48dbdc79-02e1-402e-86e1-725a81edabd2"),
                             Name = "Chinease"
                         },
                         new
                         {
-                            Id = new Guid("4d1cff44-c09f-4a04-8c3c-e98d2c5adc7c"),
+                            Id = new Guid("e1c21838-f415-42d3-8cdf-7ba6cbd2241e"),
                             Name = "Italian"
                         },
                         new
                         {
-                            Id = new Guid("13682688-2eeb-4c04-bdef-84cc500498c3"),
+                            Id = new Guid("7baebda0-3bfe-48e3-8ea9-76defca6c512"),
                             Name = "Bulgarian"
                         },
                         new
                         {
-                            Id = new Guid("eaf3bc8a-8987-480d-9e98-69585ca01a9c"),
+                            Id = new Guid("2a935cc1-6ecb-4515-890c-bd13f5c2d1a8"),
                             Name = "Mexican"
                         },
                         new
                         {
-                            Id = new Guid("1b14b3ba-5dea-4738-8a20-0062431898bd"),
+                            Id = new Guid("a5bb0368-f449-4a06-9fc4-8f45f951185f"),
                             Name = "Only drinks"
                         },
                         new
                         {
-                            Id = new Guid("c9bb4f98-f4f0-450c-8684-475c101d9aa7"),
+                            Id = new Guid("364e6f4f-dcf4-49f0-a322-cbdba4758017"),
                             Name = "Japanese"
                         },
                         new
                         {
-                            Id = new Guid("afc5adb1-4201-4e21-ada0-c05beec8860f"),
+                            Id = new Guid("ee8bab9e-9b45-4d76-a13e-13384b988078"),
                             Name = "French"
                         });
                 });

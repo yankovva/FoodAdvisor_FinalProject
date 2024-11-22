@@ -54,7 +54,13 @@ namespace FoodAdvisor.Data.Models
         [ForeignKey(nameof(CityId))]
         public City City { get; set; } = null!;
 
-        [Required]
+		[Required]
+		[Comment("The Cuisine Id.")]
+		public Guid CuisineId { get; set; }
+		[ForeignKey(nameof(CuisineId))]
+		public RestaurantCuisine Cuisine { get; set; } = null!;
+
+		[Required]
         [Comment("The Publisher Id.")]
         public Guid PublisherId { get; set; } 
 

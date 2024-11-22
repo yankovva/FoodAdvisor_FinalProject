@@ -7,7 +7,7 @@ namespace FoodAdvisor.Data.Models
 	public class Recepie
 	{
 		[Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
 		[Required]
 		[MaxLength(NameMaxLenght)]

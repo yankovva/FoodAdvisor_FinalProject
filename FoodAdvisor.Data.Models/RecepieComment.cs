@@ -9,9 +9,9 @@ namespace FoodAdvisor.Data.Models
     {
         [Key]
         [Comment("Identifier of the Recepie.")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Required]
+		[Required]
         [MaxLength(MessageMaxLenght)]
         [Comment("The message of the Recepie.")]
         public string Message { get; set; } = null!;

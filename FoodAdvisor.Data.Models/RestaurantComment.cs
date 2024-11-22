@@ -8,7 +8,7 @@ namespace FoodAdvisor.Data.Models
 	{
 		[Key]
 		[Comment("Identifier of the Comment.")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
 		[Required]
 		[MaxLength(MessageMaxLenght)]

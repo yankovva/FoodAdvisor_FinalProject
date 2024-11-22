@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    [Migration("20241122125406_MakingUplodaingImagesNonNull")]
-    partial class MakingUplodaingImagesNonNull
+    [Migration("20241122152905_ChangingDefaulPictureAccount")]
+    partial class ChangingDefaulPictureAccount
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace FoodAdvisor.Data.Migrations
                     b.Property<DateTime>("Createdon")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 22, 14, 54, 4, 694, DateTimeKind.Local).AddTicks(7233))
+                        .HasDefaultValue(new DateTime(2024, 11, 22, 17, 29, 3, 228, DateTimeKind.Local).AddTicks(6034))
                         .HasComment("Date of creation of the User.");
 
                     b.Property<string>("Email")
@@ -98,7 +98,7 @@ namespace FoodAdvisor.Data.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("/assets/img/no-image-account.jfif")
+                        .HasDefaultValue("/assets/img/no-pfp.png")
                         .HasComment("Path for the Profile picture of the User.");
 
                     b.Property<string>("SecurityStamp")
@@ -144,32 +144,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1106ab37-264e-4b39-8a15-4eaef9d22948"),
+                            Id = new Guid("55a54e42-0215-4ff1-b320-333ddc164d0f"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("300ab2f8-86dc-40ec-a853-785a7424d291"),
+                            Id = new Guid("086f6c2c-e726-4753-83ae-9ce493607dfe"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("24ee65ee-8267-48a9-b2ff-419e320045fc"),
+                            Id = new Guid("eaf354da-3f24-448b-bc63-44c1015bd7a1"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("fb4fa57b-9a21-4c5c-a95f-a83aeb736c24"),
+                            Id = new Guid("bf94d541-c0da-4c45-a8bb-2dab58b5dbc1"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("e8b65baf-9871-4781-bf3e-dcf9388d2d89"),
+                            Id = new Guid("c4bbe80b-04ae-4fb8-a766-d88487055ba5"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("babb3713-13a1-46c2-a677-5b58ac0959c1"),
+                            Id = new Guid("8e8acbb0-161b-43a5-9a62-af1e17c8a2e9"),
                             Name = "Bistro"
                         });
                 });
@@ -303,37 +303,37 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8007d0d0-20fe-443a-b2e8-736751044fbf"),
+                            Id = new Guid("0123fef5-d679-4bac-84a0-69442117a920"),
                             Name = "Breakfast"
                         },
                         new
                         {
-                            Id = new Guid("2de7d11a-514b-496d-acb9-4c2628cc88bf"),
+                            Id = new Guid("bd91cd58-02d6-4c41-9f3b-b3e6a769ec12"),
                             Name = "Lunch"
                         },
                         new
                         {
-                            Id = new Guid("787d7046-6f17-468c-8006-c7cf7b4bfcc0"),
+                            Id = new Guid("c467002f-aaad-49e7-a1cf-17f99bd22482"),
                             Name = "Dinner"
                         },
                         new
                         {
-                            Id = new Guid("1727c611-8413-46f8-8edd-e18af9b0eee4"),
+                            Id = new Guid("7d8bd8ed-c42e-4c2d-b866-c7677ca7368b"),
                             Name = "Dessert"
                         },
                         new
                         {
-                            Id = new Guid("b0ade557-602d-4be4-8440-3dd4078e7e37"),
+                            Id = new Guid("f5e4e699-8fe2-4e5b-9338-8faf1965780c"),
                             Name = "Snack"
                         },
                         new
                         {
-                            Id = new Guid("ae70a0ee-f99f-41fd-8cbf-ea8161c1e1a2"),
+                            Id = new Guid("aae9877b-8d34-43f4-9fdb-4e9bb90d0a35"),
                             Name = "Side dish"
                         },
                         new
                         {
-                            Id = new Guid("f56357ac-b0a2-4761-9fd8-70b4effd7e9d"),
+                            Id = new Guid("de21ad46-c3b4-4def-b3df-8c1efbe034cc"),
                             Name = "Starter"
                         });
                 });
@@ -452,6 +452,10 @@ namespace FoodAdvisor.Data.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasComment("The City Id.");
 
+                    b.Property<Guid>("CuisineId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasComment("The Cuisine Id.");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(700)
@@ -496,6 +500,8 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("CuisineId");
+
                     b.HasIndex("PublisherId");
 
                     b.ToTable("Restaurants");
@@ -534,6 +540,65 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RestaurantsComments");
+                });
+
+            modelBuilder.Entity("FoodAdvisor.Data.Models.RestaurantCuisine", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("The name of the Cuisine type.");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cuisines");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8fa7149c-7805-47d5-b5bc-12c1e7704bd4"),
+                            Name = "Mediteranean"
+                        },
+                        new
+                        {
+                            Id = new Guid("0ccbd527-0248-49d4-aeb2-abd07bca9a41"),
+                            Name = "Chinease"
+                        },
+                        new
+                        {
+                            Id = new Guid("4d1cff44-c09f-4a04-8c3c-e98d2c5adc7c"),
+                            Name = "Italian"
+                        },
+                        new
+                        {
+                            Id = new Guid("13682688-2eeb-4c04-bdef-84cc500498c3"),
+                            Name = "Bulgarian"
+                        },
+                        new
+                        {
+                            Id = new Guid("eaf3bc8a-8987-480d-9e98-69585ca01a9c"),
+                            Name = "Mexican"
+                        },
+                        new
+                        {
+                            Id = new Guid("1b14b3ba-5dea-4738-8a20-0062431898bd"),
+                            Name = "Only drinks"
+                        },
+                        new
+                        {
+                            Id = new Guid("c9bb4f98-f4f0-450c-8684-475c101d9aa7"),
+                            Name = "Japanese"
+                        },
+                        new
+                        {
+                            Id = new Guid("afc5adb1-4201-4e21-ada0-c05beec8860f"),
+                            Name = "French"
+                        });
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.UserRecepie", b =>
@@ -772,6 +837,12 @@ namespace FoodAdvisor.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FoodAdvisor.Data.Models.RestaurantCuisine", "Cuisine")
+                        .WithMany("Restaurants")
+                        .HasForeignKey("CuisineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FoodAdvisor.Data.Models.ApplicationUser", "Publisher")
                         .WithMany()
                         .HasForeignKey("PublisherId")
@@ -781,6 +852,8 @@ namespace FoodAdvisor.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("City");
+
+                    b.Navigation("Cuisine");
 
                     b.Navigation("Publisher");
                 });
@@ -936,6 +1009,11 @@ namespace FoodAdvisor.Data.Migrations
                     b.Navigation("RestaurantsComments");
 
                     b.Navigation("UserRestaurants");
+                });
+
+            modelBuilder.Entity("FoodAdvisor.Data.Models.RestaurantCuisine", b =>
+                {
+                    b.Navigation("Restaurants");
                 });
 #pragma warning restore 612, 618
         }

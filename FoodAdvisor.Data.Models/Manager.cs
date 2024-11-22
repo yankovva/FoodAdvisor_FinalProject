@@ -15,9 +15,9 @@ namespace FoodAdvisor.Data.Models
 	{
 		[Key]
         [Comment("The unique identifier of the manager.")]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Required]
+		[Required]
         [MinLength(PhoneNumberMinLenght)]
         [MaxLength(PhoneNumberMaxLenght)]
         [Comment("Work phone number of the manager.")]
