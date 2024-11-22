@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241122125011_AddingChefsSpecialImageAndNameToRestaurant")]
+    partial class AddingChefsSpecialImageAndNameToRestaurant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace FoodAdvisor.Data.Migrations
                     b.Property<DateTime>("Createdon")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 22, 14, 54, 4, 694, DateTimeKind.Local).AddTicks(7233))
+                        .HasDefaultValue(new DateTime(2024, 11, 22, 14, 50, 8, 435, DateTimeKind.Local).AddTicks(684))
                         .HasComment("Date of creation of the User.");
 
                     b.Property<string>("Email")
@@ -141,32 +144,32 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1106ab37-264e-4b39-8a15-4eaef9d22948"),
+                            Id = new Guid("6147b19b-5e6a-42e8-9850-ba151d4c3df8"),
                             Name = "Restaurant"
                         },
                         new
                         {
-                            Id = new Guid("300ab2f8-86dc-40ec-a853-785a7424d291"),
+                            Id = new Guid("c21d9e5c-5a3d-440e-ba44-702d93251121"),
                             Name = "Cafe"
                         },
                         new
                         {
-                            Id = new Guid("24ee65ee-8267-48a9-b2ff-419e320045fc"),
+                            Id = new Guid("142e2129-8542-4b09-8336-56e6fe2a61f6"),
                             Name = "Bar & Dinner"
                         },
                         new
                         {
-                            Id = new Guid("fb4fa57b-9a21-4c5c-a95f-a83aeb736c24"),
+                            Id = new Guid("b2852bcb-acb9-4354-a805-05ece8cb9ad1"),
                             Name = "Fast Food"
                         },
                         new
                         {
-                            Id = new Guid("e8b65baf-9871-4781-bf3e-dcf9388d2d89"),
+                            Id = new Guid("df58c59e-20eb-44e9-a242-eb26afead207"),
                             Name = "Bakery"
                         },
                         new
                         {
-                            Id = new Guid("babb3713-13a1-46c2-a677-5b58ac0959c1"),
+                            Id = new Guid("f5d626e8-b6f4-45f3-a99c-190d49d67caf"),
                             Name = "Bistro"
                         });
                 });
@@ -239,8 +242,8 @@ namespace FoodAdvisor.Data.Migrations
                         .HasComment("Description of the Recepie.");
 
                     b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2083)
+                        .HasColumnType("nvarchar(2083)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -300,37 +303,37 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8007d0d0-20fe-443a-b2e8-736751044fbf"),
+                            Id = new Guid("a45c8c5f-283a-47b7-a8e4-43f80a1928e4"),
                             Name = "Breakfast"
                         },
                         new
                         {
-                            Id = new Guid("2de7d11a-514b-496d-acb9-4c2628cc88bf"),
+                            Id = new Guid("d6b020cd-0bcb-4eca-8eee-f3af8c61b08b"),
                             Name = "Lunch"
                         },
                         new
                         {
-                            Id = new Guid("787d7046-6f17-468c-8006-c7cf7b4bfcc0"),
+                            Id = new Guid("33241044-63b4-4bfc-b221-96f89803de48"),
                             Name = "Dinner"
                         },
                         new
                         {
-                            Id = new Guid("1727c611-8413-46f8-8edd-e18af9b0eee4"),
+                            Id = new Guid("6e98ad6a-c161-465f-8db1-98112553ea9b"),
                             Name = "Dessert"
                         },
                         new
                         {
-                            Id = new Guid("b0ade557-602d-4be4-8440-3dd4078e7e37"),
+                            Id = new Guid("cdd38766-828f-41f4-a3f9-b95ae3d65d7f"),
                             Name = "Snack"
                         },
                         new
                         {
-                            Id = new Guid("ae70a0ee-f99f-41fd-8cbf-ea8161c1e1a2"),
+                            Id = new Guid("7c77d9dc-a92a-48b4-9ae3-32a5c3074e8e"),
                             Name = "Side dish"
                         },
                         new
                         {
-                            Id = new Guid("f56357ac-b0a2-4761-9fd8-70b4effd7e9d"),
+                            Id = new Guid("47a60f2c-b432-4621-b4b0-47ca61967c92"),
                             Name = "Starter"
                         });
                 });
@@ -441,7 +444,6 @@ namespace FoodAdvisor.Data.Migrations
                         .HasComment("The Chefs special dish of the Restaurant.");
 
                     b.Property<string>("ChefsSpecialImage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("An Image Path of the Chefs special dish of the  Restaurant.");
 
@@ -456,7 +458,6 @@ namespace FoodAdvisor.Data.Migrations
                         .HasComment("The Description of the Restaurant.");
 
                     b.Property<string>("ImageURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("An Image Path of the Restaurant.");
 

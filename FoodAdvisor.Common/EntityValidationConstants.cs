@@ -7,8 +7,8 @@
             public const int NameMinLenght = 2;
             public const int NameMaxLenght = 50;
 
-            public const int DescriptionMinLenght = 20;
-            public const int DescriptionMaxLenght = 300;
+			public const int DescriptionMinLenght = 100;
+            public const int DescriptionMaxLenght = 700;
 
             public const int AddressMinLenght = 5;
             public const int AddressMaxLenght = 85;

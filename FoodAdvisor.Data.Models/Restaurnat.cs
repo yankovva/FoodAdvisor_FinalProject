@@ -21,16 +21,34 @@ namespace FoodAdvisor.Data.Models
         [Comment("The Description of the Restaurant.")]
         public string Description { get; set; } = null!;
 
-        [Required]
+		[Required]
+		[MaxLength(DescriptionMaxLenght)]
+		[Comment("The Menu Description of the Restaurant.")]
+		public string MenuDescription { get; set; } = null!;
+
+		[Required]
+		[MaxLength(DescriptionMaxLenght)]
+		[Comment("The Atmosphere Description of the Restaurant.")]
+		public string AtmosphereDescription { get; set; } = null!;
+
+		[Required]
+		[MaxLength(DescriptionMaxLenght)]
+		[Comment("The Chefs special dish of the Restaurant.")]
+		public string ChefsSpecial { get; set; } = null!;
+
+		[Required]
         [MaxLength(AddressMaxLenght)]
         [Comment("The Address of the Restaurant.")]
         public string Address { get; set; } = null!;
 
-        [MaxLength(URLMaxLEnght)]
-        [Comment("An Image Url of the Restaurant.")]
-        public string? ImageURL { get; set; }
 
-        [Required]
+        [Comment("An Image Path of the Restaurant.")]
+        public string ImageURL { get; set; } = null!;
+
+        [Comment("An Image Path of the Chefs special dish of the  Restaurant.")]
+        public string ChefsSpecialImage { get; set; } = null!;
+
+		[Required]
         [Comment("The City Id.")]
         public Guid CityId { get; set; }
         [ForeignKey(nameof(CityId))]

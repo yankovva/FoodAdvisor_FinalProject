@@ -40,8 +40,7 @@ namespace FoodAdvisor.Data.Models
 		[Comment("Needed products for the Recepie.")]
 		public string Products { get; set; } = null!;
 
-		[MaxLength(URLMaxLEnght)]
-        public string? ImageURL { get; set; }
+		public string ImageURL { get; set; } = null!;
 
         public Guid PublisherId { get; set; }
 		[ForeignKey(nameof(PublisherId))]
