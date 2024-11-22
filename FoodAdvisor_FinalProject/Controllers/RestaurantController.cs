@@ -60,7 +60,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         }
 
 		[HttpPost]
-		public async Task<IActionResult> Add(RestaurantAddViewModel model, IFormFile file)
+		public async Task<IActionResult> Add(RestaurantAddViewModel model, IFormFile file, IFormFile fileDish)
 		{
 			string? userId = this.GetCurrentUserId();
 			bool isManager = await this.managerService
@@ -76,7 +76,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				return View(model);
 			}
 
-			await this.restaurantService.AddRestaurantAsync(model, Guid.Parse(userId!),file);
+			await this.restaurantService.AddRestaurantAsync(model, Guid.Parse(userId!),file, fileDish);
 
 			return RedirectToAction(nameof(Index));
 

@@ -35,16 +35,16 @@
 			<div class="info-wrapper">
 				<h4> Athmosfere</h4>
 				<p>
-					@Model.Description
+					@Model.AtmosphereDescription
 				</p>
 			</div>
 			<div class="info-wrapper">
 				<h4>Menu</h4> <i class="fa-solid fa-utensils"></i>
 				<h5>Cucine: Mediteranean</h5>
-				<h5>Shefs special: Shells with withe wine</h5>
-				<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl0DbJcmNoOHAHoep6MxYuCCCznooCYoeVAg&s">
+				<h5>Shefs special: @Model.ChefsDishName</h5>
+				<img src="/@Model.ChefsDishImage">
 				<p>
-					@Model.Description
+					@Model.MenuDescription
 				</p>
 			</div>
 			<div class="info-wrapper">
@@ -85,7 +85,7 @@
 
 		<div id="right-side">
 			<div class="socials">
-				<h6>Follow Rumblemonos</h6>
+				<h6>Follow @Model.Name</h6>
 				<div class="restaurant-social-icons">
 					<div><i class="bi bi-instagram"></i></div>
 					<div><i class="bi bi-facebook"></i></div>
