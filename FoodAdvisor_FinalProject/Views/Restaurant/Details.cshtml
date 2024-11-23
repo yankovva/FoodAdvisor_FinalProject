@@ -68,7 +68,7 @@
 			{
 				<div class="comment-wrapper">
 					<div class="commenteer-info">
-						<img class="commenter-img" src="@comment.ProfilePicture">
+						<img class="commenter-img" src="/@comment.ProfilePicture">
 						<p style="margin-bottom: 0;">@comment.UserName</p>
 						<form asp-controller="RestaurantComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
 							<input type="hidden" name="commentId" value="@comment.Id" />
@@ -87,7 +87,7 @@
 		<div id="right-side">
 			<div class="socials">
 				<h6>Follow @Model.Name</h6>
-				<div class="restaurant-social-icons">
+				<div class="social-icons">
 					<div><i class="bi bi-instagram"></i></div>
 					<div><i class="bi bi-facebook"></i></div>
 					<div><i class="fa-brands fa-square-whatsapp"></i></div>
@@ -101,7 +101,7 @@
 			</div>
 			<div class="socials">
 				<h6>Follow Food Advisor</h6>
-				<div class="restaurant-social-icons">
+				<div class="social-icons">
 					<div><i class="bi bi-instagram"></i></div>
 					<div><i class="bi bi-facebook"></i></div>
 					<div><i class="fa-brands fa-square-whatsapp"></i></div>

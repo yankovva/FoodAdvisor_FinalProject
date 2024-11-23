@@ -105,33 +105,6 @@ h4 {
     top: 0;
 }
 
-.socials {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    gap: 1em;
-    width: 100%;
-    border-bottom: 2px solid lightgrey;
-    padding: 8px;
-}
-
-.restaurant-social-icons {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 2em;
-}
-
-    .restaurant-social-icons div {
-        font-size: 2em;
-    }
-
-.socials img {
-    height: auto;
-    max-width: 150px;
-}
 
 #comment-form {
     display: flex;

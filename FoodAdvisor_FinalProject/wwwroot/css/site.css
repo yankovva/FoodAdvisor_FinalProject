@@ -299,6 +299,33 @@ body {
     padding: 50px 35px;
 }
 
+.socials {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    border-bottom: 2px solid lightgrey;
+    padding: 8px;
+}
+    .socials img {
+        height: auto;
+        max-width: 150px;
+    }
+
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2em;
+}
+
+    .social-icons div {
+        font-size: 2em;
+    }
+
 
 
 @media(max-width: 768px) {

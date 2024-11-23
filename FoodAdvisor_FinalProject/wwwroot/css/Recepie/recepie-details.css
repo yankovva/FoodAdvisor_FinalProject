@@ -11,6 +11,9 @@
     border-radius: 10px;
     padding: 8px;
 }
+h1 {
+    font-family: "Lucida Handwriting", cursive;
+}
 
 .wrapper {
     display: flex;
@@ -169,7 +172,6 @@
 
 .creator {
     border: 1px solid #dbd8d8;
-    position: sticky;
     top: 0;
     display: flex;
     align-items: center;
@@ -194,6 +196,11 @@
     gap: 6px;
     align-items: flex-start;
     margin-top:0.8em;
+    margin-bottom:1em;
+    border-bottom:2px solid lightgrey;
+    padding-bottom:12px;
+    width:100%;
+    align-content:center;
 }
 
     .creator-buttons div {

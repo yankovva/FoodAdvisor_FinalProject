@@ -13,12 +13,13 @@
 			<p>@Model.CreatetOn</p>
 		</div>
 		<a asp-action="Index" class="btn btn-secondary" style="background-color:dimgrey; color:white"><i class="bi bi-arrow-90deg-left"> Back to all</i></a>
+		
 	</div>
 
 	<div class="wrapper">
 		<div id="creator-wrapper">
 			<div class="creator">
-				<img src="@Model.PublisherPicture" alt="@NoImageAccount" id="creator-img">
+				<img src="/@Model.PublisherPicture" alt="/@NoImageAccount" id="creator-img">
 				<p> @Model.Publisher</p>
 				<p>@Model.PublisherFullName</p>
 				<p><i class="bi bi-geo-alt"></i>Plovdiv</p>
@@ -31,13 +32,21 @@
 						<a asp-controller="Recepie" asp-action="Edit" asp-route-id="@Model.Id" method="get" style="background-color:yellow" ><i class="bi bi-pencil-square"></i> </a>
 					}
 				</div>
-				
+			</div>
+			<div class="socials" style="position: sticky;">
+				<h6>Follow Food Advisor</h6>
+				<div class="social-icons">
+					<div><i class="bi bi-instagram"></i></div>
+					<div><i class="bi bi-facebook"></i></div>
+					<div><i class="fa-brands fa-square-whatsapp"></i></div>
+				</div>
+				<img src="https://www.creativefabrica.com/wp-content/uploads/2020/02/11/Food-Logo-Graphics-1-71-580x386.jpg">
 			</div>
 			
 		</div>
 
 		<div id="recepie-wrapper">
-			<img id="recepie-img" src="@Model.ImagePath" alt="@NoImage">
+			<img id="recepie-img" src="/@Model.ImagePath" alt="@NoImage">
 
 			<div id="icon-wrapper">
 				<div class="fa bi-clock">@Model.CookingTime min </div>
@@ -85,13 +94,16 @@
 			{
 				<div class="comment-wrapper">
 					<div class="commenteer-info">
-						<img class="commenter-img" src="@comment.ProfilePicture">
-						<p style="margin-bottom: 0;">@comment.ProfilePicture</p>
-						<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
-							<input type="hidden" name="commentId" value="@comment.Id" />
-							<input type="hidden" name="recepieId" value="@Model.Id" />
-							<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
-						</form>
+						<img class="commenter-img" src="/@comment.ProfilePicture">
+						<p style="margin-bottom: 0;">@comment.UserName</p>
+						@if (User?.Identity?.Name == @comment.UserName)
+						{
+							<form asp-controller="RecepieComment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+								<input type="hidden" name="commentId" value="@comment.Id" />
+								<input type="hidden" name="recepieId" value="@Model.Id" />
+								<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
+							</form>
+						}
 					</div>
 					<div class="comment-message">
 						<div class="comment-date">@comment.CreatedOn</div>

@@ -26,8 +26,7 @@
 		<button class="dropbtn"><i class="bi bi-border-width"></i></button>
 		<div class="dropdown-content">
 			<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]"><i class="bi bi-arrows-vertical"></i>Name</a>
-			<a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]"><i class="bi bi-arrows-vertical"></i>Date</a>
-			<a asp-action="Index" asp-route-sortOrder="@ViewData["DificultySortParm"]"><i class="bi bi-arrows-vertical"></i>DificultyLevel</a>
+			
 		</div>
 	</div>
 </div>
@@ -39,7 +38,7 @@
 		<div class="col-md-3" style="min-width:300px;">
 			<div class="card">
 				<div>
-					<img class="header" src="@restaurant.ImageURL" alt="/@NoImage">
+					<img class="header" src="@restaurant.ImageURL" alt="@NoImage">
 					<form asp-controller="RestaurantFavourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post">
 						<input type="hidden" name="id" value="@restaurant.Id" />
 						<button type="submit" class="icon-heart"><i type="submit" class="fa-solid fa-heart"></i></button>
