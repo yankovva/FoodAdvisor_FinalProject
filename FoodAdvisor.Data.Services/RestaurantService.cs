@@ -337,7 +337,8 @@ namespace FoodAdvisor.Data.Services
 					Category = r.Category.Name,
 					PriceRange = r.PricaRange,
 					City = r.City.Name,
-					
+					Description = r.Description.Substring(0, 100)
+
 				})
 				.Skip((currentPage - 1) * maxRecepiesPerPage)
 				.Take(maxRecepiesPerPage)

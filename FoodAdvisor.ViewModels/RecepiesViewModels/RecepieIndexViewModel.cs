@@ -9,7 +9,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
     public class RecepieIndexViewModel
     {
         public string Id { get; set; } = null!;
-        public string Name { get; set; } = null!;
+        public  string Name { get; set; } = null!;
         public int CookingTime { get; set; }
         public string Publisher { get; set; } = null!;
         public string? ImageURL { get; set; }
@@ -18,6 +18,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         public int Servings { get; set; }
         public string CreatedOn { get; set; } = null!;
         public string DificultyLevel { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
     }
 }

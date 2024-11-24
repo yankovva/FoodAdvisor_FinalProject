@@ -86,6 +86,7 @@ namespace FoodAdvisor.Data.Services
 					Servings = r.NumberOfServing,
 					CreatedOn = r.CreatedOn.ToString("dd/MM/yyyy HH:mm"),
 					DificultyLevel = r.RecepieDificultyId.ToString(),
+					Description = r.Description.Substring(0,100)
 				})
 				.Skip((currentPage - 1) * maxRecepiesPerPage)
 				.Take(maxRecepiesPerPage)

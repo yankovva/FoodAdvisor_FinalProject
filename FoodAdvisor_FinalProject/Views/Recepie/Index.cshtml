@@ -1,9 +1,9 @@
 ﻿@using FoodAdvisor.ViewModels.RecepiesViewModels;
 @using static FoodAdvisor.Common.ApplicationConstants;
-@model RecepiePaginationIndexViewModel
 @using FoodAdvisor.Data.Services.Interfaces;
 @using FoodAdvisor.Infrastructure;
 @inject IManagerService managerService
+@model RecepiePaginationIndexViewModel
 
 @{
 	ViewBag.Title = "All Recepies";
@@ -51,7 +51,7 @@
 						<i class="fa bi-layout-text-sidebar"> @recepie.Category</i>
 
 					</div>
-					<p class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, temporibus.</p>
+					<p class="info">@recepie.Description ...</p>
 				</div>
 				<div id="publisher-info">
 					<div class="col-5" style="padding-left:50px">
