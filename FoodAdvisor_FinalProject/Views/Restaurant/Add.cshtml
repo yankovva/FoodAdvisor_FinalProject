@@ -4,74 +4,76 @@
 @{
 	ViewBag.Title = "Add Restaurant";
 }
-<form asp-action="Add" method="post" enctype="multipart/form-data" id="form-add-restaurant">
-	<div class="form-group">
-		<label asp-for="@Model.Name" class="form-label-add-edit">Restaurant Name</label>
-		<input asp-for="@Model.Name" class="form-control" aria-required="true" />
-		<span asp-validation-for="@Model.Name" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.ImagePath" class="form-label-add-edit">Place Image</label>
-		<input asp-for="@Model.ImagePath" name="file" type="file" class="form-controll" aria-required="false" />
-		<span asp-validation-for="@Model.ImagePath" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.PriceRange" class="form-label-add-edit">Price Range - $</label>
-		<input asp-for="@Model.PriceRange" class="form-control" aria-required="true" />
-		<span asp-validation-for="@Model.PriceRange" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.ChefsDishName" class="form-label-add-edit">Chefs dish name</label>
-		<input asp-for="@Model.ChefsDishName" class="form-control" aria-required="true" />
-		<span asp-validation-for="@Model.ChefsDishName" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.ChefsDishImagePath" class="form-label-add-edit">Chefs dish Image</label>
-		<input asp-for="@Model.ChefsDishImagePath" name="fileDish" type="file" class="form-controll" aria-required="false" />
-		<span asp-validation-for="@Model.ChefsDishImagePath" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.Address" class="form-label-add-edit">Restaurant Address</label>
-		<input asp-for="@Model.Address" class="form-control" aria-required="true" />
-		<span asp-validation-for="@Model.Address" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.City" class="form-label-add-edit">City</label>
-		<input asp-for="@Model.City" class="form-control" aria-required="true" placeholder="Enter City of the Restaurant" />
-		<span asp-validation-for="@Model.City" class="text-danger"></span>
-	</div>
+<div clas="form-wrapper">
+	<form asp-action="Add" method="post" enctype="multipart/form-data" class="form-add-entity">
+		<div class="form-group">
+			<label asp-for="@Model.Name" class="form-label-add-edit">Restaurant Name</label>
+			<input asp-for="@Model.Name" class="form-control" aria-required="true" />
+			<span asp-validation-for="@Model.Name" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.ImagePath" class="form-label-add-edit">Place Image</label>
+			<input asp-for="@Model.ImagePath" name="file" type="file" class="form-controll" aria-required="false" />
+			<span asp-validation-for="@Model.ImagePath" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.PriceRange" class="form-label-add-edit">Price Range - $</label>
+			<input asp-for="@Model.PriceRange" class="form-control" aria-required="true" />
+			<span asp-validation-for="@Model.PriceRange" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.ChefsDishName" class="form-label-add-edit">Chefs dish name</label>
+			<input asp-for="@Model.ChefsDishName" class="form-control" aria-required="true" />
+			<span asp-validation-for="@Model.ChefsDishName" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.ChefsDishImagePath" class="form-label-add-edit">Chefs dish Image</label>
+			<input asp-for="@Model.ChefsDishImagePath" name="fileDish" type="file" class="form-controll" aria-required="false" />
+			<span asp-validation-for="@Model.ChefsDishImagePath" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.Address" class="form-label-add-edit">Restaurant Address</label>
+			<input asp-for="@Model.Address" class="form-control" aria-required="true" />
+			<span asp-validation-for="@Model.Address" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.City" class="form-label-add-edit">City</label>
+			<input asp-for="@Model.City" class="form-control" aria-required="true" placeholder="Enter City of the Restaurant" />
+			<span asp-validation-for="@Model.City" class="text-danger"></span>
+		</div>
 
-	<div class="form-group">
-		<label asp-for="@Model.CategoryId" class="form-label-add-edit">Select Category</label>
-		<select asp-for="@Model.CategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-			<option value="">Select Category...</option>
-		</select>
-		<span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.CuisineName" class="form-label-add-edit">Cuisine Type</label>
-		<input asp-for="@Model.CuisineName" class="form-control" aria-required="true" placeholder="Enter Cuisine type of the Restaurant" />
-		<span asp-validation-for="@Model.CuisineName" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.Description" class="form-label-add-edit">Description</label>
-		<textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5" placeholder="Write a  description of the Place (100-700 characters)"></textarea>
-		<span asp-validation-for="@Model.Description" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.MenuDescription" class="form-label-add-edit"> Menu Description</label>
-		<textarea asp-for="@Model.MenuDescription" class="form-control" aria-required="true" rows="5" placeholder="Write a  description of the Menu (100-700 characters)"></textarea>
-		<span asp-validation-for="@Model.MenuDescription" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.AtmosphereDescription" class="form-label-add-edit">Atmosphere Description</label>
-		<textarea asp-for="@Model.AtmosphereDescription" class="form-control" aria-required="true" rows="5" placeholder="Write a short description of the Atmosphere (100-700 characters)"></textarea>
-		<span asp-validation-for="@Model.AtmosphereDescription" class="text-danger"></span>
-	</div>
-	<div class="mb-3">
-		<input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Save" />
-	</div>
-</form>
+		<div class="form-group">
+			<label asp-for="@Model.CategoryId" class="form-label-add-edit">Select Category</label>
+			<select asp-for="@Model.CategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+				<option value="">Select Category...</option>
+			</select>
+			<span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.CuisineName" class="form-label-add-edit">Cuisine Type</label>
+			<input asp-for="@Model.CuisineName" class="form-control" aria-required="true" placeholder="Enter Cuisine type of the Restaurant" />
+			<span asp-validation-for="@Model.CuisineName" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.Description" class="form-label-add-edit">Description</label>
+			<textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5" placeholder="Write a  description of the Place (100-700 characters)"></textarea>
+			<span asp-validation-for="@Model.Description" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.MenuDescription" class="form-label-add-edit"> Menu Description</label>
+			<textarea asp-for="@Model.MenuDescription" class="form-control" aria-required="true" rows="5" placeholder="Write a  description of the Menu (100-700 characters)"></textarea>
+			<span asp-validation-for="@Model.MenuDescription" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.AtmosphereDescription" class="form-label-add-edit">Atmosphere Description</label>
+			<textarea asp-for="@Model.AtmosphereDescription" class="form-control" aria-required="true" rows="5" placeholder="Write a short description of the Atmosphere (100-700 characters)"></textarea>
+			<span asp-validation-for="@Model.AtmosphereDescription" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Save" />
+		</div>
+	</form>
+</div>
 
 
 @section Scripts {

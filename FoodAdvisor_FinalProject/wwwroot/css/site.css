@@ -15,8 +15,9 @@ body {
     height: 100vh;
 }
 
-
-
+.navbar {
+    background-color: rgba(56, 55, 55, 0.5);
+}
 
 .srch {
     font-family: 'Times New Roman';
@@ -153,11 +154,6 @@ body {
     text-align: center;
 }
 
-.navbar {
-    background-color: rgba(56, 55, 55, 0.5);
-  
-}
-
 
 .form-login {
     height: 550px;
@@ -188,6 +184,7 @@ body {
         line-height: 42px;
         text-align: center;
     }
+
 .form-register {
     height: 680px;
     width: 380px;
@@ -270,28 +267,19 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-#form-add-recepie {
-    height: 800px;
-    width: 50%;
-    background-color: rgba(255, 255, 255, 0.13);
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 60%;
-    left: 50%;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-    padding: 50px 35px;
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    margin: 10px;
 }
-#form-add-restaurant {
-    height: 730px;
+}
+.form-add-entity {
+    height: auto;
     width: 50%;
     background-color: rgba(255, 255, 255, 0.13);
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 60%;
-    left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -326,7 +314,28 @@ body {
         font-size: 2em;
     }
 
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid lightgrey;
+    background-color: beige;
+    width: 90%;
+    margin:10px;
+}
 
+    .info-wrapper h4 {
+        text-decoration: underline;
+        font-family: ui-sans-serif;
+    }
+
+    .info-wrapper p {
+        width: 80%;
+    }
 
 @media(max-width: 768px) {
     header {

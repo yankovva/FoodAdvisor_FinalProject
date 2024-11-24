@@ -62,28 +62,6 @@ h1 {
     padding-right: 10px;
 }
 
-.info-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 1em;
-    padding: 10px;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 2px solid lightgrey;
-    background-color: beige;
-    width: 90%;
-}
-
-h4 {
-    text-decoration: underline;
-    font-family: ui-sans-serif;
-}
-
-.info-wrapper p {
-    width: 80%;
-}
-
 .info-wrapper img {
     height: auto;
     width: 100%;

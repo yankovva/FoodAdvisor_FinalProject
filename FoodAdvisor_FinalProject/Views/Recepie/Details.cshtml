@@ -59,25 +59,17 @@
 				</p>
 				<p>@Model.Publisher</p>
 			</div>
-			<div class="recepie-products">
-				<div style="background-color: rgb(252, 165, 35); border-radius: 5px;">
-					<h3 class="product-h3">Products:</h3>
-				</div>
-				<div style="padding: 0.5em;">
-					<p>
-						@Model.Products
-					</p>
-				</div>
+			<div class="info-wrapper">
+				<h4> Products </h4>
+				<p>
+					@Model.Products
+				</p>
 			</div>
-			<div class="recepie-products">
-				<div style="background-color: rgb(252, 165, 35); border-radius: 5px;">
-					<h3 class="product-h3">Cooking steps:</h3>
-				</div>
-				<div style="padding: 0.5em;">
-					<p>
-						@Model.Description
-					</p>
-				</div>
+			<div class="info-wrapper">
+				<h4>Cooking steps </h4>
+				<p>
+					@Model.Description
+				</p>
 			</div>
 			@if (User!.Identity!.IsAuthenticated == true)
 			{
