@@ -3,7 +3,7 @@
 @using FoodAdvisor.Data.Services.Interfaces;
 @using FoodAdvisor.Infrastructure;
 @inject IManagerService managerService
-@model RecepiePaginationIndexViewModel
+@model PaginatedList<RecepieIndexViewModel>
 
 @{
 	ViewBag.Title = "All Recepies";
@@ -13,23 +13,28 @@
 
 <h2>Recepies</h2>
 <a asp-controller="Recepie" asp-action="Add" method="get" class="btn btn-success mb-4">Add Your Recepie!</a>
-
+<div class="filter-search-div">
 <div class="order-div">
 	<p>Order by: </p>
 	<div class="dropdown">
 		<button class="dropbtn"><i class="bi bi-border-width"></i></button>
 		<div class="dropdown-content">
-			<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]"><i class="bi bi-arrows-vertical"></i>Name</a>
-			<a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]"><i class="bi bi-arrows-vertical"></i>Date</a>
-			<a asp-action="Index" asp-route-sortOrder="@ViewData["DificultySortParm"]"><i class="bi bi-arrows-vertical"></i>DificultyLevel</a>
+				<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><i class="bi bi-arrows-vertical"></i>Name</a>
+			    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><i class="bi bi-arrows-vertical"></i>Date</a>
+				<a asp-action="Index" asp-route-sortOrder="@ViewData["DificultySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><i class="bi bi-arrows-vertical"></i>DificultyLevel</a>
 		</div>
 	</div>
 </div>
-	
-
+<div class="search-container">
+	<form method="get" asp-controller="Recepie" asp-action="Index">
+			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey;">
+		<button type="submit"><i class="fa fa-search"></i></button>
+	</form>
+</div>
+</div>
 
 <div class="row">
-	@foreach (RecepieIndexViewModel recepie in Model.Recepies)
+	@foreach (var recepie in Model)
 	{
 		<div class="col-md-3" style="min-width:300px;">
 			<div class="card">
@@ -65,31 +70,44 @@
 
 	}
 </div>
-<ul class="pagination justify-content-center">
-	@for (int i = 1; i <= Model.PageCount; i++)
-	{
-		<li class="page-item">
-			@if (i != Model.CurrentPageIndex)
-			{
-					<form asp-action="Index" asp-controller="Recepie" id="theForm" method="post">
-						<input type="hidden" id="hiddenCurrentPageIndex" value=@i name="index" />
-						<button type="submit" style="border:none; height:25px;"><p class="page-link">@i</p></button>
-					</form>
-			}
-			else
-			{
-				<a class="page-link">@i</a>
-			}
-		</li>
-	}
-</ul>
+
+@{
+	var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+	var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+	Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+	Next
+</a>
 
 
-<!--<script>
-
-	function PagerClick(index) {
-		document.getElementById("hiddenCurrentPageIndex").value = index;
-		document.theForm.submit();
-	}
-</script>
--->
+   @* <ul class="pagination justify-content-center">
+    	@for (int i = 1; i <= Model.PageCount; i++)
+    	{
+    		<li class="page-item">
+    			@if (i != Model.CurrentPageIndex)
+    			{
+    					<form asp-action="Index" asp-controller="Recepie" id="theForm" method="get">
+    						<input type="hidden" id="hiddenCurrentPageIndex" value=@i name="index" />
+    						<button type="submit" style="border:none; height:25px;"><p class="page-link">@i</p></button>
+    					</form>
+    			}
+    			else
+    			{
+    				<a class="page-link">@i</a>
+    			}
+    		</li>
+    	}
+    </ul>
+   *@

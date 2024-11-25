@@ -60,43 +60,6 @@ namespace FoodAdvisor.Data.Services
 			await this.recepieRepository.AddAsync(recepie);
 		}
 
-		public async Task<RecepiePaginationIndexViewModel> IndexGetAllRecepiesAsync(int currentPage)
-		{
-			int maxRecepiesPerPage = 16;
-			double pageCount = (double)((decimal) await this.recepieRepository
-				.GetAllAttached()
-				.Where(r => r.IsDeleted == false)
-				.CountAsync()
-				/ Convert.ToDecimal(maxRecepiesPerPage));
-
-			RecepiePaginationIndexViewModel model = new RecepiePaginationIndexViewModel();
-
-			model.Recepies = await this.recepieRepository
-				.GetAllAttached()
-				.Where(r => r.IsDeleted == false)
-				.Select(r => new RecepieIndexViewModel()
-				{
-					Id = r.Id.ToString(),
-					Name = r.Name,
-					CookingTime = r.CookingTime,
-					ImageURL = r.ImageURL,
-					Publisher = r.Publisher.UserName!,
-					Category = r.RecepieCategory.Name,
-					AuthorPicturePath = r.Publisher.ProfilePricturePath!,
-					Servings = r.NumberOfServing,
-					CreatedOn = r.CreatedOn.ToString("dd/MM/yyyy HH:mm"),
-					DificultyLevel = r.RecepieDificultyId.ToString(),
-					Description = r.Description.Substring(0,100)
-				})
-				.Skip((currentPage - 1) * maxRecepiesPerPage)
-				.Take(maxRecepiesPerPage)
-				.ToArrayAsync();
-			model.PageCount = (int)Math.Ceiling(pageCount);
-			model.CurrentPageIndex = currentPage;
-
-			return model;
-
-		}
 		public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId)
 		{
 			DetailsRecepieViewModel? model = await this.recepieRepository

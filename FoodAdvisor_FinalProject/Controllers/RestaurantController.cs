@@ -1,6 +1,8 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
+using FoodAdvisor.ViewModels.RecepiesViewModels;
+using FoodAdvisor.ViewModels;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,33 +31,60 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
         [HttpGet]
-        public async Task<IActionResult> Index(string sortOrder)
-        {
+        public async Task<IActionResult> Index(int? pageNumber, string sortOrder, string searchItem, string currentFilter)
+		{
 			ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+			ViewData["CurrentSort"] = sortOrder;
 
-			RestaurantPaginatonIndexViewModel model = await this.restaurantService.IndexGetAllRestaurants(1);
+			if (searchItem != null)
+			{
+				pageNumber = 1;
+			}
+			else
+			{
+				searchItem = currentFilter;
+			}
+
+			ViewData["CurrentFilter"] = searchItem;
+
+			var restaurants = this.dbContext
+				.Restaurants
+				.Where(r => r.IsDeleted == false)
+				.Select(r => new RestaurantIndexViewModel()
+				{
+					Id = r.Id.ToString(),
+					Name = r.Name,
+					ImageURL = r.ImageURL,
+					Publisher = r.Publisher.UserName!,
+					Category = r.Category.Name,
+					PriceRange = r.PricaRange,
+					City = r.City.Name,
+					Description = r.Description.Substring(0, 100)
+
+				}).AsQueryable();
+
 
 			switch (sortOrder)
 			{
 
 				case "name_desc":
-					model.Restaurants = model.Restaurants.OrderByDescending(s => s.Name);
+					restaurants = restaurants.OrderByDescending(s => s.Name);
 					break;
-
 				default:
-					model.Restaurants = model.Restaurants.OrderBy(r => r.Name);
+					restaurants = restaurants.OrderBy(r => r.Name);
 					break;
-			}	
-			
-			return View(model);
-        }
-		[HttpPost]
-		public async Task<IActionResult> Index(int index)
-		{
-			RestaurantPaginatonIndexViewModel model = await this.restaurantService.IndexGetAllRestaurants(index);
-			return View(model);
-		}
+			}
 
+			if (!String.IsNullOrEmpty(searchItem))
+			{
+				restaurants = restaurants.Where(r => r.Name.ToLower().Contains(searchItem.ToLower()));
+			}
+
+			int pageSize = 16;
+
+			return View(await PaginatedList<RestaurantIndexViewModel>.CreateAsync(restaurants, pageNumber ?? 1, pageSize));
+		}
+		
 
 		[HttpGet]
         public async Task<IActionResult> Add()

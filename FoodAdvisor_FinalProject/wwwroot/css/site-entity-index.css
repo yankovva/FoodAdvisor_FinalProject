@@ -133,8 +133,6 @@ img {
     align-items: center;
 }
 
-
-
 .icon-details-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -144,6 +142,11 @@ img {
     gap: 15px;
 }
 
+.filter-search-div{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-evenly;
+}
 /*drop down filter*/
 .dropbtn {
     background-color: #cd5c5c;
@@ -198,3 +201,17 @@ img {
     flex-wrap:wrap;
     gap:7px;
 }
+
+/*Search box*/
+
+.search-container button {
+    padding: 6px 10px;
+    background: white;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+    .search-container button:hover {
+        background: #ccc;
+    }

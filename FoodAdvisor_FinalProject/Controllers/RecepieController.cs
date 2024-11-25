@@ -1,10 +1,13 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
+using FoodAdvisor.ViewModels;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using static FoodAdvisor.Infrastructure.ClaimsPrincipalExtension;
 
@@ -31,50 +34,76 @@ namespace FoodAdvisor_FinalProject.Controllers
 			this.recepieFavouritesService = recepieFavouritesService;
 		}
 		[HttpGet]
-		public async Task<IActionResult> Index(string sortOrder)
+		public async Task<IActionResult> Index(int? pageNumber, string sortOrder, string searchItem, string currentFilter )
 		{
 			ViewData["DateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
 			ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
 			ViewData["DificultySortParm"] = sortOrder == "Dificulty" ? "dificulty_desc" : "Dificulty";
-			
+			ViewData["CurrentSort"] = sortOrder;
 
-			RecepiePaginationIndexViewModel model = await recepieService.IndexGetAllRecepiesAsync(1);
+			if (searchItem != null)
+			{
+				pageNumber = 1;
+			}
+			else
+			{
+				searchItem = currentFilter;
+			}
+
+			ViewData["CurrentFilter"] = searchItem;
+
+			var recepies =  this.dbContext
+				.Recepies
+				.Where(r => r.IsDeleted == false)
+				.Select(r => new RecepieIndexViewModel()
+				{
+					Id = r.Id.ToString(),
+					Name = r.Name,
+					CookingTime = r.CookingTime,
+					ImageURL = r.ImageURL,
+					Publisher = r.Publisher.UserName!,
+					Category = r.RecepieCategory.Name,
+					AuthorPicturePath = r.Publisher.ProfilePricturePath!,
+					Servings = r.NumberOfServing,
+					CreatedOn = r.CreatedOn.ToString(),
+					DificultyLevel = r.RecepieDificultyId.ToString(),
+					Description = r.Description.Substring(0, 100)
+				}).AsQueryable();
 
 			switch (sortOrder)
 			{
 				case "Name":
-					model.Recepies = model.Recepies.OrderBy(r => r.Name);
+					recepies = recepies.OrderBy(r => r.Name);
 					break;
 				case "name_desc":
-					model.Recepies = model.Recepies.OrderByDescending(s => s.Name);
+					recepies = recepies.OrderByDescending(s => s.Name);
 					break;
 				case "Dificulty":
-					model.Recepies = model.Recepies.OrderBy(r => r.DificultyLevel);
+					recepies = recepies.OrderBy(r => r.DificultyLevel);
 					break;
 				case "dificulty_desc":
-					model.Recepies = model.Recepies.OrderByDescending(s => s.DificultyLevel);
+					recepies = recepies.OrderByDescending(s => s.DificultyLevel);
 					break;
 
 				case "date_desc":
-					model.Recepies = model.Recepies.OrderByDescending(r => r.CreatedOn);
+					recepies = recepies.OrderByDescending(r => r.CreatedOn);
 					break;
 
-					default:
-						model.Recepies = model.Recepies.OrderBy(r=>r.CreatedOn);
+				default:
+					recepies = recepies.OrderBy(r => r.CreatedOn);
 					break;
 
 			}
+			if (!String.IsNullOrEmpty(searchItem))
+			{
+				recepies = recepies.Where(r => r.Name.ToLower().Contains(searchItem.ToLower()));
+			}
 
-			return View(model);
+			int pageSize = 16;
+
+			return View(await PaginatedList<RecepieIndexViewModel>.CreateAsync(recepies, pageNumber ?? 1, pageSize));
+			
 		}
-
-		[HttpPost]
-		public async Task<IActionResult> Index(int index)
-		{
-            RecepiePaginationIndexViewModel viewmodel = await recepieService.IndexGetAllRecepiesAsync(index);
-
-			return View(viewmodel);
-        }
 
 		[HttpGet]
 		public async Task<IActionResult> Add()

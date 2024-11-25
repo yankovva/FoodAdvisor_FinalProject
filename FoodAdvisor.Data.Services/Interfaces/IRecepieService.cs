@@ -11,7 +11,6 @@ namespace FoodAdvisor.Data.Services.Interfaces
 {
 	public interface IRecepieService 
 	{
-		Task<RecepiePaginationIndexViewModel> IndexGetAllRecepiesAsync(int currentPage);
 		Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file);
 		Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId);
 		Task<DeleteRecepieViewModel> DeleteRecepieViewAsync(Guid recepieId);
