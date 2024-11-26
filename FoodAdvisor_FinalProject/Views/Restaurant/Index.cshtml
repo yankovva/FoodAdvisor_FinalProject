@@ -12,7 +12,6 @@
 	ViewBag.Title = "All Restauranrs";
 }
 
-<h2 style="color:white;">Restaurants</h2>
 
 <!-- Button to add a new restaurant -->
 @if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()!))
@@ -63,7 +62,7 @@
 						<i class="fa bi-geo-alt"> @restaurant.City</i>
 
 					</div>
-					<p class="info">@restaurant.Description</p>
+					<p class="info">@restaurant.Description...</p>
 				</div>
 				<a asp-action="Details" asp-route-id="@restaurant.Id" class="card-details-btn">Details</a>
 			</div>

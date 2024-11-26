@@ -231,7 +231,7 @@ namespace FoodAdvisor.Data.Services
 					Servings = r.NumberOfServing,
 					CreatedOn = r.CreatedOn.ToString(),
 					DificultyLevel = r.RecepieDificultyId.ToString(),
-					Description = r.Description.Substring(0, 100)
+					Description = r.Description.Substring(0, 99)
 				});
 
 			switch (sortOrder)
