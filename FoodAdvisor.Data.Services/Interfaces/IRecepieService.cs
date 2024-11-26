@@ -1,4 +1,5 @@
-﻿using FoodAdvisor.ViewModels.RecepiesViewModels;
+﻿using FoodAdvisor.ViewModels;
+using FoodAdvisor.ViewModels.RecepiesViewModels;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -11,6 +12,8 @@ namespace FoodAdvisor.Data.Services.Interfaces
 {
 	public interface IRecepieService 
 	{
+
+		Task<PaginatedList<RecepieIndexViewModel>> IndexGetAllRecepiesAsync(int? pageNumber, string sortOrder, string searchItem, string currentFilter);
 		Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file);
 		Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId);
 		Task<DeleteRecepieViewModel> DeleteRecepieViewAsync(Guid recepieId);

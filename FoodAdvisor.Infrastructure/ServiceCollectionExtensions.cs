@@ -17,7 +17,6 @@ namespace FoodAdvisor.Infrastructure
 		public static void RegisterRepositories(this IServiceCollection services, Assembly modelsAssembly)
 		{
 			// to do: Re-write the implementation in such way that the user must create a single class for repositories
-			//Type[] typesToExclude = new Type[] { typeof(ApplicationUser) };
 			Type[] typesToExclude = new Type[] { };
 			
 			Type[] modelTypes = modelsAssembly
@@ -55,6 +54,11 @@ namespace FoodAdvisor.Infrastructure
 					services.AddScoped(repositoryInterface, repositoryInstanceType);
 				}
 			}
+		}
+
+		public static void RegisterServices(this IServiceCollection services)
+		{
+
 		}
 	}
 }

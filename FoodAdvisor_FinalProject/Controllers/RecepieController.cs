@@ -52,56 +52,9 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			ViewData["CurrentFilter"] = searchItem;
 
-			var recepies =  this.dbContext
-				.Recepies
-				.Where(r => r.IsDeleted == false)
-				.Select(r => new RecepieIndexViewModel()
-				{
-					Id = r.Id.ToString(),
-					Name = r.Name,
-					CookingTime = r.CookingTime,
-					ImageURL = r.ImageURL,
-					Publisher = r.Publisher.UserName!,
-					Category = r.RecepieCategory.Name,
-					AuthorPicturePath = r.Publisher.ProfilePricturePath!,
-					Servings = r.NumberOfServing,
-					CreatedOn = r.CreatedOn.ToString(),
-					DificultyLevel = r.RecepieDificultyId.ToString(),
-					Description = r.Description.Substring(0, 100)
-				}).AsQueryable();
-
-			switch (sortOrder)
-			{
-				case "Name":
-					recepies = recepies.OrderBy(r => r.Name);
-					break;
-				case "name_desc":
-					recepies = recepies.OrderByDescending(s => s.Name);
-					break;
-				case "Dificulty":
-					recepies = recepies.OrderBy(r => r.DificultyLevel);
-					break;
-				case "dificulty_desc":
-					recepies = recepies.OrderByDescending(s => s.DificultyLevel);
-					break;
-
-				case "date_desc":
-					recepies = recepies.OrderByDescending(r => r.CreatedOn);
-					break;
-
-				default:
-					recepies = recepies.OrderBy(r => r.CreatedOn);
-					break;
-
-			}
-			if (!String.IsNullOrEmpty(searchItem))
-			{
-				recepies = recepies.Where(r => r.Name.ToLower().Contains(searchItem.ToLower()));
-			}
-
-			int pageSize = 16;
-
-			return View(await PaginatedList<RecepieIndexViewModel>.CreateAsync(recepies, pageNumber ?? 1, pageSize));
+			var recepies = await this.recepieService.IndexGetAllRecepiesAsync(pageNumber,  sortOrder,  searchItem,  currentFilter);
+			
+			return View(recepies);
 			
 		}
 
