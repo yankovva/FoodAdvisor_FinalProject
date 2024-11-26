@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using Microsoft.AspNetCore.Hosting;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
+using FoodAdvisor.ViewModels;
 
 
 namespace FoodAdvisor.Data.Services
@@ -313,19 +314,11 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		//Done
-		public async Task<RestaurantPaginatonIndexViewModel> IndexGetAllRestaurants(int currentPage)
+		public async Task<PaginatedList<RestaurantIndexViewModel>> IndexGetAllRestaurantsAsync(int? pageNumber, string sortOrder, string searchItem, string currentFilter)
 		{
-			int maxRecepiesPerPage = 16;
-			double pageCount = (double)((decimal)await this.restaurantRepository
-				.GetAllAttached()
-				.Where(r => r.IsDeleted == false)
-				.CountAsync()
-				/ Convert.ToDecimal(maxRecepiesPerPage));
+			int pageSize = 16;
 
-			RestaurantPaginatonIndexViewModel model = new RestaurantPaginatonIndexViewModel();
-
-			model.Restaurants = await this.restaurantRepository
+			var restaurants = this.restaurantRepository
 				.GetAllAttached()
 				.Where(r => r.IsDeleted == false)
 				.Select(r => new RestaurantIndexViewModel()
@@ -339,15 +332,29 @@ namespace FoodAdvisor.Data.Services
 					City = r.City.Name,
 					Description = r.Description.Substring(0, 100)
 
-				})
-				.Skip((currentPage - 1) * maxRecepiesPerPage)
-				.Take(maxRecepiesPerPage)
-				.ToArrayAsync();
+				});
 
-			model.PageCount = (int)Math.Ceiling(pageCount);
-			model.CurrentPageIndex = currentPage;
 
-			return model;
+			switch (sortOrder)
+			{
+
+				case "name_desc":
+					restaurants = restaurants.OrderByDescending(s => s.Name);
+					break;
+				default:
+					restaurants = restaurants.OrderBy(r => r.Name);
+					break;
+			}
+
+			if (!String.IsNullOrEmpty(searchItem))
+			{
+				restaurants = restaurants.Where(r => r.Name.ToLower().Contains(searchItem.ToLower()));
+			}
+
+			var restaurantList = await PaginatedList<RestaurantIndexViewModel>.CreateAsync(restaurants, pageNumber ?? 1, pageSize);
+
+			return restaurantList;
 		}
+
 	}
 }

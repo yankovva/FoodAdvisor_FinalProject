@@ -1,4 +1,6 @@
-﻿using FoodAdvisor.ViewModels.RestaurantViewModels;
+﻿using FoodAdvisor.ViewModels.RecepiesViewModels;
+using FoodAdvisor.ViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 {
 	public interface IRestaurantService 
 	{
-		Task<RestaurantPaginatonIndexViewModel> IndexGetAllRestaurants(int currentPage);
+		Task<PaginatedList<RestaurantIndexViewModel>> IndexGetAllRestaurantsAsync(int? pageNumber, string sortOrder, string searchItem, string currentFilter);
 
 		Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish);
 		Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid restaurnatId);

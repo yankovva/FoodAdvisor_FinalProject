@@ -47,45 +47,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			ViewData["CurrentFilter"] = searchItem;
 
-			var restaurants = this.dbContext
-				.Restaurants
-				.Where(r => r.IsDeleted == false)
-				.Select(r => new RestaurantIndexViewModel()
-				{
-					Id = r.Id.ToString(),
-					Name = r.Name,
-					ImageURL = r.ImageURL,
-					Publisher = r.Publisher.UserName!,
-					Category = r.Category.Name,
-					PriceRange = r.PricaRange,
-					City = r.City.Name,
-					Description = r.Description.Substring(0, 100)
+			var restaurants = await this.restaurantService
+				.IndexGetAllRestaurantsAsync(pageNumber, sortOrder, searchItem, currentFilter);
 
-				}).AsQueryable();
-
-
-			switch (sortOrder)
-			{
-
-				case "name_desc":
-					restaurants = restaurants.OrderByDescending(s => s.Name);
-					break;
-				default:
-					restaurants = restaurants.OrderBy(r => r.Name);
-					break;
-			}
-
-			if (!String.IsNullOrEmpty(searchItem))
-			{
-				restaurants = restaurants.Where(r => r.Name.ToLower().Contains(searchItem.ToLower()));
-			}
-
-			int pageSize = 16;
-
-			return View(await PaginatedList<RestaurantIndexViewModel>.CreateAsync(restaurants, pageNumber ?? 1, pageSize));
+			return View(restaurants);
 		}
 		
-
 		[HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -253,7 +220,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		
 
 		//TODO: 
 		private async Task<List<Category>> GetCategories()
