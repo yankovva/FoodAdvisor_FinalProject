@@ -13,5 +13,7 @@ namespace FoodAdvisor.ViewModels.RecepieFavouritesViewModels
 		public required string Description { get; set; }
 		public required string ImageUrl { get; set; }
 		public required int CookingTime { get; set; }
-	}
+        public required string Category { get; set; }
+        public required int Servings { get; set; }
+    }
 }

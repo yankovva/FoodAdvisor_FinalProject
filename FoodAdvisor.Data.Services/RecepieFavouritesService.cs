@@ -65,9 +65,11 @@ namespace FoodAdvisor.Data.Services
 			   {
 				   Id = ur.RecepieId.ToString(),
 				   Name = ur.Recepie.Name,
-				   Description = ur.Recepie.Description,
-				   CookingTime = ur.Recepie.CookingTime,
-				   ImageUrl = ur.Recepie.ImageURL ?? string.Empty
+				   Description = ur.Recepie.Description.Substring(0, 120),
+                   CookingTime = ur.Recepie.CookingTime,
+				   ImageUrl = ur.Recepie.ImageURL ?? string.Empty,
+				   Category = ur.Recepie.RecepieCategory.Name,
+				   Servings = ur.Recepie.NumberOfServing
 			   })
 			   .ToArrayAsync();
 

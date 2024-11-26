@@ -1,0 +1,117 @@
+﻿
+.main {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    display:flex;
+    align-content:center;
+    flex-direction:column;
+    flex-wrap:wrap;
+}
+.container-entity {
+    background-color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    width:80%;
+    grid-template-columns: 300px 600px;
+    border-radius: 5px;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.356);
+}
+.entities {
+    display: flex;
+    align-self: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    padding:2em;
+    gap: 1.4em;
+}
+
+
+img {
+    width: 250px;
+    height: auto;
+    border-radius: 5px 0 0 5px;
+    width: 25%;
+}
+
+.btn-details {
+    position: absolute;
+    right: -20px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    background-color: #fc9400;
+    color: #fff;
+    padding: 22px 45px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.294);
+    text-decoration: none;
+    color: white;
+}
+
+.container__text {
+    padding: 20px 20px 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 70%;
+}
+
+h1 {
+    color: black;
+    font-weight: 400;
+}
+
+.container__text__star span {
+    font-size: 0.8rem;
+    color: #ffa800;
+    margin: -5px 0 10px;
+}
+
+p {
+    font-size: 0.9rem;
+    width:100%;
+}
+
+.container__text__timing {
+    display: flex;
+    margin: 5px 0 5px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 3em;
+}
+
+.container__text__timing_time {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
+}
+    .container__text__timing_time p {
+        color: #818189;
+    }
+
+h2 {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #818189;
+}
+    h2 i {
+        margin-left: 20px;
+        font-size: 1.5rem;
+    }
+
+p {
+    color: black;
+    font-weight: bold;
+    font-size: 1.2rem;
+}

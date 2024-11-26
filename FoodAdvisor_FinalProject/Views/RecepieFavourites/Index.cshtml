@@ -1,16 +1,58 @@
 ﻿@using FoodAdvisor.ViewModels.RecepieFavouritesViewModels;
+@using static FoodAdvisor.Common.ApplicationConstants;
 @model IEnumerable<RecepieFavouritesIndexViewModel>
 
-
-
 @{
-    ViewData["Title"] = " RecepieFavourites";
+	ViewData["Title"] = " RecepieFavourites";
 }
 
-<h2>Your Restaurant Favourites</h2>
+<link rel="stylesheet" href="~/css/favourites-entity.css" asp-append-version="true" />
 
-<button class="btn" id="switch" onclick="">Show recepie favourites</button>
 
+<div class="entities">
+	@foreach (var recepie in Model)
+	{
+		<div class="container-entity">
+			<img src="/@recepie.ImageUrl" alt="/@NoImage" />
+
+			<div class="container__text">
+				<div style="display:flex; gap:1em; flex-wrap:wrap;">
+				<h1>@recepie.Name</h1>
+				<form asp-controller="RecepieFavourites" asp-action="RemoveFromFavourites" asp-route-id="@recepie.Id" method="post" class="d-inline">
+					<input type="hidden" name="recepieId" value="@recepie.Id" />
+					<button type="submit" class="btn"><i class="fa-solid fa-heart-circle-minus"></i></button>
+				</form>
+				</div>
+				<div class="container__text__star">
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+				</div>
+				<p>
+					@recepie.Description...
+				</p>
+				<div class="container__text__timing">
+					<div class="container__text__timing_time">
+						<h2><i class="fa bi-clock"></i>Cooking time</h2>
+						<p>@recepie.CookingTime</p>
+					</div>
+					<div class="container__text__timing_time">
+						<h2><i class="fa bi-layout-text-sidebar"></i>Category</h2>
+						<p>@recepie.Category</p>
+					</div>
+					<div class="container__text__timing_time">
+						<h2><i class="fa fa-users"></i>Servings</h2>
+						<p>@recepie.Servings</p>
+					</div>
+				</div>
+				<a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" class="btn-details">Let's Cook! <i class="fa fa-arrow-right"></i></a>
+			</div>
+		</div>
+	}
+</div>
+@*
 <table class="table table-striped">
     <thead>
         <tr>
@@ -42,12 +84,6 @@
         }
     </tbody>
 </table>
+*@
 
-
-
- <script>
-    const button = document.getElementById("switch");
-    const mainElement = document.getElementById("mainElement");
-
-</script>
 
