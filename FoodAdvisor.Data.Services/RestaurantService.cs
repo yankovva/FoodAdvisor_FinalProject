@@ -279,6 +279,7 @@ namespace FoodAdvisor.Data.Services
 			 
 			RestaurantDetailsViewModel? model = await this.restaurantRepository
 				.GetAllAttached()
+				.Include(p=>p.UserRestaurants)
 				.Where(p => p.Id == restaurnatId && p.IsDeleted == false)
 				.Select(p => new RestaurantDetailsViewModel()
 				{
@@ -294,6 +295,7 @@ namespace FoodAdvisor.Data.Services
 					Address = p.Address,
 					Category = p.Category.Name,
 					PriceRange = p.PricaRange,
+					Likes = p.UserRestaurants.Where(r=>r.RestaurantId == p.Id).Count(),
 					City = p.City.Name,
 					Publisher = p.Publisher.UserName ?? string.Empty,
 					AllComment = p.RestaurantsComments

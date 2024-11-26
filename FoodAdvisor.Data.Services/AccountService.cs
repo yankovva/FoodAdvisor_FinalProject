@@ -94,8 +94,6 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		
-
 		public async Task<bool> UpdateProfilePictureAsync(IFormFile file, Guid userId)
 		{
 			ApplicationUser? user = await this.accountRepository
