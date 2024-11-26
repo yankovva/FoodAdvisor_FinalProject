@@ -1,4 +1,5 @@
 ﻿@using FoodAdvisor.ViewModels.FavouritesViewModel;
+@using static FoodAdvisor.Common.ApplicationConstants;
 @model IEnumerable<RestaurantFavouritesIndexViewModel>
 
 
@@ -6,36 +7,48 @@
     ViewData["Title"] = "Favourites";
 }
 
-<h2>Your Restaurant Favourites</h2>
+<link rel="stylesheet" href="~/css/favourites-entity.css" asp-append-version="true" />
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var restaurant in Model)
-        {
-            <tr>
-                <td>
-                    <img src="@restaurant.ImageUrl" alt="@restaurant.Name" width="100" />
-                </td>
-                <td>@restaurant.Name</td>
-                <td>@restaurant.Category</td>
-                <td>@restaurant.Description</td>
-                <td>
-                    <a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-outline-dark"><i class="fa-solid fa-circle-info"></i></a>
+<div class="entities">
+	@foreach (var restaurant in Model)
+	{
+		<div class="container-entity">
+			<img src="/@restaurant.ImageUrl" alt="/@NoImage" />
 
-                    <form asp-controller="RestaurantFavourites" asp-action="RemoveFromFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
-                       <input type="hidden" name="restaurantId" value="@restaurant.Id" />
-                        <button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-heart-circle-minus"></i></button>
-                    </form>
-            </td>
-            </tr>
-        }
-    </tbody>
-</table>
+			<div class="container__text">
+				<div style="display:flex; gap:1em; flex-wrap:wrap;">
+					<h1>@restaurant.Name</h1>
+					<form asp-controller="RestaurantFavourites" asp-action="RemoveFromFavourites" asp-route-id="@restaurant.Id" method="post" class="d-inline">
+						<input type="hidden" name="restaurantId" value="@restaurant.Id" />
+						<button type="submit" class="btn"><i class="fa-solid fa-heart-circle-minus"></i></button>
+					</form>
+				</div>
+				<div class="container__text__star">
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+					<span class="fa fa-star checked"></span>
+				</div>
+				<p>
+					@restaurant.Description...
+				</p>
+				<div class="container__text__timing">
+					<div class="container__text__timing_time">
+						<h2><i class="fa bi-cash"></i>Price Range</h2>
+						<p>@restaurant.PriceRange</p>
+					</div>
+					<div class="container__text__timing_time">
+						<h2><i class="fa bi-layout-text-sidebar"></i>Category</h2>
+						<p>@restaurant.Category</p>
+					</div>
+					<div class="container__text__timing_time">
+						<h2><i class="fa bi-geo-alt"></i>Location</h2>
+						<p>@restaurant.Location</p>
+					</div>
+				</div>
+				<a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" class="btn-details">Details <i class="fa fa-arrow-right"></i></a>
+			</div>
+		</div>
+	}
+</div>

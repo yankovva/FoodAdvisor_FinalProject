@@ -13,7 +13,8 @@ namespace FoodAdvisor.ViewModels.FavouritesViewModel
         public required string Description { get; set; }
         public required string ImageUrl { get; set; }
         public required string Category { get; set; }
+		public required string PriceRange { get; set; }
+		public required string Location { get; set; }
 
-
-    }
+	}
 }

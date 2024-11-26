@@ -68,9 +68,11 @@ namespace FoodAdvisor.Data.Services
 			   {
 				   Id = ur.RestaurantId.ToString(),
 				   Name = ur.Restaurant.Name,
-				   Description = ur.Restaurant.Description,
+				   Description = ur.Restaurant.Description.Substring(0, 120),
 				   Category = ur.Restaurant.Category.Name,
-				   ImageUrl = ur.Restaurant.ImageURL ?? string.Empty
+				   ImageUrl = ur.Restaurant.ImageURL ?? string.Empty,
+				   PriceRange = ur.Restaurant.PricaRange,
+				   Location = ur.Restaurant.City.Name
 			   })
 			   .ToArrayAsync();
 			return favourites;
