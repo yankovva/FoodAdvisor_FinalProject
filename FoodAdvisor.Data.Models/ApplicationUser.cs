@@ -41,6 +41,10 @@ namespace FoodAdvisor.Data.Models
 
 		//Favourite Recepies
 		public virtual ICollection<UserRecepie> Recepies { get; set; } = new HashSet<UserRecepie>();
+
+		public virtual ICollection<Recepie> AddedRecepies { get; set; } = new List<Recepie>();
+		public virtual ICollection<Restaurant> AddedRestaurants { get; set; } = new List<Restaurant>();
+
 		public virtual ICollection<RestaurantComment> RestaurantsComments { get; set; } = new List<RestaurantComment>();
         public virtual ICollection<RecepieComment> RecepiesComments { get; set; } = new List<RecepieComment>();
 
