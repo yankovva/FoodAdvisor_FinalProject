@@ -2,6 +2,7 @@
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.AccountViemModels;
+using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -74,7 +75,7 @@ namespace FoodAdvisor.Data.Services
 
 		public async Task<IndexGetUserInfoViewModel> IndexGetUserAsync(Guid userId)
 		{
-			
+
 			var model = await this.accountRepository
 				.GetAllAttached()
 				.Where(u => u.Id == userId)
@@ -89,6 +90,16 @@ namespace FoodAdvisor.Data.Services
 					AboutMe = u.AboutMe,
 					Email = u.Email,
 					ProfilePricture = u.ProfilePricturePath,
+					UserAddedRecepies = u.AddedRecepies.Select(r => new UserAddedRecepiesViewModel
+					{
+						Name = r.Name,
+						DificultyLevel = r.RecepieDificulty.DificultyName,
+						Categodry = r.RecepieCategory.Name,
+						Image = r.ImageURL,
+						AddedOn = r.CreatedOn.ToString("dd/MM/yyyy"),
+						Likes = r.UsersRecepies.Count(),
+						Comments = r.RecepieComments.Count()
+					})
 				}).FirstOrDefaultAsync();
 
 			return model;
