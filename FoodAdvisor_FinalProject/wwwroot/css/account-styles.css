@@ -1,0 +1,138 @@
+﻿.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-top: 30px;
+    padding: 10px;
+}
+.page-main {
+    padding: 10px;
+}
+#account-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 6em;
+    border-bottom: 2px solid gray;
+    padding-bottom: 40px;
+}
+
+#profile-picture-div {
+    align-self: flex-start;
+}
+
+
+    #profile-picture-div img {
+        height: auto;
+        width: 300px;
+        box-shadow: 5px 10px 20px #888888;
+    }
+
+#account-info {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+}
+
+    #account-info p {
+        font-weight: 500;
+        font-size: 1.2em;
+    }
+
+#heading-button-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 1em;
+}
+
+    #heading-button-div button {
+        border: none;
+        background-color: orange;
+        color: white;
+        font-size: 1.5em;
+    }
+
+#account-info h3 {
+    align-self: center;
+}
+
+.recepie {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    gap: 2em;
+    background-color: wheat;
+    padding: 10px;
+    box-shadow: 5px 10px 20px #888888;
+}
+
+    .recepie img {
+        height: auto;
+        width: 250px;
+        border: 1px solid grey;
+        padding: 5px;
+        border-radius: 7px;
+    }
+
+.recepie-info {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 40%;
+}
+
+    .recepie-info h5 {
+        align-self: center;
+        font-size: 1.4em;
+        font-style: italic;
+    }
+    
+
+    .recepie-info p {
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+
+.like-comment-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 2em;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+    .like-comment-wrapper p i {
+        margin-right: 4px;
+    }
+
+.user-added-recepies {
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+    margin-top: 30px;
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+}
+    .user-recepie-buttons {
+    align-self: flex-start;
+}
+
+    .user-recepie-buttons button {
+        border: none;
+    }
+
+        .user-recepie-buttons button i {
+            font-size: 2em;
+        }
+
+h2 {
+    text-align: center;
+    margin-top: 10px;
+    font-style: italic;
+}

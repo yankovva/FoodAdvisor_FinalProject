@@ -2,211 +2,55 @@
 @using static FoodAdvisor.Common.ApplicationConstants;
 @model IndexGetUserInfoViewModel
 
-<style>
-	body {
-		background-color: rgb(234,230,229) ;
+<link rel="stylesheet" href="~/css/account-styles.css" asp-append-version="true" />
 
-		.emp-profile {
-		padding: 3%;
-		margin-top: 3%;
-		margin-bottom: 3%;
-		border-radius: 0.5rem;
-		background: #fff;
-	}
-
-	.profile-img {
-		text-align: center;
-	}
-
-		.profile-img img {
-			width: 70%;
-			height: 100%;
-		}
-
-		.profile-img .file {
-			position: relative;
-			overflow: hidden;
-			margin-top: -20%;
-			width: 70%;
-			border: none;
-			border-radius: 0;
-			font-size: 15px;
-			background: #212529b8;
-		}
-
-			.profile-img .file input {
-				position: absolute;
-				opacity: 0;
-				right: 0;
-				top: 0;
-			}
-
-	.profile-head h5 {
-		color: #333;
-	}
-
-	.profile-head h6 {
-		color: #0062cc;
-	}
-
-	.profile-edit-btn {
-		border: none;
-		border-radius: 1.5rem;
-		width: 70%;
-		padding: 2%;
-		font-weight: 600;
-		color: #6c757d;
-		cursor: pointer;
-	}
-
-	.proile-rating {
-		font-size: 12px;
-		color: #818182;
-		margin-top: 5%;
-	}
-
-		.proile-rating span {
-			color: #495057;
-			font-size: 15px;
-			font-weight: 600;
-		}
-
-	.profile-head .nav-tabs {
-		margin-bottom: 5%;
-	}
-
-		.profile-head .nav-tabs .nav-link {
-			font-weight: 600;
-			border: none;
-		}
-
-			.profile-head .nav-tabs .nav-link.active {
-				border: none;
-				border-bottom: 2px solid #0062cc;
-			}
-
-	.profile-work {
-		padding: 14%;
-		margin-top: -15%;
-	}
-
-		.profile-work p {
-			font-size: 12px;
-			color: #818182;
-			font-weight: 600;
-			margin-top: 10%;
-		}
-
-		.profile-work a {
-			text-decoration: none;
-			color: #495057;
-			font-weight: 600;
-			font-size: 14px;
-		}
-
-		.profile-work ul {
-			list-style: none;
-		}
-
-	.profile-tab label {
-		font-weight: 600;
-	}
-
-	.profile-tab p {
-		font-weight: 600;
-		color: #0062cc;
-	}
-</style>
 @{
-	ViewBag.Title = "Account";
+    ViewBag.Title = "Account";
 }
 
-<div class="container emp-profile">
-		<div class="row">
-		<div class="col-md-4">
-				<div class="profile-img">
-				<img src="@Model.ProfilePricture" alt="@NoImage" />
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="profile-head">
-					<h5>
-						@Model.FirstName @Model.LastName
-					</h5>
-					<p class="proile-rating">RANKINGS : <span>8/10</span></p>
-					<ul class="nav nav-tabs" id="myTab" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-8">
-				<div class="tab-content profile-tab" id="myTabContent">
-					<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-					<div class="row">
-						<div class="col-md-6">
-							<label>Username:</label>
-						</div>
-						<div class="col-md-6">
-							<p> @Model.UserName</p>
-						</div>
-					</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>First Name:</label>
-							</div>
-							<div class="col-md-6">
-								<p> @Model.FirstName</p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>Last Name</label>
-							</div>
-							<div class="col-md-6">
-								<p>@Model.LastName</p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>Email</label>
-							</div>
-							<div class="col-md-6">
-								<p>@Model.Email</p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>Country: </label>
-							</div>
-							<div class="col-md-6">
-								<p>@Model.Country</p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>About me:</label>
-							</div>
-							<div class="col-md-6">
-								<p>@Model.AboutMe</p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<label>Created On:</label>
-							</div>
-							<div class="col-md-6">
-								<p>@Model.CreatedOn</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+<div class="page-main">
+    <div id="account-main">
+        <div id="profile-picture-div">
+            <img src="/@Model.ProfilePricture">
+        </div>
+
+        <div id="account-info">
+            <div id="heading-button-div">
+                <h3>Account information</h3>
+                <a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+            </div>
+            <p>Username: @Model.UserName</p>
+            <p>Firstname: @Model.FirstName</p>
+            <p>Lastname: @Model.LastName</p>
+            <p>Location: @Model.Country</p>
+            <p>About me: @Model.AboutMe</p>
+        </div>
+
+    </div>
+    <h2>Your Added Recepies</h2>
+    <div class="user-added-recepies">
+        @foreach (var recepie in Model.UserAddedRecepies)
+        {
+
+            <div class="recepie">
+                <img src="/@recepie.Image"
+                alt="/@NoImage" />
+                <div class="recepie-info">
+                    <h5>@recepie.Name</h5>
+                    <p>Last Modified : @recepie.AddedOn</p>
+                    <p>Category: @recepie.Categodry</p>
+                    <p>Dificulty level: @recepie.DificultyLevel</p>
+                    <div class="like-comment-wrapper">
+                        <p><i class="bi bi-heart"></i>@recepie.Likes likes</p>
+                        <p><i class="bi bi-chat-dots"></i>@recepie.Comments comment</p>
+                    </div>
+                </div>
+                <div class="user-recepie-buttons">
+                    <a asp-controller="Recepie" asp-action="Edit" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-controller="Recepie" asp-action="Delete" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-x-circle"></i></a>
+                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-info-circle"></i></a>
+                </div>
+            </div>
+        }
+    </div>
 </div>
