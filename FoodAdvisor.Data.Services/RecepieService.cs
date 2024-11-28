@@ -162,7 +162,6 @@ namespace FoodAdvisor.Data.Services
 
 		public async Task<bool> EditRecepieAsync(AddRecepieViewModel model, string recepieId, Guid userId, IFormFile file)
 		{
-
 			Guid recepieGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
 			if (!isGuidValid)

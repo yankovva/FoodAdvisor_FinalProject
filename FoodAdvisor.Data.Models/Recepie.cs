@@ -51,7 +51,7 @@ namespace FoodAdvisor.Data.Models
 		public RecepieCategory RecepieCategory { get; set; } = null!;
 
 		public virtual ICollection<UserRecepie> UsersRecepies{ get; set; } = new List<UserRecepie>();
-        public ICollection<RecepieComment> RecepieComments { get; set; } = new List<RecepieComment>();
+        public ICollection<Comment> RecepieComments { get; set; } = new List<Comment>();
 
         public bool IsDeleted { get; set; }
     }

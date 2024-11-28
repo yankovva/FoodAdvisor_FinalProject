@@ -45,8 +45,7 @@ namespace FoodAdvisor.Data.Models
 		public virtual ICollection<Recepie> AddedRecepies { get; set; } = new List<Recepie>();
 		public virtual ICollection<Restaurant> AddedRestaurants { get; set; } = new List<Restaurant>();
 
-		public virtual ICollection<RestaurantComment> RestaurantsComments { get; set; } = new List<RestaurantComment>();
-        public virtual ICollection<RecepieComment> RecepiesComments { get; set; } = new List<RecepieComment>();
+		public virtual ICollection<Comment> UsersComments { get; set; } = new List<Comment>();
 
 
     }

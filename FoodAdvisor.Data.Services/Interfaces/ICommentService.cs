@@ -1,5 +1,4 @@
 ﻿using FoodAdvisor.ViewModels.CommentViewModel;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services.Interfaces
 {
-	public interface IRecepieCommentService
-	{
-		Task<bool> AddAsync(string recepieId, Guid userId,AddCommentViewModel model);
-		Task<bool> DeleteAsync(string recepieId);
-	}
+    public interface ICommentService
+    {
+        Task<bool> AddAsync(string? recepieId,string? restaurantId, Guid userId, AddCommentViewModel model);
+        Task<bool> DeleteAsync(string? commentId);
+    }
 }

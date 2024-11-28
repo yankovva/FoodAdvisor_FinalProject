@@ -11,6 +11,5 @@ namespace FoodAdvisor.ViewModels.CommentViewModel
 		[MinLength(MessageMinLenght)]
 		public string Message { get; set; } = null!;
 		
-		
 	}
 }
