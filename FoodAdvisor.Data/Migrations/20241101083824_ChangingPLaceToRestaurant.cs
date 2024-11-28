@@ -28,35 +28,35 @@ namespace FoodAdvisor.Data.Migrations
                 name: "IX_UsersPlaces_PlaceId",
                 table: "UsersPlaces");
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("16bae119-1c02-4df7-bfd5-a70e48202e2a"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("16bae119-1c02-4df7-bfd5-a70e48202e2a"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("1bab5412-87c7-4e87-b654-cb4e226684a9"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("1bab5412-87c7-4e87-b654-cb4e226684a9"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("1c7001a4-491c-4614-91b1-03143b585199"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("1c7001a4-491c-4614-91b1-03143b585199"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("a14d425e-7fbf-41c2-bc71-a97f9aded01b"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("a14d425e-7fbf-41c2-bc71-a97f9aded01b"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("cd4e4887-817f-4603-b820-14681499d61b"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("cd4e4887-817f-4603-b820-14681499d61b"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("f88a935c-f67a-4af5-8876-befe3565c768"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("f88a935c-f67a-4af5-8876-befe3565c768"));
 
             migrationBuilder.DropColumn(
                 name: "PlaceId",
@@ -111,18 +111,18 @@ namespace FoodAdvisor.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("11350cf3-2e37-40fd-a2c2-a42ada1702fe"), "Restaurant" },
-                    { new Guid("4046bec5-efd6-4408-ad21-88db2952508c"), "Fast Food" },
-                    { new Guid("5e3b7a9c-d54a-48b5-80a7-af35d4565df0"), "Bakery" },
-                    { new Guid("7b1e8c61-0247-4d55-810a-00aacb2ff4e4"), "Bar & Dinner" },
-                    { new Guid("db9b2ed9-5de8-40ba-882a-10ba4c2736eb"), "Bistro" },
-                    { new Guid("f5322b6d-0f12-49b1-b60e-28129519676d"), "Cafe" }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Categories",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("11350cf3-2e37-40fd-a2c2-a42ada1702fe"), "Restaurant" },
+            //        { new Guid("4046bec5-efd6-4408-ad21-88db2952508c"), "Fast Food" },
+            //        { new Guid("5e3b7a9c-d54a-48b5-80a7-af35d4565df0"), "Bakery" },
+            //        { new Guid("7b1e8c61-0247-4d55-810a-00aacb2ff4e4"), "Bar & Dinner" },
+            //        { new Guid("db9b2ed9-5de8-40ba-882a-10ba4c2736eb"), "Bistro" },
+            //        { new Guid("f5322b6d-0f12-49b1-b60e-28129519676d"), "Cafe" }
+            //    });
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsersPlaces_RestaurantId",

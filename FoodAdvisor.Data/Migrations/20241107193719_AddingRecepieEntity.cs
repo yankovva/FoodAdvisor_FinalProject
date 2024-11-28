@@ -13,65 +13,65 @@ namespace FoodAdvisor.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("18b56dcf-0ff5-48a9-9437-994eee10e7c9"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("18b56dcf-0ff5-48a9-9437-994eee10e7c9"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("9bf56b79-048b-459e-a458-95a72d03a804"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("9bf56b79-048b-459e-a458-95a72d03a804"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("a87ac91f-2f93-4895-bf08-ff4a4fcb9a0d"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("a87ac91f-2f93-4895-bf08-ff4a4fcb9a0d"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("ac41037d-e2f5-411d-a992-be7459e0acd4"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("ac41037d-e2f5-411d-a992-be7459e0acd4"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("cb4b28cf-0dde-4366-bb59-c9c04a33bd3a"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("cb4b28cf-0dde-4366-bb59-c9c04a33bd3a"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("d5a950dc-e072-4320-ab47-f8ede132d940"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("d5a950dc-e072-4320-ab47-f8ede132d940"));
 
-            migrationBuilder.DeleteData(
-                table: "Cities",
-                keyColumn: "Id",
-                keyValue: new Guid("1f2eefb1-f9bb-408f-90f4-f742769b7334"));
+            //migrationBuilder.DeleteData(
+            //    table: "Cities",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("1f2eefb1-f9bb-408f-90f4-f742769b7334"));
 
-            migrationBuilder.DeleteData(
-                table: "Cities",
-                keyColumn: "Id",
-                keyValue: new Guid("26b3c690-6d43-4f62-9f8a-71a60de6658d"));
+            //migrationBuilder.DeleteData(
+            //    table: "Cities",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("26b3c690-6d43-4f62-9f8a-71a60de6658d"));
 
-            migrationBuilder.DeleteData(
-                table: "Cities",
-                keyColumn: "Id",
-                keyValue: new Guid("b70e57a2-77a2-4db8-b86e-e480ea35a0d7"));
+            //migrationBuilder.DeleteData(
+            //    table: "Cities",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("b70e57a2-77a2-4db8-b86e-e480ea35a0d7"));
 
-            migrationBuilder.DeleteData(
-                table: "Cities",
-                keyColumn: "Id",
-                keyValue: new Guid("ca161a4a-a5dc-4796-88d9-975966212416"));
+            //migrationBuilder.DeleteData(
+            //    table: "Cities",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("ca161a4a-a5dc-4796-88d9-975966212416"));
 
-            migrationBuilder.DeleteData(
-                table: "Cities",
-                keyColumn: "Id",
-                keyValue: new Guid("e7f6636d-d862-491d-8aca-8555b6e9e489"));
+            //migrationBuilder.DeleteData(
+            //    table: "Cities",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("e7f6636d-d862-491d-8aca-8555b6e9e489"));
 
-            migrationBuilder.DeleteData(
-                table: "Cities",
-                keyColumn: "Id",
-                keyValue: new Guid("f7907d24-6c96-4ded-9d41-298ad8d26dd7"));
+            //migrationBuilder.DeleteData(
+            //    table: "Cities",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("f7907d24-6c96-4ded-9d41-298ad8d26dd7"));
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "RestaurantId",
@@ -131,31 +131,31 @@ namespace FoodAdvisor.Data.Migrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("449dc8df-fdc9-4ed6-ae02-86b60dbf215a"), "Restaurant" },
-                    { new Guid("486a8ac8-0b43-402b-b349-ad2db960159a"), "Bakery" },
-                    { new Guid("b64b5383-9c5e-4eba-9d6a-cacdec6bbd62"), "Bar & Dinner" },
-                    { new Guid("ba63d928-a7d0-45eb-b96a-b177c49c1569"), "Fast Food" },
-                    { new Guid("d10139dc-ccbb-4568-a178-ebf94c5d0a22"), "Cafe" },
-                    { new Guid("d6e3b070-df79-4d2f-8808-9fa911916403"), "Bistro" }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Categories",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("449dc8df-fdc9-4ed6-ae02-86b60dbf215a"), "Restaurant" },
+            //        { new Guid("486a8ac8-0b43-402b-b349-ad2db960159a"), "Bakery" },
+            //        { new Guid("b64b5383-9c5e-4eba-9d6a-cacdec6bbd62"), "Bar & Dinner" },
+            //        { new Guid("ba63d928-a7d0-45eb-b96a-b177c49c1569"), "Fast Food" },
+            //        { new Guid("d10139dc-ccbb-4568-a178-ebf94c5d0a22"), "Cafe" },
+            //        { new Guid("d6e3b070-df79-4d2f-8808-9fa911916403"), "Bistro" }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "Cities",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("1c4559e7-b628-4128-9d56-056545f9298f"), "Stara Zagora" },
-                    { new Guid("5c4e3a44-1a9a-4a08-9222-baabde3daa04"), "Sofia" },
-                    { new Guid("8fe38a56-bf64-44f0-a4ab-5d6a9bf9fdf7"), "Plovdiv" },
-                    { new Guid("973e5ba0-9b84-4602-8bad-96285b2e143a"), "Burgas" },
-                    { new Guid("98ec19d3-3bb0-482b-b7e0-a429fadb0a2b"), "Ruse" },
-                    { new Guid("f2bccdb9-6927-4ec4-a500-38f093d53910"), "Varna" }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Cities",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("1c4559e7-b628-4128-9d56-056545f9298f"), "Stara Zagora" },
+            //        { new Guid("5c4e3a44-1a9a-4a08-9222-baabde3daa04"), "Sofia" },
+            //        { new Guid("8fe38a56-bf64-44f0-a4ab-5d6a9bf9fdf7"), "Plovdiv" },
+            //        { new Guid("973e5ba0-9b84-4602-8bad-96285b2e143a"), "Burgas" },
+            //        { new Guid("98ec19d3-3bb0-482b-b7e0-a429fadb0a2b"), "Ruse" },
+            //        { new Guid("f2bccdb9-6927-4ec4-a500-38f093d53910"), "Varna" }
+            //    });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recepies_PublisherId",

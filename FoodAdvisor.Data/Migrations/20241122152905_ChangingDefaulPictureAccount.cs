@@ -142,47 +142,47 @@ namespace FoodAdvisor.Data.Migrations
                 oldDefaultValue: new DateTime(2024, 11, 22, 16, 0, 29, 869, DateTimeKind.Local).AddTicks(4214),
                 oldComment: "Date of creation of the User.");
 
-        //    migrationBuilder.InsertData(
-        //        table: "Categories",
-        //        columns: new[] { "Id", "Name" },
-        //        values: new object[,]
-        //        {
-        //            { new Guid("086f6c2c-e726-4753-83ae-9ce493607dfe"), "Cafe" },
-        //            { new Guid("55a54e42-0215-4ff1-b320-333ddc164d0f"), "Restaurant" },
-        //            { new Guid("8e8acbb0-161b-43a5-9a62-af1e17c8a2e9"), "Bistro" },
-        //            { new Guid("bf94d541-c0da-4c45-a8bb-2dab58b5dbc1"), "Fast Food" },
-        //            { new Guid("c4bbe80b-04ae-4fb8-a766-d88487055ba5"), "Bakery" },
-        //            { new Guid("eaf354da-3f24-448b-bc63-44c1015bd7a1"), "Bar & Dinner" }
-        //        });
+            //migrationBuilder.InsertData(
+            //    table: "Categories",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("086f6c2c-e726-4753-83ae-9ce493607dfe"), "Cafe" },
+            //        { new Guid("55a54e42-0215-4ff1-b320-333ddc164d0f"), "Restaurant" },
+            //        { new Guid("8e8acbb0-161b-43a5-9a62-af1e17c8a2e9"), "Bistro" },
+            //        { new Guid("bf94d541-c0da-4c45-a8bb-2dab58b5dbc1"), "Fast Food" },
+            //        { new Guid("c4bbe80b-04ae-4fb8-a766-d88487055ba5"), "Bakery" },
+            //        { new Guid("eaf354da-3f24-448b-bc63-44c1015bd7a1"), "Bar & Dinner" }
+            //    });
 
-        //    migrationBuilder.InsertData(
-        //        table: "Cuisines",
-        //        columns: new[] { "Id", "Name" },
-        //        values: new object[,]
-        //        {
-        //            { new Guid("0ccbd527-0248-49d4-aeb2-abd07bca9a41"), "Chinease" },
-        //            { new Guid("13682688-2eeb-4c04-bdef-84cc500498c3"), "Bulgarian" },
-        //            { new Guid("1b14b3ba-5dea-4738-8a20-0062431898bd"), "Only drinks" },
-        //            { new Guid("4d1cff44-c09f-4a04-8c3c-e98d2c5adc7c"), "Italian" },
-        //            { new Guid("8fa7149c-7805-47d5-b5bc-12c1e7704bd4"), "Mediteranean" },
-        //            { new Guid("afc5adb1-4201-4e21-ada0-c05beec8860f"), "French" },
-        //            { new Guid("c9bb4f98-f4f0-450c-8684-475c101d9aa7"), "Japanese" },
-        //            { new Guid("eaf3bc8a-8987-480d-9e98-69585ca01a9c"), "Mexican" }
-        //        });
+            //migrationBuilder.InsertData(
+            //    table: "Cuisines",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("0ccbd527-0248-49d4-aeb2-abd07bca9a41"), "Chinease" },
+            //        { new Guid("13682688-2eeb-4c04-bdef-84cc500498c3"), "Bulgarian" },
+            //        { new Guid("1b14b3ba-5dea-4738-8a20-0062431898bd"), "Only drinks" },
+            //        { new Guid("4d1cff44-c09f-4a04-8c3c-e98d2c5adc7c"), "Italian" },
+            //        { new Guid("8fa7149c-7805-47d5-b5bc-12c1e7704bd4"), "Mediteranean" },
+            //        { new Guid("afc5adb1-4201-4e21-ada0-c05beec8860f"), "French" },
+            //        { new Guid("c9bb4f98-f4f0-450c-8684-475c101d9aa7"), "Japanese" },
+            //        { new Guid("eaf3bc8a-8987-480d-9e98-69585ca01a9c"), "Mexican" }
+            //    });
 
-        //    migrationBuilder.InsertData(
-        //        table: "RecepiesCategories",
-        //        columns: new[] { "Id", "Name" },
-        //        values: new object[,]
-        //        {
-        //            { new Guid("0123fef5-d679-4bac-84a0-69442117a920"), "Breakfast" },
-        //            { new Guid("7d8bd8ed-c42e-4c2d-b866-c7677ca7368b"), "Dessert" },
-        //            { new Guid("aae9877b-8d34-43f4-9fdb-4e9bb90d0a35"), "Side dish" },
-        //            { new Guid("bd91cd58-02d6-4c41-9f3b-b3e6a769ec12"), "Lunch" },
-        //            { new Guid("c467002f-aaad-49e7-a1cf-17f99bd22482"), "Dinner" },
-        //            { new Guid("de21ad46-c3b4-4def-b3df-8c1efbe034cc"), "Starter" },
-        //            { new Guid("f5e4e699-8fe2-4e5b-9338-8faf1965780c"), "Snack" }
-        //        });
+            //migrationBuilder.InsertData(
+            //    table: "RecepiesCategories",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("0123fef5-d679-4bac-84a0-69442117a920"), "Breakfast" },
+            //        { new Guid("7d8bd8ed-c42e-4c2d-b866-c7677ca7368b"), "Dessert" },
+            //        { new Guid("aae9877b-8d34-43f4-9fdb-4e9bb90d0a35"), "Side dish" },
+            //        { new Guid("bd91cd58-02d6-4c41-9f3b-b3e6a769ec12"), "Lunch" },
+            //        { new Guid("c467002f-aaad-49e7-a1cf-17f99bd22482"), "Dinner" },
+            //        { new Guid("de21ad46-c3b4-4def-b3df-8c1efbe034cc"), "Starter" },
+            //        { new Guid("f5e4e699-8fe2-4e5b-9338-8faf1965780c"), "Snack" }
+            //    });
         }
 
         /// <inheritdoc />

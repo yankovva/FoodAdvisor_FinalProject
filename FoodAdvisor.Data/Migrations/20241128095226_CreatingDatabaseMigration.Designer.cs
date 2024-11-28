@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241128095226_CreatingDatabaseMigration")]
+    partial class CreatingDatabaseMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +139,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.City", b =>
@@ -154,7 +157,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.Comment", b =>
@@ -194,7 +197,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.Manager", b =>
@@ -223,7 +226,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Managers", (string)null);
+                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.Recepie", b =>
@@ -286,7 +289,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasIndex("RecepieDificultyId");
 
-                    b.ToTable("Recepies", (string)null);
+                    b.ToTable("Recepies");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.RecepieCategory", b =>
@@ -303,7 +306,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RecepiesCategories", (string)null);
+                    b.ToTable("RecepiesCategories");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.RecepieDificulty", b =>
@@ -322,7 +325,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RecepiesDificulties", (string)null);
+                    b.ToTable("RecepiesDificulties");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.Restaurant", b =>
@@ -415,7 +418,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("Restaurants", (string)null);
+                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.RestaurantCuisine", b =>
@@ -432,7 +435,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cuisines", (string)null);
+                    b.ToTable("Cuisines");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.UserRecepie", b =>
@@ -449,7 +452,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasIndex("RecepieId");
 
-                    b.ToTable("UsersRecepies", (string)null);
+                    b.ToTable("UsersRecepies");
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.UserRestaurant", b =>
@@ -466,7 +469,7 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("UsersRestaurants", (string)null);
+                    b.ToTable("UsersRestaurants");
                 });
 
             modelBuilder.Entity("FoodAdvisor.ViewModels.ApplicationRole", b =>

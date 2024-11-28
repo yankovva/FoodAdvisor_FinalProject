@@ -13,70 +13,70 @@ namespace FoodAdvisor.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("289750e0-17cb-4681-a3ba-2057dc0e86d2"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("289750e0-17cb-4681-a3ba-2057dc0e86d2"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("41213f4b-e9c9-45ee-ac37-6a47dc4dc8a0"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("41213f4b-e9c9-45ee-ac37-6a47dc4dc8a0"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("4869320a-bb30-43fa-baf8-e71f013978ca"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("4869320a-bb30-43fa-baf8-e71f013978ca"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("6da74f82-3448-4d7b-8457-816853e2b666"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("6da74f82-3448-4d7b-8457-816853e2b666"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("acdfab1e-9197-4c3a-a301-b8dcf4ce3e75"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("acdfab1e-9197-4c3a-a301-b8dcf4ce3e75"));
 
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("b61dd991-b59d-4173-b4c0-5adc4cf597d6"));
+            //migrationBuilder.DeleteData(
+            //    table: "Categories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("b61dd991-b59d-4173-b4c0-5adc4cf597d6"));
 
-            migrationBuilder.DeleteData(
-                table: "RecepiesCategories",
-                keyColumn: "Id",
-                keyValue: new Guid("23bb004f-4f23-493c-9b0c-6dd69bcdae3f"));
+            //migrationBuilder.DeleteData(
+            //    table: "RecepiesCategories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("23bb004f-4f23-493c-9b0c-6dd69bcdae3f"));
 
-            migrationBuilder.DeleteData(
-                table: "RecepiesCategories",
-                keyColumn: "Id",
-                keyValue: new Guid("2655a31f-33f8-4852-8694-83d158acd6e8"));
+            //migrationBuilder.DeleteData(
+            //    table: "RecepiesCategories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("2655a31f-33f8-4852-8694-83d158acd6e8"));
 
-            migrationBuilder.DeleteData(
-                table: "RecepiesCategories",
-                keyColumn: "Id",
-                keyValue: new Guid("28c79765-468f-4be6-94f4-f85bf52fa725"));
+            //migrationBuilder.DeleteData(
+            //    table: "RecepiesCategories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("28c79765-468f-4be6-94f4-f85bf52fa725"));
 
-            migrationBuilder.DeleteData(
-                table: "RecepiesCategories",
-                keyColumn: "Id",
-                keyValue: new Guid("298ff35e-a4a3-4f04-b9ca-777e8eb4a6d7"));
+            //migrationBuilder.DeleteData(
+            //    table: "RecepiesCategories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("298ff35e-a4a3-4f04-b9ca-777e8eb4a6d7"));
 
-            migrationBuilder.DeleteData(
-                table: "RecepiesCategories",
-                keyColumn: "Id",
-                keyValue: new Guid("3ee613a2-d0f2-47e4-9abc-ce4d4be546d9"));
+            //migrationBuilder.DeleteData(
+            //    table: "RecepiesCategories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("3ee613a2-d0f2-47e4-9abc-ce4d4be546d9"));
 
-            migrationBuilder.DeleteData(
-                table: "RecepiesCategories",
-                keyColumn: "Id",
-                keyValue: new Guid("87801996-60f9-4ddc-9fe7-5e48cb10283d"));
+            //migrationBuilder.DeleteData(
+            //    table: "RecepiesCategories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("87801996-60f9-4ddc-9fe7-5e48cb10283d"));
 
-            migrationBuilder.DeleteData(
-                table: "RecepiesCategories",
-                keyColumn: "Id",
-                keyValue: new Guid("ef806b71-2b9e-494d-a8ff-26df6fb7a8e5"));
+            //migrationBuilder.DeleteData(
+            //    table: "RecepiesCategories",
+            //    keyColumn: "Id",
+            //    keyValue: new Guid("ef806b71-2b9e-494d-a8ff-26df6fb7a8e5"));
 
             migrationBuilder.AddColumn<int>(
                 name: "RecepieDificultyId",
@@ -110,32 +110,32 @@ namespace FoodAdvisor.Data.Migrations
                     table.PrimaryKey("PK_RecepiesDificulties", x => x.Id);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("43c7cd7f-d32c-452e-a932-78cc37cbdfcc"), "Bistro" },
-                    { new Guid("73083fb7-455d-41b7-9c34-8fe87b92aa3f"), "Fast Food" },
-                    { new Guid("7cc4a429-8997-4802-ba86-90d1c56ee771"), "Bar & Dinner" },
-                    { new Guid("ad0e24a5-94e7-4a26-9ab9-36c1c5069cd1"), "Restaurant" },
-                    { new Guid("f3cb1412-bc32-48a3-ac7e-2713120b103b"), "Cafe" },
-                    { new Guid("fecf9278-e9ed-449e-8f6e-9226a1ac7def"), "Bakery" }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "Categories",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("43c7cd7f-d32c-452e-a932-78cc37cbdfcc"), "Bistro" },
+            //        { new Guid("73083fb7-455d-41b7-9c34-8fe87b92aa3f"), "Fast Food" },
+            //        { new Guid("7cc4a429-8997-4802-ba86-90d1c56ee771"), "Bar & Dinner" },
+            //        { new Guid("ad0e24a5-94e7-4a26-9ab9-36c1c5069cd1"), "Restaurant" },
+            //        { new Guid("f3cb1412-bc32-48a3-ac7e-2713120b103b"), "Cafe" },
+            //        { new Guid("fecf9278-e9ed-449e-8f6e-9226a1ac7def"), "Bakery" }
+            //    });
 
-            migrationBuilder.InsertData(
-                table: "RecepiesCategories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { new Guid("1c5356e9-42eb-448a-ae5a-b7ce030675cc"), "Lunch" },
-                    { new Guid("30fd10af-428a-424a-8a7e-89a4efe6ed75"), "Breakfast" },
-                    { new Guid("82c03683-306f-44b8-b931-260c50da0932"), "Snack" },
-                    { new Guid("b1e90944-8cbf-4041-8f93-eee9f74418c5"), "Side dish" },
-                    { new Guid("c18cf9b8-1aa4-4b9d-b625-be47e5d94b68"), "Dinner" },
-                    { new Guid("d0f083f1-1335-46f9-872c-c408edb4eb85"), "Starter" },
-                    { new Guid("d6e411a3-33d7-4e81-b654-ae53602fe238"), "Dessert" }
-                });
+            //migrationBuilder.InsertData(
+            //    table: "RecepiesCategories",
+            //    columns: new[] { "Id", "Name" },
+            //    values: new object[,]
+            //    {
+            //        { new Guid("1c5356e9-42eb-448a-ae5a-b7ce030675cc"), "Lunch" },
+            //        { new Guid("30fd10af-428a-424a-8a7e-89a4efe6ed75"), "Breakfast" },
+            //        { new Guid("82c03683-306f-44b8-b931-260c50da0932"), "Snack" },
+            //        { new Guid("b1e90944-8cbf-4041-8f93-eee9f74418c5"), "Side dish" },
+            //        { new Guid("c18cf9b8-1aa4-4b9d-b625-be47e5d94b68"), "Dinner" },
+            //        { new Guid("d0f083f1-1335-46f9-872c-c408edb4eb85"), "Starter" },
+            //        { new Guid("d6e411a3-33d7-4e81-b654-ae53602fe238"), "Dessert" }
+            //    });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recepies_RecepieDificultyId",
