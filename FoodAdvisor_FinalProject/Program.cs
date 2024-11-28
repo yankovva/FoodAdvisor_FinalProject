@@ -42,9 +42,9 @@ builder.Services
 
 builder.Services.ConfigureApplicationCookie(cfg =>
 {
-	cfg.LoginPath = "/Identity/Account/Login";
-	cfg.LogoutPath = "/Home/Index";
-	cfg.ExpireTimeSpan = TimeSpan.FromDays(2);
+    cfg.LoginPath = "/Identity/Account/Login";
+    cfg.LogoutPath = "/Home/Index";
+    cfg.ExpireTimeSpan = TimeSpan.FromDays(2);
 });
 
 
@@ -56,9 +56,8 @@ builder.Services.AddScoped<IRestaurantFavouritesService, RestaurantFavouritesSer
 builder.Services.AddScoped<IRecepieService, RecepieService>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IRecepieFavouritesService, RecepieFavouritesService>();
-builder.Services.AddScoped<IRecepieCommentService, RecepieCommentService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IRestaurantCommentService, RestaurantCommentService>();
 
 
 builder.Services.AddRazorPages();
@@ -67,6 +66,15 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+//Seed data
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<FoodAdvisorDbContext>();
+    DatabaseSeeder.SeedDatabase(context);
+
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
