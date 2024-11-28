@@ -14,13 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+string adminEmail = builder.Configuration.GetValue<string>("AdminInfo:Email")!;
+string adminUsername = builder.Configuration.GetValue<string>("AdminInfo:Username")!;
+string adminPassword = builder.Configuration.GetValue<string>("AdminInfo:Password")!;
+
 builder.Services.AddDbContext<FoodAdvisorDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services
-    .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+    .AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
 {
     options.Password.RequireDigit = builder.Configuration.GetValue<bool>("Identity:Password:RequireDigits");
     options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
@@ -36,7 +40,7 @@ builder.Services
     options.User.RequireUniqueEmail = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireUniqueEmail");
 })
           .AddEntityFrameworkStores<FoodAdvisorDbContext>()
-          .AddRoles<ApplicationRole>()
+          .AddRoles<IdentityRole<Guid>>()
           .AddSignInManager<SignInManager<ApplicationUser>>()
           .AddUserManager<UserManager<ApplicationUser>>();
 
@@ -95,6 +99,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
 
 app.MapControllerRoute(
     name: "default",

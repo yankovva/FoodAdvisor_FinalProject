@@ -11,5 +11,6 @@ namespace FoodAdvisor.Common
     {
         public const string NoImageAccount = "assets/img/no-pfp.png";
         public const string NoImage = "assets/img/no-image-found.png";
+        public const string AdminRoleName = "Admin";
 	}
 }

@@ -8,7 +8,7 @@ using FoodAdvisor.ViewModels;
 
 namespace FoodAdvisor.Data
 {
-	public class FoodAdvisorDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+	public class FoodAdvisorDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 	{
 		public FoodAdvisorDbContext()
 		{
@@ -31,12 +31,6 @@ namespace FoodAdvisor.Data
 		public virtual DbSet<UserRecepie> UsersRecepies { get; set; }
 		public virtual DbSet<RecepieCategory> RecepiesCategories { get; set; }
 		public virtual DbSet<RecepieDificulty> RecepiesDificulties { get; set; }
-
-
-
-
-
-
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
