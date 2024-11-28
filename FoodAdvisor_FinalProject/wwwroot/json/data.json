@@ -1,0 +1,35 @@
+﻿{
+  "Categories": [
+    { "Name": "Restaurant" },
+    { "Name": "Cafe" },
+    { "Name": "Bar & Dinner" },
+    { "Name": "Fast Food" },
+    { "Name": "Bakery" },
+    { "Name": "Bistro" }
+  ],
+  "RecepieCategories": [
+    { "Name": "Breakfast" },
+    { "Name": "Lunch" },
+    { "Name": "Dinner" },
+    { "Name": "Dessert" },
+    { "Name": "Snack" },
+    { "Name": "Side dish" },
+    { "Name": "Starter" }
+  ],
+  "RecepieDificulties": [
+    { "DificultyName": "Easy" },
+    { "DificultyName": "Medium" },
+    { "DificultyName": "Hard" },
+    { "DificultyName": "Expert" }
+  ],
+  "RestaurantCuisines": [
+    { "Name": "Mediteranean" },
+    { "Name": "Chinese" },
+    { "Name": "Italian" },
+    { "Name": "Bulgarian" },
+    { "Name": "Mexican" },
+    { "Name": "Only drinks" },
+    { "Name": "Japanese" },
+    { "Name": "French" }
+  ]
+}

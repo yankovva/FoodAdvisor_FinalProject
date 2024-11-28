@@ -102,6 +102,10 @@ img {
 .info {
     margin: 10px 30px;
     font-size: 0.9rem;
+    margin: 10px 30px;
+    font-size: 0.9rem;
+    width: 100%;
+    padding: 10px;
 }
 
 .card-details-btn {
@@ -131,6 +135,7 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .icon-details-wrapper {
