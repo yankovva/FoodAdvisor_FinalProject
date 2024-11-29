@@ -140,7 +140,7 @@ body {
 
 
 .form-login {
-    height: 550px;
+    height: auto;
     width: 380px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -170,7 +170,7 @@ body {
     }
 
 .form-register {
-    height: 680px;
+    height: auto;
     width: 380px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -259,13 +259,11 @@ body {
     align-content: center;
     margin: 10px;
 }
-}
+
 .form-add-entity {
     height: auto;
-    width: 80%;
-    background-color: rgba(255, 255, 255, 0.13);
+    width: 100%;
     border-radius: 10px;
-    backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
     padding: 50px 35px;

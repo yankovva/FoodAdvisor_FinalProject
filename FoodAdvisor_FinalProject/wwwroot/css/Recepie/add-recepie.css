@@ -1,0 +1,121 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+
+.form-wrapper {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); 
+    border: 1px solid #e0e0e0; 
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+    font-family: 'Poppins', sans-serif;
+}
+
+    .form-wrapper h2 {
+        text-align: center;
+        color: #e67e22; 
+        font-size: 28px;
+        margin-bottom: 25px;
+        font-family: 'Lora', serif;
+        font-weight: 600;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+.form-label-add-edit {
+    display: block;
+    font-weight: bold;
+    color: #fff;
+    background-color: #e67e22; 
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.form-control, .form-controll, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .form-control:focus, .form-controll:focus, textarea:focus, select:focus {
+        border-color: #e67e22; 
+        box-shadow: 0px 0px 5px rgba(230, 126, 34, 0.5); 
+        outline: none;
+    }
+
+select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 viewBox%3D%220 0 4 5%22%3E%3Cpath fill%3D%22%23e67e22%22 d%3D%22M2 0L0 2h4z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 10px;
+    padding-right: 30px;
+}
+
+input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #f5f5f5; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #34495e;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+    input[type="file"]:hover {
+        background-color: #e67e22; 
+        color: white; 
+    }
+
+textarea {
+    resize: none;
+}
+
+.text-danger {
+    font-size: 12px;
+    color: #d9534f;
+}
+
+.btn-success {
+    background-color: #e67e22; 
+    border: none;
+    color: #fff;
+    font-size: 18px; 
+    padding: 15px 20px; 
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 8px;
+    width: 100%;
+}
+
+    .btn-success:hover {
+        background-color: #d35400; 
+        transform: scale(1.05);
+    }
+
+option[value=""] {
+    color: #888;
+}
+
+textarea::placeholder {
+    font-style: italic;
+    color: #bbb;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}

@@ -1,0 +1,134 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+
+.form-wrapper {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .form-wrapper h2 {
+        text-align: center;
+        color: #e67e22;
+        font-size: 28px;
+        margin-bottom: 25px;
+        font-family: 'Lora', serif;
+        font-weight: 600;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label-add-edit {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #FF7F32;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: #FF7F32;
+    }
+
+.text-danger {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+}
+
+input[type="file"] {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+    input[type="file"]:hover {
+        background-color: #f1f1f1;
+    }
+
+.btn {
+    padding: 15px 0;
+    background-color: #FF7F32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+}
+
+    .btn:hover {
+        background-color: #e26d24;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+select.form-control {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+    select.form-control:focus {
+        border-color: #FF7F32;
+    }
+
+textarea.form-control {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    height: 150px;
+    resize: vertical;
+    width: 100%;
+}
+
+    textarea.form-control:focus,
+    input.form-control:focus {
+        border-color: #FF7F32;
+    }
+
+input.form-control, textarea.form-control {
+    transition: border-color 0.3s ease;
+}
+
+.form-wrapper {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}

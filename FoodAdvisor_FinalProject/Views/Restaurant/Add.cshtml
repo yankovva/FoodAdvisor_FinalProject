@@ -4,7 +4,10 @@
 @{
 	ViewBag.Title = "Add Restaurant";
 }
+<link rel="stylesheet" href="~/css/Restaurant/add-restaurant.css" asp-append-version="true" />
+
 <div class="form-wrapper">
+	<h2>Add Restaurant!</h2>
 	<form asp-action="Add" method="post" enctype="multipart/form-data" class="form-add-entity">
 		<div class="form-group">
 			<label asp-for="@Model.Name" class="form-label-add-edit">Restaurant Name</label>
