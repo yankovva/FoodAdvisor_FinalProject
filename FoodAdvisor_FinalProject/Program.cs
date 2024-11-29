@@ -62,6 +62,7 @@ builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IRecepieFavouritesService, RecepieFavouritesService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddRazorPages();
@@ -92,6 +93,7 @@ else
     app.UseHsts();
 }
 app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -101,6 +103,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
 
+app.MapControllerRoute(
+	name: "Areas",
+	pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

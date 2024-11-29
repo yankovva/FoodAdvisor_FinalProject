@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "401 - Unauthorized Access";
+}
+<link rel="stylesheet" href=~/css/ErrorPages/errorpages-styles.css>
+<body class="error-401">
+    <div>
+        <div class="locked-oven">🔒🍞</div>
+        <h1>401 - You're Not Allowed in the Kitchen!</h1>
+        <p>"Oops! It looks like you don't have permission to access this content."</p>
+        <img class="locked-oven" src="https://cdn-icons-png.flaticon.com/512/2067/2067522.png" alt="Locked oven">
+        <p>Check your credentials or contact the chef (administrator) for access.</p>
+        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Take me back Home 🍰</a>
+    </div>
+</body>

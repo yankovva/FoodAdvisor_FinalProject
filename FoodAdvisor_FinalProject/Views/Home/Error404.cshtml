@@ -1,56 +1,15 @@
-﻿
-<style>
-    header{
-        display:none;
-    }
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: beige;
-    }
-
-    .error-container {
-        text-align: center;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-        font-size: 5rem;
-        color: #ff5733;
-    }
-
-    p {
-        font-size: 1.5rem;
-        color: #333;
-        margin-bottom: 20px;
-    }
-
-    a {
-        text-decoration: none;
-        background-color: #ff5733;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 3px;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-    }
-
-        a:hover {
-            background-color: #e6482e;
-        }
-</style>
-
-<div class="error-container">
-    <h1> 404 </h1>
-    <p>
-        Oops! The page you're
-        looking for is not here.
-    </p>
-    <a asp-controller="Home" asp-action="Index" >Go Back to Home</a>
-</div>
+﻿@{
+	ViewBag.Title = "404-Spilled the Soup!";
+}
+<link rel="stylesheet" href=~/css/ErrorPages/errorpages-styles.css>
+    
+<body class="error-404">
+    <div>
+        <div class="spilled-soup">🍲</div>
+        <h1>404 - Recipe Not Found</h1>
+        <p>Hmm, the content you’re looking for isn’t on the menu right now.</p>
+        <img class="spilled-soup" src="https://cdn-icons-png.flaticon.com/512/1995/1995521.png" alt="Spilled soup">
+        <p>But don't worry, we've got plenty more tasty ideas waiting for you!</p>
+        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Take me back Home 🍰</a>
+    </div>
+</body>

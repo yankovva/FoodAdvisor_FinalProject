@@ -1,0 +1,114 @@
+﻿header{
+    display:none;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f7e7c6;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    font-size: 4.5rem;
+    color: #d9534f;
+    margin: 0;
+}
+
+p {
+    font-size: 1.5rem;
+    margin: 15px 0;
+    color: #555;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    background: #d9534f;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+    a:hover {
+        background: #333;
+        color: #f7e7c6;
+    }
+
+img {
+    max-width: 180px;
+    margin: 20px 0;
+}
+
+/* Общи анимации */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes wobble {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+
+.error-500 h1 {
+    color: #d9534f; 
+}
+
+.error-500 .chef-hat {
+    font-size: 7rem;
+    margin-bottom: 20px;
+}
+
+.error-500 .burnt-toast {
+    animation: rotate 4s linear infinite;
+}
+
+.error-404 h1 {
+    color: #ff9800; 
+}
+
+.error-404 .spilled-soup {
+    animation: wobble 2s infinite ease-in-out;
+}
+
+
+.error-401 h1 {
+    color: #f39c12; 
+}
+
+.error-401 .locked-oven {
+    font-size: 6rem;
+    margin-bottom: 20px;
+    animation: rotate 5s linear infinite;
+}
