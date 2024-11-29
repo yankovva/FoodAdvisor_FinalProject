@@ -3,182 +3,219 @@
 @model IEnumerable<IndexAllUsersViewModel>
 
 @{
-    ViewData["Title"] = "Admin Panel";
+	ViewData["Title"] = "Admin Panel";
 }
 
 @inject RoleManager<IdentityRole<Guid>> roleManager
 
 @{
-    IEnumerable<string?> allRoles = await roleManager.Roles
-        .Select(r => r.Name)
-        .ToArrayAsync();
+	IEnumerable<string?> allRoles = await roleManager.Roles
+		.Select(r => r.Name)
+		.ToArrayAsync();
 }
 <style>
-    .container{
-        background-color: white;
+	.container {
+		background-color: white;
+	}
+	/* Search Box */
+	.search-container {
+		margin-bottom: 20px;
+		text-align: center;
+	}
 
-    }
-    /* Search Box */
-    .search-container {
-        margin-bottom: 20px;
-        text-align: center;
-    }
+	#searchBox {
+		width: 50%;
+		padding: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		border-radius: 20px;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+		outline: none;
+		transition: all 0.2s ease;
+	}
 
-    #searchBox {
-        width: 50%;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        outline: none;
-        transition: all 0.2s ease;
-    }
+		#searchBox:focus {
+			border-color: #4CAF50;
+			box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+		}
 
-        #searchBox:focus {
-            border-color: #4CAF50;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
+	/* Table Styles */
+	.admin-table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: 20px;
+		font-family: Arial, sans-serif;
+	}
 
-    /* Table Styles */
-    .admin-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        font-family: Arial, sans-serif;
-    }
+		.admin-table th, .admin-table td {
+			border: 1px solid #ddd;
+			padding: 12px;
+			text-align: left;
+		}
 
-        .admin-table th, .admin-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
+		.admin-table th {
+			background-color: #4CAF50;
+			color: white;
+			font-size: 16px;
+		}
 
-        .admin-table th {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-        }
+		.admin-table tr:nth-child(even) {
+			background-color: #f9f9f9;
+		}
 
-        .admin-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+		.admin-table tr:hover {
+			background-color: #f1f1f1;
+		}
 
-        .admin-table tr:hover {
-            background-color: #f1f1f1;
-        }
+	/* Dropdown Styles */
+	.role-dropdown {
+		font-size: 14px;
+		padding: 5px 10px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		background-color: #f9f9f9;
+		transition: all 0.2s ease;
+		cursor: pointer;
+	}
 
-    /* Dropdown Styles */
-    .role-dropdown {
-        font-size: 14px;
-        padding: 5px 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-        transition: all 0.2s ease;
-        cursor: pointer;
-    }
+		.role-dropdown:focus {
+			border-color: #4CAF50;
+			background-color: #fff;
+		}
 
-        .role-dropdown:focus {
-            border-color: #4CAF50;
-            background-color: #fff;
-        }
+	/* Buttons */
+	.role-update-button, .delete-button {
+		border: none;
+		font-size: 16px;
+		padding: 5px 10px;
+		margin-left: 5px;
+		cursor: pointer;
+		border-radius: 50%;
+		text-align: center;
+		line-height: 20px;
+		transition: all 0.2s ease;
+	}
 
-    /* Buttons */
-    .role-update-button, .delete-button {
-        border: none;
-        font-size: 16px;
-        padding: 5px 10px;
-        margin-left: 5px;
-        cursor: pointer;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 20px;
-        transition: all 0.2s ease;
-    }
+	.role-update-button {
+		background-color: #4CAF50;
+		color: white;
+	}
 
-    .role-update-button {
-        background-color: #4CAF50;
-        color: white;
-    }
+		.role-update-button:hover {
+			background-color: #45a049;
+		}
 
-        .role-update-button:hover {
-            background-color: #45a049;
-        }
+	.delete-button {
+		background-color: #d9534f;
+		color: white;
+	}
 
-    .delete-button {
-        background-color: #d9534f;
-        color: white;
-    }
+		.delete-button:hover {
+			background-color: #c9302c;
+		}
 
-        .delete-button:hover {
-            background-color: #c9302c;
-        }
-
-    /* Forms */
-    .role-form, .delete-form {
-        display: inline-flex;
-        align-items: center;
-    }
-
+	/* Forms */
+	.role-form, .delete-form {
+		display: inline-flex;
+		align-items: center;
+	}
 
 </style>
 
 <h2>Admin Panel</h2>
 
 <div class="search-container">
-    <input type="text" placeholder="Search users..." id="searchBox" oninput="filterUsers()" />
+	<input type="text" placeholder="Search users..." id="searchBox" oninput="filterUsers()" />
 </div>
 
 <table class="admin-table">
-    <thead>
-        <tr>
-            <th>User</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody id="userTable">
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.Username</td>
-                <td>@user.Email</td>
-                <td>
-                    <form method="post" asp-page-handler="UpdateRole" class="role-form">
-                        <select name="SelectedRole" asp-for="@user.CurrentRoles" class="role-dropdown">
-                            @foreach (var role in allRoles)
-                            {
-                                <option value="@role">@role</option>
-                            }
-                        </select>
-                        <input type="hidden" name="UserId" value="@user.Id" />
-                        <button type="submit" class="role-update-button">✔</button>
-                    </form>
-                </td>
-                <td>
-                    <form method="post" asp-page-handler="DeleteUser" class="delete-form">
-                        <input type="hidden" name="UserId" value="@user.Id" />
-                        <button type="submit" class="delete-button">🗑</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
+	<thead>
+		<tr>
+			<th>User</th>
+			<th>Email</th>
+			<th>Current Role</th>
+			<th>Is Manager</th>
+			<th>Add Role</th>
+			<th>Remove Role</th>
+			<th>Make Manager</th>
+			<th>Delete User</th>
+		</tr>
+	</thead>
+	<tbody id="userTable">
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td>@user.Username</td>
+				<td>@user.Email</td>
+				<td>
+					@foreach (var role in user.CurrentRoles)
+					{
+						<span class="badge bg-secondary">@role</span>
+					}
+				</td>
+				<td>@user.IsManager</td>
+				<td>
+					<form method="post" asp-action="UpdateRole" asp-controller="AdminManage" asp-area="Admin" class="role-form">
+						<select name="roleName" class="role-dropdown">
+							@foreach (var role in allRoles)
+							{
+								<option value="@role">@role</option>
+							}
+						</select>
+						<input type="hidden" name="userId" value="@user.Id" />
+						<button type="submit" class="role-update-button">✔</button>
+					</form>
+				</td>
+				<td>
+					<form method="post" asp-action="RemoveRole" asp-controller="AdminManage" asp-area="Admin" class="role-form">
+						<select name="roleName" class="role-dropdown">
+							@foreach (var role in user.CurrentRoles)
+							{
+								<option value="@role">@role</option>
+							}
+						</select>
+						<input type="hidden" name="userId" value="@user.Id" />
+						<button type="submit" class="delete-button">❌</button>
+					</form>
+				</td>
+				<td>
+						@if (user.IsManager == false)
+						{
+						<form method="post" asp-action="MakeManager" asp-controller="AdminManage" asp-area="Admin" class="role-form">
+							<input type="hidden" name="userId" value="@user.Id" />
+							<button type="submit" class="role-update-button">✔Make Manager</button>
+						</form>
+						}
+						else if (user.IsManager == true)
+						{
+						<form method="post" asp-action="RemoveManager" asp-controller="AdminManage" asp-area="Admin" class="role-form">
+							<input type="hidden" name="userId" value="@user.Id" />
+							<button type="submit" class="delete-button">❌Remove Manager</button>
+						</form>
+						}
+				</td>
+				<td>
+					<form method="post" asp-action="Delete" asp-controller="AdminManage" asp-area="Admin" class="delete-form">
+						<input type="hidden" name="userId" value="@user.Id" />
+						<button type="submit" class="delete-button">🗑 Delete User</button>
+					</form>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
 
 @section Scripts {
-    <script>
-        function filterUsers() {
-            const searchValue = document.getElementById('searchBox').value.toLowerCase();
-            const rows = document.querySelectorAll('#userTable tr');
-            rows.forEach(row => {
-                const username = row.cells[0].textContent.toLowerCase();
-                const email = row.cells[1].textContent.toLowerCase();
-                row.style.display = (username.includes(searchValue) || email.includes(searchValue)) ? '' : 'none';
-            });
-        }
-    </script>
+	<script>
+		function filterUsers() {
+			const searchValue = document.getElementById('searchBox').value.toLowerCase();
+			const rows = document.querySelectorAll('#userTable tr');
+			rows.forEach(row => {
+				const username = row.cells[0].textContent.toLowerCase();
+				const email = row.cells[1].textContent.toLowerCase();
+				row.style.display = (username.includes(searchValue) || email.includes(searchValue)) ? '' : 'none';
+			});
+		}
+	</script>
 }
 
