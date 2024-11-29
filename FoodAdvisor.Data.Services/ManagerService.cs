@@ -2,11 +2,7 @@
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FoodAdvisor.Data.Services
 {
@@ -28,6 +24,37 @@ namespace FoodAdvisor.Data.Services
 				.GetAllAttached()
 				.AnyAsync(m => m.UserId.ToString().ToLower() == userId);
 			return result;
+		}
+
+		public async Task AddManagerAsync(Guid userId, string phoneNumber, string address)
+		{
+			Manager manager = new Manager()
+			{
+				UserId = userId,
+				Address = address,
+				WorkPhoneNumber = phoneNumber
+			};
+
+			await this.managerRepository.AddAsync(manager);
+		}
+
+		public async Task<bool> RemoveManagerAsync(Guid userId)
+		{
+			Manager manager = await this.managerRepository
+				.FirstorDefaultAsync(m=>m.UserId == userId);
+
+			if (manager == null)
+			{
+				return false;
+			}
+
+			bool isDeleted = await this.managerRepository.DeleteAsync(manager.Id);
+			if (isDeleted == false)
+			{
+				return false;
+			}
+
+			return true;
 		}
 	}
 }
