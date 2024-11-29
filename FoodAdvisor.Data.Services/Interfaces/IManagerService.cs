@@ -9,5 +9,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 	public interface IManagerService
 	{
 		Task<bool> IsUserManagerAsync(string userId);
+		Task AddManagerAsync(Guid userId, string phoneNumber, string address);
+		Task<bool> RemoveManagerAsync(Guid userId);
 	}
 }
