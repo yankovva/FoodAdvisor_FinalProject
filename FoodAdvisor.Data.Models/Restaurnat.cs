@@ -80,7 +80,6 @@ namespace FoodAdvisor.Data.Models
         public bool IsDeleted { get; set; } = false;
 
         [Comment("Shows the price range of the restaurant.")]
-        [MaxLength(PriceRangeMaxLenght)]
         [Required]
         public int PricaRange { get; set; }
     }

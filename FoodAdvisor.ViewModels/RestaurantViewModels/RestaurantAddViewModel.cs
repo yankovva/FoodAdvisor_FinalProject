@@ -60,9 +60,8 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[MaxLength(CuisineNameMaxLenght)]
 		[MinLength(CuisineNameMinLenght)]
 		public string CuisineName { get; set; } = null!;
+
 		[Required]
-		[MaxLength(PriceRangeMaxLenght)]
-		[MinLength(PriceRangeMinLenght)]
 		public int PriceRange { get; set; } 
     }
 }

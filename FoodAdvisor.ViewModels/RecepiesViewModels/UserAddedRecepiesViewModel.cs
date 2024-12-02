@@ -8,7 +8,8 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 {
 	public class UserAddedRecepiesViewModel
 	{
-        public required string Name { get; set; }
+		public required string Id { get; set; }
+		public required string Name { get; set; }
 		public required string DificultyLevel { get; set; }
 		public required string Categodry { get; set; }
 		public required string AddedOn { get; set; }
