@@ -21,7 +21,7 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
         public required string Category { get; set; }
         public required string City { get; set; }
         public required string Address { get; set; }
-		public required string PriceRange { get; set; }
+		public required int PriceRange { get; set; }
 		public required string CuisineName { get; set; }
 		public required int Likes { get; set; }
 

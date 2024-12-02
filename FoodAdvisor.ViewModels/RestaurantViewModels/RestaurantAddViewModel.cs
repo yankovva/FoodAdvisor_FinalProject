@@ -63,7 +63,6 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[Required]
 		[MaxLength(PriceRangeMaxLenght)]
 		[MinLength(PriceRangeMinLenght)]
-		[RegularExpression(PriceRangeAllowedValue)]
-		public string PriceRange { get; set; } = null!;
+		public int PriceRange { get; set; } 
     }
 }

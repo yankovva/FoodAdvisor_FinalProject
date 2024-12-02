@@ -44,10 +44,6 @@ namespace FoodAdvisor.Data
 				.Property(u => u.ProfilePricturePath)
 				.HasDefaultValue($"{NoImageAccount}");
 
-			builder.Entity<Restaurant>()
-				.Property(r => r.PricaRange)
-				.HasDefaultValue("$");
-
 		}
 	}
 }

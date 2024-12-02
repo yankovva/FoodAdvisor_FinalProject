@@ -41,7 +41,6 @@ namespace FoodAdvisor.Data.Models
         [Comment("The Address of the Restaurant.")]
         public string Address { get; set; } = null!;
 
-
         [Comment("An Image Path of the Restaurant.")]
         public string ImageURL { get; set; } = null!;
 
@@ -81,7 +80,8 @@ namespace FoodAdvisor.Data.Models
         public bool IsDeleted { get; set; } = false;
 
         [Comment("Shows the price range of the restaurant.")]
+        [MaxLength(PriceRangeMaxLenght)]
         [Required]
-        public string PricaRange { get; set; } = null!;
+        public int PricaRange { get; set; }
     }
 }
