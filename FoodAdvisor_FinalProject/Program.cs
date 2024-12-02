@@ -63,6 +63,7 @@ builder.Services.AddScoped<IRecepieFavouritesService, RecepieFavouritesService>(
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 
 builder.Services.AddRazorPages();

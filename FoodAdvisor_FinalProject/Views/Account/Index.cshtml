@@ -46,9 +46,9 @@
                     </div>
                 </div>
                 <div class="user-recepie-buttons">
-                    <a asp-controller="Recepie" asp-action="Edit" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a asp-controller="Recepie" asp-action="Delete" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-x-circle"></i></a>
-                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-info-circle"></i></a>
+                    <a asp-controller="Recepie" asp-action="Edit" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-controller="Recepie" asp-action="Delete" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-x-circle"></i></a>
+                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-info-circle"></i></a>
                 </div>
             </div>
         }

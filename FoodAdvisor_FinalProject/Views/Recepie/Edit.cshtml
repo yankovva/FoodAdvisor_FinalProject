@@ -4,53 +4,62 @@
 @{
 	ViewBag.Title = "Edit Recepie";
 }
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-	<div class="form-group">
-		<label asp-for="@Model.Name" class="form-label-add-edit">Recepie Name</label>
-		<input asp-for="@Model.Name" class="form-control" aria-required="true" />
-		<span asp-validation-for="@Model.Name" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-			<label asp-for="@Model.ImagePath" class="form-label-add-edit">Image</label>
+<link rel="stylesheet" href="~/css/Recepie/add-recepie.css" asp-append-version="true" />
+
+<div class="form-wrapper">
+	<h2>Edit Recepie! </h2>
+	<form asp-action="Edit" method="post" enctype="multipart/form-data" class="form-add-entity">
+		<div class="form-group">
+			<label asp-for="@Model.Name" class="form-label-add-edit">Recepie Name</label>
+			<input asp-for="@Model.Name" class="form-control" aria-required="true" />
+			<span asp-validation-for="@Model.Name" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.ImagePath" class="form-label-add-edit">Image of the recepie</label>
 			<input asp-for="@Model.ImagePath" name="file" type="file" class="form-controll" aria-required="false" />
 			<span asp-validation-for="@Model.ImagePath" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.CookingTime" class="form-label-add-edit">Cooking Time</label>
-		<input asp-for="@Model.CookingTime" class="form-control" aria-required="true" />
-		<span asp-validation-for="@Model.CookingTime" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.Servings" class="form-label-add-edit">Servings</label>
-		<input asp-for="@Model.Servings" class="form-control" aria-required="true" />
-		<span asp-validation-for="@Model.Servings" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.CategoryId" class="form-label-add-edit">Select Category</label>
-		<select asp-for="@Model.CategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-			<option value="">Select Category...</option>
-		</select>
-		<span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="@Model.Products" class="form-label-add-edit">Products</label>
-		<textarea asp-for="@Model.Products" class="form-control" aria-required="true" rows="5" placeholder="Write a list of the products"></textarea>
-		<span asp-validation-for="@Model.Products" class="text-danger"></span>
-	</div>
-	<div class="mb-3">
-	<div class="form-group">
-		<label asp-for="@Model.Description" class="form-label-add-edit">Description</label>
-		<textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5" placeholder="Write a short description of the place (20-300 characters)"></textarea>
-		<span asp-validation-for="@Model.Description" class="text-danger"></span>
-	</div>
-	<div class="mb-3">
-		<input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Confirm" />
-	</div>
-</form>
-
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.CookingTime" class="form-label-add-edit">Cooking time in minutes</label>
+			<input asp-for="@Model.CookingTime" class="form-control" aria-required="true" />
+			<span asp-validation-for="@Model.CookingTime" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.Servings" class="form-label-add-edit">Servings</label>
+			<input asp-for="@Model.Servings" class="form-control" aria-required="true" />
+			<span asp-validation-for="@Model.Servings" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.CategoryId" class="form-label-add-edit">Select Category</label>
+			<select asp-for="@Model.CategoryId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+				<option value="">Select Category...</option>
+			</select>
+			<span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.DificultyId" class="form-label-add-edit">Select Dificulty level</label>
+			<select asp-for="@Model.DificultyId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Dificulty, "Id", "DificultyName"))">
+				<option value="">Select Level...</option>
+			</select>
+			<span asp-validation-for="@Model.DificultyId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.Products" class="form-label-add-edit">Add list of products, separeted by ","</label>
+			<textarea asp-for="@Model.Products" class="form-control" aria-required="true" rows="5" placeholder="Potatoes- 1kg, Tomatoes- 2kg, Garlic - 2gloves ... "></textarea>
+			<span asp-validation-for="@Model.Products" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<div class="form-group">
+				<label asp-for="@Model.Description" class="form-label-add-edit">Write the cooking proces</label>
+				<textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5" placeholder="Write a description for the recepie (50-700 characters)"></textarea>
+				<span asp-validation-for="@Model.Description" class="text-danger"></span>
+			</div>
+			<input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Save" />
+		</div>
+	</form>
+</div>
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 }
-
 

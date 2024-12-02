@@ -31,7 +31,7 @@
 		</div>
 	</div>
 	<div class="search-container">
-		<form method="get" asp-controller="Recepie"  asp-action="Index">
+		<form method="get" asp-controller="Recepie" asp-action="Index">
 			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey;">
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>
@@ -57,7 +57,27 @@
 						@restaurant.Name
 					</h1>
 					<div class="icon-details-wrapper">
-						<i class="fa bi-cash">@restaurant.PriceRange</i>
+						@if (restaurant.PriceRange < 20)
+						{
+							<i class="fa bi-cash">$</i>
+						}
+						else if (restaurant.PriceRange < 50 && restaurant.PriceRange >= 20)
+						{
+							<i class="fa bi-cash">$$</i>
+						}
+						else if (restaurant.PriceRange < 70 && restaurant.PriceRange >= 50)
+						{
+							<i class="fa bi-cash">$$$</i>
+						}
+						else if (restaurant.PriceRange < 110 && restaurant.PriceRange >= 70)
+						{
+							<i class="fa bi-cash">$$$$</i>
+						}
+						else
+						{
+							<i class="fa bi-cash">$$$$$</i>
+
+						}
 						<i class="fa fa-users"> @restaurant.Category</i>
 						<i class="fa bi-geo-alt"> @restaurant.City</i>
 
