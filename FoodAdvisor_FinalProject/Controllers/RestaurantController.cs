@@ -181,6 +181,11 @@ namespace FoodAdvisor_FinalProject.Controllers
 			RestaurantAddViewModel? model = await this.restaurantService
 				.EditRestaurantViewAsync(restaurantGuid);
 
+			if (model == null)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
+
 			model.Categories = await GetCategories();
 
 			return View(model);

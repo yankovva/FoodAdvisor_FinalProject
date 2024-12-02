@@ -145,6 +145,10 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			AddRecepieViewModel model = await this.recepieService
 				.EditRecepieViewAsync (recepieGuid);
+			if (model == null)
+			{
+				return this.RedirectToAction(nameof(Index));
+			}
 			model.Categories = await GetCategories();
 			model.Dificulty = await GetDificulty();
 
