@@ -68,7 +68,6 @@ namespace FoodAdvisor.Data.Services
 				await cuisineRepository.AddAsync(cuisine);
 			}
 
-
 			Restaurant place = new Restaurant()
 			{
 				Name = model.Name,
@@ -175,6 +174,7 @@ namespace FoodAdvisor.Data.Services
 
 			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
 			long maxSize = 5 * 1024 * 1024;
+
 			if (file != null)
 			{
 				fileService.DeleteFile(editedRestaurant.ImageURL);
@@ -205,10 +205,7 @@ namespace FoodAdvisor.Data.Services
 				editedRestaurant.ChefsSpecialImage = newImagePath;
 			}
 
-
-			await this.cityRepository.AddAsync(city);
 			bool isUpdated = await this.restaurantRepository.UpdateAsync(editedRestaurant);
-
 			return true;
 		}
 

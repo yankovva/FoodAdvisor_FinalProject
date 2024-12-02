@@ -1,0 +1,104 @@
+﻿.container {
+    background-color: white;
+}
+/* Search Box */
+.search-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#searchBox {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+    #searchBox:focus {
+        border-color: #4CAF50;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+/* Table Styles */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+    .admin-table th, .admin-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .admin-table th {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+    }
+
+    .admin-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .admin-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+/* Dropdown Styles */
+.role-dropdown {
+    font-size: 14px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+    .role-dropdown:focus {
+        border-color: #4CAF50;
+        background-color: #fff;
+    }
+
+/* Buttons */
+.role-update-button, .delete-button {
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    transition: all 0.2s ease;
+}
+
+.role-update-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+    .role-update-button:hover {
+        background-color: #45a049;
+    }
+
+.delete-button {
+    background-color: #d9534f;
+    color: white;
+}
+
+    .delete-button:hover {
+        background-color: #c9302c;
+    }
+
+.role-form, .delete-form {
+    display: inline-flex;
+    align-items: center;
+}
