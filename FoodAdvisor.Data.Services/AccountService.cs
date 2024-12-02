@@ -92,6 +92,7 @@ namespace FoodAdvisor.Data.Services
 					ProfilePricture = u.ProfilePricturePath,
 					UserAddedRecepies = u.AddedRecepies.Select(r => new UserAddedRecepiesViewModel
 					{
+						Id = r.Id.ToString(),
 						Name = r.Name,
 						DificultyLevel = r.RecepieDificulty.DificultyName,
 						Categodry = r.RecepieCategory.Name,

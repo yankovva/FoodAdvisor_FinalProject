@@ -13,72 +13,51 @@ using FoodAdvisor.ViewModels;
 
 namespace FoodAdvisor.Data.Services
 {
-    public class RestaurantService : BaseService,IRestaurantService
+	public class RestaurantService : BaseService, IRestaurantService
 	{
 		private readonly IRepository<Restaurant, Guid> restaurantRepository;
 		private readonly IRepository<City, Guid> cityRepository;
-		private readonly IRepository<RestaurantCuisine,  Guid> cuisineRepository;
+		private readonly IRepository<RestaurantCuisine, Guid> cuisineRepository;
 		private readonly IWebHostEnvironment enviorment;
+		private readonly IFileService fileService;
 
 		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository,
 			IRepository<City, Guid> cityRepository,
 			IWebHostEnvironment enviorment,
-			IRepository<RestaurantCuisine, Guid> cuisineRepository)
-        {
-            this.restaurantRepository = restaurantRepository;
+			IRepository<RestaurantCuisine, Guid> cuisineRepository, IFileService fileService)
+		{
+			this.restaurantRepository = restaurantRepository;
 			this.cityRepository = cityRepository;
 			this.enviorment = enviorment;
 			this.cuisineRepository = cuisineRepository;
-        }
+			this.fileService = fileService;
+		}
 
 		//Done
-        public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish)
+		public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish)
 		{
-			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RestaurantPictures");
-			string uploadFolderChefsDish = Path.Combine(enviorment.WebRootPath, "ChefDishesPictures");
-
-			if (!Directory.Exists(uploadFolder))
-			{
-				Directory.CreateDirectory(uploadFolder);
-			}
-
-			if (!Directory.Exists(uploadFolderChefsDish))
-			{
-				Directory.CreateDirectory(uploadFolderChefsDish);
-			}
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			long maxSize = 5 * 1024 * 1024; // 5MB
 
 			string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
 			string fileNameChefsDish = userId.ToString() + "_" + model.ChefsDishName + "_" + Path.GetFileName(fileDish.FileName);
 
+			string filePathREstaurant = await fileService.UploadFileAsync(file, "RestaurantPictures", fileName);
+			string filePathChefDish = await fileService.UploadFileAsync(file, "ChefDishesPictures", fileName);
 
-			string NemImagePath = Path.Combine("RestaurantPictures", fileName);
-			string NemImagePathChefsDish = Path.Combine("ChefDishesPictures", fileNameChefsDish);
 
-			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
-			{
-				await file.CopyToAsync(stream);
-			}
-			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePathChefsDish), FileMode.Create))
-			{
-				await fileDish.CopyToAsync(stream);
-			}
-
-			//
-			City? city = await this.cityRepository
+			City city = await this.cityRepository
 				.FirstorDefaultAsync(c => c.Name.ToLower() == model.City.ToLower());
-
-			RestaurantCuisine? cuisine = await this.cuisineRepository
-				.FirstorDefaultAsync(c => c.Name.ToLower() == model.CuisineName.ToLower());
-
-
 			if (city == null)
 			{
-				 city = new City()
+				city = new City()
 				{
 					Name = model.City
 				};
-				await this.cityRepository.AddAsync(city);
+				await cityRepository.AddAsync(city);
 			}
+			RestaurantCuisine cuisine = await this.cuisineRepository
+				.FirstorDefaultAsync(c => c.Name.ToLower() == model.CuisineName.ToLower());
 
 			if (cuisine == null)
 			{
@@ -86,14 +65,15 @@ namespace FoodAdvisor.Data.Services
 				{
 					Name = model.CuisineName
 				};
-				await this.cuisineRepository.AddAsync(cuisine);
+				await cuisineRepository.AddAsync(cuisine);
 			}
+
 
 			Restaurant place = new Restaurant()
 			{
 				Name = model.Name,
 				Description = model.Description,
-				ImageURL = NemImagePath,
+				ImageURL = filePathREstaurant,
 				CategoryId = model.CategoryId,
 				PublisherId = userId,
 				City = city,
@@ -102,7 +82,7 @@ namespace FoodAdvisor.Data.Services
 				MenuDescription = model.MenuDescription,
 				AtmosphereDescription = model.AtmosphereDescription,
 				ChefsSpecial = model.ChefsDishName,
-				ChefsSpecialImage = NemImagePathChefsDish,
+				ChefsSpecialImage = filePathChefDish,
 				Cuisine = cuisine
 			};
 
@@ -116,16 +96,13 @@ namespace FoodAdvisor.Data.Services
 			Restaurant? restaurant = await this.restaurantRepository
 				.GetByIdAsync(Guid.Parse(model.Id));
 
-			string filePath = enviorment.WebRootPath;
-			string imageToDelete = $"{filePath}\\{restaurant.ImageURL}";
-
 			if (restaurant == null)
 			{
 				return false;
 			}
+			this.fileService.DeleteFile(restaurant.ImageURL);
 			restaurant.IsDeleted = true;
-			File.Delete(imageToDelete);
-			await this.restaurantRepository.SaveChangesAsync();
+			await restaurantRepository.SaveChangesAsync();
 			return true;
 		}
 
@@ -143,7 +120,7 @@ namespace FoodAdvisor.Data.Services
 				   Name = r.Name,
 				   Publisher = r.Publisher.UserName ?? string.Empty,
 				   Category = r.Category.Name,
-				   
+
 			   })
 			   .FirstOrDefaultAsync();
 
@@ -162,14 +139,16 @@ namespace FoodAdvisor.Data.Services
 			}
 
 			City city = await this.cityRepository
-				.FirstorDefaultAsync(c=>c.Name.ToLower() == model.City.ToLower());
+				.FirstorDefaultAsync(c => c.Name.ToLower() == model.City.ToLower());
 			if (city == null)
 			{
-				 city = new City()
+				city = new City()
 				{
 					Name = model.City
 				};
+				await cityRepository.AddAsync(city);
 			}
+
 			RestaurantCuisine cuisine = await this.cuisineRepository
 				.FirstorDefaultAsync(c => c.Name.ToLower() == model.CuisineName.ToLower());
 
@@ -179,6 +158,7 @@ namespace FoodAdvisor.Data.Services
 				{
 					Name = model.CuisineName
 				};
+				await cuisineRepository.AddAsync(cuisine);
 			}
 
 			editedRestaurant.Name = model.Name;
@@ -193,52 +173,36 @@ namespace FoodAdvisor.Data.Services
 			editedRestaurant.AtmosphereDescription = model.AtmosphereDescription;
 			editedRestaurant.ChefsSpecial = model.ChefsDishName;
 
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			long maxSize = 5 * 1024 * 1024;
 			if (file != null)
 			{
-				string filePath = enviorment.WebRootPath;
-				string imageToDelete = $"{filePath}\\{editedRestaurant.ImageURL}";
-				File.Delete(imageToDelete);
+				fileService.DeleteFile(editedRestaurant.ImageURL);
 
-				string uploadFolder = Path.Combine(enviorment.WebRootPath, "RestaurantPictures");
-
-				if (!Directory.Exists(uploadFolder))
+				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
 				{
-					Directory.CreateDirectory(uploadFolder);
+					throw new ArgumentException("Unvalid file!");
 				}
 
-				string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
-				string NemImagePath = Path.Combine("RestaurantPictures", fileName);
+				string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
+				string newImagePath = await fileService.UploadFileAsync(file, "RestaurantPictures", fileName);
 
-				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
-				{
-					await file.CopyToAsync(stream);
-				}
-
-				editedRestaurant.ImageURL = NemImagePath;
+				editedRestaurant.ImageURL = newImagePath;
 			}
 
 			if (fileDish != null)
 			{
-				string filePath = enviorment.WebRootPath;
-				string imageToDelete = $"{filePath}\\{editedRestaurant.ChefsSpecialImage}";
-				File.Delete(imageToDelete);
+				fileService.DeleteFile(editedRestaurant.ChefsSpecialImage);
 
-				string uploadFolder = Path.Combine(enviorment.WebRootPath, "ChefDishesPictures");
-
-				if (!Directory.Exists(uploadFolder))
+				if (!fileService.IsFileValid(fileDish, allowedExtensions, maxSize))
 				{
-					Directory.CreateDirectory(uploadFolder);
+					throw new ArgumentException("Unvalid file!");
 				}
 
-				string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(fileDish.FileName);
-				string NemImagePath = Path.Combine("ChefDishesPictures", fileName);
-
-				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
-				{
-					await fileDish.CopyToAsync(stream);
-				}
-
-				editedRestaurant.ChefsSpecialImage = NemImagePath;
+				string fileName = $"{userId}_{model.Name}_{Path.GetFileName(fileDish.FileName)}";
+				string newImagePath = await fileService.UploadFileAsync(fileDish, "ChefDishesPictures", fileName);
+				
+				editedRestaurant.ChefsSpecialImage = newImagePath;
 			}
 
 
@@ -276,10 +240,10 @@ namespace FoodAdvisor.Data.Services
 		//Done
 		public async Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid restaurnatId)
 		{
-			 
+
 			RestaurantDetailsViewModel? model = await this.restaurantRepository
 				.GetAllAttached()
-				.Include(p=>p.UserRestaurants)
+				.Include(p => p.UserRestaurants)
 				.Where(p => p.Id == restaurnatId && p.IsDeleted == false)
 				.Select(p => new RestaurantDetailsViewModel()
 				{
@@ -295,12 +259,12 @@ namespace FoodAdvisor.Data.Services
 					Address = p.Address,
 					Category = p.Category.Name,
 					PriceRange = p.PricaRange,
-					Likes = p.UserRestaurants.Where(r=>r.RestaurantId == p.Id).Count(),
+					Likes = p.UserRestaurants.Where(r => r.RestaurantId == p.Id).Count(),
 					City = p.City.Name,
 					Publisher = p.Publisher.UserName ?? string.Empty,
 					AllComment = p.RestaurantsComments
-					.Where(rc=>rc.IsDeleted == false)
-					.Select(rc=> new CommentAllViewModel()
+					.Where(rc => rc.IsDeleted == false)
+					.Select(rc => new CommentAllViewModel()
 					{
 						Message = rc.Message,
 						CreatedOn = rc.CreatedDate,

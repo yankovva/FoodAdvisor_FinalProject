@@ -16,49 +16,42 @@ namespace FoodAdvisor.Data.Services
 		private readonly IRepository<Recepie, Guid> recepieRepository;
 		private readonly IWebHostEnvironment enviorment;
 		private IRepository<UserRecepie, object> userRecepieRepository;
+		private readonly IFileService fileService;
 
 
 		public RecepieService(IRepository<Recepie, Guid> recepieRepository, IWebHostEnvironment enviorment,
-			IRepository<UserRecepie, object> userRecepieRepository)
+			IRepository<UserRecepie, object> userRecepieRepository, IFileService fileService)
 		{
 			this.recepieRepository = recepieRepository;
 			this.enviorment = enviorment;
 			this.userRecepieRepository = userRecepieRepository;
+			this.fileService = fileService;
 		}
 
 		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file)
 		{
-			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RecepiePictures");
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			long maxSize = 5 * 1024 * 1024; // 5MB
 
-			if (!Directory.Exists(uploadFolder))
-			{
-				Directory.CreateDirectory(uploadFolder);
-			}
+			string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
 
-			string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
-			string NemImagePath = Path.Combine("RecepiePictures", fileName);
+			string filePath = await fileService.UploadFileAsync(file, "RecepiePictures", fileName);
 
-			using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
-			{
-				await file.CopyToAsync(stream);
-			}
-
-			Recepie recepie = new Recepie()
+			Recepie recepie = new Recepie
 			{
 				Name = model.Name,
 				Description = model.Description,
 				CookingTime = model.CookingTime,
 				PublisherId = userId,
-				ImageURL = NemImagePath,
+				ImageURL = filePath,
 				CreatedOn = DateTime.Now,
 				RecepieCategoryId = model.CategoryId,
 				Products = model.Products,
 				NumberOfServing = model.Servings,
 				RecepieDificultyId = model.DificultyId
-
 			};
 
-			await this.recepieRepository.AddAsync(recepie);
+			await recepieRepository.AddAsync(recepie);
 		}
 
 		public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId)
@@ -129,13 +122,12 @@ namespace FoodAdvisor.Data.Services
 
 			if (recepie != null)
 			{
+				fileService.DeleteFile(recepie.ImageURL);
 				recepie.IsDeleted = true;
-				File.Delete(imageToDelete);
-				await this.recepieRepository.SaveChangesAsync();
+				await recepieRepository.SaveChangesAsync();
 				return true;
 			}
 			return false;
-
 		}
 
 		public async Task<AddRecepieViewModel> EditRecepieViewAsync(Guid id)
@@ -176,12 +168,6 @@ namespace FoodAdvisor.Data.Services
 				return false;
 			}
 
-			string uploadFolder = Path.Combine(enviorment.WebRootPath, "RecepiePictures");
-
-			if (!Directory.Exists(uploadFolder))
-			{
-				Directory.CreateDirectory(uploadFolder);
-			}
 			editedRecepie.Name = model.Name;
 			editedRecepie.Description = model.Description;
 			editedRecepie.CookingTime = model.CookingTime;
@@ -192,19 +178,20 @@ namespace FoodAdvisor.Data.Services
 
 			if (file != null)
 			{
-				string filePath = enviorment.WebRootPath;
-				string imageToDelete = $"{filePath}\\{editedRecepie.ImageURL}";
-				File.Delete(imageToDelete);
+				fileService.DeleteFile(editedRecepie.ImageURL);
 
-				string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
-				string NemImagePath = Path.Combine("RecepiePictures", fileName);
-
-				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NemImagePath), FileMode.Create))
+				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+				long maxSize = 5 * 1024 * 1024;
+				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
 				{
-					await file.CopyToAsync(stream);
+					throw new ArgumentException("Unvalid file!");
 				}
-				editedRecepie.ImageURL = NemImagePath;
 
+				string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
+
+				string newImagePath = await fileService.UploadFileAsync(file, "RecepiePictures", fileName);
+
+				editedRecepie.ImageURL = newImagePath;
 			}
 
 			await this.recepieRepository.UpdateAsync(editedRecepie);
