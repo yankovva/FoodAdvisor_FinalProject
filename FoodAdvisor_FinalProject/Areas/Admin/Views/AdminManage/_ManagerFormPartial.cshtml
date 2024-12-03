@@ -1,0 +1,18 @@
+﻿@using FoodAdvisor.ViewModels.UserViewModels;
+@model ManagerFormViewModel
+
+<link rel="stylesheet" href="~/css/Admin/admin-manage.css" asp-append-version="true" />
+
+<form id="managerForm">
+    <div>
+        <label>Work phone number:</label>
+        <input type="text" name="PhoneNumber" required />
+    </div>
+    <div>
+        <label>Current address:</label>
+        <input type="text" name="Address" required />
+    </div>
+    <input type="hidden" id="UserId" name="UserId" value="@Model.UserId" />
+    <button type="submit">Save</button>
+</form>
+

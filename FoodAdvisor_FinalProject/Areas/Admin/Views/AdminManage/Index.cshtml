@@ -73,20 +73,27 @@
 					</form>
 				</td>
 				<td>
-						@if (user.IsManager == false)
-						{
-						<form method="post" asp-action="MakeManager" asp-controller="AdminManage" asp-area="Admin" class="role-form">
-							<input type="hidden" name="userId" value="@user.Id" />
-							<button type="submit" class="role-update-button">✔Make Manager</button>
-						</form>
-						}
-						else if (user.IsManager == true)
-						{
+					@if (user.IsManager == false)
+					{
+						<div>
+							<button id="showFormButton" class="role-update-button"> ✔Make Manager</button>
+
+							<!-- Модалният прозорец -->
+							<div id="managerModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+								<div style="background:#fff; width:400px; margin:10% auto; padding:20px; position:relative;">
+									<button id="closeModal" style="position:absolute; top:10px; right:10px;">❌</button>
+									@await Html.PartialAsync("_ManagerFormPartial", new ManagerFormViewModel { UserId = user.Id })
+								</div>
+							</div>
+						</div>
+					}
+					else if (user.IsManager == true)
+					{
 						<form method="post" asp-action="RemoveManager" asp-controller="AdminManage" asp-area="Admin" class="role-form">
 							<input type="hidden" name="userId" value="@user.Id" />
 							<button type="submit" class="delete-button">❌Remove Manager</button>
 						</form>
-						}
+					}
 				</td>
 				<td>
 					<form method="post" asp-action="Delete" asp-controller="AdminManage" asp-area="Admin" class="delete-form">
@@ -109,6 +116,43 @@
 				const email = row.cells[1].textContent.toLowerCase();
 				row.style.display = (username.includes(searchValue) || email.includes(searchValue)) ? '' : 'none';
 			});
+		}
+
+		const showFormButton = document.getElementById("showFormButton");
+		const managerModal = document.getElementById("managerModal");
+		const closeModal = document.getElementById("closeModal");
+
+		if(showFormButton != null && managerModal != null && closeModal != null){
+		showFormButton.addEventListener("click", () => {
+			managerModal.style.display = "block";
+		});
+
+		closeModal.addEventListener("click", () => {
+			managerModal.style.display = "none";
+		});
+
+		// AJAX
+		document.getElementById("managerForm").addEventListener("submit", function (event) {
+			event.preventDefault();
+
+			const formData = new FormData(event.target);
+
+			fetch('AdminManage/CreateManager', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert('Manager was added successfully!');
+					managerModal.style.display = "none";
+					location.reload();
+				} else {
+					alert('Error: ' + data.message);
+				}
+			})
+			.catch(error => console.error('Error:', error));
+		});
 		}
 	</script>
 }
