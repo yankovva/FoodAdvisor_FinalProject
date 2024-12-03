@@ -117,9 +117,6 @@ namespace FoodAdvisor.Data.Services
 			Recepie? recepie = await this.recepieRepository
 				.GetByIdAsync(Guid.Parse(model.Id));
 
-			string filePath = enviorment.WebRootPath;
-			string imageToDelete = $"{filePath}\\{recepie.ImageURL}";
-
 			if (recepie != null)
 			{
 				fileService.DeleteFile(recepie.ImageURL);
@@ -175,8 +172,11 @@ namespace FoodAdvisor.Data.Services
 			editedRecepie.RecepieDificultyId = model.DificultyId;
 			editedRecepie.NumberOfServing = model.Servings;
 
-			if (file != null)
+			if (file == null)
 			{
+				return false;
+			}
+
 				fileService.DeleteFile(editedRecepie.ImageURL);
 
 				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
@@ -191,10 +191,10 @@ namespace FoodAdvisor.Data.Services
 				string newImagePath = await fileService.UploadFileAsync(file, "RecepiePictures", fileName);
 
 				editedRecepie.ImageURL = newImagePath;
-			}
-
-			await this.recepieRepository.UpdateAsync(editedRecepie);
+				await this.recepieRepository.UpdateAsync(editedRecepie);
+				
 			return true;
+			
 		}
 
 		public async  Task<PaginatedList<RecepieIndexViewModel>> IndexGetAllRecepiesAsync(int? pageNumber, string sortOrder, string searchItem, string currentFilter)

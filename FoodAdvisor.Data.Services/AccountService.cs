@@ -15,13 +15,15 @@ namespace FoodAdvisor.Data.Services
 	{
 		private readonly IRepository<ApplicationUser, Guid> accountRepository;
 		private readonly IWebHostEnvironment enviorment;
-		private readonly UserManager<ApplicationUser> userManager;	
+		private readonly UserManager<ApplicationUser> userManager;
+		private readonly IFileService fileService;
 		public AccountService(IRepository<ApplicationUser, Guid> accountRepository, IWebHostEnvironment enviorment,
-			UserManager<ApplicationUser> userManager)
+			UserManager<ApplicationUser> userManager, IFileService fileService)
         {
 			this.accountRepository = accountRepository;
 			this.enviorment = enviorment;
 			this.userManager = userManager;
+			this.fileService = fileService;
 		}
 
         public async Task<bool> EditUserAsync(EditUserViewModel model, string userId)
@@ -121,26 +123,26 @@ namespace FoodAdvisor.Data.Services
 			{
 				if (user.ProfilePricturePath != null)
 				{
-					string filePath = enviorment.WebRootPath;
-					string imageToDelete = $"{filePath}\\{user.ProfilePricturePath}";
+					fileService.DeleteFile(user.ProfilePricturePath);
+				}
 
-					File.Delete(imageToDelete);
+				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+				long maxSize = 5 * 1024 * 1024;
+				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
+				{
+					throw new ArgumentException("Unvalid file!");
+					
 				}
 
 				string fileName = userId.ToString() + "_" + user.UserName + "_" + Path.GetFileName(file.FileName);
-				string NewImagePath = Path.Combine("ProfilePictures", fileName);
+				string newImagePath = await fileService.UploadFileAsync(file, "ProfilePictures", fileName);
 
-				using (FileStream stream = new FileStream(Path.Combine(enviorment.WebRootPath, NewImagePath), FileMode.Create))
-				{
-					await file.CopyToAsync(stream);
-				}
-
-				user.ProfilePricturePath = NewImagePath;
-
+				user.ProfilePricturePath = newImagePath;
 
 				await this.accountRepository.UpdateAsync(user);
+				return true;
 			}
-			return true;
+			return false;
 		}
 	}
 }

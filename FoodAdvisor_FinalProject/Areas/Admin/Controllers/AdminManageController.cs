@@ -14,13 +14,9 @@ namespace FoodAdvisor_FinalProject.Areas.Admin.Controllers
 	public class AdminManageController : BaseController
 	{
 		private readonly IUserService userService;
-		private readonly UserManager<ApplicationUser> userManager;
-		private readonly IManagerService managerService;
-		public AdminManageController(IUserService userService, UserManager<ApplicationUser> userManager, IManagerService managerService)
+		public AdminManageController(IUserService userService)
 		{
 			this.userService = userService;
-			this.userManager = userManager;
-			this.managerService = managerService;
 		}
 
 		[HttpGet]

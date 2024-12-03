@@ -175,8 +175,11 @@ namespace FoodAdvisor.Data.Services
 			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
 			long maxSize = 5 * 1024 * 1024;
 
-			if (file != null)
+			if (file == null || fileDish == null)
 			{
+				return false;
+			}
+
 				fileService.DeleteFile(editedRestaurant.ImageURL);
 
 				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
@@ -188,22 +191,18 @@ namespace FoodAdvisor.Data.Services
 				string newImagePath = await fileService.UploadFileAsync(file, "RestaurantPictures", fileName);
 
 				editedRestaurant.ImageURL = newImagePath;
-			}
-
-			if (fileDish != null)
-			{
-				fileService.DeleteFile(editedRestaurant.ChefsSpecialImage);
+			
+	           fileService.DeleteFile(editedRestaurant.ChefsSpecialImage);
 
 				if (!fileService.IsFileValid(fileDish, allowedExtensions, maxSize))
 				{
 					throw new ArgumentException("Unvalid file!");
 				}
 
-				string fileName = $"{userId}_{model.Name}_{Path.GetFileName(fileDish.FileName)}";
-				string newImagePath = await fileService.UploadFileAsync(fileDish, "ChefDishesPictures", fileName);
+				string fileNameDish = $"{userId}_{model.Name}_{Path.GetFileName(fileDish.FileName)}";
+				string newImagePathDish = await fileService.UploadFileAsync(fileDish, "ChefDishesPictures", fileNameDish);
 				
-				editedRestaurant.ChefsSpecialImage = newImagePath;
-			}
+				editedRestaurant.ChefsSpecialImage = newImagePathDish;
 
 			bool isUpdated = await this.restaurantRepository.UpdateAsync(editedRestaurant);
 			return true;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodAdvisor.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,5 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         public string DificultyLevel { get; set; } = null!;
         public string Description { get; set; } = null!;
 
-    }
+	}
 }
