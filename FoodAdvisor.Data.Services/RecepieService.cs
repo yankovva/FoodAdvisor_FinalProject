@@ -146,7 +146,6 @@ namespace FoodAdvisor.Data.Services
 					Servings = r.NumberOfServing,
 					DificultyId = r.RecepieDificultyId
 
-
 				}).FirstOrDefaultAsync();
 
 			return model;

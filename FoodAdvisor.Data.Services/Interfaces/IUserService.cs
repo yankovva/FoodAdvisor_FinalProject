@@ -13,7 +13,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
         Task<bool> DeleteUserAsync(Guid userId);
         Task<bool> UpdateRoleAsync(Guid userId, string roleName);
         Task<bool> RemoveRoleAsync(Guid userId, string roleName);
-        Task<bool> MakeManagerAsync(Guid userId);
+        Task<bool> MakeManagerAsync(string userId, string phoneNumber, string address);
         Task<bool> RemoveManagerAsync(Guid userId);
 
 	}
