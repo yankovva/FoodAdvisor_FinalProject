@@ -14,7 +14,7 @@ namespace FoodAdvisor.Data.Models
         public Guid ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; } = null!;
 
-        [Comment("Identifier of the Restaurant")]
+        [Comment("Identifier of the Recepie")]
         public Guid RestaurantId { get; set; }
         public virtual Restaurant Restaurant { get; set; } = null!;
     }

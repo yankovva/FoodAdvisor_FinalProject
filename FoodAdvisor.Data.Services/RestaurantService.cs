@@ -117,7 +117,7 @@ namespace FoodAdvisor.Data.Services
 			   {
 				   Id = id.ToString(),
 				   Name = r.Name,
-				   Publisher = r.Publisher.UserName ?? string.Empty,
+				   Publisher = r.Publisher.User.UserName ?? string.Empty,
 				   Category = r.Category.Name,
 
 			   })
@@ -257,7 +257,7 @@ namespace FoodAdvisor.Data.Services
 					PriceRange = p.PricaRange,
 					Likes = p.UserRestaurants.Where(r => r.RestaurantId == p.Id).Count(),
 					City = p.City.Name,
-					Publisher = p.Publisher.UserName ?? string.Empty,
+					Publisher = p.Publisher.User.UserName ?? string.Empty,
 					AllComment = p.RestaurantsComments
 					.Where(rc => rc.IsDeleted == false)
 					.Select(rc => new CommentAllViewModel()
@@ -288,7 +288,7 @@ namespace FoodAdvisor.Data.Services
 					Id = r.Id.ToString(),
 					Name = r.Name,
 					ImageURL = r.ImageURL,
-					Publisher = r.Publisher.UserName!,
+					Publisher = r.Publisher.User.UserName ?? string.Empty,
 					Category = r.Category.Name,
 					PriceRange = r.PricaRange,
 					City = r.City.Name,

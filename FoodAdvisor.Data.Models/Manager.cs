@@ -30,5 +30,7 @@ namespace FoodAdvisor.Data.Models
         public Guid UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public ApplicationUser User { get; set; } = null!;
-    }
+
+		public virtual ICollection<Restaurant> AddedRestaurants { get; set; } = new List<Restaurant>();
+	}
 }

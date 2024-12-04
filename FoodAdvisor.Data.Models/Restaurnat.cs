@@ -64,7 +64,7 @@ namespace FoodAdvisor.Data.Models
         public Guid PublisherId { get; set; } 
 
         [ForeignKey(nameof(PublisherId))]
-        public ApplicationUser Publisher { get; set; } = null!;
+        public Manager Publisher { get; set; } = null!;
 
         [Required]
         [Comment("The Category Id.")]
