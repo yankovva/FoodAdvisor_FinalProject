@@ -77,7 +77,6 @@ namespace FoodAdvisor.Data.Services
 
 		public async Task<IndexGetUserInfoViewModel> IndexGetUserAsync(Guid userId)
 		{
-
 			var model = await this.accountRepository
 				.GetAllAttached()
 				.Where(u => u.Id == userId)
@@ -92,7 +91,9 @@ namespace FoodAdvisor.Data.Services
 					AboutMe = u.AboutMe,
 					Email = u.Email,
 					ProfilePricture = u.ProfilePricturePath,
-					UserAddedRecepies = u.AddedRecepies.Select(r => new UserAddedRecepiesViewModel
+					UserAddedRecepies = u.AddedRecepies
+					.Where(r => r.IsDeleted == false)
+					.Select(r => new UserAddedRecepiesViewModel
 					{
 						Id = r.Id.ToString(),
 						Name = r.Name,

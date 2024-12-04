@@ -12,12 +12,12 @@ namespace FoodAdvisor.Data.Models
     public class Comment
     {
         [Key]
-        [Comment("Identifier of the Recepie.")]
+        [Comment("Identifier of the Comment.")]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
         [MaxLength(MessageMaxLenght)]
-        [Comment("The message of the Recepie.")]
+        [Comment("The message of the Comment.")]
         public string Message { get; set; } = null!;
 
         public bool IsDeleted { get; set; }

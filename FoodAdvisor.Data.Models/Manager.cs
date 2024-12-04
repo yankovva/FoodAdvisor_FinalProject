@@ -18,13 +18,11 @@ namespace FoodAdvisor.Data.Models
         public Guid Id { get; set; } = Guid.NewGuid();
 
 		[Required]
-        [MinLength(PhoneNumberMinLenght)]
         [MaxLength(PhoneNumberMaxLenght)]
         [Comment("Work phone number of the manager.")]
         public string WorkPhoneNumber { get; set; } = null!;
 
         [Required]
-        [MinLength(AddressMinLenght)] 
         [MaxLength(AddressMaxLenght)]
         [Comment("Address of the manager.")]
         public string Address { get; set; } = null!;

@@ -13,10 +13,6 @@
             public const int AddressMinLenght = 5;
             public const int AddressMaxLenght = 85;
 
-            public const int URLMaxLEnght = 2083;
-            public const int URLMinLenght = 8;
-
-
 		}
 
         public static class City
@@ -60,9 +56,6 @@
 
 			public const int ProductsMinLengt = 10;
 			public const int ProductsMaxLenght = 300;
-
-			public const int URLMaxLEnght = 2083;
-			public const int URLMinLenght = 8;
 
 		}
 
