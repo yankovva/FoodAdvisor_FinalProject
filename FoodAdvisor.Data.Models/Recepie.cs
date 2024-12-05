@@ -27,7 +27,12 @@ namespace FoodAdvisor.Data.Models
 		[Comment("Description of the Recepie.")]
 		public string Description { get; set; } = null!;
 
-        [Required]
+		[Required]
+		[MaxLength(CookingStepsMaxLenght)]
+		[Comment("CookingSteps of the Recepie.")]
+		public string CookingSteps  { get; set; } = null!;
+
+		[Required]
 		[Comment("Number of servings for the Recepie")]
         public int NumberOfServing { get; set; }
 

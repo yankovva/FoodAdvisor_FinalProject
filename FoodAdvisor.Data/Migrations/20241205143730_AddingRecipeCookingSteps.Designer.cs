@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241205143730_AddingRecipeCookingSteps")]
+    partial class AddingRecipeCookingSteps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace FoodAdvisor.Data.Migrations
                     b.Property<DateTime>("Createdon")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 12, 5, 16, 59, 48, 218, DateTimeKind.Local).AddTicks(2685))
+                        .HasDefaultValue(new DateTime(2024, 12, 5, 16, 37, 28, 354, DateTimeKind.Local).AddTicks(9867))
                         .HasComment("Date of creation of the User.");
 
                     b.Property<string>("Email")
@@ -234,8 +237,8 @@ namespace FoodAdvisor.Data.Migrations
 
                     b.Property<string>("CookingSteps")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)")
+                        .HasMaxLength(700)
+                        .HasColumnType("nvarchar(700)")
                         .HasComment("CookingSteps of the Recepie.");
 
                     b.Property<int>("CookingTime")

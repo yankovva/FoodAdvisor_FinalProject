@@ -52,7 +52,10 @@
 			public const int NameMaxLenght = 30;
 
 			public const int DescriptionMinLenght = 50;
-			public const int DescriptionMaxLenght = 700;
+			public const int DescriptionMaxLenght = 500;
+
+			public const int CookingStepsMinLenght = 50;
+			public const int CookingStepsMaxLenght = 3000;
 
 			public const int ProductsMinLengt = 10;
 			public const int ProductsMaxLenght = 300;

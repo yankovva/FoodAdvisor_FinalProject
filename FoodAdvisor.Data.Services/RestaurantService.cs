@@ -39,7 +39,7 @@ namespace FoodAdvisor.Data.Services
 		//Done
 		public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish)
 		{
-			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" , ".jfif" };
 			long maxSize = 5 * 1024 * 1024; // 5MB
 
 			if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
@@ -188,7 +188,7 @@ namespace FoodAdvisor.Data.Services
 			editedRestaurant.AtmosphereDescription = model.AtmosphereDescription;
 			editedRestaurant.ChefsSpecial = model.ChefsDishName;
 
-			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" , ".jfif" };
 			long maxSize = 5 * 1024 * 1024;
 
 			if (file == null || fileDish == null)

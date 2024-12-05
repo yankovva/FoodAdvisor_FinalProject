@@ -1,4 +1,5 @@
 ﻿using FoodAdvisor.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static FoodAdvisor.Common.EntityValidationConstants.Recepie;
 namespace FoodAdvisor.ViewModels.RecepiesViewModels
@@ -19,7 +20,12 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         [MinLength(DescriptionMinLenght)]
         [MaxLength(DescriptionMaxLenght)]
         public string Description { get; set; } = null!;
-		
+
+		[Required]
+		[MaxLength(CookingStepsMaxLenght)]
+		[MinLength(CookingStepsMinLenght)]
+		public string CookingSteps { get; set; } = null!;
+
 		[Required]
 		[MinLength(ProductsMinLengt)]
 		[MaxLength(ProductsMaxLenght)]

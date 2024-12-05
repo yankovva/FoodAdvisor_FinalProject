@@ -32,7 +32,7 @@ namespace FoodAdvisor.Data.Services
 
 		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file)
 		{
-			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".jfif" };
 			long maxSize = 5 * 1024 * 1024; // 5MB
 
 			if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
@@ -55,7 +55,8 @@ namespace FoodAdvisor.Data.Services
 				RecepieCategoryId = model.CategoryId,
 				Products = model.Products,
 				NumberOfServing = model.Servings,
-				RecepieDificultyId = model.DificultyId
+				RecepieDificultyId = model.DificultyId,
+				CookingSteps = model.CookingSteps
 			};
 
 			await recepieRepository.AddAsync(recepie);
@@ -71,6 +72,7 @@ namespace FoodAdvisor.Data.Services
 					Id = recepieId,
 					Name = r.Name,
 					Description = r.Description,
+					CookingSteps = r.CookingSteps,
 					CreatetOn = r.CreatedOn,
 					CookingTime = r.CookingTime,
 					Publisher = r.Publisher.UserName!,
@@ -150,7 +152,8 @@ namespace FoodAdvisor.Data.Services
 					Products = r.Products,
 					CategoryId = r.RecepieCategoryId,
 					Servings = r.NumberOfServing,
-					DificultyId = r.RecepieDificultyId
+					DificultyId = r.RecepieDificultyId,
+					CookingSteps = r.CookingSteps
 
 				}).FirstOrDefaultAsync();
 
@@ -180,6 +183,7 @@ namespace FoodAdvisor.Data.Services
 			editedRecepie.RecepieCategoryId = model.CategoryId;
 			editedRecepie.RecepieDificultyId = model.DificultyId;
 			editedRecepie.NumberOfServing = model.Servings;
+			editedRecepie.CookingSteps = model.CookingSteps;
 
 			if (file == null)
 			{
@@ -188,7 +192,7 @@ namespace FoodAdvisor.Data.Services
 
 				fileService.DeleteFile(editedRecepie.ImageURL);
 
-				string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+				string[] allowedExtensions = { ".jpg", ".jpeg", ".png",".jfif" };
 				long maxSize = 5 * 1024 * 1024;
 				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
 				{
