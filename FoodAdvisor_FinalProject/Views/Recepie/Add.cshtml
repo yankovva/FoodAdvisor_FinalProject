@@ -45,13 +45,18 @@
 		</div>
 		<div class="form-group">
 			<label asp-for="@Model.Products" class="form-label-add-edit">Add list of products, separeted by ","</label>
-			<textarea asp-for="@Model.Products" class="form-control" aria-required="true" rows="5" placeholder="Potatoes- 1kg, Tomatoes- 2kg, Garlic - 2gloves ... " ></textarea>
+			<textarea asp-for="@Model.Products" class="form-control" aria-required="true" rows="5" placeholder="Potatoes- 1kg, Tomatoes- 2kg, Garlic - 2gloves... " ></textarea>
 			<span asp-validation-for="@Model.Products" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="@Model.CookingSteps" class="form-label-add-edit">Write the cooking proces</label>
+			<textarea asp-for="@Model.CookingSteps" class="form-control" aria-required="true" rows="5" placeholder="Write the cooking process (50- 3000 characters)"></textarea>
+			<span asp-validation-for="@Model.CookingSteps" class="text-danger"></span>
 		</div>
 		<div class="mb-3">
 			<div class="form-group">
 				<label asp-for="@Model.Description" class="form-label-add-edit">Write the cooking proces</label>
-				<textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5" placeholder="Write a description for the recepie (50-700 characters)"></textarea>
+				<textarea asp-for="@Model.Description" class="form-control" aria-required="true" rows="5" placeholder="Write a description of the recepie (50- 500 characters)"></textarea>
 				<span asp-validation-for="@Model.Description" class="text-danger"></span>
 			</div>
 			<input class="btn btn btn-success  mb-2 w-100 py-3 fw-bold rounded" type="submit" value="Save" />

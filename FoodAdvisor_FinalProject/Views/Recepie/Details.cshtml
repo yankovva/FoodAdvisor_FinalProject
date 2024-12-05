@@ -60,15 +60,21 @@
 				<p>@Model.Publisher</p>
 			</div>
 			<div class="info-wrapper">
-				<h4> Products </h4>
+				<h4>Recepie Description</h4>
+				<p>
+					@Model.Description
+				</p>
+			</div>
+			<div class="info-wrapper">
+				<h4>Products</h4>
 				<p>
 					@Model.Products
 				</p>
 			</div>
 			<div class="info-wrapper">
-				<h4>Cooking steps </h4>
+				<h4>Cooking steps</h4>
 				<p>
-					@Model.Description
+					@Model.CookingSteps
 				</p>
 			</div>
 			@if (User!.Identity!.IsAuthenticated == true)
