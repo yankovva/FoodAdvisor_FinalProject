@@ -68,7 +68,7 @@
     }
 
 /* Buttons */
-.role-update-button, .delete-button {
+.showFormButton, .delete-button {
     border: none;
     font-size: 16px;
     padding: 5px 10px;
@@ -80,12 +80,12 @@
     transition: all 0.2s ease;
 }
 
-.role-update-button {
+.showFormButton {
     background-color: #4CAF50;
     color: white;
 }
 
-    .role-update-button:hover {
+    .showFormButton:hover {
         background-color: #45a049;
     }
 
@@ -93,16 +93,34 @@
     background-color: #d9534f;
     color: white;
 }
+#role-update-button {
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    transition: all 0.2s ease;
+    background-color: #4CAF50;
+    color: white;
+}
 
-    .delete-button:hover {
-        background-color: #c9302c;
-    }
+#role-update-button:hover {
+    background-color: #45a049;
+}
+.delete-button:hover {
+    background-color: #c9302c;
+}
 
 .role-form, .delete-form {
     display: inline-flex;
     align-items: center;
 }
-#managerForm {
+
+/*Form*/
+.managerForm {
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
@@ -112,17 +130,17 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-    #managerForm div {
+    .managerForm div {
         margin-bottom: 15px;
     }
 
-    #managerForm label {
+    .managerForm label {
         font-weight: bold;
         display: block;
         margin-bottom: 5px;
     }
 
-    #managerForm input[type="text"] {
+    .managerForm input[type="text"] {
         width: 100%;
         padding: 10px;
         font-size: 14px;
@@ -131,7 +149,7 @@
         box-sizing: border-box;
     }
 
-    #managerForm button {
+    .managerForm button {
         width: 100%;
         padding: 10px;
         background-color: #f79c42;
@@ -142,6 +160,6 @@
         cursor: pointer;
     }
 
-        #managerForm button:hover {
+        .managerForm button:hover {
             background-color: #e6892e;
         }

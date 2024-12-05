@@ -1,35 +1,827 @@
 ﻿{
+  "RecipeCategories": [
+    {
+      "Id": "6c4feb38-4cc8-4f98-af51-5a49a7bedcf0",
+      "Name": "Lunch"
+    },
+    {
+      "Id": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "Name": "Dinner"
+    },
+    {
+      "Id": "1c272709-f036-40d4-a352-a4ece2fcb9fa",
+      "Name": "Breakfast"
+    },
+    {
+      "Id": "0708042d-eaf3-4e4b-a5a7-b4362d471013",
+      "Name": "Side Dish"
+    },
+    {
+      "Id": "fbffff2e-cc65-4bb0-89e2-4d5ad307e0c4",
+      "Name": "Dessert"
+    },
+    {
+      "Id": "2a5cc5ef-0991-4763-8a6f-7b6ead6bca23",
+      "Name": "Starter"
+    }
+  ],
+
   "Categories": [
-    { "Name": "Restaurant" },
-    { "Name": "Cafe" },
-    { "Name": "Bar & Dinner" },
-    { "Name": "Fast Food" },
-    { "Name": "Bakery" },
-    { "Name": "Bistro" }
-  ],
-  "RecepieCategories": [
-    { "Name": "Breakfast" },
-    { "Name": "Lunch" },
-    { "Name": "Dinner" },
-    { "Name": "Dessert" },
-    { "Name": "Snack" },
-    { "Name": "Side dish" },
-    { "Name": "Starter" }
-  ],
-  "RecepieDificulties": [
-    { "DificultyName": "Easy" },
-    { "DificultyName": "Medium" },
-    { "DificultyName": "Hard" },
-    { "DificultyName": "Expert" }
+    {
+      "Id": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "Name": "Restaurant"
+    },
+    {
+      "Id": "4c7eeef5-d849-405e-9f2b-ba15e1eacbfa",
+      "Name": "Cafe"
+    },
+    {
+      "Id": "08cd66c3-c4d4-4fe3-8173-7d13cc8bff58",
+      "Name": "Bar & Dinner"
+    },
+    {
+      "Id": "e39aea30-b4d2-4239-85df-6eeef98fd1ab",
+      "Name": "Fast Food"
+    },
+    {
+      "Id": "f5bb5d59-2bb0-4972-be14-3a808eea877e",
+      "Name": "Bakery"
+    },
+    {
+      "Id": "2d71615d-2bdd-4556-bb07-ddf0acb21829",
+      "Name": "Bistro"
+    }
   ],
   "RestaurantCuisines": [
-    { "Name": "Mediteranean" },
-    { "Name": "Chinese" },
-    { "Name": "Italian" },
-    { "Name": "Bulgarian" },
-    { "Name": "Mexican" },
-    { "Name": "Only drinks" },
-    { "Name": "Japanese" },
-    { "Name": "French" }
+    {
+      "Id": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "Name": "Mediterranean"
+    },
+    {
+      "Id": "6223a80a-4dc6-4706-9c4a-14359d06cadf",
+      "Name": "Chinese"
+    },
+    {
+      "Id": "281b6c26-1848-4e0b-a5f4-68542ad3ed1e",
+      "Name": "Italian"
+    },
+    {
+      "Id": "d5fa9ea4-9119-445a-974d-301861a20b0c",
+      "Name": "Bulgarian"
+    },
+    {
+      "Id": "8cbdbc7d-cdc1-489d-b13e-39ae09bf95c6",
+      "Name": "Mexican"
+    },
+    {
+      "Id": "e8ca1581-d9bb-4a34-ae4f-4f4baa53145d",
+      "Name": "Mostly drinks"
+    },
+    {
+      "Id": "54ab5115-6cdb-4e06-b49b-833617d54f44",
+      "Name": "Japanese"
+    },
+    {
+      "Id": "3ca23d15-933d-4974-83f5-9136e0c6b385",
+      "Name": "French"
+    }
+  ],
+  "RecipeDificulties": [
+    {
+      "Id": 1,
+      "DificultyName": "Easy"
+    },
+    {
+      "Id": 2,
+      "DificultyName": "Medium"
+    },
+    {
+      "Id": 3,
+      "DificultyName": "Hard"
+    },
+    {
+      "Id": 4,
+      "DificultyName": "Expert"
+    }
+  ],
+  "Cities": [
+    {
+      "Id": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "Name": "City 1"
+    },
+    {
+      "Id": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "Name": "City 2"
+    }
+  ],
+  "Managers": [
+    {
+      "Id": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "WorkPhoneNumber": "07790653321",
+      "Address": "Best Street 7",
+      "UserId": "7df25137-b39a-4a91-903b-303c0582e389"
+    },
+    {
+      "Id": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "WorkPhoneNumber": "01545986892",
+      "Address": "Best Street 9",
+      "UserId": "622d3321-2af5-4148-a4c4-dce20b49c686"
+    }
+  ],
+  "Restaurants": [
+    {
+      "Id": "76f8c5b4-90a8-43ad-8b59-7d9f3e2c1a64",
+      "Name": "Golden Lantern",
+      "Description": "Golden Lantern is a culinary treasure offering exquisite Asian dishes crafted with traditional techniques and modern twists. From savory dim sum to aromatic broths, every bite tells a story of heritage.",
+      "MenuDescription": "Our menu includes delicate shrimp dumplings, savory Peking duck, and flavorful stir-fried noodles. For dessert, enjoy a refreshing mango sticky rice pudding.",
+      "AtmosphereDescription": "Immerse yourself in an elegant setting adorned with intricate lanterns, soft lighting, and authentic Asian art that creates a tranquil yet inviting environment.",
+      "ChefsSpecial": "Chef's Special: Crispy Peking Duck - Tender duck with a crispy skin served with pancakes, hoisin sauce, and scallions.",
+      "Address": "45 Jade Street, Hong Kong, China",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 120,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Golden Lantern_1.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Golden Lantern_1.jpg"
+    },
+    {
+      "Id": "23a66516-b4b5-4935-9ca7-4d69e568bea8",
+      "Name": "The Golden Plate",
+      "Description": "Experience the best of French cuisine with traditional recipes passed down through generations, using only the finest ingredients. From delicate pastries to rich sauces, this restaurant promises a memorable dining experience.",
+      "MenuDescription": "Dive into the freshest seafood available, from succulent shrimp and oysters to the finest catch of the day. Our menu is built around the philosophy of freshness, with each dish highlighting the natural flavors of the ocean, complemented by exquisite seasonings and delicate preparations.",
+      "AtmosphereDescription": "The Golden Plate offers a relaxed, modern space with light, airy décor. The minimalist design and fresh greenery create a tranquil environment, perfect for enjoying a healthy, delicious meal.",
+      "ChefsSpecial": "Chef's Special: Truffle Risotto - Creamy arborio rice infused with truffle oil and topped with shaved black truffles.",
+      "Address": "Address 2, City",
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_The Golden Plate_2.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_The Golden Plate_2.jpg",
+      "CityId": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "IsDeleted": false,
+      "PricaRange": 200
+    },
+    {
+      "Id": "82d4f6c9-b8a1-4c3d-97e2-5f7b6a9d4c3f",
+      "Name": "Rustic Harvest",
+      "Description": "Rustic Harvest is a farm-to-table restaurant that celebrates seasonal ingredients and sustainability. Each dish showcases the rich flavors of locally sourced produce and meats.",
+      "MenuDescription": "Our menu changes with the seasons but includes dishes like roasted beet salad, herb-crusted lamb chops, and fresh berry cobbler. Everything is made with care and attention to detail.",
+      "AtmosphereDescription": "Experience a cozy countryside vibe with wooden accents, earthy tones, and an open kitchen where you can watch your meal being prepared.",
+      "ChefsSpecial": "Chef's Special: Herb-Crusted Lamb Chops - Served with a rosemary jus, garlic mashed potatoes, and sautéed asparagus.",
+      "Address": "67 Orchard Road, Napa Valley, CA, USA",
+      "CityId": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 50,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Rustic Harvest_3.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Rustic Harvest_3.jpg"
+    },
+    {
+      "Id": "a9b6c4e3-8f7d-49e6-97b2-3f4d8a7c9e5a",
+      "Name": "Coastal Breeze",
+      "Description": "Coastal Breeze offers a taste of the sea with its expertly prepared seafood dishes and waterfront views. Fresh catches and vibrant flavors define this seafood haven.",
+      "MenuDescription": "Savor dishes like butter-poached lobster, seared scallops with citrus beurre blanc, and creamy clam chowder served in a bread bowl.",
+      "AtmosphereDescription": "Enjoy the serene ambiance with floor-to-ceiling windows overlooking the ocean, nautical décor, and soft, calming colors.",
+      "ChefsSpecial": "Chef's Special: Seared Scallops - Perfectly cooked scallops served with a citrus beurre blanc and a side of wild rice pilaf.",
+      "Address": "23 Seashore Avenue, Malibu, CA, USA",
+      "CityId": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 100,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Coastal Breeze_4.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Coastal Breeze_4.jpg"
+    },
+    {
+      "Id": "5f6b4a9e-d7c8-4a97-9b6c-3f2e7d8a4c5a",
+      "Name": "The Velvet Table",
+      "Description": "The Velvet Table is a luxurious fine-dining experience where elegance meets culinary artistry. Indulge in a menu that combines the finest ingredients with meticulous preparation.",
+      "MenuDescription": "Enjoy dishes like truffle risotto, slow-braised short ribs, and decadent chocolate fondant. Every dish is a masterpiece that delights the senses.",
+      "AtmosphereDescription": "Soft velvet drapes, candlelit tables, and exquisite décor create a romantic and sophisticated setting perfect for special occasions.",
+      "ChefsSpecial": "Chef's Special: Truffle Risotto - Creamy arborio rice infused with truffle oil and topped with shaved black truffles.",
+      "Address": "12 Silk Avenue, Paris, France",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 180,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_The Velvet Tabl_5.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_The Velvet Tabl_5.jpg"
+    },
+    {
+      "Id": "a6631ed4-65ea-4a56-bc68-4c6d3212c3a9",
+      "Name": "Seafood Delight",
+      "Description": "At Seafood Delight, we serve the freshest seafood in town, sourced daily from local waters and prepared with expert care. Experience the ocean’s bounty in every dish.",
+      "MenuDescription": "Dive into the freshest seafood available, from succulent shrimp and oysters to the finest catch of the day. Our menu is built around the philosophy of freshness, with each dish highlighting the natural flavors of the ocean, complemented by exquisite seasonings and delicate preparations.",
+      "AtmosphereDescription": "With its nautical theme, our restaurant brings the sea to your table. Soft blues and whites dominate the space, giving the atmosphere a calm and relaxing feel, perfect for enjoying a seafood feast.",
+      "ChefsSpecial": "Chef's Special: Lobster Tail - Succulent lobster tail grilled to perfection, served with a side of garlic butter and fresh herbs.",
+      "Address": "789 Ocean Drive, San Francisco, CA, USA",
+      "CityId": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 120,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Seafood Delight_6.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Seafood Delight_6.jpg"
+    },
+    {
+      "Id": "cfc14913-30c4-467a-b9e7-88de3c42c829",
+      "Name": "Bistro La Vie",
+      "Description": "Bistro La Vie serves the best of French bistro cuisine, with a menu that includes everything from croissants to coq au vin. The casual yet chic atmosphere provides the perfect setting for enjoying a relaxed meal.",
+      "MenuDescription": "Experience a menu that blends the best of French cuisine with local influences. Our bistro offers freshly baked croissants, savory quiches, hearty French onion soups, and perfectly cooked steaks, all served in a charming atmosphere that makes every meal feel like a special occasion.",
+      "AtmosphereDescription": "Bistro La Vie combines elegant French charm with a laid-back ambiance. Wooden tables, soft lighting, and vintage French posters create an intimate, cozy environment.",
+      "ChefsSpecial": "Chef's Special: Duck Confit - Tender duck leg slow-cooked in its own fat and served with roasted potatoes and seasonal vegetables.",
+      "Address": "123 Parisian Blvd, Paris, France",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 110,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Bistro La Viet_7.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Bistro La Viet_7.jpg"
+    },
+    {
+      "Id": "3e93c87a-e3d7-4f9f-bcb0-62fcf6d9c799",
+      "Name": "Sushi & Grill",
+      "Description": "Sushi & Grill offers a variety of sushi and grilled meats, including seafood, chicken, and beef, served alongside delicious vegetable sides. Every meal is a harmonious blend of flavors.",
+      "MenuDescription": "Our menu features the finest selection of sushi rolls, from classic nigiri to creative maki rolls, paired with a variety of grilled meats, vegetables, and seafood. Every dish is carefully crafted with the freshest ingredients to provide an authentic taste of Japan.",
+      "AtmosphereDescription": "Sushi & Grill provides a sleek, modern dining experience with a focus on fresh, vibrant ingredients. Clean lines, minimalistic décor, and a sushi bar for a front-row view of the chefs at work create an upscale ambiance.",
+      "ChefsSpecial": "Chef's Special: Grilled Salmon Roll - Fresh salmon rolled with avocado and cucumber, topped with a sweet teriyaki glaze and sesame seeds.",
+      "Address": "456 Sushi Street, Tokyo, Japan",
+      "CityId": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 100,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Sushi & Grill_8.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Sushi & Grill_8.jpg"
+    },
+    {
+      "Id": "b5272f98-6877-4203-b05e-b4bfa56f1d07",
+      "Name": "Le Petit Cafe",
+      "Description": "Le Petit Cafe offers a cozy, charming environment where you can enjoy freshly made coffee, pastries, sandwiches, and light meals throughout the day. The menu is designed for breakfast and lunch lovers alike.",
+      "MenuDescription": "A cozy spot where comfort food meets quality. Enjoy a wide range of freshly made sandwiches, soups, salads, and breakfast options. Our menu is designed to satisfy any craving, whether you're looking for a hearty meal or a light snack, all prepared with love and care.",
+      "AtmosphereDescription": "With a classic café ambiance, Le Petit Cafe welcomes guests with warm, inviting decor. A perfect place for enjoying a quiet meal or catching up with friends over coffee.",
+      "ChefsSpecial": "Chef's Special: Avocado Toast - Freshly mashed avocado, topped with poached eggs, and drizzled with a balsamic glaze.",
+      "Address": "789 Cafe Road, Bordeaux, France",
+      "CityId": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 50,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Le Petit Cafe_9.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Le Petit Cafe_9.jpg"
+    },
+    {
+      "Id": "ff90e8bc-e9e2-4d7f-bc42-fb49849582e0",
+      "Name": "Mexican Fiesta",
+      "Description": "Mexican Fiesta serves vibrant and flavorful dishes inspired by the rich culinary traditions of Mexico. From tacos to enchiladas, each dish is packed with authentic flavors and fresh ingredients.",
+      "MenuDescription": "Our menu is a celebration of Mexican cuisine, with an array of spicy salsas, sizzling fajitas, and fresh guacamole. Choose from a variety of tacos, burritos, and enchiladas, or try our famous Mole Poblano, all served with a side of warm tortillas.",
+      "AtmosphereDescription": "The colorful and lively atmosphere of Mexican Fiesta is perfect for enjoying a meal with family and friends. With vibrant décor, music, and a festive atmosphere, every meal feels like a fiesta.",
+      "ChefsSpecial": "Chef's Special: Mole Poblano - Tender chicken smothered in a rich, flavorful mole sauce, served with rice, beans, and warm tortillas.",
+      "Address": "123 Fiesta Lane, Mexico City, Mexico",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "c7348847-d3ba-44eb-96d4-9dd5b451c7ea",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 85,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Mexican Fiesta_10.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\c7348847-d3ba-44eb-96d4-9dd5b451c7ea_Mexican Fiesta_10.jpg"
+    },
+    {
+      "Id": "fe5a9b17-2f02-4719-9870-b1b129fbcfa5",
+      "Name": "The Burger Joint",
+      "Description": "The Burger Joint is known for serving juicy burgers, hand-cut fries, and delicious milkshakes. Whether you prefer classic or gourmet, we have something for every burger lover.",
+      "MenuDescription": "Our menu features a variety of gourmet burgers made with high-quality beef, chicken, and plant-based patties. Enjoy our signature burger creations like the BBQ Bacon Burger or the Spicy Jalapeño Burger, all served with a side of crispy fries.",
+      "AtmosphereDescription": "The Burger Joint offers a casual and relaxed environment with a retro vibe. With its comfortable seating and laid-back atmosphere, it's the perfect place for enjoying a burger with friends or family.",
+      "ChefsSpecial": "Chef's Special: BBQ Bacon Burger - A delicious burger topped with crispy bacon, cheddar cheese, BBQ sauce, and caramelized onions.",
+      "Address": "456 Burger Street, Los Angeles, CA, USA",
+      "CityId": "2b77ec69-befc-4091-8638-d383d4dc4b07",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 30,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_The Burger Joint_11.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_The Burger Joint_11.jpg"
+    },
+    {
+      "Id": "8c56a472-0fe3-4302-bb4a-cad61e9b276f",
+      "Name": "Pasta Paradise",
+      "Description": "Pasta Paradise offers a wide range of handmade pasta dishes, from classic spaghetti to creative raviolis. Our dishes are crafted with the finest ingredients, bringing authentic Italian flavors to your table.",
+      "MenuDescription": "Our menu is dedicated to the art of pasta. From traditional spaghetti and fettuccine to stuffed ravioli and gnocchi, each dish is prepared fresh daily. We also offer a variety of sauces, including creamy Alfredo, rich Bolognese, and tangy marinara.",
+      "AtmosphereDescription": "Pasta Paradise provides a cozy and inviting atmosphere with rustic décor, giving you the feeling of being in a traditional Italian trattoria. It's the perfect place for enjoying a hearty pasta meal with friends or family.",
+      "ChefsSpecial": "Chef's Special: Truffle Tagliatelle - Fresh tagliatelle pasta tossed in a creamy truffle sauce, finished with Parmesan cheese and a touch of fresh parsley.",
+      "Address": "789 Pasta Avenue, Florence, Italy",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 95,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Pasta Paradise_12.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Pasta Paradise_12.jpg"
+    },
+    {
+      "Id": "6e839e8d-f3bb-41db-b983-86f1f3a24d6b",
+      "Name": "Steakhouse Supreme",
+      "Description": "Steakhouse Supreme offers the finest cuts of meat, aged to perfection and cooked just the way you like it. Enjoy a fine dining experience with exceptional service and a great wine selection.",
+      "MenuDescription": "Our menu features premium steaks, including ribeye, filet mignon, and T-bone, cooked to your desired level of doneness. We also offer delicious sides like garlic mashed potatoes, creamed spinach, and grilled asparagus, paired with a curated selection of wines.",
+      "AtmosphereDescription": "With its elegant yet cozy ambiance, Steakhouse Supreme is the perfect place for enjoying a fine steak. The dimly lit dining room, leather seating, and dark wood accents create a refined atmosphere for a memorable meal.",
+      "ChefsSpecial": "Chef's Special: Filet Mignon - A tender and juicy filet mignon, grilled to perfection and served with garlic butter and a side of mashed potatoes.",
+      "Address": "102 Steak Lane, New York, NY, USA",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 150,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Steakhouse Supreme_13.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Steakhouse Supreme_13.jpg"
+    },
+    {
+      "Id": "1fa70219-cc8c-414c-ae62-3a5bdfcfd2d3",
+      "Name": "Sakura Sushi",
+      "Description": "Sakura Sushi brings the delicate art of Japanese sushi-making to life. From fresh sashimi to creative maki rolls, each dish reflects precision, balance, and exceptional quality.",
+      "MenuDescription": "Our menu features a wide range of Japanese delights, including freshly sliced sashimi, intricately crafted nigiri, and an array of colorful maki rolls. Don’t miss our chef’s specialty: the Dragon Roll, which is a visual and culinary masterpiece.",
+      "AtmosphereDescription": "The serene and minimalist décor of Sakura Sushi, complete with wooden accents and soft lighting, provides a tranquil escape for a delightful meal.",
+      "ChefsSpecial": "Chef's Special: Omakase Platter - A curated selection of the chef's finest sushi creations, paired with house-made sauces.",
+      "Address": "321 Blossom Street, Tokyo, Japan",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 70,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Sakura Sushi_14.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Sakura Sushi_14.jpg"
+    },
+    {
+      "Id": "215fa2f9-4c0f-4f62-b499-68c394007d35",
+      "Name": "The Gourmet Garden",
+      "Description": "The Gourmet Garden specializes in farm-to-table dining, offering fresh, organic ingredients transformed into seasonal dishes that burst with flavor.",
+      "MenuDescription": "Our menu changes with the seasons to provide dishes crafted from the freshest ingredients. Enjoy offerings like roasted beet salad, herb-crusted lamb, and a decadent chocolate avocado mousse for dessert.",
+      "AtmosphereDescription": "Surrounded by greenery and rustic wooden tables, The Gourmet Garden provides a cozy, nature-inspired setting perfect for any occasion.",
+      "ChefsSpecial": "Chef's Special: Herb-Crusted Lamb - Tender lamb seasoned with fresh herbs, served with roasted vegetables and a red wine reduction.",
+      "Address": "987 Greenfield Lane, Portland, OR, USA",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 110,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_The Gourmet Garden_15.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_The Gourmet Garden_15.jpg"
+    },
+    {
+      "Id": "387c2a98-5d88-4343-b120-04f034e1e7a6",
+      "Name": "Taste of Tuscany",
+      "Description": "Taste of Tuscany offers a slice of Italy with its authentic, home-style Italian cuisine. From freshly baked bread to hand-rolled pasta, every dish feels like a warm embrace.",
+      "MenuDescription": "Indulge in classic Italian dishes like creamy risottos, perfectly baked lasagnas, and wood-fired pizzas. Pair your meal with our selection of fine Italian wines for a truly Tuscan experience.",
+      "AtmosphereDescription": "With its rustic charm and candlelit tables, Taste of Tuscany provides a cozy and romantic ambiance reminiscent of a traditional Italian trattoria.",
+      "ChefsSpecial": "Chef's Special: Lobster Ravioli - Fresh pasta filled with lobster, served in a creamy tomato sauce with a hint of saffron.",
+      "Address": "456 Via Roma, Florence, Italy",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 95,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Taste of Tuscany_16.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Taste of Tuscany_16.jpg"
+    },
+    {
+      "Id": "c9b2eaa7-b2f5-44be-99b9-01aaf0e6bca1",
+      "Name": "Ocean's Delight",
+      "Description": "Ocean's Delight serves fresh, sustainably sourced seafood dishes that highlight the best of coastal cuisine. Experience the true taste of the sea with our expertly crafted menu.",
+      "MenuDescription": "Our menu includes grilled fish, buttery lobster rolls, and creamy clam chowders. Try our signature seafood platter, featuring oysters, prawns, scallops, and crab legs, all served with house-made sauces.",
+      "AtmosphereDescription": "With its nautical décor and ocean views, Ocean's Delight offers a relaxed yet elegant setting that transports you to the coast.",
+      "ChefsSpecial": "Chef's Special: Seafood Platter - A luxurious spread of the freshest seafood, served with tangy cocktail and creamy tartar sauces.",
+      "Address": "123 Seaside Blvd, Sydney, Australia",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 120,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Ocean's Delight_17.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Ocean's Delight_17.jpg"
+    },
+    {
+      "Id": "e2d2b1a7-54ab-4fa7-b68d-869b7dc3c879",
+      "Name": "Parisian Bliss",
+      "Description": "Parisian Bliss brings the charm of a French café to your neighborhood. From buttery croissants to delicate soufflés, every bite is a taste of Paris.",
+      "MenuDescription": "Our menu offers a variety of French delicacies, including quiches, crepes, and hearty onion soup. Finish your meal with a slice of our decadent chocolate tart or a traditional crème brûlée.",
+      "AtmosphereDescription": "The elegant, Parisian-inspired décor with soft music in the background creates the perfect setting for a leisurely meal or a romantic date.",
+      "ChefsSpecial": "Chef's Special: Duck Confit - A classic French dish featuring tender duck leg confit served with roasted potatoes and a fresh salad.",
+      "Address": "456 Rue de Rivoli, Paris, France",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 65,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Parisian Bliss_18.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Parisian Bliss_18.jpg"
+    },
+    {
+      "Id": "b9f72f3b-34b9-45ed-9c6e-4a2b12d849c3",
+      "Name": "Spice Symphony",
+      "Description": "Spice Symphony harmoniously blends the vibrant flavors of Indian and Chinese cuisines. Known for its bold spices and innovative fusion dishes, this restaurant is a symphony of taste.",
+      "MenuDescription": "Explore a menu brimming with creativity: tangy chicken tikka dumplings, spicy Szechuan noodles, and the ever-popular curry-infused fried rice. Every bite is a celebration of flavor and spice.",
+      "AtmosphereDescription": "Bright and contemporary, Spice Symphony's atmosphere reflects the colorful and dynamic nature of its menu, with warm lighting and vibrant art on the walls.",
+      "ChefsSpecial": "Chef's Special: Szechuan Butter Chicken - A bold twist on a classic, with tender chicken cooked in a spicy Szechuan sauce.",
+      "Address": "789 Spicer Street, Mumbai, India",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 20,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Spice Symphony_19.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Spice Symphony_19.jpg"
+    },
+    {
+      "Id": "c319f8d3-527c-4b17-a06a-624d2c1b8968",
+      "Name": "The Bavarian Tavern",
+      "Description": "The Bavarian Tavern transports you to the heart of Germany with its authentic dishes and hearty portions. Enjoy a taste of tradition with every meal.",
+      "MenuDescription": "Our menu features favorites like crispy schnitzels, savory bratwurst, and warm pretzels served with tangy mustard. Don’t miss our rich and creamy beer cheese soup.",
+      "AtmosphereDescription": "Rustic wooden furnishings and vintage beer steins create a cozy and inviting ambiance, perfect for enjoying good food and great company.",
+      "ChefsSpecial": "Chef's Special: Pork Knuckle - Slow-roasted to perfection, served with sauerkraut and mashed potatoes.",
+      "Address": "456 Steinweg Lane, Munich, Germany",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 70,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_The Bavarian Tavern_20.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_The Bavarian Tavern_20.jpg"
+    },
+    {
+      "Id": "dba62c3d-7f6c-43c1-8a74-295d8e2f317e",
+      "Name": "Savanna Grill",
+      "Description": "Savanna Grill celebrates the bold and earthy flavors of African cuisine, offering dishes inspired by the diverse cultures and landscapes of the continent.",
+      "MenuDescription": "Our menu includes tender grilled meats, spiced stews, and flavorful flatbreads. Try our signature peri-peri chicken, served with a side of jollof rice and plantains.",
+      "AtmosphereDescription": "The warm, rustic interiors with African-inspired patterns and artwork provide an immersive dining experience that connects you to the essence of the savanna.",
+      "ChefsSpecial": "Chef's Special: Bobotie - A traditional South African casserole with spiced minced meat, topped with a creamy egg custard.",
+      "Address": "789 Safari Lane, Cape Town, South Africa",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 55,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Savanna Grill_21.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Savanna Grill_21.jpg"
+    },
+    {
+      "Id": "ef6c8d2a-5f93-437a-b97f-6b8c9f4d7c5b",
+      "Name": "Citrus Grove",
+      "Description": "Citrus Grove offers a fresh and zesty dining experience, with a menu inspired by the bright and bold flavors of citrus fruits.",
+      "MenuDescription": "Enjoy dishes like grilled lemon herb chicken, orange-glazed salmon, and lime-infused panna cotta. Every dish is crafted to highlight the natural tanginess of citrus.",
+      "AtmosphereDescription": "With its vibrant décor and lush greenery, Citrus Grove creates a cheerful and refreshing ambiance that lifts your spirits.",
+      "ChefsSpecial": "Chef's Special: Lemon Herb Chicken - Grilled to perfection and served with a tangy citrus butter sauce and roasted vegetables.",
+      "Address": "123 Citrus Lane, Miami, FL, USA",
+      "CityId": "da67344d-6fd5-43d3-86aa-ddf16da5ea6d",
+      "CuisineId": "ad5ab518-48d3-41e9-a020-839df02e23f1",
+      "PublisherId": "5172f1a5-c042-4ca9-aad9-22ac1370737e",
+      "CategoryId": "f65e2c76-5cb7-4644-b351-00447e62b39a",
+      "PriceRange": 65,
+      "IsDeleted": false,
+      "ImageURL": "RestaurantPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Citrus Grove_22.jpg",
+      "ChefsSpecialImage": "ChefDishesPictures\\5172f1a5-c042-4ca9-aad9-22ac1370737e_Citrus Grove_22.jpg"
+    }
+  ],
+  "Recipes": [
+    {
+      "Id": "e9475dc5-9ef4-4af1-bc0b-ecb450067b29",
+      "Name": "Mediterranean Salad",
+      "ImageURL": "RecepiePictures\\Mediterranean Quinoa Salad_1.jpg",
+      "CookingTime": 25,
+      "Description": "A refreshing and nutritious salad featuring fluffy quinoa, crisp cucumbers, juicy cherry tomatoes, Kalamata olives, and a tangy lemon dressing. Perfect as a light meal or a vibrant side dish.",
+      "Products": "Quinoa, Cucumber, Cherry Tomatoes, Olives, Lemon Juice, Olive Oil, Salt, Pepper",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 3,
+      "PublisherId": "4b9593f1-17bf-433d-b4e9-60d3c11d2d83",
+      "CreatedOn": "2021-07-22T12:57:59.048224"
+    },
+    {
+      "Id": "ed62b85d-8f4b-4739-9a8e-7e52c3d4f9a6",
+      "Name": "Classic Carbonara",
+      "ImageURL": "RecepiePictures\\Classic Carbonara_2.jpg",
+      "CookingTime": 30,
+      "Description": "A traditional Italian pasta dish made with spaghetti, crispy pancetta, creamy egg yolks, and grated Parmesan cheese. This dish is simple yet indulgent, perfect for any occasion.",
+      "Products": "Spaghetti, Pancetta, Egg Yolks, Parmesan Cheese, Black Pepper",
+      "NumberOfServing": 2,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 4,
+      "PublisherId": "4b9593f1-17bf-433d-b4e9-60d3c11d2d83",
+      "CreatedOn": "2024-06-03T12:57:59.048224"
+    },
+    {
+      "Id": "7f5c83e4-9a72-4d87-bc5a-3e9d8f6a7b2c",
+      "Name": "Herb Roasted Chicken",
+      "ImageURL": "RecepiePictures\\Lemon Herb Roasted Chicken_3.jpg",
+      "CookingTime": 90,
+      "Description": "Juicy and tender chicken marinated with zesty lemon, fresh herbs, and garlic, then roasted to golden perfection. This comforting dish is a crowd-pleaser for family dinners.",
+      "Products": "Whole Chicken, Lemon, Garlic, Fresh Herbs (Thyme, Rosemary), Olive Oil, Salt, Pepper",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 3,
+      "PublisherId": "55a88aeb-5a0d-4dcd-9f8f-2010d3d2746c",
+      "CreatedOn": "2021-07-06T12:57:59.048224"
+    },
+    {
+      "Id": "8b5d96f2-7e49-4a83-a9c6-d7f3e9a4b5c7",
+      "Name": "Decadent Chocolate Mousse",
+      "ImageURL": "RecepiePictures\\Decadent Chocolate Mousse_4.jpg",
+      "CookingTime": 40,
+      "Description": "A rich and velvety dessert made with high-quality dark chocolate, fresh cream, and a touch of vanilla. This chocolate mousse is perfect for satisfying your sweet tooth.",
+      "Products": "Dark Chocolate, Heavy Cream, Sugar, Vanilla Extract",
+      "NumberOfServing": 6,
+      "RecepieCategoryId": "fbffff2e-cc65-4bb0-89e2-4d5ad307e0c4",
+      "RecepieDificultyId": 2,
+      "PublisherId": "55a88aeb-5a0d-4dcd-9f8f-2010d3d2746c",
+      "CreatedOn": "2023-10-06T12:57:59.048224"
+    },
+    {
+      "Id": "a2f5c6e8-1d4f-4a9e-b3c7-d8e7f9b5a4c6",
+      "Name": "Spicy Thai Green Curry",
+      "ImageURL": "RecepiePictures\\Spicy Thai Green Curry_5.jpg",
+      "CookingTime": 45,
+      "Description": "A fragrant and spicy Thai green curry made with fresh green chilies, coconut milk, and tender chicken or tofu. This dish is a flavorful treat for spice lovers.",
+      "Products": "Green Curry Paste, Coconut Milk, Chicken or Tofu, Green Vegetables, Fish Sauce",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 1,
+      "PublisherId": "55a88aeb-5a0d-4dcd-9f8f-2010d3d2746c",
+      "CreatedOn": "2019-02-06T12:57:59.048224"
+    },
+    {
+      "Id": "d9e7f6c5-2b3a-4d8f-b5c7-8e3f6a4b9c2e",
+      "Name": "Hearty Minestrone Soup",
+      "ImageURL": "RecepiePictures\\Hearty Minestrone Soup_6.jpg",
+      "CookingTime": 60,
+      "Description": "A comforting Italian soup packed with seasonal vegetables, beans, and pasta, simmered in a flavorful tomato-based broth.",
+      "Products": "Carrots, Celery, Onion, Tomatoes, Beans, Pasta, Italian Herbs",
+      "NumberOfServing": 6,
+      "RecepieCategoryId": "2a5cc5ef-0991-4763-8a6f-7b6ead6bca23",
+      "RecepieDificultyId": 2,
+      "PublisherId": "55a88aeb-5a0d-4dcd-9f8f-2010d3d2746c",
+      "CreatedOn": "2024-03-06T12:57:59.048224"
+    },
+    {
+      "Id": "c4e8f6a9-7b3d-9c5f-2d6a-3e7b9f8c2d5a",
+      "Name": "Vegan Buddha Bowl",
+      "ImageURL": "RecepiePictures\\Vegan Buddha Bowl_7.jpg",
+      "CookingTime": 30,
+      "Description": "A colorful and healthy vegan dish featuring quinoa, roasted vegetables, fresh greens, and a creamy tahini dressing. Perfect for a quick and nutritious meal.",
+      "Products": "Quinoa, Sweet Potatoes, Kale, Chickpeas, Tahini, Lemon Juice",
+      "NumberOfServing": 2,
+      "RecepieCategoryId": "6c4feb38-4cc8-4f98-af51-5a49a7bedcf0",
+      "RecepieDificultyId": 3,
+      "PublisherId": "b2c8567c-a0b5-49ac-9c11-12c760dc4cc4",
+      "CreatedOn": "2023-06-06T12:57:59.048224"
+    },
+    {
+      "Id": "f9b5a4c6-7d8f-3b9e-2f6a-4e3b7d9c2a5f",
+      "Name": "French Onion Soup",
+      "ImageURL": "RecepiePictures\\French Onion Soup_8.jpg",
+      "CookingTime": 90,
+      "Description": "A classic French dish made with caramelized onions, rich beef broth, and topped with a slice of crusty bread and melted Gruyère cheese.",
+      "Products": "Onions, Beef Broth, Bread, Gruyère Cheese, Butter, Thyme",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "2a5cc5ef-0991-4763-8a6f-7b6ead6bca23",
+      "RecepieDificultyId": 4,
+      "PublisherId": "b2c8567c-a0b5-49ac-9c11-12c760dc4cc4",
+      "CreatedOn": "2024-10-06T13:57:59.048224"
+    },
+    {
+      "Id": "b7e9f8c3-2a4b-9d6f-3e5a-7f8d3c6a4b9e",
+      "Name": "Classic Beef Stroganoff",
+      "ImageURL": "RecepiePictures\\Classic Beef Stroganoff_9.jpg",
+      "CookingTime": 50,
+      "Description": "A creamy and savory dish featuring sautéed beef strips, mushrooms, and onions, served over egg noodles. A timeless comfort food.",
+      "Products": "Beef, Mushrooms, Onion, Sour Cream, Egg Noodles",
+      "NumberOfServing": 3,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 3,
+      "PublisherId": "b2c8567c-a0b5-49ac-9c11-12c760dc4cc4",
+      "CreatedOn": "2021-10-06T12:57:59.048224"
+    },
+    {
+      "Id": "f2a9e7d3-c6a4-8f5d-9b3e-2c7f6a4b9e3d",
+      "Name": "Creamy Garlic Pasta",
+      "ImageURL": "RecepiePictures\\Creamy Garlic Pasta_10.jpg",
+      "CookingTime": 25,
+      "Description": "A simple yet delicious pasta dish with a creamy garlic sauce, topped with grated Parmesan cheese and fresh parsley.",
+      "Products": "Spaghetti, Garlic, Heavy Cream, Parmesan Cheese, Parsley",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "0708042d-eaf3-4e4b-a5a7-b4362d471013",
+      "RecepieDificultyId": 1,
+      "PublisherId": "b2c8567c-a0b5-49ac-9c11-12c760dc4cc4",
+      "CreatedOn": "2021-09-06T19:57:59.048224"
+    },
+    {
+      "Id": "d8f3b6c4-9a7e-2f5d-3c6a-7e9b5f8d2c4e",
+      "Name": "Stuffed Bell Peppers",
+      "ImageURL": "RecepiePictures\\Stuffed Bell Peppers_11.jpg",
+      "CookingTime": 60,
+      "Description": "Bell peppers stuffed with a flavorful mixture of ground beef, rice, and vegetables, baked until tender and delicious.",
+      "Products": "Bell Peppers, Ground Beef, Rice, Tomatoes, Onion, Garlic",
+      "NumberOfServing": 6,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 2,
+      "PublisherId": "622d3321-2af5-4148-a4c4-dce20b49c686",
+      "CreatedOn": "2020-02-06T19:57:59.048224"
+    },
+    {
+      "Id": "b6a3f9d7-2e4b-8c5f-7a9e-3d6c9f8b2a5e",
+      "Name": "Lemon Herb Chicken",
+      "ImageURL": "RecepiePictures\\Lemon Herb Chicken_12.jpg",
+      "CookingTime": 50,
+      "Description": "Juicy chicken breasts marinated in a zesty lemon herb sauce, grilled or baked to perfection. Served with roasted vegetables.",
+      "Products": "Chicken Breasts, Lemon Juice, Garlic, Olive Oil, Fresh Herbs",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 3,
+      "PublisherId": "622d3321-2af5-4148-a4c4-dce20b49c686",
+      "CreatedOn": "2024-02-06T19:57:59.048224"
+    },
+    {
+      "Id": "c5a9f7e3-d6b4-2f8c-7a5d-3e9f6b2c4a7e",
+      "Name": "Vegetarian Chili",
+      "ImageURL": "RecepiePictures\\Vegetarian Chili_13.jpg",
+      "CookingTime": 75,
+      "Description": "A hearty vegetarian chili loaded with beans, tomatoes, and spices, perfect for a cozy dinner or a game-day gathering.",
+      "Products": "Kidney Beans, Black Beans, Tomatoes, Onion, Bell Peppers, Spices",
+      "NumberOfServing": 8,
+      "RecepieCategoryId": "0708042d-eaf3-4e4b-a5a7-b4362d471013",
+      "RecepieDificultyId": 2,
+      "PublisherId": "622d3321-2af5-4148-a4c4-dce20b49c686",
+      "CreatedOn": "2024-08-06T16:57:59.048224"
+    },
+    {
+      "Id": "e3b7d9c2-a4f8-5b6a-3d9e-7c2f5a9e6b4d",
+      "Name": "Classic Pancakes",
+      "ImageURL": "RecepiePictures\\Classic Pancakes_14.jpg",
+      "CookingTime": 20,
+      "Description": "Fluffy and golden pancakes made with a simple batter, perfect for breakfast or brunch. Serve with syrup and fresh fruits.",
+      "Products": "Flour, Eggs, Milk, Baking Powder, Butter, Syrup",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "1c272709-f036-40d4-a352-a4ece2fcb9fa",
+      "RecepieDificultyId": 1,
+      "PublisherId": "622d3321-2af5-4148-a4c4-dce20b49c686",
+      "CreatedOn": "2023-01-06T16:57:59.048224"
+    },
+    {
+      "Id": "8f2b6c9a-7d3e-5f4b-2a9e-6d3f7b5e9c8a",
+      "Name": "Spicy Thai Curry",
+      "ImageURL": "RecepiePictures\\Spicy Thai Curry_15.jpg",
+      "CookingTime": 40,
+      "Description": "A vibrant and aromatic Thai curry with a spicy coconut milk base, tender chicken, and fresh vegetables. Serve with jasmine rice.",
+      "Products": "Chicken, Coconut Milk, Curry Paste, Bell Peppers, Basil, Jasmine Rice",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "064233c3-b09d-4361-974a-8e45de8644fd",
+      "RecepieDificultyId": 1,
+      "PublisherId": "622d3321-2af5-4148-a4c4-dce20b49c686",
+      "CreatedOn": "2022-10-06T16:57:59.048224"
+    },
+    {
+      "Id": "7e5b4c9d-3f6a-8b2a-9c7e-2d6f3b5a9e4c",
+      "Name": "Baked Ziti",
+      "ImageURL": "RecepiePictures\\Baked Ziti_16.jpg",
+      "CookingTime": 50,
+      "Description": "A comforting Italian-American casserole with layers of pasta, marinara sauce, ricotta, and melted mozzarella cheese.",
+      "Products": "Ziti Pasta, Marinara Sauce, Ricotta Cheese, Mozzarella Cheese, Parmesan Cheese",
+      "NumberOfServing": 6,
+      "RecepieCategoryId": "6c4feb38-4cc8-4f98-af51-5a49a7bedcf0",
+      "RecepieDificultyId": 2,
+      "PublisherId": "7df25137-b39a-4a91-903b-303c0582e389",
+      "CreatedOn": "2024-08-06T16:57:59.048224"
+    },
+    {
+      "Id": "5c8f2b6a-9d3e-7a4b-6e9f-3d7f5a2c9b4e",
+      "Name": "Greek Salad",
+      "ImageURL": "RecepiePictures\\Greek Salad_17.jpg",
+      "CookingTime": 15,
+      "Description": "A refreshing salad with crisp cucumbers, ripe tomatoes, Kalamata olives, and creamy feta cheese, drizzled with olive oil.",
+      "Products": "Cucumbers, Tomatoes, Kalamata Olives, Feta Cheese, Olive Oil, Oregano",
+      "NumberOfServing": 4,
+      "RecepieCategoryId": "0708042d-eaf3-4e4b-a5a7-b4362d471013",
+      "RecepieDificultyId": 3,
+      "PublisherId": "7df25137-b39a-4a91-903b-303c0582e389",
+      "CreatedOn": "2024-08-03T16:57:59.048224"
+    },
+    {
+      "Id": "9e3d7f5a-4b6a-2f8c-7b9e-3c5d9a6f4e7b",
+      "Name": "Chocolate Lava Cake",
+      "ImageURL": "RecepiePictures\\Chocolate Lava Cake_18.jpg",
+      "CookingTime": 25,
+      "Description": "A decadent dessert with a rich chocolate cake exterior and a gooey, molten chocolate center. Perfect for special occasions.",
+      "Products": "Dark Chocolate, Butter, Eggs, Sugar, Flour, Powdered Sugar",
+      "NumberOfServing": 2,
+      "RecepieCategoryId": "fbffff2e-cc65-4bb0-89e2-4d5ad307e0c4",
+      "RecepieDificultyId": 4,
+      "PublisherId": "7df25137-b39a-4a91-903b-303c0582e389",
+      "CreatedOn": "2023-12-03T16:57:59.048224"
+    }
+  ],
+  "Comments": [
+
+    {
+      "Id": "78aa5006-bf83-4f75-83af-92473f5a3c53",
+      "Message": "Great recipe! I loved it.",
+      "IsDeleted": false,
+      "UserId": "7df25137-b39a-4a91-903b-303c0582e389",
+      "RecepieId": "9e3d7f5a-4b6a-2f8c-7b9e-3c5d9a6f4e7b",
+      "CreatedDate": "2024-12-03T16:57:59.048224"
+    },
+    {
+      "Id": "190e118f-98ad-4b74-be77-9d04835e47bf",
+      "Message": "Great recipe! Will do it soon! ",
+      "IsDeleted": false,
+      "UserId": "622d3321-2af5-4148-a4c4-dce20b49c686",
+      "RecepieId": "b6a3f9d7-2e4b-8c5f-7a9e-3d6c9f8b2a5e",
+      "CreatedDate": "2024-12-03T16:57:59.048258"
+    },
+    {
+      "Id": "8ffa6a16-3b46-4431-8ad5-c475d3a8af18",
+      "Message": "Great recipe! I loved it.",
+      "IsDeleted": false,
+      "UserId": "b2c8567c-a0b5-49ac-9c11-12c760dc4cc4",
+      "RecepieId": "f2a9e7d3-c6a4-8f5d-9b3e-2c7f6a4b9e3d",
+      "CreatedDate": "2024-12-03T16:57:59.048268"
+    },
+    {
+      "Id": "299962a3-f8d7-4872-8f23-19f5f258c6b2",
+      "Message": "Great recipe!Everybody likes it!",
+      "IsDeleted": false,
+      "UserId": "55a88aeb-5a0d-4dcd-9f8f-2010d3d2746c",
+      "RecepieId": "7e5b4c9d-3f6a-8b2a-9c7e-2d6f3b5a9e4c",
+      "CreatedDate": "2024-12-03T16:57:59.048277"
+    },
+    {
+      "Id": "f02319e4-6baf-4bb3-a808-20a2c36c0490",
+      "Message": "Great recipe! Easy to make and amazing taste!",
+      "IsDeleted": false,
+      "UserId": "4b9593f1-17bf-433d-b4e9-60d3c11d2d83",
+      "RecepieId": "ed62b85d-8f4b-4739-9a8e-7e52c3d4f9a6",
+      "CreatedDate": "2024-12-03T16:57:59.048285"
+    },
+
+    {
+      "Id": "7f04c173-5565-4c4d-b896-ce379ab1dc24",
+      "Message": "Wonderful restaurant! Highly recommend.",
+      "IsDeleted": false,
+      "UserId": "7df25137-b39a-4a91-903b-303c0582e389",
+      "RestaurantId": "b9f72f3b-34b9-45ed-9c6e-4a2b12d849c3",
+      "CreatedDate": "2024-12-03T16:57:59.048308"
+    },
+    {
+      "Id": "63e07aae-885c-45a1-8efa-2043d35651e1",
+      "Message": "Wonderful restaurant! Nice food options. ",
+      "IsDeleted": false,
+      "UserId": "622d3321-2af5-4148-a4c4-dce20b49c686",
+      "RestaurantId": "c319f8d3-527c-4b17-a06a-624d2c1b8968",
+      "CreatedDate": "2024-12-03T16:57:59.048332"
+    },
+    {
+      "Id": "b129ba03-53cb-417b-aca3-097b833954a7",
+      "Message": "Highly recommend. Chefs dish is amazing",
+      "IsDeleted": false,
+      "UserId": "7df25137-b39a-4a91-903b-303c0582e389",
+      "RestaurantId": "c319f8d3-527c-4b17-a06a-624d2c1b8968",
+      "CreatedDate": "2024-12-03T16:57:59.048461"
+    },
+    {
+      "Id": "bf841da1-a850-4ab9-b679-64acba6a5856",
+      "Message": "I'm not impressed... ",
+      "IsDeleted": false,
+      "UserId": "55a88aeb-5a0d-4dcd-9f8f-2010d3d2746c",
+      "RestaurantId": "b9f72f3b-34b9-45ed-9c6e-4a2b12d849c3",
+      "CreatedDate": "2024-12-03T16:57:59.048504"
+    },
+    {
+      "Id": "b50d5001-4c28-476a-9805-0bc35f1c5d4b",
+      "Message": "Very nice serving.",
+      "IsDeleted": false,
+      "UserId": "4b9593f1-17bf-433d-b4e9-60d3c11d2d83",
+      "RestaurantId": "b9f72f3b-34b9-45ed-9c6e-4a2b12d849c3",
+      "CreatedDate": "2024-12-03T16:57:59.048519"
+    }
   ]
 }
