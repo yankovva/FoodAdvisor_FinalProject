@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
+using static FoodAdvisor.Common.ApplicationConstants;
+using static FoodAdvisor.Common.EntityValidationConstants;
+using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor.Data.Services
 {
@@ -19,14 +21,14 @@ namespace FoodAdvisor.Data.Services
 		private readonly IFileService fileService;
 		public AccountService(IRepository<ApplicationUser, Guid> accountRepository, IWebHostEnvironment enviorment,
 			UserManager<ApplicationUser> userManager, IFileService fileService)
-        {
+		{
 			this.accountRepository = accountRepository;
 			this.enviorment = enviorment;
 			this.userManager = userManager;
 			this.fileService = fileService;
 		}
 
-        public async Task<bool> EditUserAsync(EditUserViewModel model, string userId)
+		public async Task<bool> EditUserAsync(EditUserViewModel model, string userId)
 		{
 			Guid userGuid = Guid.Empty;
 			bool isGuidValid = this.IsGuidValid(userId, ref userGuid);
@@ -37,25 +39,65 @@ namespace FoodAdvisor.Data.Services
 
 			ApplicationUser? user = await this.accountRepository
 				.GetByIdAsync(userGuid);
-				
+
 			if (user == null)
 			{
 				//TODO:Add message
 				return false;
 			}
-			
+
 			user.FirstName = model.FirstName;
 			user.LastName = model.LastName;
 			user.AboutMe = model.AboutMe;
 			user.Country = model.Country;
-			user.UserName = model.UserName;
 
-			await userManager.SetUserNameAsync(user, model.UserName);
-			await userManager.UpdateNormalizedUserNameAsync(user);
-			
+			if (model.UserName != null && model.UserName != user.UserName)
+			{
+				var result = await userManager.SetUserNameAsync(user, model.UserName);
+				if (!result.Succeeded)
+				{
+					//TODO:Add message
+					return false;
+				}
+				await userManager.UpdateNormalizedUserNameAsync(user);
+
+			}
+			if (model.Email != null && model.Email != user.Email)
+			{
+				var result = await userManager.SetEmailAsync(user, model.Email);
+				if (!result.Succeeded)
+				{
+					//TODO:Add message
+					return false;
+				}
+				await userManager.UpdateNormalizedEmailAsync(user);
+			}
+
+
+
 			await this.accountRepository.UpdateAsync(user);
 			return true;
 		}
+
+		public async Task<bool> ChangePasswordAsync(string currentPassword, string newPassword, Guid userId)
+		{
+			var user = await userManager.FindByIdAsync(userId.ToString());
+
+			if (user == null)
+			{
+				return false;
+			}
+
+			var result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+			if (result.Succeeded)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
 
 		public async Task<EditUserViewModel> GetEditUserViewAsync(Guid userId)
 		{
@@ -89,7 +131,7 @@ namespace FoodAdvisor.Data.Services
 					CreatedOn = DateTime.Now,
 					Country = u.Country,
 					AboutMe = u.AboutMe,
-					Email = u.Email,
+					Email = u.Email!,
 					ProfilePricture = u.ProfilePricturePath,
 					UserAddedRecepies = u.AddedRecepies
 					.Where(r => r.IsDeleted == false)
@@ -100,7 +142,7 @@ namespace FoodAdvisor.Data.Services
 						DificultyLevel = r.RecepieDificulty.DificultyName,
 						Categodry = r.RecepieCategory.Name,
 						Image = r.ImageURL,
-						AddedOn = r.CreatedOn.ToString("dd/MM/yyyy"),
+						AddedOn = r.CreatedOn.ToString(DateTimeFormat),
 						Likes = r.UsersRecepies.Count(),
 						Comments = r.RecepieComments.Count()
 					})
@@ -131,12 +173,12 @@ namespace FoodAdvisor.Data.Services
 				long maxSize = 5 * 1024 * 1024;
 				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
 				{
-					throw new ArgumentException("Unvalid file!");
-					
+					throw new ArgumentException(InvalidFileMessage);
+
 				}
 
 				string fileName = userId.ToString() + "_" + user.UserName + "_" + Path.GetFileName(file.FileName);
-				string newImagePath = await fileService.UploadFileAsync(file, "ProfilePictures", fileName);
+				string newImagePath = await fileService.UploadFileAsync(file, ProfilePicturesFolderName, fileName);
 
 				user.ProfilePricturePath = newImagePath;
 
@@ -145,5 +187,6 @@ namespace FoodAdvisor.Data.Services
 			}
 			return false;
 		}
+
 	}
 }

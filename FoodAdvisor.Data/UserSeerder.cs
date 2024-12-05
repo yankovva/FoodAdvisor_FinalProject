@@ -10,7 +10,7 @@ namespace FoodAdvisor.Data
 {
 	public class UserSeerder
 	{
-		public static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager)
+		public static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager, FoodAdvisorDbContext context)
 		{
 			var users = new List<(string Email, string Password,string Username, string Id)>
 				{
@@ -21,22 +21,26 @@ namespace FoodAdvisor.Data
 					("andrea@gmail.com", "Andrea123!!", "AndreaVs", "4b9593f1-17bf-433d-b4e9-60d3c11d2d83"),
 				};
 
-			foreach (var (email, password, username, id) in users)
+			if (!context.Users.Any())
 			{
-				var user = await userManager.FindByEmailAsync(email);
-				if (user == null)
+				foreach (var (email, password, username, id) in users)
 				{
-					user = new ApplicationUser
+					var user = await userManager.FindByEmailAsync(email);
+					if (user == null)
 					{
-						UserName = username,
-						Email = email,
-						EmailConfirmed = true,
-						Id = Guid.Parse(id)
-					};
+						user = new ApplicationUser
+						{
+							UserName = username,
+							Email = email,
+							EmailConfirmed = true,
+							Id = Guid.Parse(id)
+						};
 
-					var result = await userManager.CreateAsync(user, password);
+						var result = await userManager.CreateAsync(user, password);
+					}
 				}
 			}
+			
 		}
 
 	}

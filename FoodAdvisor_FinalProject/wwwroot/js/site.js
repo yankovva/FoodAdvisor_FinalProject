@@ -51,3 +51,4 @@ if (showFormButtons.length > 0 && managerModals.length > 0 && closeModals.length
 		});
 	}
 }
+

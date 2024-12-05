@@ -1,14 +1,14 @@
 ﻿using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
-using FoodAdvisor.ViewModels.RestaurantViewModels;
-using FoodAdvisor.ViewModels.CommentViewModel;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using System;
-using Microsoft.AspNetCore.Hosting;
-using FoodAdvisor.ViewModels.RecepiesViewModels;
 using FoodAdvisor.ViewModels;
+using FoodAdvisor.ViewModels.CommentViewModel;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using static FoodAdvisor.Common.ApplicationConstants;
+using static FoodAdvisor.Common.ErrorMessages;
 
 
 namespace FoodAdvisor.Data.Services
@@ -42,6 +42,10 @@ namespace FoodAdvisor.Data.Services
 			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
 			long maxSize = 5 * 1024 * 1024; // 5MB
 
+			if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
+			{
+				throw new ArgumentException(InvalidFileMessage);
+			}
 
 			Manager manager = await this.managerRepository
 				.FirstorDefaultAsync(m => m.UserId == userId);
@@ -51,8 +55,8 @@ namespace FoodAdvisor.Data.Services
 			string fileNameChefsDish = userId.ToString() + "_" + model.ChefsDishName + "_" + Path.GetFileName(fileDish.FileName);
 
 
-			string filePathREstaurant = await fileService.UploadFileAsync(file, "RestaurantPictures", fileName);
-			string filePathChefDish = await fileService.UploadFileAsync(file, "ChefDishesPictures", fileName);
+			string filePathREstaurant = await fileService.UploadFileAsync(file, RestaurantPicturesFolderName, fileName);
+			string filePathChefDish = await fileService.UploadFileAsync(file, ChefDishesFolderName, fileName);
 
 
 			City city = await this.cityRepository
@@ -196,11 +200,11 @@ namespace FoodAdvisor.Data.Services
 
 				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
 				{
-					throw new ArgumentException("Unvalid file!");
+					throw new ArgumentException(InvalidFileMessage);
 				}
 
 				string fileName = $"{manager.Id.ToString()}_{model.Name}_{Path.GetFileName(file.FileName)}";
-				string newImagePath = await fileService.UploadFileAsync(file, "RestaurantPictures", fileName);
+				string newImagePath = await fileService.UploadFileAsync(file, RestaurantPicturesFolderName, fileName);
 
 				editedRestaurant.ImageURL = newImagePath;
 			
@@ -208,11 +212,11 @@ namespace FoodAdvisor.Data.Services
 
 				if (!fileService.IsFileValid(fileDish, allowedExtensions, maxSize))
 				{
-					throw new ArgumentException("Unvalid file!");
+					throw new ArgumentException(InvalidFileMessage);
 				}
 
 				string fileNameDish = $"{userId}_{model.Name}_{Path.GetFileName(fileDish.FileName)}";
-				string newImagePathDish = await fileService.UploadFileAsync(fileDish, "ChefDishesPictures", fileNameDish);
+				string newImagePathDish = await fileService.UploadFileAsync(fileDish, ChefDishesFolderName, fileNameDish);
 				
 				editedRestaurant.ChefsSpecialImage = newImagePathDish;
 
@@ -270,7 +274,8 @@ namespace FoodAdvisor.Data.Services
 					Likes = p.UserRestaurants.Where(r => r.RestaurantId == p.Id).Count(),
 					City = p.City.Name,
 					Publisher = p.Publisher.User.UserName ?? string.Empty,
-					PublisherQuote = p.Publisher.User.AboutMe ?? string.Empty,
+					PublisherQuote = p.Publisher.User.AboutMe ?? DefaultQuote ,
+					PublisherId = p.PublisherId.ToString(),
 					AllComment = p.RestaurantsComments
 					.Where(rc => rc.IsDeleted == false)
 					.Select(rc => new CommentAllViewModel()

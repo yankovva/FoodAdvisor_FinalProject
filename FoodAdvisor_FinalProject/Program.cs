@@ -37,7 +37,7 @@ builder.Services
     options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
     options.SignIn.RequireConfirmedEmail = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedEmail");
     options.SignIn.RequireConfirmedPhoneNumber = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedPhoneNumber");
-
+    
     options.User.RequireUniqueEmail = builder.Configuration.GetValue<bool>("Identity:SignIn:RequireUniqueEmail");
 })
           .AddEntityFrameworkStores<FoodAdvisorDbContext>()
@@ -78,9 +78,9 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
 	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-	await UserSeerder.SeedUsersAsync(userManager);
-
 	var context = scope.ServiceProvider.GetRequiredService<FoodAdvisorDbContext>();
+	await UserSeerder.SeedUsersAsync(userManager, context);
+
     DatabaseSeeder.SeedDatabase(context);
 }
 

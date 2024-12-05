@@ -55,7 +55,7 @@
 			</div>
 			<div class="w3-panel w3-leftbar w3-light-grey">
 				<p class="w3-xxlarge w3-serif">
-					<i>"Make it as simple as possible, but not simpler."</i>
+					<i>"@Model.PublisherQuote"</i>
 				</p>
 				<p>@Model.Publisher</p>
 			</div>
@@ -88,7 +88,7 @@
 					<div class="commenteer-info">
 						<img class="commenter-img" src="/@comment.ProfilePicture">
 						<p style="margin-bottom: 0;">@comment.UserName</p>
-						@if (User?.Identity?.Name == @comment.UserName)
+						@if (Model.PublisherId == @comment.UserId)
 						{
 							<form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
 								<input type="hidden" name="commentId" value="@comment.Id" />

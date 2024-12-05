@@ -4,6 +4,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RecepieFavouritesViewModels;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace FoodAdvisor.Data.Services
 {
 	public class RecepieFavouritesService : BaseService, IRecepieFavouritesService

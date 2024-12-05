@@ -12,5 +12,6 @@ namespace FoodAdvisor.Data.Services.Interfaces
 
         public Task<bool> UpdateProfilePictureAsync(IFormFile file, Guid userId);
 
+		Task<bool> ChangePasswordAsync(string currentPassword, string newPassword, Guid userId);
 	}
 }

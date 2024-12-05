@@ -49,7 +49,7 @@
         public static class Recepie
         {
 			public const int NameMinLenght = 3;
-			public const int NameMaxLenght = 20;
+			public const int NameMaxLenght = 30;
 
 			public const int DescriptionMinLenght = 50;
 			public const int DescriptionMaxLenght = 700;

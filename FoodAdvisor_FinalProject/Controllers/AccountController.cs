@@ -3,6 +3,7 @@ using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.AccountViemModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
@@ -15,6 +16,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 	public class AccountController : BaseController
 	{
 		private readonly IAccountService accountService;
+		
 		public AccountController(IAccountService accountService)
 		{
 			this.accountService = accountService;
@@ -93,6 +95,22 @@ namespace FoodAdvisor_FinalProject.Controllers
 			
 			return RedirectToAction(nameof(Index));
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> ChangePassword(string currentPassword, string newPassword)
+		{
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+
+			bool result = await this.accountService.ChangePasswordAsync(currentPassword, newPassword, userId);
+
+			if (result == false)
+			{
+				return Json(new { success = false, message = "Something went wrong. Please try again!" });
+			}
+
+			return Json(new { success = true, message = "Password changed successfully!" });
+		}
+	}
 	}
 	
-}
+

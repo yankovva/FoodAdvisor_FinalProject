@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static FoodAdvisor.Common.EntityValidationConstants;
-
-namespace FoodAdvisor.Common
+﻿namespace FoodAdvisor.Common
 {
-    public static class ApplicationConstants
+	public static class ApplicationConstants
     {
         public const string NoImageAccount = "assets/img/no-pfp.png";
         public const string NoImage = "assets/img/no-image-found.png";
         public const string AdminRoleName = "Admin";
+		public const string DefaultQuote = "The best is yet to come...";
+        public const string RecepiePicturesFolderName = "RecipePictures";
+		public const string RestaurantPicturesFolderName = "RestaurantPictures";
+		public const string ChefDishesFolderName = "ChefDishesPictures";
+		public const string ProfilePicturesFolderName = "ProfilePictures";
+		public const string DateTimeFormat = "dd/MM/yyyy";
 	}
 }

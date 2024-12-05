@@ -70,11 +70,14 @@
 					<div class="commenteer-info">
 						<img class="commenter-img" src="/@comment.ProfilePicture">
 						<p style="margin-bottom: 0;">@comment.UserName</p>
-						<form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
-							<input type="hidden" name="commentId" value="@comment.Id" />
-							<input type="hidden" name="restaurantId" value="@Model.Id" />
-							<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
-						</form>
+						@if (comment.UserId == Model.PublisherId )
+						{
+							<form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+								<input type="hidden" name="commentId" value="@comment.Id" />
+								<input type="hidden" name="restaurantId" value="@Model.Id" />
+								<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
+							</form>
+						}
 					</div>
 					<div class="comment-message">
 						<div class="comment-date">@comment.CreatedOn</div>

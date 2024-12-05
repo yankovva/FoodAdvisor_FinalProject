@@ -7,7 +7,9 @@ using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
+using static FoodAdvisor.Common.ApplicationConstants;
+using static FoodAdvisor.Common.ErrorMessages;
+
 
 namespace FoodAdvisor.Data.Services
 {
@@ -33,9 +35,14 @@ namespace FoodAdvisor.Data.Services
 			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
 			long maxSize = 5 * 1024 * 1024; // 5MB
 
+			if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
+			{
+				throw new ArgumentException(InvalidFileMessage);
+			}
+
 			string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
 
-			string filePath = await fileService.UploadFileAsync(file, "RecepiePictures", fileName);
+			string filePath = await fileService.UploadFileAsync(file, RecepiePicturesFolderName, fileName);
 
 			Recepie recepie = new Recepie
 			{
@@ -71,6 +78,8 @@ namespace FoodAdvisor.Data.Services
 					Products = r.Products,
 					PublisherFullName = $"{r.Publisher.FirstName} {r.Publisher.LastName}",
 					PublisherPicture = r.Publisher.ProfilePricturePath,
+					PublisherId = r.PublisherId.ToString(),
+					PublisherQuote = r.Publisher.AboutMe ?? DefaultQuote,
 					ImagePath = r.ImageURL,
 					Dificulty = r.RecepieDificulty.DificultyName,
 					Servings = r.NumberOfServing,
@@ -183,12 +192,12 @@ namespace FoodAdvisor.Data.Services
 				long maxSize = 5 * 1024 * 1024;
 				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
 				{
-					throw new ArgumentException("Unvalid file!");
+					throw new ArgumentException(InvalidFileMessage);
 				}
 
 				string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
 
-				string newImagePath = await fileService.UploadFileAsync(file, "RecepiePictures", fileName);
+				string newImagePath = await fileService.UploadFileAsync(file, RecepiePicturesFolderName, fileName);
 
 				editedRecepie.ImageURL = newImagePath;
 				await this.recepieRepository.UpdateAsync(editedRecepie);
