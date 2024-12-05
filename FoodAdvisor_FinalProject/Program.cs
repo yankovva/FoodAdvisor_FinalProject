@@ -7,6 +7,7 @@ using FoodAdvisor.Infrastructure;
 using FoodAdvisor.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -76,10 +77,14 @@ var app = builder.Build();
 //Seed data
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<FoodAdvisorDbContext>();
-    DatabaseSeeder.SeedDatabase(context);
+	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+	await UserSeerder.SeedUsersAsync(userManager);
 
+	var context = scope.ServiceProvider.GetRequiredService<FoodAdvisorDbContext>();
+    DatabaseSeeder.SeedDatabase(context);
 }
+
+	
 
 
 // Configure the HTTP request pipeline.
