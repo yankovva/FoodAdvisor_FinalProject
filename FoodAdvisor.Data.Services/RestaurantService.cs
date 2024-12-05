@@ -17,6 +17,7 @@ namespace FoodAdvisor.Data.Services
 	{
 		private readonly IRepository<Restaurant, Guid> restaurantRepository;
 		private readonly IRepository<City, Guid> cityRepository;
+		private readonly IRepository<Manager, Guid> managerRepository;
 		private readonly IRepository<RestaurantCuisine, Guid> cuisineRepository;
 		private readonly IWebHostEnvironment enviorment;
 		private readonly IFileService fileService;
@@ -24,13 +25,15 @@ namespace FoodAdvisor.Data.Services
 		public RestaurantService(IRepository<Restaurant, Guid> restaurantRepository,
 			IRepository<City, Guid> cityRepository,
 			IWebHostEnvironment enviorment,
-			IRepository<RestaurantCuisine, Guid> cuisineRepository, IFileService fileService)
+			IRepository<RestaurantCuisine, Guid> cuisineRepository, IFileService fileService,
+			IRepository<Manager, Guid> managerRepository)
 		{
 			this.restaurantRepository = restaurantRepository;
 			this.cityRepository = cityRepository;
 			this.enviorment = enviorment;
 			this.cuisineRepository = cuisineRepository;
 			this.fileService = fileService;
+			this.managerRepository = managerRepository;
 		}
 
 		//Done
@@ -39,8 +42,14 @@ namespace FoodAdvisor.Data.Services
 			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
 			long maxSize = 5 * 1024 * 1024; // 5MB
 
-			string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
+
+			Manager manager = await this.managerRepository
+				.FirstorDefaultAsync(m => m.UserId == userId);
+
+
+			string fileName = manager.Id.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
 			string fileNameChefsDish = userId.ToString() + "_" + model.ChefsDishName + "_" + Path.GetFileName(fileDish.FileName);
+
 
 			string filePathREstaurant = await fileService.UploadFileAsync(file, "RestaurantPictures", fileName);
 			string filePathChefDish = await fileService.UploadFileAsync(file, "ChefDishesPictures", fileName);
@@ -67,17 +76,17 @@ namespace FoodAdvisor.Data.Services
 				};
 				await cuisineRepository.AddAsync(cuisine);
 			}
-
+			
 			Restaurant place = new Restaurant()
 			{
 				Name = model.Name,
 				Description = model.Description,
 				ImageURL = filePathREstaurant,
 				CategoryId = model.CategoryId,
-				PublisherId = userId,
+				PublisherId = manager.Id,
 				City = city,
 				Address = model.Address,
-				PricaRange = model.PriceRange,
+				PriceRange = model.PriceRange,
 				MenuDescription = model.MenuDescription,
 				AtmosphereDescription = model.AtmosphereDescription,
 				ChefsSpecial = model.ChefsDishName,
@@ -160,14 +169,17 @@ namespace FoodAdvisor.Data.Services
 				await cuisineRepository.AddAsync(cuisine);
 			}
 
+			Manager manager = await this.managerRepository
+				.FirstorDefaultAsync(m => m.UserId == userId);
+
 			editedRestaurant.Name = model.Name;
 			editedRestaurant.Address = model.Address;
 			editedRestaurant.CategoryId = model.CategoryId;
-			editedRestaurant.PublisherId = userId;
+			editedRestaurant.PublisherId = manager.Id;
 			editedRestaurant.Description = model.Description;
 			editedRestaurant.City = city;
 			editedRestaurant.Cuisine = cuisine;
-			editedRestaurant.PricaRange = model.PriceRange;
+			editedRestaurant.PriceRange = model.PriceRange;
 			editedRestaurant.MenuDescription = model.MenuDescription;
 			editedRestaurant.AtmosphereDescription = model.AtmosphereDescription;
 			editedRestaurant.ChefsSpecial = model.ChefsDishName;
@@ -187,7 +199,7 @@ namespace FoodAdvisor.Data.Services
 					throw new ArgumentException("Unvalid file!");
 				}
 
-				string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
+				string fileName = $"{manager.Id.ToString()}_{model.Name}_{Path.GetFileName(file.FileName)}";
 				string newImagePath = await fileService.UploadFileAsync(file, "RestaurantPictures", fileName);
 
 				editedRestaurant.ImageURL = newImagePath;
@@ -221,7 +233,7 @@ namespace FoodAdvisor.Data.Services
 					Description = g.Description,
 					ImagePath = g.ImageURL,
 					Address = g.Address,
-					PriceRange = g.PricaRange,
+					PriceRange = g.PriceRange,
 					MenuDescription = g.MenuDescription,
 					AtmosphereDescription = g.AtmosphereDescription,
 					ChefsDishName = g.ChefsSpecial,
@@ -254,10 +266,11 @@ namespace FoodAdvisor.Data.Services
 					CuisineName = p.Cuisine.Name,
 					Address = p.Address,
 					Category = p.Category.Name,
-					PriceRange = p.PricaRange,
+					PriceRange = p.PriceRange,
 					Likes = p.UserRestaurants.Where(r => r.RestaurantId == p.Id).Count(),
 					City = p.City.Name,
 					Publisher = p.Publisher.User.UserName ?? string.Empty,
+					PublisherQuote = p.Publisher.User.AboutMe ?? string.Empty,
 					AllComment = p.RestaurantsComments
 					.Where(rc => rc.IsDeleted == false)
 					.Select(rc => new CommentAllViewModel()
@@ -290,7 +303,7 @@ namespace FoodAdvisor.Data.Services
 					ImageURL = r.ImageURL,
 					Publisher = r.Publisher.User.UserName ?? string.Empty,
 					Category = r.Category.Name,
-					PriceRange = r.PricaRange,
+					PriceRange = r.PriceRange,
 					City = r.City.Name,
 					Description = r.Description.Substring(0, 99)
 

@@ -81,6 +81,6 @@ namespace FoodAdvisor.Data.Models
 
         [Comment("Shows the price range of the restaurant.")]
         [Required]
-        public int PricaRange { get; set; }
+        public int PriceRange { get; set; }
     }
 }

@@ -71,7 +71,7 @@ namespace FoodAdvisor.Data.Services
 				   Description = ur.Restaurant.Description.Substring(0, 120),
 				   Category = ur.Restaurant.Category.Name,
 				   ImageUrl = ur.Restaurant.ImageURL ?? string.Empty,
-				   PriceRange = ur.Restaurant.PricaRange,
+				   PriceRange = ur.Restaurant.PriceRange,
 				   Location = ur.Restaurant.City.Name
 			   })
 			   .ToArrayAsync();
