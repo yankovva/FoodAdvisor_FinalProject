@@ -164,7 +164,7 @@ namespace FoodAdvisor.Data.Services
 
 			if (file != null)
 			{
-				if (user.ProfilePricturePath != null)
+				if (user.ProfilePricturePath != null && user.ProfilePricturePath != NoImageAccount)
 				{
 					fileService.DeleteFile(user.ProfilePricturePath);
 				}

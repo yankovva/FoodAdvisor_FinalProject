@@ -13,7 +13,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
 		public string CookingSteps { get; set; } = null!;
-		public string Products { get; set; } = null!;
+		public List<string> Products { get; set; } = new List<string>();
 		public DateTime CreatetOn { get; set; }
         public string Publisher { get; set; } = null!;
 		public string PublisherQuote { get; set; } = null!;

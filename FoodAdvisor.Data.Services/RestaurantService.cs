@@ -39,7 +39,7 @@ namespace FoodAdvisor.Data.Services
 		//Done
 		public async Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish)
 		{
-			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" , ".jfif" };
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".jfif" };
 			long maxSize = 5 * 1024 * 1024; // 5MB
 
 			if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
@@ -80,7 +80,7 @@ namespace FoodAdvisor.Data.Services
 				};
 				await cuisineRepository.AddAsync(cuisine);
 			}
-			
+
 			Restaurant place = new Restaurant()
 			{
 				Name = model.Name,
@@ -188,37 +188,42 @@ namespace FoodAdvisor.Data.Services
 			editedRestaurant.AtmosphereDescription = model.AtmosphereDescription;
 			editedRestaurant.ChefsSpecial = model.ChefsDishName;
 
-			string[] allowedExtensions = { ".jpg", ".jpeg", ".png" , ".jfif" };
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".jfif" };
 			long maxSize = 5 * 1024 * 1024;
 
 			if (file == null || fileDish == null)
 			{
 				return false;
 			}
-
+			if (editedRestaurant.ImageURL != NoImage)
+			{
 				fileService.DeleteFile(editedRestaurant.ImageURL);
+			}
 
-				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
-				{
-					throw new ArgumentException(InvalidFileMessage);
-				}
+			if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
+			{
+				throw new ArgumentException(InvalidFileMessage);
+			}
 
-				string fileName = $"{manager.Id.ToString()}_{model.Name}_{Path.GetFileName(file.FileName)}";
-				string newImagePath = await fileService.UploadFileAsync(file, RestaurantPicturesFolderName, fileName);
+			string fileName = $"{manager.Id.ToString()}_{model.Name}_{Path.GetFileName(file.FileName)}";
+			string newImagePath = await fileService.UploadFileAsync(file, RestaurantPicturesFolderName, fileName);
 
-				editedRestaurant.ImageURL = newImagePath;
-			
-	           fileService.DeleteFile(editedRestaurant.ChefsSpecialImage);
+			editedRestaurant.ImageURL = newImagePath;
 
-				if (!fileService.IsFileValid(fileDish, allowedExtensions, maxSize))
-				{
-					throw new ArgumentException(InvalidFileMessage);
-				}
+			if (editedRestaurant.ChefsSpecialImage != NoImage)
+			{
+				fileService.DeleteFile(editedRestaurant.ChefsSpecialImage);
+			}
 
-				string fileNameDish = $"{userId}_{model.Name}_{Path.GetFileName(fileDish.FileName)}";
-				string newImagePathDish = await fileService.UploadFileAsync(fileDish, ChefDishesFolderName, fileNameDish);
-				
-				editedRestaurant.ChefsSpecialImage = newImagePathDish;
+			if (!fileService.IsFileValid(fileDish, allowedExtensions, maxSize))
+			{
+				throw new ArgumentException(InvalidFileMessage);
+			}
+
+			string fileNameDish = $"{userId}_{model.Name}_{Path.GetFileName(fileDish.FileName)}";
+			string newImagePathDish = await fileService.UploadFileAsync(fileDish, ChefDishesFolderName, fileNameDish);
+
+			editedRestaurant.ChefsSpecialImage = newImagePathDish;
 
 			bool isUpdated = await this.restaurantRepository.UpdateAsync(editedRestaurant);
 			return true;
@@ -274,7 +279,7 @@ namespace FoodAdvisor.Data.Services
 					Likes = p.UserRestaurants.Where(r => r.RestaurantId == p.Id).Count(),
 					City = p.City.Name,
 					Publisher = p.Publisher.User.UserName ?? string.Empty,
-					PublisherQuote = p.Publisher.User.AboutMe ?? DefaultQuote ,
+					PublisherQuote = p.Publisher.User.AboutMe ?? DefaultQuote,
 					PublisherId = p.PublisherId.ToString(),
 					AllComment = p.RestaurantsComments
 					.Where(rc => rc.IsDeleted == false)

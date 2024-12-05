@@ -77,7 +77,7 @@ namespace FoodAdvisor.Data.Services
 					CookingTime = r.CookingTime,
 					Publisher = r.Publisher.UserName!,
 					Category = r.RecepieCategory.Name,
-					Products = r.Products,
+					Products = r.Products.Split(", ", StringSplitOptions.None).ToList(),
 					PublisherFullName = $"{r.Publisher.FirstName} {r.Publisher.LastName}",
 					PublisherPicture = r.Publisher.ProfilePricturePath,
 					PublisherId = r.PublisherId.ToString(),
@@ -189,9 +189,11 @@ namespace FoodAdvisor.Data.Services
 			{
 				return false;
 			}
-
+			if (editedRecepie.ImageURL != NoImage)
+			{
 				fileService.DeleteFile(editedRecepie.ImageURL);
-
+			}
+		
 				string[] allowedExtensions = { ".jpg", ".jpeg", ".png",".jfif" };
 				long maxSize = 5 * 1024 * 1024;
 				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))

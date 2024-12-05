@@ -46,7 +46,7 @@
 		</div>
 
 		<div id="recepie-wrapper">
-			<img id="recepie-img" src="/@Model.ImagePath" alt="@NoImage">
+			<img id="recepie-img" src="/@Model.ImagePath" alt="/@NoImage">
 
 			<div id="icon-wrapper">
 				<div class="fa bi-clock">@Model.CookingTime min </div>
@@ -67,9 +67,10 @@
 			</div>
 			<div class="info-wrapper">
 				<h4>Products</h4>
-				<p>
-					@Model.Products
-				</p>
+					@for (int i = 1; i <= Model.Products.Count; i++)
+					{
+					 <p style="width:100%; margin-bottom: 0;font-size: 1.1em;">@i. @Model.Products[i]</p>
+					}
 			</div>
 			<div class="info-wrapper">
 				<h4>Cooking steps</h4>
