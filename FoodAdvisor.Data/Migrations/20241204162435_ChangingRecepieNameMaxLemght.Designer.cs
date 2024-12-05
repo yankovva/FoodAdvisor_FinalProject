@@ -4,6 +4,7 @@ using FoodAdvisor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodAdvisor.Data.Migrations
 {
     [DbContext(typeof(FoodAdvisorDbContext))]
-    partial class FoodAdvisorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241204162435_ChangingRecepieNameMaxLemght")]
+    partial class ChangingRecepieNameMaxLemght
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace FoodAdvisor.Data.Migrations
                     b.Property<DateTime>("Createdon")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 12, 4, 20, 31, 13, 796, DateTimeKind.Local).AddTicks(4488))
+                        .HasDefaultValue(new DateTime(2024, 12, 4, 18, 24, 33, 741, DateTimeKind.Local).AddTicks(5818))
                         .HasComment("Date of creation of the User.");
 
                     b.Property<string>("Email")
@@ -323,28 +326,6 @@ namespace FoodAdvisor.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RecepiesDificulties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DificultyName = "Easy"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DificultyName = "Medium"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DificultyName = "Hard"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DificultyName = "Expert"
-                        });
                 });
 
             modelBuilder.Entity("FoodAdvisor.Data.Models.Restaurant", b =>

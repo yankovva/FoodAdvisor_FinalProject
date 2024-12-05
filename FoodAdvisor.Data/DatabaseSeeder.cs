@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace FoodAdvisor.Data;
 public class DatabaseSeeder
 {
-
     public static void SeedDatabase(FoodAdvisorDbContext context)
     {
         var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "json", "data.json");
@@ -20,7 +19,6 @@ public class DatabaseSeeder
 
         if (!context.Categories.Any())
         {
-            // Добавяне на категории
             if (data.Categories != null)
             {
                 foreach (var category in data.Categories)
@@ -31,10 +29,9 @@ public class DatabaseSeeder
         }
         if (!context.RecepiesCategories.Any())
         {
-            // Добавяне на категории рецепти
-            if (data.RecepieCategories != null)
+            if (data.RecipeCategories != null)
             {
-                foreach (var recepieCategory in data.RecepieCategories)
+                foreach (var recepieCategory in data.RecipeCategories)
                 {
                     context.RecepiesCategories.Add(recepieCategory);
 
@@ -44,10 +41,9 @@ public class DatabaseSeeder
 
         if (!context.RecepiesDificulties.Any())
         {
-            // Добавяне на трудности на рецепти
-            if (data.RecepieDificulties != null)
+            if (data.RecipeDificulties != null)
             {
-                foreach (var difficulty in data.RecepieDificulties)
+                foreach (var difficulty in data.RecipeDificulties)
                 {
                     context.RecepiesDificulties.Add(difficulty);
                 }
@@ -55,7 +51,6 @@ public class DatabaseSeeder
         }
         if (!context.Cuisines.Any())
         {
-            //Добавяне на типове кухня
             if (data.RestaurantCuisines != null)
             {
                 foreach (var cuisine in data.RestaurantCuisines)
@@ -64,8 +59,59 @@ public class DatabaseSeeder
                 }
             }
         }
-        // Записване на промените в базата
-        context.SaveChanges();
+		if (!context.Cities.Any())
+		{
+			if (data.Cities != null)
+			{
+				foreach (var city in data.Cities)
+				{
+					context.Cities.Add(city);
+				}
+			}
+		}
+		if (!context.Managers.Any())
+		{
+			if (data.Managers != null)
+			{
+				foreach (var manager in data.Managers)
+				{
+					context.Managers.Add(manager);
+				}
+			}
+		}
+		if (!context.Restaurants.Any())
+		{
+			if (data.Restaurants != null)
+			{
+				foreach (var restaurant in data.Restaurants)
+				{
+					context.Restaurants.Add(restaurant);
+				}
+			}
+		}
+		if (!context.Recepies.Any())
+		{
+			if (data.Recipes != null)
+			{
+				foreach (var recepie in data.Recipes)
+				{
+					context.Recepies.Add(recepie);
+				}
+			}
+		}
+		if (!context.Comments.Any())
+		{
+			if (data.Comments != null)
+			{
+				foreach (var comment in data.Comments)
+				{
+					context.Comments.Add(comment);
+				}
+			}
+		}
+		
+		
+		context.SaveChanges();
     }
 }
 
@@ -73,8 +119,13 @@ public class DatabaseSeeder
 public class SeedData
 {
     public List<Category> Categories { get; set; } = new List<Category>();
-    public List<RecepieCategory> RecepieCategories { get; set; } = new List<RecepieCategory>();
-    public List<RecepieDificulty> RecepieDificulties { get; set; } = new List<RecepieDificulty>();
+    public List<RecepieCategory> RecipeCategories { get; set; } = new List<RecepieCategory>();
+    public List<RecepieDificulty> RecipeDificulties { get; set; } = new List<RecepieDificulty>();
     public List<RestaurantCuisine> RestaurantCuisines { get; set; } = new List<RestaurantCuisine>();
+	public List<Restaurant> Restaurants { get; set; } = new List<Restaurant>();
+	public List<Recepie> Recipes { get; set; } = new List<Recepie>();
+	public List<Comment> Comments { get; set; } = new List<Comment>();
+	public List<Manager> Managers { get; set; } = new List<Manager>();
+	public List<City> Cities { get; set; } = new List<City>();
 }
 

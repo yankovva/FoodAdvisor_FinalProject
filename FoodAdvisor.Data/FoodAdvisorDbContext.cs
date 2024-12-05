@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using static FoodAdvisor.Common.ApplicationConstants;
 using FoodAdvisor.ViewModels;
+using System.Reflection.Emit;
 
 
 namespace FoodAdvisor.Data
@@ -43,6 +44,13 @@ namespace FoodAdvisor.Data
 			builder.Entity<ApplicationUser>()
 				.Property(u => u.ProfilePricturePath)
 				.HasDefaultValue($"{NoImageAccount}");
+
+			builder.Entity<RecepieDificulty>().HasData(
+		   new RecepieDificulty { Id = 1, DificultyName = "Easy" },
+		   new RecepieDificulty { Id = 2, DificultyName = "Medium" },
+		   new RecepieDificulty { Id = 3, DificultyName = "Hard" },
+		   new RecepieDificulty { Id = 4, DificultyName = "Expert" }
+	   );
 
 		}
 	}
