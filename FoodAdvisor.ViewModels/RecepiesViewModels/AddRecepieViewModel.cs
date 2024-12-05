@@ -9,7 +9,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         [Required]
         [MinLength(NameMinLenght)]
         [MaxLength(NameMaxLenght)]
-        public string Name { get; set; } = null!;
+        public required string Name { get; set; } 
 
 		public string? ImagePath { get; set; } 
 		
@@ -19,19 +19,19 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
         [Required]
         [MinLength(DescriptionMinLenght)]
         [MaxLength(DescriptionMaxLenght)]
-        public string Description { get; set; } = null!;
+        public required string Description { get; set; }
 
 		[Required]
 		[MaxLength(CookingStepsMaxLenght)]
 		[MinLength(CookingStepsMinLenght)]
-		public string CookingSteps { get; set; } = null!;
+		public required string CookingSteps { get; set; }
 
 		[Required]
 		[MinLength(ProductsMinLengt)]
 		[MaxLength(ProductsMaxLenght)]
 		[RegularExpression(@"^([a-zA-Z\s]+(?:\s*-\s*\d+(\s*(kg|gr|g|l|ml|oz))?)?)(,\s*[a-zA-Z\s]+(?:\s*-\s*\d+(\s*(kg|gr|g|l|ml|oz))?)?)*$",
 					   ErrorMessage = "Invalid format. Ingredients should be separated with a comma and may optionally include quantities (e.g. banana, flour- 500gr).")]
-		public string Products { get; set; } = null!;
+		public required string Products { get; set; }
 		[Required]
 		public int Servings { get; set; } 
 

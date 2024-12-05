@@ -9,17 +9,17 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 {
     public class RecepieIndexViewModel
     {
-        public string Id { get; set; } = null!;
-        public  string Name { get; set; } = null!;
+        public required string Id { get; set; } 
+        public required string Name { get; set; } 
         public int CookingTime { get; set; }
-        public string Publisher { get; set; } = null!;
+        public  required string Publisher { get; set; }
         public string? ImageURL { get; set; }
-        public string Category { get; set; } = null!;
-		public string AuthorPicturePath { get; set; } = null!;
+        public required string Category { get; set; }
+		public required string AuthorPicturePath { get; set; } 
         public int Servings { get; set; }
-        public string CreatedOn { get; set; } = null!;
-        public string DificultyLevel { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public required string CreatedOn { get; set; }
+        public required string DificultyLevel { get; set; }
+        public required string Description { get; set; } 
 
 	}
 }

@@ -13,27 +13,27 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[MaxLength(NameMaxLenght)]
 		[MinLength(NameMinLenght)]
 		[Required]
-		public string Name { get; set; } = null!;
+		public required string Name { get; set; } 
 
 		[MaxLength(DescriptionMaxLenght)]
 		[MinLength(DescriptionMinLenght)]
 		[Required]
-        public  string Description { get; set; } = null!;
+        public required string Description { get; set; }
 
 		[Required]
 		[MinLength(DescriptionMinLenght)]
 		[MaxLength(DescriptionMaxLenght)]
-		public string AtmosphereDescription { get; set; } = null!;
+		public required string AtmosphereDescription { get; set; }
 
 		[Required]
 		[MinLength(DescriptionMinLenght)]
 		[MaxLength(DescriptionMaxLenght)]
-		public string MenuDescription { get; set; } = null!;
+		public required string MenuDescription { get; set; }
 
 		[Required]
 		[MinLength(AddressMinLenght)]
 		[MaxLength(AddressMaxLenght)]
-        public  string Address { get; set; } = null!;
+        public required string Address { get; set; }
 
 		
 		public string? ChefsDishImagePath { get; set; } 
@@ -41,7 +41,7 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[Required]
 		[MinLength(NameMinLenght)]
 		[MaxLength(NameMaxLenght)]
-		public string ChefsDishName { get; set; } = null!;
+		public required string ChefsDishName { get; set; }
 
 		
 		public string? ImagePath { get; set; } 
@@ -54,12 +54,12 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 		[Required]
 		[MaxLength(CityNameMaxLenght)]
 		[MinLength(CityNameMinLenght)]
-		public string City { get; set; } = null!;
+		public required string City { get; set; } 
 
 		[Required]
 		[MaxLength(CuisineNameMaxLenght)]
 		[MinLength(CuisineNameMinLenght)]
-		public string CuisineName { get; set; } = null!;
+		public required string CuisineName { get; set; }
 
 		[Required]
 		public int PriceRange { get; set; } 

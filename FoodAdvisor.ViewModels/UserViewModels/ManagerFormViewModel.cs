@@ -9,12 +9,12 @@ namespace FoodAdvisor.ViewModels.UserViewModels
 {
     public class ManagerFormViewModel
     {
-		public string UserId { get; set; } = null!;
+		public required string UserId { get; set; } 
 
 		[Required]
-		public string PhoneNumber { get; set; } = null!;
+		public required string PhoneNumber { get; set; } 
 
 		[Required]
-		public string Address { get; set; } = null!;
+		public required string Address { get; set; }
 	}
 }

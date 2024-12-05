@@ -10,22 +10,22 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 	public class DetailsRecepieViewModel
 	{
         public Guid Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
-		public string CookingSteps { get; set; } = null!;
+        public required string Name { get; set; } 
+        public required string Description { get; set; } 
+		public required string CookingSteps { get; set; }
 		public List<string> Products { get; set; } = new List<string>();
 		public DateTime CreatetOn { get; set; }
-        public string Publisher { get; set; } = null!;
-		public string PublisherQuote { get; set; } = null!;
-		public string PublisherId { get; set; } = null!;
-		public string PublisherFullName { get; set; } = null!;
-        public string PublisherPicture { get; set; } = null!;
-		public string PublisherLocation { get; set; } = null!;
-		public string ImagePath { get; set; } = null!;
+        public required string Publisher { get; set; }
+		public required string PublisherQuote { get; set; } 
+		public required string PublisherId { get; set; } 
+		public required string PublisherFullName { get; set; } 
+        public  required string PublisherPicture { get; set; } 
+		public required string PublisherLocation { get; set; }
+		public required string ImagePath { get; set; } 
 		public int CookingTime { get; set; }
-		public string Category { get; set; } = null!;
+		public required string Category { get; set; } 
         public int  Servings { get; set; }
-		public string Dificulty { get; set; } = null!;
+		public required string Dificulty { get; set; }
         public IEnumerable<CommentAllViewModel> AllComment { get; set; } = new List<CommentAllViewModel>();
 
 	}

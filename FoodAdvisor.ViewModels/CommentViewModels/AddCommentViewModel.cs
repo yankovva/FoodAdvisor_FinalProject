@@ -9,7 +9,7 @@ namespace FoodAdvisor.ViewModels.CommentViewModel
 		[Required]
 		[MaxLength(MessageMaxLenght)]
 		[MinLength(MessageMinLenght)]
-		public string Message { get; set; } = null!;
+		public required string Message { get; set; } 
 		
 	}
 }
