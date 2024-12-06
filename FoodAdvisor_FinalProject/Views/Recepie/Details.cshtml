@@ -67,11 +67,14 @@
 			</div>
 			<div class="info-wrapper">
 				<h4>Products</h4>
-					@for (int i = 1; i <= Model.Products.Count; i++)
-					{
-					 <p style="width:100%; margin-bottom: 0;font-size: 1.1em;">@i. @Model.Products[i]</p>
-					}
-			</div>
+				
+						@foreach (var product in Model.Products)
+						{
+					<p style="width:100%; margin-bottom: 0;font-size: 1.1em;"><i class="bi bi-dot"></i> @product</p>
+						}
+			
+			
+					</div>
 			<div class="info-wrapper">
 				<h4>Cooking steps</h4>
 				<p>

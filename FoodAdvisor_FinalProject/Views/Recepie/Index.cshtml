@@ -17,7 +17,7 @@
 <div class="filter-search-div">
  
 	<div class="order-div">
-		<p>Categodry: </p>
+		<p>Order by: </p>
 		<div class="dropdown">
 			<button class="dropbtn"><i class="bi bi-border-width"></i></button>
 			<div class="dropdown-content">
@@ -29,7 +29,7 @@
 	</div>
 <div class="search-container">
 	<form method="get" asp-controller="Recepie" asp-action="Index">
-			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey;">
+			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey; border-radius: 10px;width: 15em;">
 		<button type="submit"><i class="fa fa-search"></i></button>
 	</form>
 </div>

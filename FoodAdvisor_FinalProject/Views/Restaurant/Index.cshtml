@@ -31,8 +31,8 @@
 		</div>
 	</div>
 	<div class="search-container">
-		<form method="get" asp-controller="Recepie" asp-action="Index">
-			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey;">
+		<form method="get" asp-controller="Restaurant" asp-action="Index">
+			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey; border-radius: 10px;width: 15em;">
 			<button type="submit"><i class="fa fa-search"></i></button>
 		</form>
 	</div>

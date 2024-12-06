@@ -1,56 +1,103 @@
-﻿@using FoodAdvisor.ViewModels.AccountViemModels;
+﻿@using FoodAdvisor.Data.Services.Interfaces
+@using FoodAdvisor.ViewModels.AccountViemModels;
 @using static FoodAdvisor.Common.ApplicationConstants;
+@inject IManagerService managerService
 @model IndexGetUserInfoViewModel
 
 <link rel="stylesheet" href="~/css/account-styles.css" asp-append-version="true" />
 
 @{
-    ViewBag.Title = "Account";
+	ViewBag.Title = "Account";
 }
 
 <div class="page-main">
-    <div id="account-main">
-        <div id="profile-picture-div">
-            <img src="/@Model.ProfilePricture">
-        </div>
+	<div id="account-main">
+		<div id="profile-picture-div">
+			<img src="/@Model.ProfilePricture">
+		</div>
 
-        <div id="account-info">
-            <div id="heading-button-div">
-                <h3>Account information</h3>
-                <a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
-            </div>
-            <p>Username: @Model.UserName</p>
-            <p>Firstname: @Model.FirstName</p>
-            <p>Lastname: @Model.LastName</p>
-            <p>Location: @Model.Country</p>
-            <p>About me: @Model.AboutMe</p>
-        </div>
+		<div id="account-info">
+			<div id="heading-button-div">
+				<h3>Account information</h3>
+				<a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+			</div>
+			<p>Username: @Model.UserName</p>
+			<p>Firstname: @Model.FirstName</p>
+			<p>Lastname: @Model.LastName</p>
+			<p>Location: @Model.Country</p>
+			<p>About me: @Model.AboutMe</p>
+		</div>
 
-    </div>
-    <h2>Your Added Recepies</h2>
-    <div class="user-added-recepies">
-        @foreach (var recepie in Model.UserAddedRecepies)
-        {
+	</div>
+	@if (await managerService.IsUserManagerAsync(Model.Id))
+	{
+		<h2>Your Added Recepies and Restaurants</h2>
+		<div>
+			<input type="radio" id="option1" name="contentOption" value="1" onchange="toggleContent()" checked>
+			<label for="option1">Recepies</label>
 
-            <div class="recepie">
-                <img src="/@recepie.Image"
-                alt="/@NoImage" />
-                <div class="recepie-info">
-                    <h5>@recepie.Name</h5>
-                    <p>Last Modified : @recepie.AddedOn</p>
-                    <p>Category: @recepie.Categodry</p>
-                    <p>Dificulty level: @recepie.DificultyLevel</p>
-                    <div class="like-comment-wrapper">
-                        <p><i class="bi bi-heart"></i>@recepie.Likes likes</p>
-                        <p><i class="bi bi-chat-dots"></i>@recepie.Comments comment</p>
-                    </div>
-                </div>
-                <div class="user-recepie-buttons">
-                    <a asp-controller="Recepie" asp-action="Edit" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a asp-controller="Recepie" asp-action="Delete" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-x-circle"></i></a>
-                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-info-circle"></i></a>
-                </div>
-            </div>
-        }
-    </div>
+			<input type="radio" id="option2" name="contentOption" value="2" onchange="toggleContent()">
+			<label for="option2">Restaurants</label>
+		</div>
+	}
+	else
+	{
+		<h2>Your Added Recepies</h2>
+		<div>
+			<input type="radio" id="option1" name="contentOption" value="1" onchange="toggleContent()" checked hidden>
+
+		</div>
+	}
+
+	<div class="user-added-recepies" id="content1">
+		@foreach (var recepie in Model.UserAddedRecepies)
+		{
+
+			<div class="recepie">
+				<img src="/@recepie.Image"
+					 alt="/@NoImage" />
+				<div class="recepie-info">
+					<h5>@recepie.Name</h5>
+					<p>Last Modified : @recepie.AddedOn</p>
+					<p>Category: @recepie.Categodry</p>
+					<p>Dificulty level: @recepie.DificultyLevel</p>
+					<div class="like-comment-wrapper">
+						<p><i class="bi bi-heart"></i>@recepie.Likes likes</p>
+						<p><i class="bi bi-chat-dots"></i>@recepie.Comments comment</p>
+					</div>
+				</div>
+				<div class="user-recepie-buttons">
+					<a asp-controller="Recepie" asp-action="Edit" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+					<a asp-controller="Recepie" asp-action="Delete" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-x-circle"></i></a>
+					<a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-info-circle"></i></a>
+				</div>
+			</div>
+		}
+	</div>
+	<div class="user-added-recepies" id="content2">
+		@foreach (var restaurant in Model.UserAdedRestaurants)
+		{
+
+			<div class="recepie">
+				<img src="/@restaurant.Image"
+					 alt="/@NoImage" />
+				<div class="recepie-info">
+					<h5>@restaurant.Name</h5>
+					<p>Category: @restaurant.Categodry</p>
+					<p>Cuisine type: @restaurant.Cuisine</p>
+					<div class="like-comment-wrapper">
+						<p><i class="bi bi-heart"></i>@restaurant.Likes likes</p>
+						<p><i class="bi bi-chat-dots"></i>@restaurant.Comments comment</p>
+					</div>
+				</div>
+				<div class="user-recepie-buttons">
+					<a asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurant.Id" method="get" class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square"></i></a>
+					<a asp-controller="Restaurant" asp-action="Delete" asp-route-id="@restaurant.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-x-circle"></i></a>
+					<a asp-controller="Restaurant" asp-action="Details" asp-route-id="@restaurant.Id" method="get" class="btn btn-outline-dark"><i class="bi bi-info-circle"></i></a>
+				</div>
+			</div>
+		}
+	</div>
 </div>
+
+<script src="~/js/scripts.js"></script>
