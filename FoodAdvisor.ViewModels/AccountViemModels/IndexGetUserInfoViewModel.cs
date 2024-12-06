@@ -1,5 +1,6 @@
 ﻿using FoodAdvisor.Data.Models;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace FoodAdvisor.ViewModels.AccountViemModels
         public string? ProfilePricture { get; set; }
 		public required string Email { get; set; }
 		public virtual IEnumerable<UserAddedRecepiesViewModel> UserAddedRecepies { get; set; } = new List<UserAddedRecepiesViewModel>();
-      
+
+		public virtual IEnumerable<UserAdedRestaurantsViewModel> UserAdedRestaurants { get; set; } = new List<UserAdedRestaurantsViewModel>();
 	}
 }
