@@ -3,6 +3,7 @@ using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.AccountViemModels;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -145,6 +146,19 @@ namespace FoodAdvisor.Data.Services
 						AddedOn = r.CreatedOn.ToString(DateTimeFormat),
 						Likes = r.UsersRecepies.Count(),
 						Comments = r.RecepieComments.Count()
+					}),
+					UserAdedRestaurants = u.AddedRestaurants
+					.Where(r=>r.IsDeleted == false)
+					.Select(r=> new UserAdedRestaurantsViewModel
+					{
+
+						Id = r.Id.ToString(),
+						Name = r.Name,
+						Cuisine = r.Cuisine.Name,
+						Categodry = r.Category.Name,
+						Image = r.ImageURL,
+						Likes = r.UserRestaurants.Count(),
+						Comments = r.UserRestaurants.Count()
 					})
 				}).FirstOrDefaultAsync();
 

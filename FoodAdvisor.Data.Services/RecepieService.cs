@@ -80,6 +80,7 @@ namespace FoodAdvisor.Data.Services
 					Products = r.Products.Split(", ", StringSplitOptions.None).ToList(),
 					PublisherFullName = $"{r.Publisher.FirstName} {r.Publisher.LastName}",
 					PublisherPicture = r.Publisher.ProfilePricturePath,
+					PublisherLocation = r.Publisher.Country,
 					PublisherId = r.PublisherId.ToString(),
 					PublisherQuote = r.Publisher.AboutMe ?? DefaultQuote,
 					ImagePath = r.ImageURL,
