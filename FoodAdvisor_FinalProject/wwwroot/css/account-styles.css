@@ -18,7 +18,7 @@
 }
 
 #profile-picture-div {
-    align-self: flex-start;
+    align-self: center;
 }
 
 
@@ -67,10 +67,12 @@
     background-color: wheat;
     padding: 10px;
     box-shadow: 5px 10px 20px #888888;
+    justify-content:center;
+    border-radius:15px;
 }
 
     .recepie img {
-        height: auto;
+        height: 240px;
         width: 250px;
         border: 1px solid grey;
         padding: 5px;

@@ -14,7 +14,7 @@
     display: flex;
     flex-direction:row;
     flex-wrap:wrap;
-    width:80%;
+    width:75%;
     grid-template-columns: 300px 600px;
     border-radius: 5px;
     box-shadow: 0 15px 20px rgba(0, 0, 0, 0.356);
@@ -46,7 +46,7 @@ img {
     align-items: center;
     background-color: #fc9400;
     color: #fff;
-    padding: 22px 45px;
+    padding: 15px 23px;
     font-size: 1rem;
     text-transform: uppercase;
     border-radius: 5px;
@@ -54,6 +54,7 @@ img {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.294);
     text-decoration: none;
     color: white;
+    top: 5px;
 }
 
 .container__text {
@@ -67,8 +68,12 @@ img {
 h1 {
     color: black;
     font-weight: 400;
+    font-size:2.2em;
 }
 
+.d-inline button{
+    margin-top:0;
+}
 .container__text__star span {
     font-size: 0.8rem;
     color: #ffa800;
@@ -76,8 +81,9 @@ h1 {
 }
 
 p {
-    font-size: 0.9rem;
-    width:100%;
+    color: black;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 .container__text__timing {
@@ -110,8 +116,3 @@ h2 {
         font-size: 1.5rem;
     }
 
-p {
-    color: black;
-    font-weight: bold;
-    font-size: 1.2rem;
-}

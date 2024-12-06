@@ -320,10 +320,7 @@ body {
     }
 
 @media(max-width: 768px) {
-    header {
-        min-width: 40em;
-    }
-
+   
     .collapse:not(.show) {
         display: none !important;
     }

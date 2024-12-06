@@ -147,10 +147,20 @@ img {
     gap: 15px;
 }
 
-.filter-search-div{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-evenly;
+.filter-search-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background-color: white;
+    padding: 6px;
+    align-items: center;
+    border-radius: 10px;
+    border: 2px solid #e0dbdb;
+}
+.order-div p {
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #4f4e4e;
 }
 /*drop down filter*/
 .dropbtn {
@@ -160,7 +170,9 @@ img {
     font-size: 16px;
     border: none;
     cursor: pointer;
+    border-radius: 3px;
 }
+
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -211,10 +223,11 @@ img {
 
 .search-container button {
     padding: 6px 10px;
-    background: white;
     font-size: 17px;
     border: none;
     cursor: pointer;
+    background-color: lightgrey;
+    border-radius: 3px;
 }
 
     .search-container button:hover {
