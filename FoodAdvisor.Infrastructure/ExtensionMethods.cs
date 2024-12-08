@@ -1,4 +1,5 @@
-﻿using FoodAdvisor.Data.Models;
+﻿using FoodAdvisor.Data;
+using FoodAdvisor.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -102,5 +103,37 @@ namespace FoodAdvisor.Infrastructure
 
             return applicationUser;
         }
-    }
+
+		public static IApplicationBuilder SeedDatabase(this IApplicationBuilder app)
+		{
+			using IServiceScope serviceScope = app.ApplicationServices.CreateAsyncScope();
+			IServiceProvider serviceProvider = serviceScope.ServiceProvider;
+
+			Task.Run(async () =>
+			{
+				await DatabaseSeeder.SeedDatabase(serviceProvider);
+			})
+				.GetAwaiter()
+				.GetResult();
+
+			return app;
+		}
+
+		public static IApplicationBuilder SeedUsers(this IApplicationBuilder app)
+		{
+			using IServiceScope serviceScope = app.ApplicationServices.CreateAsyncScope();
+			IServiceProvider serviceProvider = serviceScope.ServiceProvider;
+            
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+			Task.Run(async () =>
+			{
+				await UserSeerder.SeedUsersAsync(userManager,serviceProvider);
+			})
+				.GetAwaiter()
+				.GetResult();
+
+			return app;
+		}
+	}
 }

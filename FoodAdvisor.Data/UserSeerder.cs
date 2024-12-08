@@ -1,5 +1,6 @@
 ﻿using FoodAdvisor.Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,11 @@ namespace FoodAdvisor.Data
 {
 	public class UserSeerder
 	{
-		public static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager, FoodAdvisorDbContext context)
+		public static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager, IServiceProvider services)
 		{
+
+			await using FoodAdvisorDbContext context = services.GetRequiredService<FoodAdvisorDbContext>();
+
 			var users = new List<(string Email, string Password,string Username, string Id)>
 				{
 					("jenny@gmail.com", "Jenny123!", "JenyFromTheBlock","7df25137-b39a-4a91-903b-303c0582e389" ),
@@ -21,7 +25,7 @@ namespace FoodAdvisor.Data
 					("andrea@gmail.com", "Andrea123!!", "AndreaVs", "4b9593f1-17bf-433d-b4e9-60d3c11d2d83"),
 				};
 
-			if (!context.Users.Any())
+			if (context.Users.Count() <= 1)
 			{
 				foreach (var (email, password, username, id) in users)
 				{
@@ -40,7 +44,6 @@ namespace FoodAdvisor.Data
 					}
 				}
 			}
-			
 		}
 
 	}
