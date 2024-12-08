@@ -4,6 +4,19 @@
 @{
 	ViewBag.Title = "Add Recepie";
 }
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success">
+		@TempData["SuccessMessage"]
+	</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-danger">
+		@TempData["ErrorMessage"]
+	</div>
+}
 <link rel="stylesheet" href="~/css/Recepie/add-recepie.css" asp-append-version="true" />
 
 <div class="form-wrapper">

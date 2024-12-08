@@ -52,19 +52,8 @@ builder.Services.ConfigureApplicationCookie(cfg =>
     cfg.ExpireTimeSpan = TimeSpan.FromDays(2);
 });
 
-
-
 builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-
-builder.Services.AddScoped<IRestaurantService, RestaurantService>();
-builder.Services.AddScoped<IRestaurantFavouritesService, RestaurantFavouritesService>();
-builder.Services.AddScoped<IRecepieService, RecepieService>();
-builder.Services.AddScoped<IManagerService, ManagerService>();
-builder.Services.AddScoped<IRecepieFavouritesService, RecepieFavouritesService>();
-builder.Services.AddScoped<ICommentService, CommentService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.RegisterUserDefinedServices(typeof(IRestaurantService).Assembly);
 
 
 builder.Services.AddRazorPages();
@@ -73,19 +62,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
-//Seed data
-using (var scope = app.Services.CreateScope())
-{
-	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-	var context = scope.ServiceProvider.GetRequiredService<FoodAdvisorDbContext>();
-	await UserSeerder.SeedUsersAsync(userManager, context);
-
-    DatabaseSeeder.SeedDatabase(context);
-}
-
-	
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -107,7 +83,14 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
+
+if (app.Environment.IsDevelopment())
+{
+    app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
+	app.SeedUsers();
+	app.SeedDatabase();
+
+}
 
 app.MapControllerRoute(
 	name: "Areas",

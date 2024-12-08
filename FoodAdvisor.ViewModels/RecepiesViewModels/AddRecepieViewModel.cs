@@ -29,8 +29,7 @@ namespace FoodAdvisor.ViewModels.RecepiesViewModels
 		[Required]
 		[MinLength(ProductsMinLengt)]
 		[MaxLength(ProductsMaxLenght)]
-		[RegularExpression(@"^([a-zA-Z\s]+(?:\s*-\s*\d+(\s*(kg|gr|g|l|ml|oz))?)?)(,\s*[a-zA-Z\s]+(?:\s*-\s*\d+(\s*(kg|gr|g|l|ml|oz))?)?)*$",
-					   ErrorMessage = "Invalid format. Ingredients should be separated with a comma and may optionally include quantities (e.g. banana, flour- 500gr).")]
+		
 		public string Products { get; set; } = null!;
 		[Required]
 		public int Servings { get; set; } 

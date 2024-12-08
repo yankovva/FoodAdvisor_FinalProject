@@ -16,7 +16,7 @@ namespace FoodAdvisor.Infrastructure
     {
 		public static void RegisterRepositories(this IServiceCollection services, Assembly modelsAssembly)
 		{
-			// to do: Re-write the implementation in such way that the user must create a single class for repositories
+			
 			Type[] typesToExclude = new Type[] { };
 			
 			Type[] modelTypes = modelsAssembly
@@ -56,9 +56,29 @@ namespace FoodAdvisor.Infrastructure
 			}
 		}
 
-		public static void RegisterServices(this IServiceCollection services)
+		public static void RegisterUserDefinedServices(this IServiceCollection services, Assembly serviceAssembly)
 		{
+			Type[] serviceInterfaceTypes = serviceAssembly
+				.GetTypes()
+				.Where(t => t.IsInterface)
+				.ToArray();
+			Type[] serviceTypes = serviceAssembly
+				.GetTypes()
+				.Where(t => !t.IsInterface && !t.IsAbstract &&
+								t.Name.ToLower().EndsWith("service"))
+				.ToArray();
 
+			foreach (Type serviceInterfaceType in serviceInterfaceTypes)
+			{
+				Type? serviceType = serviceTypes
+					.SingleOrDefault(t => "i" + t.Name.ToLower() == serviceInterfaceType.Name.ToLower());
+				if (serviceType == null)
+				{
+					throw new NullReferenceException($"Service type could not be obtained for the service {serviceInterfaceType.Name}");
+				}
+
+				services.AddScoped(serviceInterfaceType, serviceType);
+			}
 		}
 	}
 }
