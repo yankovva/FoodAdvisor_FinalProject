@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{6C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodAdvisor.Data.Services", "FoodAdvisor.Data.Services\FoodAdvisor.Data.Services.csproj", "{A0B99D13-E470-476D-A738-98A434F79F46}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A13D4F7F-13C2-416D-9A8C-C1469FA71548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodAdvisor.Services.Tests", "FoodAdvisor.Services.Tests\FoodAdvisor.Services.Tests.csproj", "{7385B8D5-134C-420D-B8B2-26ACE9B80B83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,10 @@ Global
 		{A0B99D13-E470-476D-A738-98A434F79F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B99D13-E470-476D-A738-98A434F79F46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B99D13-E470-476D-A738-98A434F79F46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7385B8D5-134C-420D-B8B2-26ACE9B80B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7385B8D5-134C-420D-B8B2-26ACE9B80B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7385B8D5-134C-420D-B8B2-26ACE9B80B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7385B8D5-134C-420D-B8B2-26ACE9B80B83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +76,7 @@ Global
 		{659517AA-8367-4785-987F-B5DE80E47038} = {54D33950-A076-4F96-9146-21C8A19BC716}
 		{53F64559-126F-454C-937E-C59A479C712B} = {54D33950-A076-4F96-9146-21C8A19BC716}
 		{A0B99D13-E470-476D-A738-98A434F79F46} = {6C64485F-A8F0-4BAD-A7CF-5859D1F6BB0B}
+		{7385B8D5-134C-420D-B8B2-26ACE9B80B83} = {A13D4F7F-13C2-416D-9A8C-C1469FA71548}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {117C2609-BE79-43F1-B8CA-665EED34BDCF}

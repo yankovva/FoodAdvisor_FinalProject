@@ -17,23 +17,17 @@ namespace FoodAdvisor.Data.Services
 	public class RecepieService : BaseService, IRecepieService
 	{
 		private readonly IRepository<Recepie, Guid> recepieRepository;
-		private readonly IRepository<RecepieCategory, Guid> recepieCategoryRepository;
-		private readonly IRepository<RecepieDificulty, int> recepieDificultyRepository;
-		private readonly IWebHostEnvironment enviorment;
 		private IRepository<UserRecepie, object> userRecepieRepository;
 		private readonly IFileService fileService;
 
 
-		public RecepieService(IRepository<Recepie, Guid> recepieRepository, IWebHostEnvironment enviorment,
-			IRepository<UserRecepie, object> userRecepieRepository, IFileService fileService,
-			IRepository<RecepieCategory, Guid> recepieCategoryRepository, IRepository<RecepieDificulty, int> recepieDificultyRepository)
+		public RecepieService(IRepository<Recepie, Guid> recepieRepository,
+			IRepository<UserRecepie, object> userRecepieRepository, 
+			IFileService fileService)
 		{
 			this.recepieRepository = recepieRepository;
-			this.enviorment = enviorment;
 			this.userRecepieRepository = userRecepieRepository;
 			this.fileService = fileService;
-			this.recepieCategoryRepository = recepieCategoryRepository;
-			this.recepieDificultyRepository = recepieDificultyRepository;
 		}
 
 		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file)
@@ -49,6 +43,13 @@ namespace FoodAdvisor.Data.Services
 			string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
 
 			string filePath = await fileService.UploadFileAsync(file, RecepiePicturesFolderName, fileName);
+
+			Guid userGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(userId.ToString(), ref userGuid);
+			if (!isGuidValid)
+			{
+				throw new FormatException(InvalidErrorMessage);
+			}
 
 			Recepie recepie = new Recepie
 			{
@@ -257,13 +258,13 @@ namespace FoodAdvisor.Data.Services
 				Name = r.Name,
 				CookingTime = r.CookingTime,
 				ImageURL = r.ImageURL,
-				Publisher = r.Publisher.UserName!,
-				Category = r.RecepieCategory.Name,
-				AuthorPicturePath = r.Publisher.ProfilePricturePath!,
+				Publisher = r.Publisher.UserName ?? "unkown",
+				Category = r.RecepieCategory.Name ?? "unknwon",
+				AuthorPicturePath = r.Publisher.ProfilePricturePath ?? "no-picture",
 				Servings = r.NumberOfServing,
 				CreatedOn = r.CreatedOn.ToString(),
-				DificultyLevel = r.RecepieDificultyId.ToString(),
-				Description = r.Description.Substring(0, 99)
+				DificultyLevel = r.RecepieDificultyId.ToString()  ?? "unknown",
+				Description = r.Description.Substring(0, 99) ?? "unknown",
 			}).ToArrayAsync();
 
 			return recepies;
@@ -271,9 +272,10 @@ namespace FoodAdvisor.Data.Services
 
 			public async Task<IEnumerable<string>> GetAllCategoriesAsync()
 			{
-				IEnumerable<string> allCategories = await this.recepieCategoryRepository
+				IEnumerable<string> allCategories = await this.recepieRepository
 					.GetAllAttached()
-					.Select(c => c.Name)
+					.Select(c => c.RecepieCategory.Name)
+					.Distinct()
 					.ToArrayAsync();
 
 				return allCategories;
@@ -281,9 +283,10 @@ namespace FoodAdvisor.Data.Services
 
 			public async Task<IEnumerable<string>> GetAllDificultiesAsync()
 			{
-				IEnumerable<string> allDificulties = await this.recepieDificultyRepository
+				IEnumerable<string> allDificulties = await this.recepieRepository
 					.GetAllAttached()
-					.Select(c => c.DificultyName)
+					.Select(c => c.RecepieDificulty.DificultyName)
+					.Distinct()
 					.ToArrayAsync();
 
 				return allDificulties;

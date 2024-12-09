@@ -9,5 +9,6 @@ namespace FoodAdvisor.Common
     public static class ErrorMessages
     {
 		public const string InvalidFileMessage = "Invalid file!";
+		public const string InvalidErrorMessage = "An unexpected error occurred while adding the recipe.";
 	}
 }

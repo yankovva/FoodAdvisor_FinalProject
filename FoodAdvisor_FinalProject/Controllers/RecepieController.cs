@@ -74,19 +74,16 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Add(AddRecepieViewModel model, IFormFile file)
 		{
-
-
 			string? userId = this.GetCurrentUserId();
+
 			if (!ModelState.IsValid)
 			{
 				model.Categories = await GetCategories();
 				model.Dificulty = await GetDificulty();
-				TempData["ErrorMessage"] = "An error occurred, please try again.";
 				return View(model);			
 			}
 
 			await this.recepieService.AddRecepiesAsync(model, Guid.Parse(userId!),file);
-			TempData["SuccessMessage"] = "Operation completed successfully!";
 			return RedirectToAction(nameof(Index));
 		}
 
