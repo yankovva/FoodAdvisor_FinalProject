@@ -28,20 +28,20 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house"></i>Home</a>
 						</li>
 
 						@if (User?.Identity?.IsAuthenticated ?? false)
 						{
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Restaurant" asp-action="Index">Restaurants</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Restaurant" asp-action="Index"> <i class="bi bi-shop-window"></i> Restaurants</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Recepie" asp-action="Index">Recepies</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Recepie" asp-action="Index"> <i class="bi bi-egg-fried"></i> Recepies</a>
 							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle text-light" href="#" id="favouritesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Favourites
+									<i class="bi bi-heart-fill"></i>Favourites
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="favouritesDropdown">
 									<li>
@@ -53,12 +53,12 @@
 								</ul>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link  text-light " asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+								<a class="nav-link  text-light " asp-area="" asp-controller="Account" asp-action="Index"><i class="bi bi-person-circle"></i>Account</a>
 							</li>
 							@if (User.IsInRole(AdminRoleName))
 							{
 								<li class="nav-item">
-									<a class="nav-link  text-light " asp-area="Admin" asp-controller="AdminManage" asp-action="Index">Admin</a>
+									<a class="nav-link  text-light " asp-area="Admin" asp-controller="AdminManage" asp-action="Index"> <i class="bi bi-kanban"></i> Admin</a>
 								</li>
 							}
 

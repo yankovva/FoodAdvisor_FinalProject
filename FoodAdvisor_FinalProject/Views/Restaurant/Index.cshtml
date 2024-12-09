@@ -2,7 +2,7 @@
 @using FoodAdvisor.Data.Services.Interfaces;
 @using FoodAdvisor.Infrastructure;
 @using static FoodAdvisor.Common.ApplicationConstants;
-@model PaginatedList<RestaurantIndexViewModel>
+@model FilterIndexRestaurantViewModel
 @inject IManagerService managerService
 
 <link rel="stylesheet" href="~/css/site-entity-index.css" asp-append-version="true" />
@@ -12,14 +12,86 @@
 	ViewBag.Title = "All Restauranrs";
 }
 
-
 <!-- Button to add a new restaurant -->
 @if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()!))
 {
 	<a asp-action="Add" class="btn btn-success mb-4">Add New Restaurant</a>
 }
 
-<div class="filter-search-div">
+<form method="get" asp-action="Index" class="filter-search-div">
+	<div class="row">
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="SearchQuery">Search by keyword</label>
+				<input asp-for="SearchQuery" class="form-control" placeholder="Search by name..." />
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="CategoryFilter"><i class="bi bi-arrow-down-up"></i> Category</label>
+				<select asp-for="CategoryFilter" class="form-control">
+					@if (Model.AllCategories != null)
+					{
+						<option value="">Reset</option>
+						foreach (string category in Model.AllCategories)
+						{
+							<option value="@category">@category</option>
+						}
+					}
+				</select>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="CuisineFilter"><i class="bi bi-arrow-down-up"></i> Cuisine</label>
+				<select asp-for="CuisineFilter" class="form-control">
+					@if (Model.AllCuisines != null)
+					{
+						<option value="">Reset</option>
+						foreach (string cuisine in Model.AllCuisines)
+						{
+							<option value="@cuisine">@cuisine</option>
+						}
+					}
+				</select>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="CityFilter"><i class="bi bi-arrow-down-up"></i> City</label>
+				<select asp-for="CityFilter" class="form-control">
+					@if (Model.AllCities != null)
+					{
+						<option value="">Reset</option>
+						foreach (string city in Model.AllCities)
+						{
+							<option value="@city">@city</option>
+						}
+					}
+				</select>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="EntitiesPerPage"><i class="bi bi-arrow-down-up"></i> Restaurants per page</label>
+				<select asp-for="EntitiesPerPage" class="form-control">
+					@for (int i = 5; i <= 30; i += 5)
+					{
+						<option value="@i">@i</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="col col d-flex align-items-end">
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Filter</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+
+@*<div class="filter-search-div">
 	<div class="order-div">
 		<p>Order by: </p>
 		<div class="dropdown">
@@ -37,75 +109,107 @@
 		</form>
 	</div>
 </div>
-
+*@
 
 <div class="row">
-	@foreach (var restaurant in Model)
+	@if (Model.Restaurants != null)
 	{
-		<div class="col-md-3" style="min-width:300px;">
-			<div class="card">
-				<div>
-					<img class="header" src="@restaurant.ImageURL" alt="@NoImage">
-					<form asp-controller="RestaurantFavourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post">
-						<input type="hidden" name="id" value="@restaurant.Id" />
-						<button type="submit" class="icon-heart"><i type="submit" class="fa-solid fa-heart"></i></button>
-					</form>
-
-				</div>
-				<div class="text">
-					<h1 class="food">
-						@restaurant.Name
-					</h1>
-					<div class="icon-details-wrapper">
-						@if (restaurant.PriceRange < 20)
-						{
-							<i class="fa bi-cash">$</i>
-						}
-						else if (restaurant.PriceRange < 50 && restaurant.PriceRange >= 20)
-						{
-							<i class="fa bi-cash">$$</i>
-						}
-						else if (restaurant.PriceRange < 70 && restaurant.PriceRange >= 50)
-						{
-							<i class="fa bi-cash">$$$</i>
-						}
-						else if (restaurant.PriceRange < 110 && restaurant.PriceRange >= 70)
-						{
-							<i class="fa bi-cash">$$$$</i>
-						}
-						else
-						{
-							<i class="fa bi-cash">$$$$$</i>
-
-						}
-						<i class="fa fa-users"> @restaurant.Category</i>
-						<i class="fa bi-geo-alt"> @restaurant.City</i>
+		@foreach (var restaurant in Model.Restaurants)
+		{
+			<div class="col-md-3" style="min-width:300px;">
+				<div class="card">
+					<div>
+						<img class="header" src="@restaurant.ImageURL" alt="@NoImage">
+						<form asp-controller="RestaurantFavourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post">
+							<input type="hidden" name="id" value="@restaurant.Id" />
+							<button type="submit" class="icon-heart"><i type="submit" class="fa-solid fa-heart"></i></button>
+						</form>
 
 					</div>
-					<p class="info">@restaurant.Description...</p>
+					<div class="text">
+						<h1 class="food">
+							@restaurant.Name
+						</h1>
+						<div class="icon-details-wrapper">
+							@if (restaurant.PriceRange < 20)
+							{
+								<i class="fa bi-cash">$</i>
+							}
+							else if (restaurant.PriceRange < 50 && restaurant.PriceRange >= 20)
+							{
+								<i class="fa bi-cash">$$</i>
+							}
+							else if (restaurant.PriceRange < 70 && restaurant.PriceRange >= 50)
+							{
+								<i class="fa bi-cash">$$$</i>
+							}
+							else if (restaurant.PriceRange < 110 && restaurant.PriceRange >= 70)
+							{
+								<i class="fa bi-cash">$$$$</i>
+							}
+							else
+							{
+								<i class="fa bi-cash">$$$$$</i>
+
+							}
+							<i class="fa fa-users"> @restaurant.Category</i>
+							<i class="fa bi-geo-alt"> @restaurant.City</i>
+
+						</div>
+						<p class="info">@restaurant.Description...</p>
+					</div>
+					<a asp-action="Details" asp-route-id="@restaurant.Id" class="card-details-btn">Details</a>
 				</div>
-				<a asp-action="Details" asp-route-id="@restaurant.Id" class="card-details-btn">Details</a>
 			</div>
-		</div>
+		}
 	}
 </div>
 
-@{
-	var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-	var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
+<nav aria-label="Page navigation" class="mt-4">
+	<ul class="pagination">
+		@if (Model.CurrentPage > 1)
+		{
+			<li class="page-item">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@(Model.CurrentPage - 1)"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-categoryFilter="@Model.CategoryFilter"
+				   asp-route-cityFilter="@Model.CityFilter"
+				   asp-route-cuisineFilter="@Model.CuisineFilter"
+				   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
+					Previous
+				</a>
+			</li>
+		}
 
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-	Previous
-</a>
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-	Next
-</a>
+		@for (int i = 1; i <= Model.TotalPages; i++)
+		{
+			<li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@i"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-categoryFilter="@Model.CategoryFilter"
+				   asp-route-cityFilter="@Model.CityFilter"
+				   asp-route-cuisineFilter="@Model.CuisineFilter"
+				   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
+					@i
+				</a>
+			</li>
+		}
+
+		@if (Model.CurrentPage < Model.TotalPages)
+		{
+			<li class="page-item">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@(Model.CurrentPage + 1)"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-categoryFilter="@Model.CategoryFilter"
+				   asp-route-cityFilter="@Model.CityFilter"
+				   asp-route-cuisineFilter="@Model.CuisineFilter"
+				   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
+					Next
+				</a>
+			</li>
+		}
+	</ul>
+</nav>

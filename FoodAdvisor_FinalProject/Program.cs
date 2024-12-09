@@ -13,7 +13,8 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 string adminEmail = builder.Configuration.GetValue<string>("AdminInfo:Email")!;
 string adminUsername = builder.Configuration.GetValue<string>("AdminInfo:Username")!;
@@ -53,7 +54,7 @@ builder.Services.ConfigureApplicationCookie(cfg =>
 });
 
 builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
-builder.Services.RegisterUserDefinedServices(typeof(IRestaurantService).Assembly);
+builder.Services.RegisterUserDefinedServices(typeof(IBaseService).Assembly);
 
 
 builder.Services.AddRazorPages();

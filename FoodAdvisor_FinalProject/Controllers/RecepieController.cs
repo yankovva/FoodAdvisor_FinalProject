@@ -34,28 +34,31 @@ namespace FoodAdvisor_FinalProject.Controllers
 			this.recepieFavouritesService = recepieFavouritesService;
 		}
 		[HttpGet]
-		public async Task<IActionResult> Index(int? pageNumber, string sortOrder, string searchItem, string currentFilter )
+		public async Task<IActionResult> Index(FilterIndexRecipeViewModel model)
 		{
-			ViewData["DateSortParm"] = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
-			ViewData["NameSortParm"] = sortOrder == "Name" ? "name_desc" : "Name";
-			ViewData["DificultySortParm"] = sortOrder == "Dificulty" ? "dificulty_desc" : "Dificulty";
-			ViewData["CurrentSort"] = sortOrder;
+
+			IEnumerable<RecepieIndexViewModel> recipes =
+			   await this.recepieService.IndexGetAllRecepiesAsync(model);
+
+			int recipeCount = await this.recepieService.GetFilteredRecepiesCountAsync(model);
 
 
-			if (searchItem != null)
+			FilterIndexRecipeViewModel viewModel = new FilterIndexRecipeViewModel
 			{
-				pageNumber = 1;
-			}
-			else
-			{
-				searchItem = currentFilter;
-			}
+				Recipes = recipes,
+				SearchQuery = model.SearchQuery,
+				CategoryFilter = model.CategoryFilter,
+				DificultyFilter = model.DificultyFilter,
+				AllCategories = await this.recepieService.GetAllCategoriesAsync(),
+				AllDificulties = await this.recepieService.GetAllDificultiesAsync(),
+				CurrentPage = model.CurrentPage,
+				EntitiesPerPage = model.EntitiesPerPage,
+				TotalPages = (int)Math.Ceiling((double)recipeCount /
+											   model.EntitiesPerPage!.Value)
+			};
 
-			ViewData["CurrentFilter"] = searchItem;
-
-			var recepies = await this.recepieService.IndexGetAllRecepiesAsync(pageNumber,  sortOrder,  searchItem,  currentFilter);
 			
-			return View(recepies);
+			return View(viewModel);
 			
 		}
 
@@ -193,8 +196,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			return await dbContext.RecepiesDificulties.ToListAsync();
 		}
-
-
 
 	}
 }

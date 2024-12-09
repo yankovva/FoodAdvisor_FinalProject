@@ -12,8 +12,7 @@ namespace FoodAdvisor.Data.Services.Interfaces
 {
 	public interface IRestaurantService 
 	{
-		Task<PaginatedList<RestaurantIndexViewModel>> IndexGetAllRestaurantsAsync(int? pageNumber, string sortOrder, string searchItem, string currentFilter);
-
+		Task<IEnumerable<RestaurantIndexViewModel>> IndexGetAllRecepiesAsync(FilterIndexRestaurantViewModel model);
 		Task AddRestaurantAsync(RestaurantAddViewModel model, Guid userId, IFormFile file, IFormFile fileDish);
 		Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid restaurnatId);
 
@@ -21,5 +20,10 @@ namespace FoodAdvisor.Data.Services.Interfaces
 		Task<bool> DeleteRestaurantAsync(RestaurantDeleteViewModel model);
 		Task<bool> EditRestaurantAsync(RestaurantAddViewModel model,Guid restaurantId, Guid userId, IFormFile file, IFormFile fileDish);
 		Task<RestaurantAddViewModel> EditRestaurantViewAsync(Guid id);
+
+		Task<IEnumerable<string>> GetAllCitiesAsync();
+		Task<int> GetFilteredRestaurantsCountAsync(FilterIndexRestaurantViewModel inputModel);
+		Task<IEnumerable<string>> GetAllCategoriesAsync();
+		Task<IEnumerable<string>> GetAllCuisinesAsync();
 	}
 }

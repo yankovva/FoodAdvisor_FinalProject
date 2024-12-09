@@ -30,29 +30,35 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 		}
 
-        [HttpGet]
-        public async Task<IActionResult> Index(int? pageNumber, string sortOrder, string searchItem, string currentFilter)
+		public async Task<IActionResult> Index(FilterIndexRestaurantViewModel model)
 		{
-			ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-			ViewData["CurrentSort"] = sortOrder;
 
-			if (searchItem != null)
+			IEnumerable<RestaurantIndexViewModel> restaurants =
+			   await this.restaurantService.IndexGetAllRecepiesAsync(model);
+
+			int recipeCount = await this.restaurantService.GetFilteredRestaurantsCountAsync(model);
+
+
+			FilterIndexRestaurantViewModel viewModel = new FilterIndexRestaurantViewModel
 			{
-				pageNumber = 1;
-			}
-			else
-			{
-				searchItem = currentFilter;
-			}
+				Restaurants = restaurants,
+				SearchQuery = model.SearchQuery,
+				CategoryFilter = model.CategoryFilter,
+				CityFilter = model.CityFilter,
+				CuisineFilter = model.CuisineFilter,
+				AllCategories = await this.restaurantService.GetAllCategoriesAsync(),
+				AllCities = await this.restaurantService.GetAllCitiesAsync(),
+				AllCuisines = await this.restaurantService.GetAllCuisinesAsync(),
+				CurrentPage = model.CurrentPage,
+				EntitiesPerPage = model.EntitiesPerPage,
+				TotalPages = (int)Math.Ceiling((double)recipeCount /
+											   model.EntitiesPerPage!.Value)
+			};
 
-			ViewData["CurrentFilter"] = searchItem;
+			return View(viewModel);
 
-			var restaurants = await this.restaurantService
-				.IndexGetAllRestaurantsAsync(pageNumber, sortOrder, searchItem, currentFilter);
-
-			return View(restaurants);
 		}
-		
+
 		[HttpGet]
         public async Task<IActionResult> Add()
         {

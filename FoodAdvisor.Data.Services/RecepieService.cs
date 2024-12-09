@@ -7,6 +7,7 @@ using FoodAdvisor.ViewModels.RecepiesViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 using static FoodAdvisor.Common.ApplicationConstants;
 using static FoodAdvisor.Common.ErrorMessages;
 
@@ -16,18 +17,23 @@ namespace FoodAdvisor.Data.Services
 	public class RecepieService : BaseService, IRecepieService
 	{
 		private readonly IRepository<Recepie, Guid> recepieRepository;
+		private readonly IRepository<RecepieCategory, Guid> recepieCategoryRepository;
+		private readonly IRepository<RecepieDificulty, int> recepieDificultyRepository;
 		private readonly IWebHostEnvironment enviorment;
 		private IRepository<UserRecepie, object> userRecepieRepository;
 		private readonly IFileService fileService;
 
 
 		public RecepieService(IRepository<Recepie, Guid> recepieRepository, IWebHostEnvironment enviorment,
-			IRepository<UserRecepie, object> userRecepieRepository, IFileService fileService)
+			IRepository<UserRecepie, object> userRecepieRepository, IFileService fileService,
+			IRepository<RecepieCategory, Guid> recepieCategoryRepository, IRepository<RecepieDificulty, int> recepieDificultyRepository)
 		{
 			this.recepieRepository = recepieRepository;
 			this.enviorment = enviorment;
 			this.userRecepieRepository = userRecepieRepository;
 			this.fileService = fileService;
+			this.recepieCategoryRepository = recepieCategoryRepository;
+			this.recepieDificultyRepository = recepieDificultyRepository;
 		}
 
 		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file)
@@ -194,79 +200,111 @@ namespace FoodAdvisor.Data.Services
 			{
 				fileService.DeleteFile(editedRecepie.ImageURL);
 			}
-		
-				string[] allowedExtensions = { ".jpg", ".jpeg", ".png",".jfif" };
-				long maxSize = 5 * 1024 * 1024;
-				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
-				{
-					throw new ArgumentException(InvalidFileMessage);
-				}
 
-				string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
+			string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".jfif" };
+			long maxSize = 5 * 1024 * 1024;
+			if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
+			{
+				throw new ArgumentException(InvalidFileMessage);
+			}
 
-				string newImagePath = await fileService.UploadFileAsync(file, RecepiePicturesFolderName, fileName);
+			string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
 
-				editedRecepie.ImageURL = newImagePath;
-				await this.recepieRepository.UpdateAsync(editedRecepie);
-				
+			string newImagePath = await fileService.UploadFileAsync(file, RecepiePicturesFolderName, fileName);
+
+			editedRecepie.ImageURL = newImagePath;
+			await this.recepieRepository.UpdateAsync(editedRecepie);
+
 			return true;
-			
+
 		}
 
-		public async  Task<PaginatedList<RecepieIndexViewModel>> IndexGetAllRecepiesAsync(int? pageNumber, string sortOrder, string searchItem, string currentFilter)
+		public async Task<IEnumerable<RecepieIndexViewModel>> IndexGetAllRecepiesAsync(FilterIndexRecipeViewModel model)
 		{
-			int pageSize = 16;
+			IQueryable<Recepie> allRecipes = this.recepieRepository
+				.GetAllAttached();
 
-			var recepies = this.recepieRepository
-				.GetAllAttached()
-				.Where(r => r.IsDeleted == false)
-				.Select(r => new RecepieIndexViewModel()
-				{
-					Id = r.Id.ToString(),
-					Name = r.Name,
-					CookingTime = r.CookingTime,
-					ImageURL = r.ImageURL,
-					Publisher = r.Publisher.UserName!,
-					Category = r.RecepieCategory.Name,
-					AuthorPicturePath = r.Publisher.ProfilePricturePath!,
-					Servings = r.NumberOfServing,
-					CreatedOn = r.CreatedOn.ToString(),
-					DificultyLevel = r.RecepieDificultyId.ToString(),
-					Description = r.Description.Substring(0, 99)
-				});
-
-			switch (sortOrder)
+			if (!String.IsNullOrWhiteSpace(model.SearchQuery))
 			{
-				case "Name":
-					recepies = recepies.OrderBy(r => r.Name);
-					break;
-				case "name_desc":
-					recepies = recepies.OrderByDescending(s => s.Name);
-					break;
-				case "Dificulty":
-					recepies = recepies.OrderBy(r => r.DificultyLevel);
-					break;
-				case "dificulty_desc":
-					recepies = recepies.OrderByDescending(s => s.DificultyLevel);
-					break;
-
-				case "date_desc":
-					recepies = recepies.OrderByDescending(r => r.CreatedOn);
-					break;
-
-				default:
-					recepies = recepies.OrderBy(r => r.CreatedOn);
-					break;
-
-			}
-			if (!String.IsNullOrEmpty(searchItem))
-			{
-				recepies = recepies.Where(r => r.Name.ToLower().Contains(searchItem.ToLower()));
+				allRecipes = allRecipes
+					.Where(m => m.Name.ToLower().Contains(model.SearchQuery.ToLower()));
 			}
 
-			var recepielist = await PaginatedList<RecepieIndexViewModel>.CreateAsync(recepies, pageNumber ?? 1, pageSize);
+			if (!String.IsNullOrWhiteSpace(model.CategoryFilter))
+			{
+				allRecipes = allRecipes
+					.Where(m => m.RecepieCategory.Name.ToLower() == model.CategoryFilter.ToLower());
+			}
 
-			return  recepielist;
+			if (!String.IsNullOrWhiteSpace(model.DificultyFilter))
+			{
+				allRecipes = allRecipes
+					.Where(m => m.RecepieDificulty.DificultyName.ToLower() == model.DificultyFilter.ToLower());
+			}
+
+
+			if (model.CurrentPage.HasValue &&
+				model.EntitiesPerPage.HasValue)
+			{
+				allRecipes = allRecipes
+					.Skip(model.EntitiesPerPage.Value * (model.CurrentPage.Value - 1))
+					.Take(model.EntitiesPerPage.Value);
+
+			}
+			var recepies = await allRecipes.Select(r => new RecepieIndexViewModel()
+			{
+				Id = r.Id.ToString(),
+				Name = r.Name,
+				CookingTime = r.CookingTime,
+				ImageURL = r.ImageURL,
+				Publisher = r.Publisher.UserName!,
+				Category = r.RecepieCategory.Name,
+				AuthorPicturePath = r.Publisher.ProfilePricturePath!,
+				Servings = r.NumberOfServing,
+				CreatedOn = r.CreatedOn.ToString(),
+				DificultyLevel = r.RecepieDificultyId.ToString(),
+				Description = r.Description.Substring(0, 99)
+			}).ToArrayAsync();
+
+			return recepies;
+		}
+
+			public async Task<IEnumerable<string>> GetAllCategoriesAsync()
+			{
+				IEnumerable<string> allCategories = await this.recepieCategoryRepository
+					.GetAllAttached()
+					.Select(c => c.Name)
+					.ToArrayAsync();
+
+				return allCategories;
+			}
+
+			public async Task<IEnumerable<string>> GetAllDificultiesAsync()
+			{
+				IEnumerable<string> allDificulties = await this.recepieDificultyRepository
+					.GetAllAttached()
+					.Select(c => c.DificultyName)
+					.ToArrayAsync();
+
+				return allDificulties;
+			}
+
+		
+		public async Task<int> GetFilteredRecepiesCountAsync(FilterIndexRecipeViewModel inputModel)
+		{
+			FilterIndexRecipeViewModel model = new FilterIndexRecipeViewModel()
+			{
+				CurrentPage = null,
+				EntitiesPerPage = null,
+				SearchQuery = inputModel.SearchQuery,
+				CategoryFilter = inputModel.CategoryFilter,
+				DificultyFilter = inputModel.DificultyFilter,
+			};
+
+			int recipesCount = (await this.IndexGetAllRecepiesAsync(model))
+				.Count();
+
+			return recipesCount;
 		}
 
 	}

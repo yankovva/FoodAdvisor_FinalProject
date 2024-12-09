@@ -45,7 +45,12 @@ img {
     max-width: 300px;
     margin: 20px auto;
     box-shadow: 0px 0px 30px 2px #000;
+    border-radius:20px;
 }
+    .card .img {
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
 
 .header {
     background-size: cover;
@@ -121,6 +126,7 @@ img {
     background-color: orange;
     text-decoration: none;
     margin-top: 0px;
+    border-radius:20px;
 }
 
 #author-image {
@@ -148,14 +154,16 @@ img {
 }
 
 .filter-search-div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    color: #656566;
     background-color: white;
     padding: 6px;
     align-items: center;
     border-radius: 10px;
     border: 2px solid #e0dbdb;
+}
+.form-control {
+    font-style: italic;
+    color: #656566;
 }
 .order-div p {
     margin-bottom: 0;

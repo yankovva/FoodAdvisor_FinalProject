@@ -1,8 +1,8 @@
 ﻿using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
-using FoodAdvisor.ViewModels;
 using FoodAdvisor.ViewModels.CommentViewModel;
+using FoodAdvisor.ViewModels.RecepiesViewModels;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -254,6 +254,57 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
+		public async Task<IEnumerable<string>> GetAllCategoriesAsync()
+		{
+			IEnumerable<string> allCategories = await this.restaurantRepository
+					.GetAllAttached()
+					.Select(c => c.Category.Name)
+					.Distinct()
+					.ToArrayAsync();
+
+			return allCategories;
+		}
+
+		public async Task<IEnumerable<string>> GetAllCuisinesAsync()
+		{
+
+			IEnumerable<string> allCuisines = await this.restaurantRepository
+					.GetAllAttached()
+					.Select(c => c.Cuisine.Name)
+					.Distinct()
+					.ToArrayAsync();
+
+			return allCuisines;
+		}
+
+		public async Task<IEnumerable<string>> GetAllCitiesAsync()
+		{
+			IEnumerable<string> allCitites = await this.cityRepository
+					.GetAllAttached()
+					.Select(c => c.Name)
+					.ToArrayAsync();
+
+			return allCitites;
+		}
+
+		public async Task<int> GetFilteredRestaurantsCountAsync(FilterIndexRestaurantViewModel inputModel)
+		{
+			FilterIndexRestaurantViewModel model = new FilterIndexRestaurantViewModel()
+			{
+				CurrentPage = null,
+				EntitiesPerPage = null,
+				SearchQuery = inputModel.SearchQuery,
+				CategoryFilter = inputModel.CategoryFilter,
+				CuisineFilter = inputModel.CuisineFilter,
+				CityFilter = inputModel.CityFilter
+			};
+
+			int restaurantsCount = (await this.IndexGetAllRecepiesAsync(model))
+				.Count();
+
+			return restaurantsCount;
+		}
+
 		//Done
 		public async Task<RestaurantDetailsViewModel> GetRestaurantDetailsAsync(Guid restaurnatId)
 		{
@@ -299,46 +350,58 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public async Task<PaginatedList<RestaurantIndexViewModel>> IndexGetAllRestaurantsAsync(int? pageNumber, string sortOrder, string searchItem, string currentFilter)
+		public async Task<IEnumerable<RestaurantIndexViewModel>> IndexGetAllRecepiesAsync(FilterIndexRestaurantViewModel model)
 		{
-			int pageSize = 16;
+			IQueryable<Restaurant> allRestaurants = this.restaurantRepository
+				.GetAllAttached();
 
-			var restaurants = this.restaurantRepository
-				.GetAllAttached()
-				.Where(r => r.IsDeleted == false)
-				.Select(r => new RestaurantIndexViewModel()
-				{
-					Id = r.Id.ToString(),
-					Name = r.Name,
-					ImageURL = r.ImageURL,
-					Publisher = r.Publisher.UserName!,
-					Category = r.Category.Name,
-					PriceRange = r.PriceRange,
-					City = r.City.Name,
-					Description = r.Description.Substring(0, 99)
-
-				});
-
-
-			switch (sortOrder)
+			if (!String.IsNullOrWhiteSpace(model.SearchQuery))
 			{
-
-				case "name_desc":
-					restaurants = restaurants.OrderByDescending(s => s.Name);
-					break;
-				default:
-					restaurants = restaurants.OrderBy(r => r.Name);
-					break;
+				allRestaurants = allRestaurants
+					.Where(m => m.Name.ToLower().Contains(model.SearchQuery.ToLower()));
 			}
 
-			if (!String.IsNullOrEmpty(searchItem))
+			if (!String.IsNullOrWhiteSpace(model.CityFilter))
 			{
-				restaurants = restaurants.Where(r => r.Name.ToLower().Contains(searchItem.ToLower()));
+				allRestaurants = allRestaurants
+					.Where(m => m.City.Name.ToLower() == model.CityFilter.ToLower());
+
 			}
 
-			var restaurantList = await PaginatedList<RestaurantIndexViewModel>.CreateAsync(restaurants, pageNumber ?? 1, pageSize);
+			if (!String.IsNullOrWhiteSpace(model.CuisineFilter))
+			{
+				allRestaurants = allRestaurants
+					.Where(m => m.Cuisine.Name.ToLower() == model.CuisineFilter.ToLower());
+			}
+			if (!String.IsNullOrWhiteSpace(model.CategoryFilter))
+			{
+				allRestaurants = allRestaurants
+					.Where(m => m.Category.Name.ToLower() == model.CategoryFilter.ToLower());
+			}
 
-			return restaurantList;
+
+			if (model.CurrentPage.HasValue &&
+				model.EntitiesPerPage.HasValue)
+			{
+				allRestaurants = allRestaurants
+					.Skip(model.EntitiesPerPage.Value * (model.CurrentPage.Value - 1))
+					.Take(model.EntitiesPerPage.Value);
+
+			}
+			var restaurnats = await allRestaurants.Select(r => new RestaurantIndexViewModel()
+			{
+				Id = r.Id.ToString(),
+				Name = r.Name,
+				ImageURL = r.ImageURL,
+				Publisher = r.Publisher.UserName!,
+				Category = r.Category.Name,
+				PriceRange = r.PriceRange,
+				City = r.City.Name,
+				Description = r.Description.Substring(0, 99)
+
+			}).ToArrayAsync();
+
+			return restaurnats;
 		}
 
 	}

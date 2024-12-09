@@ -19,7 +19,7 @@ public class DatabaseSeeder
 
 		try
 		{
-			string json = await File.ReadAllTextAsync(jsonFilePath, Encoding.Unicode, CancellationToken.None);
+			string json = await File.ReadAllTextAsync(jsonFilePath, Encoding.ASCII, CancellationToken.None);
 			SeedData data = JsonConvert.DeserializeObject<SeedData>(json)!; // Десериализиране 
 
 			if (!context.Categories.Any())
