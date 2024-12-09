@@ -25,6 +25,7 @@ namespace FoodAdvisor.Data.Services
             {
                 return false;
             }
+
             Comment comment = new()
             {
                 Message = model.Message,
@@ -65,10 +66,10 @@ namespace FoodAdvisor.Data.Services
 
         public async Task<bool> DeleteAsync(string commentId)
         {
-            Guid CommentGuid = Guid.Parse(commentId);
+            Guid commentGuid = Guid.Parse(commentId);
 
             Comment? comment = await this.commentRepository
-                .GetByIdAsync(CommentGuid);
+                .GetByIdAsync(commentGuid);
 
             if (comment == null || comment.IsDeleted == true)
             {

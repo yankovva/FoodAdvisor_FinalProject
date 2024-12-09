@@ -260,11 +260,6 @@ namespace FoodAdvisor.Services.Tests
 		[Test]
 		public async Task AddRecepiesAsyncSHouldThrowExeptionWhenFileIsInvalid()
 		{
-			IQueryable<Recepie> recipesMockQueryable = recipeData.BuildMock();
-
-			this.recepieRepository
-				.Setup(r => r.GetAllAttached())
-				.Returns(recipesMockQueryable);
 
 			this.fileService
 				.Setup(fs => fs.IsFileValid(It.IsAny<IFormFile>(), It.IsAny<string[]>(), It.IsAny<long>()))
@@ -474,8 +469,8 @@ namespace FoodAdvisor.Services.Tests
 			this.recepieRepository
 				.Setup(r => r.GetAllAttached())
 				.Returns(new List<Recepie> { recepirdata }.AsQueryable().BuildMock());
-			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
 
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
 
 			string nonExistingRecepieId = Guid.NewGuid().ToString();
 			var result = await recipeService.DeleteRecepieViewAsync(nonExistingRecepieId);
@@ -502,6 +497,7 @@ namespace FoodAdvisor.Services.Tests
 				.Returns(new List<Recepie> { recepirdata }.AsQueryable().BuildMock());
 
 			string deletedRecepieId = "11111111-1111-1111-1111-111111111111";
+
 			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
 
 			var result = await recipeService.DeleteRecepieViewAsync(deletedRecepieId);
@@ -616,10 +612,17 @@ namespace FoodAdvisor.Services.Tests
 				IsDeleted = false
 			};
 
-			recepieRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(recepie);
-			fileService.Setup(f => f.IsFileValid(fileMock.Object, It.IsAny<string[]>(), It.IsAny<long>())).Returns(true);
-			fileService.Setup(f => f.UploadFileAsync(fileMock.Object, It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync("new_image.jpg");
-			fileService.Setup(f => f.DeleteFile(It.IsAny<string>()));
+			recepieRepository
+				.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+				.ReturnsAsync(recepie);
+			fileService
+				.Setup(f => f.IsFileValid(fileMock.Object, It.IsAny<string[]>(), It.IsAny<long>()))
+				.Returns(true);
+			fileService
+				.Setup(f => f.UploadFileAsync(fileMock.Object, It.IsAny<string>(), It.IsAny<string>()))
+				.ReturnsAsync("new_image.jpg");
+			fileService
+				.Setup(f => f.DeleteFile(It.IsAny<string>()));
 			
 			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
 

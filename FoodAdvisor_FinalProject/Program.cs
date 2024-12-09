@@ -6,6 +6,7 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.Infrastructure;
 using FoodAdvisor.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -60,7 +61,10 @@ builder.Services.RegisterUserDefinedServices(typeof(IBaseService).Assembly);
 builder.Services.AddRazorPages();
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(cfg =>
+{
+    cfg.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
 
 var app = builder.Build();
 
