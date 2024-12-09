@@ -1,7 +1,7 @@
 ﻿using FoodAdvisor.Data.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-
+using static FoodAdvisor.Common.ErrorMessages;
 namespace FoodAdvisor.Data.Services
 {
 	public class FileService : IFileService
@@ -16,7 +16,7 @@ namespace FoodAdvisor.Data.Services
 		public async Task<string> UploadFileAsync(IFormFile file, string folderName, string uniqueFileName)
 		{
 			if (file == null || file.Length == 0)
-				throw new ArgumentException("The File is empty or missing!");
+				throw new ArgumentException(MissingFileErrorMessage);
 
 			string uploadFolder = Path.Combine(_environment.WebRootPath, folderName);
 			if (!Directory.Exists(uploadFolder))

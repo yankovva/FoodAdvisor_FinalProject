@@ -7,6 +7,7 @@ using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using static FoodAdvisor.Common.ApplicationConstants;
 using static FoodAdvisor.Common.EntityValidationConstants;
@@ -17,14 +18,12 @@ namespace FoodAdvisor.Data.Services
 	public class AccountService : BaseService, IAccountService
 	{
 		private readonly IRepository<ApplicationUser, Guid> accountRepository;
-		private readonly IWebHostEnvironment enviorment;
 		private readonly UserManager<ApplicationUser> userManager;
 		private readonly IFileService fileService;
-		public AccountService(IRepository<ApplicationUser, Guid> accountRepository, IWebHostEnvironment enviorment,
+		public AccountService(IRepository<ApplicationUser, Guid> accountRepository,
 			UserManager<ApplicationUser> userManager, IFileService fileService)
 		{
 			this.accountRepository = accountRepository;
-			this.enviorment = enviorment;
 			this.userManager = userManager;
 			this.fileService = fileService;
 		}
@@ -74,31 +73,9 @@ namespace FoodAdvisor.Data.Services
 				await userManager.UpdateNormalizedEmailAsync(user);
 			}
 
-
-
 			await this.accountRepository.UpdateAsync(user);
 			return true;
 		}
-
-		public async Task<bool> ChangePasswordAsync(string currentPassword, string newPassword, Guid userId)
-		{
-			var user = await userManager.FindByIdAsync(userId.ToString());
-
-			if (user == null)
-			{
-				return false;
-			}
-
-			var result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
-
-			if (result.Succeeded)
-			{
-				return true;
-			}
-
-			return false;
-		}
-
 
 		public async Task<EditUserViewModel> GetEditUserViewAsync(Guid userId)
 		{
@@ -201,6 +178,7 @@ namespace FoodAdvisor.Data.Services
 			}
 			return false;
 		}
+		
 
 	}
 }
