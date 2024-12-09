@@ -258,7 +258,7 @@ namespace FoodAdvisor.Services.Tests
 			});
 		}
 		[Test]
-		public async Task AddRecipeSHouldThrowExeptionWhenFileIsInvalid()
+		public async Task AddRecepiesAsyncSHouldThrowExeptionWhenFileIsInvalid()
 		{
 			IQueryable<Recepie> recipesMockQueryable = recipeData.BuildMock();
 
@@ -292,43 +292,10 @@ namespace FoodAdvisor.Services.Tests
 
 			Assert.That(exeption.Message, Is.EqualTo(InvalidFileMessage));
 		}
-		[Test]
-		public async Task AddRecepiesAsyncShouldThrowArgumentExceptionWhenGuidIsInvalid()
-		{
 
-			var model = new AddRecepieViewModel
-			{
-				Name = "Pasta",
-				Description = "A classic French dish made with caramelized onions, rich beef broth, and topped with a slice of crusty bread and melted Gruyère cheese.",
-				CookingTime = 30,
-				CategoryId = Guid.NewGuid(),
-				Products = "Pasta, Tomato Sauce-900,Tomato, beef ",
-				Servings = 4,
-				DificultyId = 2,
-				CookingSteps = "A classic French dish made with caramelized onions, rich beef broth, and topped with a slice of crusty bread and melted Gruyère cheese."
-			};
-
-			var invalidUserId = "invalid-user-id";
-			var fileMock = new Mock<IFormFile>();
-
-			this.fileService
-				.Setup(f => f.IsFileValid(It.IsAny<IFormFile>(), It.IsAny<string[]>(), It.IsAny<long>()))
-				.Returns(true);
-			this.fileService
-				.Setup(f => f.UploadFileAsync(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<string>()))
-				.ReturnsAsync("test-path");
-
-			var recipeService = new RecepieService(this.recepieRepository.Object, this.userRecepieRepository.Object, this.fileService.Object);
-
-			var ex = Assert.ThrowsAsync<FormatException>(async () =>
-			{
-				await recipeService.AddRecepiesAsync(model, Guid.Parse(invalidUserId), fileMock.Object);
-			});
-			Assert.That(ex.Message, Is.EqualTo(InvalidErrorMessage));
-		}
 
 		[Test]
-		public async Task AddRecepieShouldAddRecipeWhenEverythingIsValidPositive()
+		public async Task AddRecepiesAsyncShouldAddRecipeWhenEverythingIsValidPositive()
 		{
 			var model = new AddRecepieViewModel
 			{
@@ -365,6 +332,305 @@ namespace FoodAdvisor.Services.Tests
 			recepieRepository
 				.Verify(r => r.AddAsync(It.Is<Recepie>(r => r.Name == model.Name && r.Description == model.Description)), Times.Once);
 		}
-	}
+		[Test]
+		public async Task GetRecepietDetailsAsync_ValidGuid_ShouldReturnCorrectDetailsPositive()
+		{
+			var validId = Guid.NewGuid();
 
+			var recepieData = new Recepie
+			{
+				Id = validId,
+				Name = "Test Recipe",
+				Description = "Test Description",
+				CookingSteps = "Test Steps",
+				CreatedOn = new DateTime(2023, 12, 1),
+				CookingTime = 30,
+				Publisher = new ApplicationUser
+				{
+					UserName = "TestUser",
+					FirstName = "John",
+					LastName = "Doe",
+					ProfilePricturePath = "path/to/picture.jpg",
+					Country = "USA",
+					AboutMe = "Cooking is fun! I Love it very much"
+				},
+				RecepieCategory = new RecepieCategory { Name = "Dessert" },
+				RecepieDificulty = new RecepieDificulty { DificultyName = "Medium" },
+				Products = "Sugar, Flour, Butter",
+				NumberOfServing = 4,
+				ImageURL = "path/to/image.jpg",
+				RecepieComments = new List<Comment>
+					{
+						new Comment
+							{
+								Id = Guid.NewGuid(),
+								Message = "Great recipe!",
+								CreatedDate = new DateTime(2023, 12, 5),
+								UserId = Guid.NewGuid(),
+								User = new ApplicationUser
+								{
+									UserName = "CommentUser",
+									ProfilePricturePath = "path/to/commenter.jpg"
+								}
+							}
+						}
+			};
+
+			this.recepieRepository
+				.Setup(r => r.GetAllAttached())
+				.Returns(new List<Recepie> { recepieData }.AsQueryable().BuildMock());
+
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var result = await recipeService.GetRecepietDetailsAsync(validId.ToString());
+
+			Assert.IsNotNull(result);
+			Assert.That(result.Id, Is.EqualTo(validId));
+			Assert.That(result.Name, Is.EqualTo("Test Recipe"));
+			Assert.That(result.AllComment.Count(), Is.EqualTo(1));
+			Assert.That(result.AllComment.First().Message, Is.EqualTo("Great recipe!"));
+		}
+
+		[Test]
+		public void GetRecepietDetailsAsync_InvalidGuid_ShouldThrowArgumentExceptionNegative()
+		{
+			var invalidId = "invalid-guid";
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var ex = Assert.ThrowsAsync<ArgumentException>(async () =>
+				await recipeService.GetRecepietDetailsAsync(invalidId));
+
+			Assert.That(ex.Message, Is.EqualTo(InvalidGuidMessage));
+		}
+		[Test]
+		public async Task GetRecepietDetailsAsync_ValidGuidButNotFound_ShouldReturnNullNegative()
+		{
+
+			var validId = Guid.NewGuid();
+			recepieRepository.Setup(r => r.GetAllAttached())
+				.Returns(new List<Recepie>().AsQueryable().BuildMock());
+
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var result = await recipeService.GetRecepietDetailsAsync(validId.ToString());
+
+			Assert.IsNull(result);
+		}
+
+		[Test]
+		public async Task DeleteRecepieViewAsync_ValidGuid_ReturnsModel()
+		{
+			var recepirdata = new Recepie
+			{
+				Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+				Name = "Test Recipe",
+				IsDeleted = false,
+				CreatedOn = new DateTime(2023, 12, 5),
+				ImageURL = "test_image.jpg",
+				Publisher = new ApplicationUser
+				{
+					UserName = "TestUser"
+				}
+			};
+			string validRecepieId = "11111111-1111-1111-1111-111111111111";
+			this.recepieRepository
+				.Setup(r => r.GetAllAttached())
+				.Returns(new List<Recepie> { recepirdata }.AsQueryable().BuildMock());
+
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var result = await recipeService.DeleteRecepieViewAsync(validRecepieId);
+
+			Assert.IsNotNull(result);
+			Assert.That(result.Id, Is.EqualTo(validRecepieId));
+			Assert.That(result.Name, Is.EqualTo("Test Recipe"));
+			Assert.That(result.Publisher, Is.EqualTo("TestUser"));
+		}
+		[Test]
+		public void DeleteRecepieViewAsync_InvalidGuid_ThrowsArgumentException()
+		{
+			string invalidRecepieId = "invalid-guid";
+
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var ex = Assert.ThrowsAsync<ArgumentException>(() => recipeService.DeleteRecepieViewAsync(invalidRecepieId));
+			Assert.That(ex.Message, Is.EqualTo(InvalidGuidMessage));
+		}
+		[Test]
+		public async Task DeleteRecepieViewAsync_RecepieNotFound_ReturnsNull()
+		{
+			var recepirdata = new Recepie
+			{
+				Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+				Name = "Test Recipe",
+				IsDeleted = false,
+				CreatedOn = new DateTime(2023, 12, 5),
+				ImageURL = "test_image.jpg",
+				Publisher = new ApplicationUser
+				{
+					UserName = "TestUser"
+				}
+			};
+			this.recepieRepository
+				.Setup(r => r.GetAllAttached())
+				.Returns(new List<Recepie> { recepirdata }.AsQueryable().BuildMock());
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+
+			string nonExistingRecepieId = Guid.NewGuid().ToString();
+			var result = await recipeService.DeleteRecepieViewAsync(nonExistingRecepieId);
+
+			Assert.IsNull(result);
+		}
+		[Test]
+		public async Task DeleteRecepieViewAsync_DeletedRecepie_ReturnsNull()
+		{
+			var recepirdata = new Recepie
+			{
+				Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+				Name = "Test Recipe",
+				IsDeleted = true,
+				CreatedOn = new DateTime(2023, 12, 5),
+				ImageURL = "test_image.jpg",
+				Publisher = new ApplicationUser
+				{
+					UserName = "TestUser"
+				}
+			};
+			this.recepieRepository
+				.Setup(r => r.GetAllAttached())
+				.Returns(new List<Recepie> { recepirdata }.AsQueryable().BuildMock());
+
+			string deletedRecepieId = "11111111-1111-1111-1111-111111111111";
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var result = await recipeService.DeleteRecepieViewAsync(deletedRecepieId);
+
+			Assert.IsNull(result);
+		}
+		[Test]
+		public async Task DeleteRecepieAsync_ValidRecepieId_DeletesRecepieAndReturnsTrue()
+		{
+			// Arrange
+			var recepieData = new Recepie
+			{
+				Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+				IsDeleted = false,
+				ImageURL = "test_image.jpg"
+			};
+
+			recepieRepository.Setup(r => r.GetByIdAsync(recepieData.Id))
+			.ReturnsAsync(recepieData);
+
+			recepieRepository.Setup(r => r.SaveChangesAsync())
+				.Returns(Task.CompletedTask);
+
+			this.fileService.Setup(f => f.DeleteFile(recepieData.ImageURL));
+
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var model = new DeleteRecepieViewModel { Id = recepieData.Id.ToString() };
+		
+			var result = await recipeService.DeleteRecepieAsync(model);
+
+			Assert.IsTrue(result);
+			Assert.IsTrue(recepieData.IsDeleted);
+			fileService.Verify(f => f.DeleteFile("test_image.jpg"), Times.Once);
+			recepieRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
+		}
+		[Test]
+		public async Task DeleteRecepieAsync_InvalidRecepieId_ReturnsFalse()
+		{
+			Guid nonExistingRecepieId = Guid.Parse("22222222-2222-2222-2222-222222222222");
+
+			var recepieData = new Recepie
+			{
+				Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+				IsDeleted = false,
+				ImageURL = "test_image.jpg"
+			};
+
+			recepieRepository.Setup(r => r.GetByIdAsync(recepieData.Id))
+			.ReturnsAsync(recepieData);
+
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var model = new DeleteRecepieViewModel { Id = nonExistingRecepieId.ToString() };
+
+			var result = await recipeService.DeleteRecepieAsync(model);
+
+			Assert.IsFalse(result);
+			fileService.Verify(f => f.DeleteFile(It.IsAny<string>()), Times.Never);
+			recepieRepository.Verify(r => r.SaveChangesAsync(), Times.Never);
+		}
+		[Test]
+		public async Task DeleteRecepieAsync_RecepieAlreadyDeleted_ReturnsTrue()
+		{
+			var recepie = new Recepie
+			{
+				Id = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+				IsDeleted = true,
+				ImageURL = "already_deleted.jpg"
+			};
+
+			recepieRepository.Setup(r => r.GetByIdAsync(recepie.Id))
+				.ReturnsAsync(recepie);
+			recepieRepository.Setup(r => r.SaveChangesAsync())
+				.Returns(Task.CompletedTask);
+			fileService.Setup(f => f.DeleteFile(recepie.ImageURL));
+
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var model = new DeleteRecepieViewModel { Id = recepie.Id.ToString() };
+
+			var result = await recipeService.DeleteRecepieAsync(model);
+
+			Assert.IsTrue(result);
+			fileService.Verify(f => f.DeleteFile("already_deleted.jpg"), Times.Once);
+			recepieRepository.Verify(r => r.SaveChangesAsync(), Times.Once);
+		}
+		[Test]
+		public async Task EditRecepieAsync_ValidRecepieId_UpdatesRecepieAndReturnsTrue()
+		{
+			var recepieId = Guid.NewGuid().ToString();
+			var userId = Guid.NewGuid();
+
+			var fileMock = new Mock<IFormFile>();
+
+			var model = new AddRecepieViewModel
+			{
+				Name = "Updated Name",
+				Description = "Updated Description A classic French dish made with caramelized onions, rich beef broth, and topped with a slice of crusty bread and melted Gruyère",
+				CookingTime = 60,
+				Products = "Product1, Product2",
+				CategoryId = Guid.NewGuid(),
+				DificultyId = 1,
+				Servings = 4,
+				CookingSteps = "Step1, Step2 A classic French dish made with caramelized onions, rich beef broth, and topped with a slice of crusty bread and melted Gruyère"
+			};
+
+			var recepie = new Recepie
+			{
+				Id = Guid.Parse(recepieId),
+				ImageURL = "old_image.jpg",
+				IsDeleted = false
+			};
+
+			recepieRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(recepie);
+			fileService.Setup(f => f.IsFileValid(fileMock.Object, It.IsAny<string[]>(), It.IsAny<long>())).Returns(true);
+			fileService.Setup(f => f.UploadFileAsync(fileMock.Object, It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync("new_image.jpg");
+			fileService.Setup(f => f.DeleteFile(It.IsAny<string>()));
+			
+			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
+
+			var result = await recipeService.EditRecepieAsync(model, recepieId, userId, fileMock.Object);
+
+			Assert.IsTrue(result);
+			Assert.That(recepie.ImageURL, Is.EqualTo("new_image.jpg"));
+			fileService.Verify(f => f.DeleteFile("old_image.jpg"), Times.Once);
+			recepieRepository.Verify(r => r.UpdateAsync(recepie), Times.Once);
+		}
+	}
 }
+
+

@@ -42,7 +42,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			int recipeCount = await this.recepieService.GetFilteredRecepiesCountAsync(model);
 
-
 			FilterIndexRecipeViewModel viewModel = new FilterIndexRecipeViewModel
 			{
 				Recipes = recipes,
@@ -90,15 +89,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Details(string id)
 		{
-			Guid recepieGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref recepieGuid);
-			if (!isGuidValid)
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
-
 			DetailsRecepieViewModel model = await this.recepieService
-				.GetRecepietDetailsAsync(recepieGuid);
+				.GetRecepietDetailsAsync(id);
 
 			if (model == null)
 			{
@@ -111,14 +103,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(string id)
 		{
-			Guid recepieGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref recepieGuid);
-			if (!isGuidValid)
-			{
-				return this.RedirectToAction(nameof(Index));
-			}
 			DeleteRecepieViewModel model = await this.recepieService
-				.DeleteRecepieViewAsync(recepieGuid);
+				.DeleteRecepieViewAsync(id);
 			return View(model);
 		}
 

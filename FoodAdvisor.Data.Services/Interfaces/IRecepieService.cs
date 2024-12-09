@@ -15,8 +15,8 @@ namespace FoodAdvisor.Data.Services.Interfaces
 
 		Task<IEnumerable<RecepieIndexViewModel>> IndexGetAllRecepiesAsync(FilterIndexRecipeViewModel model);
 		Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file);
-		Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId);
-		Task<DeleteRecepieViewModel> DeleteRecepieViewAsync(Guid recepieId);
+		Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(string recepieId);
+		Task<DeleteRecepieViewModel> DeleteRecepieViewAsync(string recepieId);
 
 		Task<bool> DeleteRecepieAsync(DeleteRecepieViewModel model);
 		Task<AddRecepieViewModel> EditRecepieViewAsync(Guid id);

@@ -32,6 +32,7 @@ namespace FoodAdvisor.Data.Services
 
 		public async Task AddRecepiesAsync(AddRecepieViewModel model, Guid userId, IFormFile file)
 		{
+			
 			string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".jfif" };
 			long maxSize = 5 * 1024 * 1024; // 5MB
 
@@ -43,13 +44,6 @@ namespace FoodAdvisor.Data.Services
 			string fileName = $"{userId}_{model.Name}_{Path.GetFileName(file.FileName)}";
 
 			string filePath = await fileService.UploadFileAsync(file, RecepiePicturesFolderName, fileName);
-
-			Guid userGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(userId.ToString(), ref userGuid);
-			if (!isGuidValid)
-			{
-				throw new FormatException(InvalidErrorMessage);
-			}
 
 			Recepie recepie = new Recepie
 			{
@@ -69,14 +63,21 @@ namespace FoodAdvisor.Data.Services
 			await recepieRepository.AddAsync(recepie);
 		}
 
-		public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(Guid recepieId)
+		public async Task<DetailsRecepieViewModel> GetRecepietDetailsAsync(string recepieId)
 		{
+			Guid recepieGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
+			if (!isGuidValid)
+			{
+				throw new ArgumentException(InvalidGuidMessage);
+			}
+
 			DetailsRecepieViewModel? model = await this.recepieRepository
 				.GetAllAttached()
-				.Where(r => r.IsDeleted == false && r.Id == recepieId)
+				.Where(r => r.IsDeleted == false && r.Id == recepieGuid)
 				.Select(r => new DetailsRecepieViewModel()
 				{
-					Id = recepieId,
+					Id = recepieGuid,
 					Name = r.Name,
 					Description = r.Description,
 					CookingSteps = r.CookingSteps,
@@ -111,12 +112,18 @@ namespace FoodAdvisor.Data.Services
 			return model;
 		}
 
-		public async Task<DeleteRecepieViewModel> DeleteRecepieViewAsync(Guid recepieId)
+		public async Task<DeleteRecepieViewModel> DeleteRecepieViewAsync(string recepieId)
 		{
+			Guid recepieGuid = Guid.Empty;
+			bool isGuidValid = this.IsGuidValid(recepieId, ref recepieGuid);
+			if (!isGuidValid)
+			{
+				throw new ArgumentException(InvalidGuidMessage);
+			}
 
 			DeleteRecepieViewModel? model = await this.recepieRepository
 				.GetAllAttached()
-			   .Where(r => r.Id == recepieId && r.IsDeleted == false)
+			   .Where(r => r.Id == recepieGuid && r.IsDeleted == false)
 			   .AsNoTracking()
 			   .Select(r => new DeleteRecepieViewModel()
 			   {
