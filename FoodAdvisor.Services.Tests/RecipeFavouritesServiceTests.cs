@@ -17,48 +17,7 @@ namespace FoodAdvisor.Services.Tests
 	[TestFixture]
 	public class RecipeFavouritesServiceTests
 	{
-		private IList<Recepie> recipeData = new List<Recepie>()
-		{
-			new Recepie()
-			{
-				Id = Guid.Parse("7E5B4C9D-3F6A-8B2A-9C7E-2D6F3B5A9E4C"),
-				Name = "Baked Ziti",
-				CookingTime = 40,
-				CreatedOn = new DateTime(2023, 11,23),
-				Description = "A classic French dish made with caramelized onions, rich beef broth, and topped with a slice of crusty bread and melted Gruyère cheese.",
-				ImageURL = "RecepiePictures\\Creamy Garlic Pasta_10.jpg",
-				PublisherId = Guid.Parse("B2C8567C-A0B5-49AC-9C11-12C760DC4CC4"),
-				RecepieCategory = new RecepieCategory { Name = "Bulgarian" },
-				RecepieCategoryId=Guid.Parse("2A5CC5EF-0991-4763-8A6F-7B6EAD6BCA23"),
-				Publisher = new ApplicationUser { UserName = "John Doe", ProfilePricturePath = "path/to/picture" },
-				RecepieDificulty = new RecepieDificulty { DificultyName = "Medium" },
-				NumberOfServing = 4,
-				IsDeleted = false,
-				RecepieDificultyId = 3,
-				Products = "Dark Chocolate, Butter, Eggs, Sugar, Flour, Powdered Sugar",
-				CookingSteps = "Cook the pasta according to package instructions until al dente.In a large pan, heat olive oil over medium-high heat and sauté garlic until fragrant.Add shrimp to the pan and cook for 2-3 minutes on each side, until they turn pink and opaque.Add lemon juice, zest, and a pinch of red pepper flakes. Stir to combine.Toss the cooked pasta into the pan with the shrimp, adding a bit of pasta water to create a light sauce.Garnish with fresh parsley and serve immediately.Serve hot, garnished with fresh basil and grated Parmesan cheese, if desired."
-			},
-			new Recepie()
-			{
-				Id = Guid.Parse("E3B7D9C2-A4F8-5B6A-3D9E-7C2F5A9E6B4D"),
-				Name = "Cake",
-				CookingTime = 90,
-				CreatedOn = new DateTime(2022, 10,4),
-				Description = "A vibrant and aromatic Thai curry with a spicy coconut milk base, tender chicken, and fresh vegetables. Serve with jasmine rice.",
-				ImageURL = "RecepiePictures\\Vegan Buddha Bowl_7.jpg",
-				PublisherId = Guid.Parse("7DF25137-B39A-4A91-903B-303C0582E389"),
-				Publisher = new ApplicationUser { UserName = "John Doe", ProfilePricturePath = "path/to/picture" },
-				RecepieCategory = new RecepieCategory { Name = "Italian" },
-				RecepieCategoryId=Guid.Parse("2A5CC5EF-0991-4763-8A6F-7B6EAD6BCA23"),
-				Products = "Dark Chocolate, Butter, Eggs, Sugar, Flour, Powdered Sugar",
-				CookingSteps = "Heat olive oil in a large skillet over medium-high heat. Brown the beef strips, then set them aside.In the same skillet, melt butter and sauté onions for 4-5 minutes until softened. Add garlic and cook for another minute.Add mushrooms and cook until browned, about 5-7 minutes.Sprinkle flour over the mixture and stir to combine.Gradually pour in the beef broth, stirring constantly. Add sour cream and simmer for 5 minutes until the sauce thickens.Return beef to the skillet, season with salt and pepper, and serve over egg noodles.Add the tomatoes, beans, and pasta to the pot. Stir and continue to simmer for another 10-15 minutes, or until the pasta is cooked.Season with salt, pepper, and Italian herbs to taste.",
-				NumberOfServing = 6,
-				RecepieDificultyId = 3,
-				RecepieDificulty = new RecepieDificulty { DificultyName = "Medium" },
-				IsDeleted = false,
-
-			}
-		};
+		
 		private Mock<IRepository<Recepie, Guid>> recepieRepository;
 		private Mock<IRepository<UserRecepie, object>> userRecepieRepository;
 
@@ -108,7 +67,6 @@ namespace FoodAdvisor.Services.Tests
 		[Test]
 		public async Task AddToFavouritesAsync_RecepieAlreadyFavourite_ReturnsFalse()
 		{
-			// Arrange
 			var userId = Guid.NewGuid();
 			var recepieId = Guid.NewGuid().ToString();
 			var recepieGuid = Guid.Parse(recepieId);
