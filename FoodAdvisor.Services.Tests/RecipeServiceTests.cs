@@ -507,7 +507,6 @@ namespace FoodAdvisor.Services.Tests
 		[Test]
 		public async Task DeleteRecepieAsync_ValidRecepieId_DeletesRecepieAndReturnsTrue()
 		{
-			// Arrange
 			var recepieData = new Recepie
 			{
 				Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),

@@ -106,5 +106,6 @@ namespace FoodAdvisor.Data.Services
 			await this.userRecepieRepository.DeleteAsync(userRecepie);
 			return true;
 		}
+
 	}
 }
