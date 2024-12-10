@@ -4,18 +4,15 @@ using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.AccountViemModels;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using static FoodAdvisor.Common.ApplicationConstants;
-using static FoodAdvisor.Common.EntityValidationConstants;
 using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class AccountService : BaseService, IAccountService
+    public class AccountService : BaseService, IAccountService
 	{
 		private readonly IRepository<ApplicationUser, Guid> accountRepository;
 		private readonly UserManager<ApplicationUser> userManager;

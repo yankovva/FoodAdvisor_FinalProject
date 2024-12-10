@@ -1,19 +1,12 @@
 ﻿using FoodAdvisor.Data.Models;
-using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class UserService : BaseService, IUserService
+    public class UserService : BaseService, IUserService
 	{
 		private readonly UserManager<ApplicationUser> userManager;
 		private readonly RoleManager<IdentityRole<Guid>> roleManager;

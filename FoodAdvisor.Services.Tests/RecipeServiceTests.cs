@@ -448,7 +448,8 @@ namespace FoodAdvisor.Services.Tests
 
 			IRecepieService recipeService = new RecepieService(recepieRepository.Object, userRecepieRepository.Object, fileService.Object);
 
-			var ex = Assert.ThrowsAsync<ArgumentException>(() => recipeService.DeleteRecepieViewAsync(invalidRecepieId));
+			var ex = Assert
+				.ThrowsAsync<ArgumentException>(() => recipeService.DeleteRecepieViewAsync(invalidRecepieId));
 			Assert.That(ex.Message, Is.EqualTo(InvalidGuidMessage));
 		}
 		[Test]

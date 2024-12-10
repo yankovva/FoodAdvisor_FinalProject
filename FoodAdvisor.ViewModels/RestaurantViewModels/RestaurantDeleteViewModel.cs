@@ -8,10 +8,10 @@ namespace FoodAdvisor.ViewModels.RestaurantViewModels
 {
 	public class RestaurantDeleteViewModel
 	{
-        public required string  Id { get; set; }
-        public required string Name { get; set; }
-        public required string Publisher { get; set; }
-        public required string Category { get; set; }
+        public string Id { get; set; } = null!;
+        public  string Name { get; set; } = null!;
+        public  string Publisher { get; set; } = null!;
+        public  string Category { get; set; } = null!;
 
     }
 }
