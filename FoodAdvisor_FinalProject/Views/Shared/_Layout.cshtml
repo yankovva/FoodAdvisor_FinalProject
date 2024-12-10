@@ -1,4 +1,7 @@
-﻿@using static FoodAdvisor.Common.ApplicationConstants;
+﻿@using FoodAdvisor.Data.Services.Interfaces
+@using static FoodAdvisor.Common.ApplicationConstants;
+@using FoodAdvisor.Infrastructure;
+@inject IManagerService managerService
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +17,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 		  integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
 		  crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
@@ -36,51 +39,81 @@
 
 						@if (User?.Identity?.IsAuthenticated ?? false)
 						{
-							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Restaurant" asp-action="Index"> <i class="bi bi-shop-window"></i> Restaurants</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Recepie" asp-action="Index"> <i class="bi bi-egg-fried"></i> Recepies</a>
-							</li>
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle text-light" href="#" id="favouritesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									<i class="bi bi-heart-fill"></i>Favourites
-								</a>
-								<ul class="dropdown-menu" aria-labelledby="favouritesDropdown">
-									<li>
-										<a class="dropdown-item" asp-area="" asp-controller="RestaurantFavourites" asp-action="Index">Restaurants</a>
-									</li>
-									<li>
-										<a class="dropdown-item" asp-area="" asp-controller="RecepieFavourites" asp-action="Index">Recepies</a>
-									</li>
-								</ul>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link  text-light " asp-area="" asp-controller="Account" asp-action="Index"><i class="bi bi-person-circle"></i>Account</a>
-							</li>
-							@if (User.IsInRole(AdminRoleName))
+								@if (await this.managerService.IsUserManagerAsync(this.User.GetUserId()!))
+								{
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle text-light" href="#" id="favouritesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Restaurants
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="favouritesDropdown">
+										<li>
+											<a class="nav-link text-light" asp-area="" asp-controller="Restaurant" asp-action="Index">All Restaurants</a>
+										</li>
+										<li>
+											<a class="dropdown-item" asp-area="" asp-controller="Restaurant" asp-action="Add" method="get"><i class="bi bi-plus-circle"></i>Add Restaurant</a>
+										</li>
+									</ul>
+								</li>
+							}
+							else
 							{
-								<li class="nav-item">
-									<a class="nav-link  text-light " asp-area="Admin" asp-controller="AdminManage" asp-action="Index"> <i class="bi bi-kanban"></i> Admin</a>
+								<li>
+									<a class="nav-link text-light" asp-area="" asp-controller="Restaurant" asp-action="Index">Restaurants</a>
 								</li>
 							}
 
-						}
-					</ul>
-					<partial name="_LoginPartial" />
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="container">
-		<main role="main" class="main">
-			@RenderBody()
-		</main>
-	</div>
-	
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle text-light" href="#" id="favouritesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Recepies
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="favouritesDropdown">
+										<li>
+											<a class="dropdown-item" asp-area="" asp-controller="Recepie" asp-action="Index">All Recipes</a>
+										</li>
+										<li>
+										<a class="dropdown-item" asp-area="" asp-controller="Recepie" asp-action="Add" method="get"><i class="bi bi-plus-circle"></i> Add Recipe</a>
+										</li>
+									</ul>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle text-light" href="#" id="favouritesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										<i class="bi bi-heart-fill"></i>Favorites
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="favouritesDropdown">
+										<li>
+											<a class="dropdown-item" asp-area="" asp-controller="RestaurantFavourites" asp-action="Index">Restaurants</a>
+										</li>
+										<li>
+										<a class="dropdown-item" asp-area="" asp-controller="RecepieFavourites" asp-action="Index">Recipes</a>
+										</li>
+									</ul>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link  text-light " asp-area="" asp-controller="Account" asp-action="Index"><i class="bi bi-person-circle"></i>Account</a>
+								</li>
+									@if (User.IsInRole(AdminRoleName))
+									{
+									<li class="nav-item">
+										<a class="nav-link  text-light " asp-area="Admin" asp-controller="AdminManage" asp-action="Index"> <i class="bi bi-kanban"></i> Admin</a>
+									</li>
+									}
 
-	@await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+								}
+						</ul>
+						<partial name="_LoginPartial" />
+					</div>
+				</div>
+			</nav>
+		</header>
+		<div class="container">
+			<main role="main" class="main">
+									@RenderBody()
+			</main>
+		</div>
+
+		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="~/js/site.js" asp-append-version="true"></script>
+
+							@await RenderSectionAsync("Scripts", required: false)
+	</body>
+	</html>
