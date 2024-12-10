@@ -47,11 +47,7 @@ namespace FoodAdvisor.Data.Services
 				throw new ArgumentException(InvalidFileMessage);
 			}
 
-			Manager manager = await this.managerRepository
-				.FirstorDefaultAsync(m => m.UserId == userId);
-
-
-			string fileName = manager.Id.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
+			string fileName = userId.ToString() + "_" + model.Name + "_" + Path.GetFileName(file.FileName);
 			string fileNameChefsDish = userId.ToString() + "_" + model.ChefsDishName + "_" + Path.GetFileName(fileDish.FileName);
 
 
@@ -87,7 +83,7 @@ namespace FoodAdvisor.Data.Services
 				Description = model.Description,
 				ImageURL = filePathREstaurant,
 				CategoryId = model.CategoryId,
-				PublisherId = manager.Id,
+				PublisherId = userId,
 				City = city,
 				Address = model.Address,
 				PriceRange = model.PriceRange,
@@ -173,13 +169,10 @@ namespace FoodAdvisor.Data.Services
 				await cuisineRepository.AddAsync(cuisine);
 			}
 
-			Manager manager = await this.managerRepository
-				.FirstorDefaultAsync(m => m.UserId == userId);
-
 			editedRestaurant.Name = model.Name;
 			editedRestaurant.Address = model.Address;
 			editedRestaurant.CategoryId = model.CategoryId;
-			editedRestaurant.PublisherId = manager.Id;
+			editedRestaurant.PublisherId = userId;
 			editedRestaurant.Description = model.Description;
 			editedRestaurant.City = city;
 			editedRestaurant.Cuisine = cuisine;
@@ -205,7 +198,7 @@ namespace FoodAdvisor.Data.Services
 				throw new ArgumentException(InvalidFileMessage);
 			}
 
-			string fileName = $"{manager.Id.ToString()}_{model.Name}_{Path.GetFileName(file.FileName)}";
+			string fileName = $"{userId.ToString()}_{model.Name}_{Path.GetFileName(file.FileName)}";
 			string newImagePath = await fileService.UploadFileAsync(file, RestaurantPicturesFolderName, fileName);
 
 			editedRestaurant.ImageURL = newImagePath;

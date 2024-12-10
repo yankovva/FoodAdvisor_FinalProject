@@ -1,18 +1,12 @@
-﻿using FoodAdvisor.Data;
-using FoodAdvisor.Data.Models;
-using FoodAdvisor.Data.Services.Interfaces;
+﻿using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.AccountViemModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Immutable;
-using System.IO;
-using static FoodAdvisor.Common.EntityValidationConstants;
+using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
-	[Authorize]
+    [Authorize]
 	public class AccountController : BaseController
 	{
 		private readonly IAccountService accountService;
@@ -27,8 +21,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
 			if (userId == Guid.Empty)
 			{
-				//TODO add error
-				return RedirectToAction("Index", "Home");
+				TempData[ErrorMessage] = "An unexpected error occurred. Please try again later or contact support.";
+                return RedirectToAction("Index", "Home");
 			}
 
 			var model = await this.accountService
@@ -36,8 +30,9 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (model == null)
 			{
-				//TODO add error
-				return RedirectToAction("Index", "Home");
+				TempData[ErrorMessage] = "No user found with the provided details. Please check your information and try again.";
+
+                return RedirectToAction("Index", "Home");
 			}
 
 			return View(model);
@@ -53,7 +48,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (model == null)
 			{
-				return  RedirectToAction("Index", "Home");
+                TempData[ErrorMessage] = "No user found with the provided details. Please check your information and try again.";
+                return  RedirectToAction("Index", "Home");
 			}
 
 			return View(model);
@@ -64,7 +60,9 @@ namespace FoodAdvisor_FinalProject.Controllers
 		{
 			if (ModelState.IsValid == false)
 			{
-				return RedirectToAction(nameof(Index));
+				TempData[ErrorMessage]= "The data provided is invalid. Please ensure all fields are filled out correctly and try again.";
+
+                return View(model);
 			}
 
 			bool isEdited = await this.accountService
@@ -72,9 +70,9 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (isEdited == false)
 			{
-				//TODO: add message
-				return RedirectToAction("Index", "Home");
-			}
+                TempData[ErrorMessage] = "An unexpected error occurred. Please try again later or contact support.";
+                return View(model);
+            }
 
 			return RedirectToAction(nameof(Index));
 		}
@@ -82,35 +80,30 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> UpdateImage(IFormFile file)
 		{
-			Guid userGuid =  Guid.Parse(GetCurrentUserId()!);
-
-			bool isUpdated =  await this.accountService
-				.UpdateProfilePictureAsync(file, userGuid);
-
-			if (isUpdated == false)
+			try
 			{
-				//TODO: add message
-				return RedirectToAction("Index", "Home");
-			}
-			
-			return RedirectToAction(nameof(Index));
-		}
+                Guid userGuid = Guid.Parse(GetCurrentUserId()!);
 
-		[HttpPost]
-		public async Task<IActionResult> ChangePassword(string currentPassword, string newPassword)
-		{
-			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+                bool isUpdated = await this.accountService
+                    .UpdateProfilePictureAsync(file, userGuid);
 
-			bool result = await this.accountService.ChangePasswordAsync(currentPassword, newPassword, userId);
+                if (isUpdated == false)
+                {
+                    TempData[ErrorMessage] = "Unable to update the profile picture.User not found";
+					return RedirectToAction(nameof(Index));
+				}
 
-			if (result == false)
+                TempData[SuccessMessage] = "Profile picture updated successfully.";
+            }
+			catch (ArgumentException ex)
 			{
-				return Json(new { success = false, message = "Something went wrong. Please try again!" });
-			}
+                TempData[ErrorMessage] = ex.Message;
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
-			return Json(new { success = true, message = "Password changed successfully!" });
-		}
+		
 	}
-	}
+}
 	
 

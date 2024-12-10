@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="~/css/Admin/admin-manage.css" asp-append-version="true" />
 
 <form class="managerForm">
+    @Html.AntiForgeryToken()
     <div>
         <label>Work phone number:</label>
         <input type="text" name="PhoneNumber" required />

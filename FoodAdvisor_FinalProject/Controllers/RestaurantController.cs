@@ -78,6 +78,7 @@ namespace FoodAdvisor_FinalProject.Controllers
         }
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Add(RestaurantAddViewModel model, IFormFile file, IFormFile fileDish)
 		{
 			string? userId = this.GetCurrentUserId();

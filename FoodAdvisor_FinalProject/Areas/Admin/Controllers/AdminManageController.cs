@@ -101,7 +101,8 @@ namespace FoodAdvisor_FinalProject.Areas.Admin.Controllers
 
 
 		[HttpPost]
-		public async Task<IActionResult> CreateManager([FromForm] ManagerFormViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateManager([FromForm] ManagerFormViewModel model)
 		{
 			if (!ModelState.IsValid)
 			{

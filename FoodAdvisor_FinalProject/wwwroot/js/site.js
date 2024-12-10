@@ -13,6 +13,7 @@ const managerModals = document.getElementsByClassName("managerModal");
 const closeModals = document.getElementsByClassName("closeModal");
 const managerForms = document.getElementsByClassName("managerForm");
 
+
 if (showFormButtons.length > 0 && managerModals.length > 0 && closeModals.length > 0) {
 	for (let i = 0; i < showFormButtons.length; i++) {
 		showFormButtons[i].addEventListener("click", () => {
@@ -33,9 +34,16 @@ if (showFormButtons.length > 0 && managerModals.length > 0 && closeModals.length
 
 			const formData = new FormData(event.target);
 
+			const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+			
+
 			fetch('AdminManage/CreateManager', {
 				method: 'POST',
-				body: formData
+				body: formData,
+				headers: {
+					'X-RequestVerificationToken': token 
+				},
 			})
 				.then(response => response.json())
 				.then(data => {

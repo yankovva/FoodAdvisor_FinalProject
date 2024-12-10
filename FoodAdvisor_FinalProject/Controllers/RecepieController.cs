@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using static FoodAdvisor.Infrastructure.ClaimsPrincipalExtension;
+using static FoodAdvisor.Common.ErrorMessages;
 
 
 namespace FoodAdvisor_FinalProject.Controllers
@@ -83,6 +84,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			}
 
 			await this.recepieService.AddRecepiesAsync(model, Guid.Parse(userId!),file);
+			TempData[SuccessMessage] = "Successfully added recipe!";
 			return RedirectToAction(nameof(Index));
 		}
 
