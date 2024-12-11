@@ -381,7 +381,9 @@ namespace FoodAdvisor.Data.Services
 					.Take(model.EntitiesPerPage.Value);
 
 			}
-			var restaurnats = await allRestaurants.Select(r => new RestaurantIndexViewModel()
+			var restaurnats = await allRestaurants
+				.Where(r => r.IsDeleted == false)
+				.Select(r => new RestaurantIndexViewModel()
 			{
 				Id = r.Id.ToString(),
 				Name = r.Name,

@@ -257,7 +257,9 @@ namespace FoodAdvisor.Data.Services
 					.Take(model.EntitiesPerPage.Value);
 
 			}
-			var recepies = await allRecipes.Select(r => new RecepieIndexViewModel()
+			var recepies = await allRecipes
+				.Where(r=>r.IsDeleted == false)
+				.Select(r => new RecepieIndexViewModel()
 			{
 				Id = r.Id.ToString(),
 				Name = r.Name,

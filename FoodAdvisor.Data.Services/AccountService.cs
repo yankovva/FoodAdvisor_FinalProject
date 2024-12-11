@@ -162,7 +162,6 @@ namespace FoodAdvisor.Data.Services
 				if (!fileService.IsFileValid(file, allowedExtensions, maxSize))
 				{
 					throw new ArgumentException(InvalidFileMessage);
-
 				}
 
 				string fileName = userId.ToString() + "_" + user.UserName + "_" + Path.GetFileName(file.FileName);
