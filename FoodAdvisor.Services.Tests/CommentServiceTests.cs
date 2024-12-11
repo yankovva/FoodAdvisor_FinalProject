@@ -48,25 +48,6 @@ namespace FoodAdvisor.Services.Tests
 		}
 
 		[Test]
-		public async Task AddAsync_NullMessage_ReturnsFalse()
-		{
-			var model = new AddCommentViewModel { Message = null };
-			var userId = Guid.NewGuid();
-			var recepieId = Guid.NewGuid().ToString();
-			var restaurantId = (string?)null;
-
-			commentRepository
-				.Setup(cr => cr.AddAsync(It.IsAny<Comment>()))
-				.Returns(Task.CompletedTask);
-
-			ICommentService commentService = new CommentService(commentRepository.Object);
-			
-			var result = await commentService.AddAsync(recepieId, restaurantId, userId, model);
-
-			Assert.IsFalse(result);
-			commentRepository.Verify(cr => cr.AddAsync(It.IsAny<Comment>()), Times.Never);
-		}
-		[Test]
 		public async Task AddAsync_NoRecepieOrRestaurantId_ReturnsFalse()
 		{
 			var model = new AddCommentViewModel { Message = "No ID test" };

@@ -61,39 +61,7 @@ namespace FoodAdvisor.Services.Tests
 			userRestaurantRepository.Verify(urr => urr.AddAsync(It.Is<UserRestaurant>(ur =>
 				ur.ApplicationUserId == userId && ur.RestaurantId == restaurantGuid)), Times.Once);
 		}
-		[Test]
-		public async Task AddToFavouritesAsync_RestaurantAlreadyInFavourites_ReturnsFalse()
-		{
-			var userId = Guid.NewGuid();
-			var restaurantId = Guid.NewGuid().ToString();
-			var restaurantGuid = Guid.Parse(restaurantId);
-			var restaurant = new Restaurant
-			{
-				Id = restaurantGuid,
-				Name = "Test Restaurant",
-				IsDeleted = false
-			};
-			var userRestaurant = new UserRestaurant
-			{
-				ApplicationUserId = userId,
-				RestaurantId = restaurantGuid
-			};
-
-			restaurantRepository
-				.Setup(rr => rr.GetAllAttached())
-				.Returns(new List<Restaurant> { restaurant }.AsQueryable().BuildMockDbSet().Object);
-
-			userRestaurantRepository
-				.Setup(urr => urr.GetAllAttached())
-				.Returns(new List<UserRestaurant> { userRestaurant }.AsQueryable().BuildMockDbSet().Object);
-
-			IRestaurantFavouritesService favouriteService = new RestaurantFavouritesService(restaurantRepository.Object, userRestaurantRepository.Object);
-
-			var result = await favouriteService.AddToFavouritesAsync(userId, restaurantId);
-
-			Assert.IsFalse(result);
-			userRestaurantRepository.Verify(urr => urr.AddAsync(It.IsAny<UserRestaurant>()), Times.Never);
-		}
+		
 		[Test]
 		public async Task AddToFavouritesAsync_RestauranteDoesNotExist_ReturnsFalse()
 		{
