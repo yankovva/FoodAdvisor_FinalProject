@@ -109,6 +109,7 @@ namespace FoodAdvisor.Data.Services
 				return false;
 			}
 			this.fileService.DeleteFile(restaurant.ImageURL);
+			this.fileService.DeleteFile(restaurant.ChefsSpecialImage);
 			restaurant.IsDeleted = true;
 			await restaurantRepository.SaveChangesAsync();
 			return true;
