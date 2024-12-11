@@ -69,7 +69,7 @@
 			<div class="form-group">
 				<label asp-for="EntitiesPerPage"><i class="bi bi-arrow-down-up"></i> Restaurants per page</label>
 				<select asp-for="EntitiesPerPage" class="form-control">
-					@for (int i = 5; i <= 30; i += 5)
+					@for (int i = 8; i <= 32; i += 4)
 					{
 						<option value="@i">@i</option>
 					}
