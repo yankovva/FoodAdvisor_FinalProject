@@ -1,13 +1,10 @@
 ﻿using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
-using FoodAdvisor.ViewModels;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 using static FoodAdvisor.Common.ApplicationConstants;
 using static FoodAdvisor.Common.ErrorMessages;
 

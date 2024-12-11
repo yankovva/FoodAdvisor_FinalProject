@@ -1,14 +1,70 @@
 ﻿@using FoodAdvisor.ViewModels.RecepieFavouritesViewModels;
 @using static FoodAdvisor.Common.ApplicationConstants;
-@model IEnumerable<RecepieFavouritesIndexViewModel>
+@model RecipeFavouritesFilteredViewModel
 
 @{
-	ViewData["Title"] = " RecepieFavourites";
+	ViewData["Title"] = " RecepieFavorites";
 }
 
 <link rel="stylesheet" href="~/css/favourites-entity.css" asp-append-version="true" />
-<h1 style="font-weight:500; color:white; font-style:italic">Recepie Favourites!</h1>
-@if (Model.Count() == 0)
+<form method="get" asp-action="Index" class="filter-search-div">
+
+	<div class="row">
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="SearchQuery">Search by keyword</label>
+				<input asp-for="SearchQuery" class="form-control" placeholder="Search by name..." />
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="CategoryFilter"><i class="bi bi-arrow-down-up"></i> Category</label>
+				<select asp-for="CategoryFilter" class="form-control">
+					@if (Model.AllCategories != null)
+					{
+						<option value="">Reset category filter</option>
+						foreach (string category in Model.AllCategories)
+						{
+							<option value="@category">@category</option>
+						}
+					}
+				</select>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="DificultyFilter"><i class="bi bi-arrow-down-up"></i> Dificulty</label>
+				<select asp-for="DificultyFilter" class="form-control">
+					@if (Model.AllDificulties != null)
+					{
+						<option value="">Reset dificulty filter</option>
+						foreach (string dif in Model.AllDificulties)
+						{
+							<option value="@dif">@dif</option>
+						}
+					}
+				</select>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label asp-for="EntitiesPerPage"><i class="bi bi-arrow-down-up"></i> Recipe per page</label>
+				<select asp-for="EntitiesPerPage" class="form-control">
+					@for (int i = 5; i <= 30; i += 5)
+					{
+						<option value="@i">@i</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="col col d-flex align-items-end">
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Filter</button>
+			</div>
+		</div>
+	</div>
+</form>
+@if (Model.Recipes.Count() == 0)
 {
 	<p>
 		Oops, it looks like your favorites list is still empty! 🤷‍♀️✨
@@ -19,10 +75,10 @@
 }else
 {
 <div class="entities">
-	@foreach (var recepie in Model)
+		@foreach (var recepie in Model.Recipes)
 	{
 		<div class="container-entity">
-			<img src="/@recepie.ImageUrl" alt="/@NoImage" />
+				<img src="/@recepie.ImageUrl" alt="https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg" />
 
 			<div class="container__text">
 				<div style="display:flex; gap:1em; flex-wrap:wrap;">
@@ -63,39 +119,49 @@
 	}
 </div>
 }
+<nav aria-label="Page navigation" class="mt-4">
+	<ul class="pagination">
+		@if (Model.CurrentPage > 1)
+		{
+			<li class="page-item">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@(Model.CurrentPage - 1)"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-categoryFilter="@Model.CategoryFilter"
+				   asp-route-dificultyFilter="@Model.DificultyFilter"
+				   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
+					Previous
+				</a>
+			</li>
+		}
 
-@*
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Cooking Time</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody id="mainElement">
-        @foreach (var recepie in Model)
-        {
-            <tr>
-                <td>
-                    <img src="@recepie.ImageUrl" alt="@recepie.Name" width="100" />
-                </td>
-                <td>@recepie.Name</td>
-                <td>@recepie.CookingTime</td>
-                <td>@recepie.Description</td>
-                <td>
-                    <a asp-controller="Recepie" asp-action="Details" asp-route-id="@recepie.Id" class="btn btn-outline-dark"><i class="fa-solid fa-circle-info"></i></a>
+		@for (int i = 1; i <= Model.TotalPages; i++)
+		{
+			<li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@i"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-categoryFilter="@Model.CategoryFilter"
+				   asp-route-dificultyFilter="@Model.DificultyFilter"
+				   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
+					@i
+				</a>
+			</li>
+		}
 
-                    <form asp-controller="RecepieFavourites" asp-action="RemoveFromFavourites" asp-route-id="@recepie.Id" method="post" class="d-inline">
-                        <input type="hidden" name="recepieId" value="@recepie.Id" />
-                        <button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-heart-circle-minus"></i></button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-*@
-
+		@if (Model.CurrentPage < Model.TotalPages)
+		{
+			<li class="page-item">
+				<a class="page-link" asp-action="Index"
+				   asp-route-currentPage="@(Model.CurrentPage + 1)"
+				   asp-route-searchQuery="@Model.SearchQuery"
+				   asp-route-categoryFilter="@Model.CategoryFilter"
+				   asp-route-dificultyFilter="@Model.DificultyFilter"
+				   asp-route-entitiesPerPage="@Model.EntitiesPerPage">
+					Next
+				</a>
+			</li>
+		}
+	</ul>
+</nav>
 

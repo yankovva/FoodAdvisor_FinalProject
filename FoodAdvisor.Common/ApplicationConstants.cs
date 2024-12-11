@@ -6,7 +6,7 @@
         public const string NoImage = "assets/img/no-image-found.png";
         public const string AdminRoleName = "Admin";
 		public const string DefaultQuote = "The best is yet to come...";
-        public const string RecepiePicturesFolderName = "RecipePictures";
+        public const string RecepiePicturesFolderName = "RecepiePictures";
 		public const string RestaurantPicturesFolderName = "RestaurantPictures";
 		public const string ChefDishesFolderName = "ChefDishesPictures";
 		public const string ProfilePicturesFolderName = "ProfilePictures";

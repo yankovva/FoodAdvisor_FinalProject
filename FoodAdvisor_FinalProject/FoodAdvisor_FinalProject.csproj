@@ -40,7 +40,6 @@
     <Folder Include="wwwroot\ChefDishesPictures\" />
     <Folder Include="wwwroot\ProfilePictures\" />
     <Folder Include="wwwroot\RestaurantPictures\" />
-    <Folder Include="wwwroot\RecepiePictures\" />
   </ItemGroup>
 
 </Project>

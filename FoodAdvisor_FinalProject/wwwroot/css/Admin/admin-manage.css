@@ -1,6 +1,19 @@
 ﻿.container {
     background-color: white;
 }
+body {
+    background: white;
+   
+}
+main {
+    border: 8px solid gray;
+    padding: 20px;
+   
+}
+h2 {
+    text-align: center;
+    font-size: 2.5rem;
+}
 /* Search Box */
 .search-container {
     margin-bottom: 20px;

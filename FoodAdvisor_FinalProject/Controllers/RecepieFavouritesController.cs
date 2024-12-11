@@ -6,7 +6,7 @@ using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
-	[Authorize]
+    [Authorize]
 	public class RecepieFavouritesController : BaseController
 	{
 		private readonly IRecepieFavouritesService recepieFavouritesService;
@@ -15,7 +15,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				this.recepieFavouritesService = recepieFavouritesService;
         }
 		[HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(RecipeFavouritesFilteredViewModel model)
 		{
 			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
 			if (userId == Guid.Empty)
@@ -25,9 +25,26 @@ namespace FoodAdvisor_FinalProject.Controllers
 			}
 
 			IEnumerable<RecepieFavouritesIndexViewModel> favourites = await this.recepieFavouritesService
-				.InedexGetAllFavouritesAsync(userId.ToString());
+				.InedexGetAllFavouritesAsync(userId.ToString(), model);
 
-			return View(favourites);
+			int recipeCount = await this.recepieFavouritesService
+				.GetFilteredRecepiesCountAsync(userId.ToString(),model);
+
+			RecipeFavouritesFilteredViewModel viewModel = new RecipeFavouritesFilteredViewModel
+			{
+				Recipes = favourites,
+				SearchQuery = model.SearchQuery,
+				CategoryFilter = model.CategoryFilter,
+				DificultyFilter = model.DificultyFilter,
+				AllCategories = await this.recepieFavouritesService.GetAllCategoriesAsync(),
+				AllDificulties = await this.recepieFavouritesService.GetAllDificultiesAsync(),
+				CurrentPage = model.CurrentPage,
+				EntitiesPerPage = model.EntitiesPerPage,
+				TotalPages = (int)Math.Ceiling((double)recipeCount /
+											   model.EntitiesPerPage!.Value)
+			};
+
+			return View(viewModel);
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]

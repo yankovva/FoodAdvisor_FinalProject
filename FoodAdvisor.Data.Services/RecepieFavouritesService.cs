@@ -7,7 +7,7 @@ using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor.Data.Services
 {
-	public class RecepieFavouritesService : BaseService, IRecepieFavouritesService
+    public class RecepieFavouritesService : BaseService, IRecepieFavouritesService
 	{
 		private IRepository<Recepie, Guid> recepietRepository;
 		private IRepository<UserRecepie, object> userRecepieRepository;
@@ -57,12 +57,57 @@ namespace FoodAdvisor.Data.Services
 			return true;
         }
 
-        public async Task<IEnumerable<RecepieFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId)
+		public async Task<int> GetFilteredRecepiesCountAsync(string userId,RecipeFavouritesFilteredViewModel inputModel)
 		{
-			IEnumerable<RecepieFavouritesIndexViewModel> recepies = await this.userRecepieRepository
-				.GetAllAttached()
-			   .Where(ur => ur.Recepie.IsDeleted == false && ur.ApplicationUserId.ToString().ToLower() == userId.ToLower())
-			   .Select(ur => new RecepieFavouritesIndexViewModel()
+			RecipeFavouritesFilteredViewModel model = new RecipeFavouritesFilteredViewModel()
+			{
+				CurrentPage = null,
+				EntitiesPerPage = null,
+				SearchQuery = inputModel.SearchQuery,
+				CategoryFilter = inputModel.CategoryFilter,
+				DificultyFilter = inputModel.DificultyFilter,
+			};
+			int recipesCount = (await this.InedexGetAllFavouritesAsync(userId,model))
+				.Count();
+
+			return recipesCount;
+		}
+
+		public async Task<IEnumerable<RecepieFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId, RecipeFavouritesFilteredViewModel model)
+		{
+			IQueryable<UserRecepie> allRecipes = this.userRecepieRepository
+				.GetAllAttached();
+
+			if (!String.IsNullOrWhiteSpace(model.SearchQuery))
+			{
+				allRecipes = allRecipes
+					.Where(m => m.Recepie.Name.ToLower().Contains(model.SearchQuery.ToLower()));
+			}
+
+			if (!String.IsNullOrWhiteSpace(model.CategoryFilter))
+			{
+				allRecipes = allRecipes
+					.Where(m => m.Recepie.RecepieCategory.Name.ToLower() == model.CategoryFilter.ToLower());
+			}
+
+			if (!String.IsNullOrWhiteSpace(model.DificultyFilter))
+			{
+				allRecipes = allRecipes
+					.Where(m => m.Recepie.RecepieDificulty.DificultyName.ToLower() == model.DificultyFilter.ToLower());
+			}
+
+
+			if (model.CurrentPage.HasValue &&
+				model.EntitiesPerPage.HasValue)
+			{
+				allRecipes = allRecipes
+					.Skip(model.EntitiesPerPage.Value * (model.CurrentPage.Value - 1))
+					.Take(model.EntitiesPerPage.Value);
+
+			}
+			IEnumerable<RecepieFavouritesIndexViewModel> recepies = await allRecipes
+				.Where(ur => ur.Recepie.IsDeleted == false && ur.ApplicationUserId.ToString().ToLower() == userId.ToLower())
+				.Select(ur => new RecepieFavouritesIndexViewModel()
 			   {
 				   Id = ur.RecepieId.ToString(),
 				   Name = ur.Recepie.Name,
@@ -105,6 +150,28 @@ namespace FoodAdvisor.Data.Services
 
 			await this.userRecepieRepository.DeleteAsync(userRecepie);
 			return true;
+		}
+
+		public async Task<IEnumerable<string>> GetAllCategoriesAsync()
+		{
+			IEnumerable<string> allCategories = await this.userRecepieRepository
+				.GetAllAttached()
+				.Select(c => c.Recepie.RecepieCategory.Name)
+				.Distinct()
+				.ToArrayAsync();
+
+			return allCategories;
+		}
+
+		public async Task<IEnumerable<string>> GetAllDificultiesAsync()
+		{
+			IEnumerable<string> allDificulties = await this.userRecepieRepository
+				.GetAllAttached()
+				.Select(c => c.Recepie.RecepieDificulty.DificultyName)
+				.Distinct()
+				.ToArrayAsync();
+
+			return allDificulties;
 		}
 
 	}

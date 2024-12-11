@@ -2,6 +2,8 @@
 using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.FavouritesViewModel;
+using FoodAdvisor.ViewModels.RestaurantFavouritesViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.EntityFrameworkCore;
 using static FoodAdvisor.Common.ErrorMessages;
 namespace FoodAdvisor.Data.Services
@@ -53,11 +55,99 @@ namespace FoodAdvisor.Data.Services
 			return true;
 
 		}
-		public async Task<IEnumerable<RestaurantFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId)
+
+		public async Task<IEnumerable<string>> GetAllCategoriesAsync()
 		{
-			IEnumerable<RestaurantFavouritesIndexViewModel> favourites = await this.userRestaurantRepository
-				.GetAllAttached()
-			   .Where(ur => ur.Restaurant.IsDeleted == false && ur.ApplicationUserId.ToString().ToLower() == userId.ToLower())
+			IEnumerable<string> allCategories = await this.userRestaurantRepository
+					.GetAllAttached()
+					.Select(c => c.Restaurant.Category.Name)
+					.Distinct()
+					.ToArrayAsync();
+
+			return allCategories;
+		}
+
+		public async Task<IEnumerable<string>> GetAllCitiesAsync()
+		{
+			IEnumerable<string> allCitites = await this.userRestaurantRepository
+					.GetAllAttached()
+					.Select(c => c.Restaurant.City.Name)
+					.Distinct()
+					.ToArrayAsync();
+
+			return allCitites;
+		}
+
+		public  async Task<IEnumerable<string>> GetAllCuisinesAsync()
+		{
+			IEnumerable<string> allCuisines = await this.userRestaurantRepository
+					.GetAllAttached()
+					.Select(c => c.Restaurant.Cuisine.Name)
+					.Distinct()
+					.ToArrayAsync();
+
+			return allCuisines;
+		}
+
+		public async Task<int> GetFilteredRestaurantsCountAsync(string userId,RestaurantFavouriteFilteredViewModel inputModel)
+		{
+			RestaurantFavouriteFilteredViewModel model = new RestaurantFavouriteFilteredViewModel()
+			{
+				CurrentPage = null,
+				EntitiesPerPage = null,
+				SearchQuery = inputModel.SearchQuery,
+				CategoryFilter = inputModel.CategoryFilter,
+				CuisineFilter = inputModel.CuisineFilter,
+				CityFilter = inputModel.CityFilter
+			};
+
+			int restaurantsCount = (await this.InedexGetAllFavouritesAsync(userId,model))
+				.Count();
+
+			return restaurantsCount;
+		}
+
+		public async Task<IEnumerable<RestaurantFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId, RestaurantFavouriteFilteredViewModel model)
+		{
+			IQueryable<UserRestaurant> allRestaurants = this.userRestaurantRepository
+				.GetAllAttached();
+
+			if (!String.IsNullOrWhiteSpace(model.SearchQuery))
+			{
+				allRestaurants = allRestaurants
+					.Where(m => m.Restaurant.Name.ToLower().Contains(model.SearchQuery.ToLower()));
+			}
+
+			if (!String.IsNullOrWhiteSpace(model.CityFilter))
+			{
+				allRestaurants = allRestaurants
+					.Where(m => m.Restaurant.City.Name.ToLower() == model.CityFilter.ToLower());
+
+			}
+
+			if (!String.IsNullOrWhiteSpace(model.CuisineFilter))
+			{
+				allRestaurants = allRestaurants
+					.Where(m => m.Restaurant.Cuisine.Name.ToLower() == model.CuisineFilter.ToLower());
+			}
+			if (!String.IsNullOrWhiteSpace(model.CategoryFilter))
+			{
+				allRestaurants = allRestaurants
+					.Where(m => m.Restaurant.Category.Name.ToLower() == model.CategoryFilter.ToLower());
+			}
+
+
+			if (model.CurrentPage.HasValue &&
+				model.EntitiesPerPage.HasValue)
+			{
+				allRestaurants = allRestaurants
+					.Skip(model.EntitiesPerPage.Value * (model.CurrentPage.Value - 1))
+					.Take(model.EntitiesPerPage.Value);
+
+			}
+
+			var favourites = await allRestaurants
+				.Where(ur => ur.Restaurant.IsDeleted == false && ur.ApplicationUserId.ToString().ToLower() == userId.ToLower())
 			   .Select(ur => new RestaurantFavouritesIndexViewModel()
 			   {
 				   Id = ur.RestaurantId.ToString(),

@@ -2,6 +2,8 @@
 using FoodAdvisor.Data;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.FavouritesViewModel;
+using FoodAdvisor.ViewModels.RestaurantFavouritesViewModels;
+using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FoodAdvisor.Common.ErrorMessages;
@@ -20,7 +22,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(RestaurantFavouriteFilteredViewModel model)
 		{
 			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
 			if (userId == Guid.Empty)
@@ -30,9 +32,28 @@ namespace FoodAdvisor_FinalProject.Controllers
 			}
 
 			IEnumerable<RestaurantFavouritesIndexViewModel> favourites = await this.favouritesService
-				.InedexGetAllFavouritesAsync(userId .ToString());
+				.InedexGetAllFavouritesAsync(userId .ToString(), model);
 
-			return View(favourites);
+			int restaurantCount = await this.favouritesService
+				.GetFilteredRestaurantsCountAsync(userId.ToString(),model);
+
+			RestaurantFavouriteFilteredViewModel viewModel = new RestaurantFavouriteFilteredViewModel
+			{
+				Restaurants = favourites,
+				SearchQuery = model.SearchQuery,
+				CategoryFilter = model.CategoryFilter,
+				CityFilter = model.CityFilter,
+				CuisineFilter = model.CuisineFilter,
+				AllCategories = await this.favouritesService.GetAllCategoriesAsync(),
+				AllCities = await this.favouritesService.GetAllCitiesAsync(),
+				AllCuisines = await this.favouritesService.GetAllCuisinesAsync(),
+				CurrentPage = model.CurrentPage,
+				EntitiesPerPage = model.EntitiesPerPage,
+				TotalPages = (int)Math.Ceiling((double)restaurantCount /
+											   model.EntitiesPerPage!.Value)
+			};
+
+			return View(viewModel);
 		}
 		[HttpPost]
 		public async Task<IActionResult> AddToFavourites(string? id)

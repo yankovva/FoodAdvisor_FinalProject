@@ -6,11 +6,9 @@
 @model FilterIndexRecipeViewModel
 
 @{
-	ViewBag.Title = "All Recepies";
+	ViewBag.Title = "All Recipes";
 }
 <link rel="stylesheet" href="~/css/site-entity-index.css" asp-append-version="true" />
-
-<a asp-controller="Recepie" asp-action="Add" method="get" class="btn btn-success mb-4">Add Your Recepie!</a>
 
 <form method="get" asp-action="Index" class="filter-search-div">
 
@@ -78,7 +76,7 @@
 			<div class="col-md-3" style="min-width:300px;">
 				<div class="card">
 					<div>
-						<img class="header" src="@recepie.ImageURL" alt="/@NoImage">
+						<img class="header" src="@recepie.ImageURL" alt="https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg">
 						<form method="post" asp-controller="RecepieFavourites" asp-action="AddToFavourites" asp-route-id="@recepie.Id">
 							@Html.AntiForgeryToken()
 							<input type="hidden" name="id" value="@recepie.Id" />

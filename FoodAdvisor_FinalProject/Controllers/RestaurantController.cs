@@ -32,7 +32,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			IEnumerable<RestaurantIndexViewModel> restaurants =
 			   await this.restaurantService.IndexGetAllRecepiesAsync(model);
 
-			int recipeCount = await this.restaurantService.GetFilteredRestaurantsCountAsync(model);
+			int restaurantCount = await this.restaurantService.GetFilteredRestaurantsCountAsync(model);
 
 
 			FilterIndexRestaurantViewModel viewModel = new FilterIndexRestaurantViewModel
@@ -47,7 +47,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 				AllCuisines = await this.restaurantService.GetAllCuisinesAsync(),
 				CurrentPage = model.CurrentPage,
 				EntitiesPerPage = model.EntitiesPerPage,
-				TotalPages = (int)Math.Ceiling((double)recipeCount /
+				TotalPages = (int)Math.Ceiling((double)restaurantCount /
 											   model.EntitiesPerPage!.Value)
 			};
 
