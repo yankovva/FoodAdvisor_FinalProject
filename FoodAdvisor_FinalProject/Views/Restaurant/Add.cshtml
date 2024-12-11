@@ -33,7 +33,9 @@
 			<span asp-validation-for="@Model.ChefsDishName" class="text-danger"></span>
 		</div>
 		<div class="form-group">
-			<label asp-for="@Model.ChefsDishImagePath" class="form-label-add-edit">Chefs dish Image</label>
+			<label asp-for="@Model.ChefsDishImagePath" class="form-label-add-edit">
+				Chefs dish Image<p class="tooltip">*<span class="tooltiptext">.jpg", ".jpeg", ".png", ".jfif - no more than 5MB</span></p>
+			</label>
 			<input asp-for="@Model.ChefsDishImagePath" name="fileDish" type="file" class="form-controll" aria-required="false" />
 			<span asp-validation-for="@Model.ChefsDishImagePath" class="text-danger"></span>
 		</div>
