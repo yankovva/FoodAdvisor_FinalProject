@@ -3,12 +3,7 @@ using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.FavouritesViewModel;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using static FoodAdvisor.Common.ErrorMessages;
 namespace FoodAdvisor.Data.Services
 {
 	public class RestaurantFavouritesService : BaseService, IRestaurantFavouritesService
@@ -46,17 +41,16 @@ namespace FoodAdvisor.Data.Services
 				.AnyAsync(ur => ur.ApplicationUserId == userId && ur.RestaurantId == restaurantGuid);
 
 			UserRestaurant newFavoriteRestaurant = new UserRestaurant();
-
-			if (alreaduAddedToFavourites == false)
+			
+			if (alreaduAddedToFavourites == true)
 			{
-				newFavoriteRestaurant.ApplicationUserId = userId;
-				newFavoriteRestaurant.RestaurantId = restaurantGuid;
-				
-				await this.userRestaurantRepository.AddAsync(newFavoriteRestaurant!);
-				return true;
+				throw new Exception(FavoritesErrorMessage);
 			};
+			newFavoriteRestaurant.ApplicationUserId = userId;
+			newFavoriteRestaurant.RestaurantId = restaurantGuid;
 
-			return false;
+			await this.userRestaurantRepository.AddAsync(newFavoriteRestaurant!);
+			return true;
 
 		}
 		public async Task<IEnumerable<RestaurantFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId)

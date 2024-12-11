@@ -1,15 +1,11 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
-using FoodAdvisor.ViewModels.RecepiesViewModels;
-using FoodAdvisor.ViewModels;
 using FoodAdvisor.ViewModels.RestaurantViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Security.Claims;
+using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
@@ -27,9 +23,9 @@ namespace FoodAdvisor_FinalProject.Controllers
             this.dbContext = _dbContext;
 			this.restaurantService = restaurantService;
 			this.managerService = managerService;
-
 		}
 
+		[HttpGet]
 		public async Task<IActionResult> Index(FilterIndexRestaurantViewModel model)
 		{
 
@@ -62,18 +58,23 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
         public async Task<IActionResult> Add()
         {
-			string? userId = this.GetCurrentUserId();
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
+
 			bool isManager = await this.managerService
-				.IsUserManagerAsync (userId!);
+				.IsUserManagerAsync (userId.ToString());
 			if (!isManager)
 			{
-				//TODO: Add some messages;
+				TempData[ErrorMessage] = NotManagerErrorMessage;
 				return RedirectToAction(nameof(Index));
 			}
 			var model = new RestaurantAddViewModel();
             model.Categories = await GetCategories();
 			
-
 			return View(model);
         }
 
@@ -81,21 +82,36 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Add(RestaurantAddViewModel model, IFormFile file, IFormFile fileDish)
 		{
-			string? userId = this.GetCurrentUserId();
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
 			bool isManager = await this.managerService
-				.IsUserManagerAsync(userId!);
+				.IsUserManagerAsync(userId.ToString());
 			if (!isManager)
 			{
+				TempData[ErrorMessage] = NotManagerErrorMessage;
 				return RedirectToAction(nameof(Index));
 			}
-
-			if (ModelState.IsValid == false)
+			try
 			{
-				model.Categories = await GetCategories();
-				return View(model);
+				if (ModelState.IsValid == false)
+				{
+					model.Categories = await GetCategories();
+					TempData[ErrorMessage] = InvalidModelStateErrorMessage;
+					return View(model);
+				}
+				TempData[SuccessMessage] = AddingWasSuccesfullMessage;
+				await this.restaurantService
+					.AddRestaurantAsync(model, userId, file, fileDish);
 			}
-
-			await this.restaurantService.AddRestaurantAsync(model, Guid.Parse(userId!),file, fileDish);
+			catch (ArgumentException ex)
+			{
+				TempData[ErrorMessage] = ex.Message;
+			}
+			
 
 			return RedirectToAction(nameof(Index));
 
@@ -108,7 +124,8 @@ namespace FoodAdvisor_FinalProject.Controllers
             bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
             if (!isGuidValid)
             {
-                return this.RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = InvalidGuidMessage;
+				return this.RedirectToAction(nameof(Index));
             }
 
 			RestaurantDetailsViewModel? model = await this.restaurantService
@@ -116,7 +133,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 
             if (model == null)
             {
-                return this.RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = EntityNotFoundMessage;
+				return this.RedirectToAction(nameof(Index));
             }
 
             return View(model);
@@ -125,11 +143,17 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Delete(string id)
         {
-			string? userId = this.GetCurrentUserId();
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
 			bool isManager = await this.managerService
-				.IsUserManagerAsync(userId!);
+				.IsUserManagerAsync(userId.ToString());
 			if (!isManager)
 			{
+				TempData[ErrorMessage] = NotManagerErrorMessage;
 				return RedirectToAction(nameof(Index));
 			}
 
@@ -137,6 +161,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
 			{
+				TempData[ErrorMessage] = InvalidGuidMessage;
 				return this.RedirectToAction(nameof(Index));
 			}
 
@@ -146,35 +171,49 @@ namespace FoodAdvisor_FinalProject.Controllers
 			return View(model);
         }
         [HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(RestaurantDeleteViewModel model)
         {
-			string? userId = this.GetCurrentUserId();
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
 			bool isManager = await this.managerService
-				.IsUserManagerAsync(userId!);
+				.IsUserManagerAsync(userId.ToString());
 			if (!isManager)
 			{
+				TempData[ErrorMessage] = NotManagerErrorMessage;
 				return RedirectToAction(nameof(Index));
 			}
+
 
 			bool isDeleted = await this.restaurantService
 				.DeleteRestaurantAsync(model);
 			if (isDeleted == false)
 			{
-				//TODO: ADD MESSAGE
+				TempData[ErrorMessage] = EntityNotFoundMessage;
 				return View(model);
 			}
-
+			TempData[SuccessMessage] = DeletingWasSuccesfullMessage;
 			return RedirectToAction(nameof(Index));
         }
 
 		[HttpGet]
 		public async Task<IActionResult> Edit(string id)
 		{
-			string? userId = this.GetCurrentUserId();
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
 			bool isManager = await this.managerService
-				.IsUserManagerAsync(userId!);
+				.IsUserManagerAsync(userId.ToString());
 			if (!isManager)
 			{
+				TempData[ErrorMessage] = NotManagerErrorMessage;
 				return RedirectToAction(nameof(Index));
 			}
 
@@ -182,6 +221,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
 			if (!isGuidValid)
 			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
 				return this.RedirectToAction(nameof(Index));
 			}
 
@@ -190,46 +230,63 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (model == null)
 			{
+				TempData[ErrorMessage] = EntityNotFoundMessage;
 				return this.RedirectToAction(nameof(Index));
 			}
 
 			model.Categories = await GetCategories();
-
 			return View(model);
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(RestaurantAddViewModel model, string id, IFormFile file, IFormFile fileDish)
 		{
-			string? userId = this.GetCurrentUserId();
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
 			bool isManager = await this.managerService
-				.IsUserManagerAsync(userId!);
+				.IsUserManagerAsync(userId.ToString());
 			if (!isManager)
 			{
+				TempData[ErrorMessage] = NotManagerErrorMessage;
 				return RedirectToAction(nameof(Index));
 			}
+			try
+			{
+				if (ModelState.IsValid == false)
+				{
+					model.Categories = await GetCategories();
+					TempData[ErrorMessage] = InvalidModelStateErrorMessage;
+					return View(model);
+				}
+				Guid restaurantGuid = Guid.Empty;
+				bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
+				if (!isGuidValid)
+				{
+					TempData[ErrorMessage] = InvalidGuidMessage;
+					return this.RedirectToAction(nameof(Index));
+				}
 
-			if (ModelState.IsValid == false)
-			{
-				model.Categories = await GetCategories();
-				return View(model);
+				bool isEdited = await this.restaurantService
+					.EditRestaurantAsync(model, restaurantGuid, userId, file, fileDish);
+				if (isEdited == false)
+				{
+					TempData[ErrorMessage] = EntityNotFoundMessage;
+					return View(model);
+				}
+				TempData[SuccessMessage] = EditingWasSuccesfullMessage;
+				return RedirectToAction(nameof(Index));
 			}
-			Guid restaurantGuid = Guid.Empty;
-			bool isGuidValid = this.IsGuidValid(id, ref restaurantGuid);
-			if (!isGuidValid)
+			catch (ArgumentException ex)
 			{
-				return this.RedirectToAction(nameof(Index));
+				TempData[ErrorMessage] = ex.Message;
+				throw;
 			}
-			Guid userGuid = Guid.Parse(GetCurrentUserId());
 			
-			bool isEdited=await this.restaurantService
-				.EditRestaurantAsync(model,restaurantGuid,userGuid,file, fileDish);
-			if (isEdited == false)
-			{
-				// TODO: ADD MESSAGE
-				return View(model);
-			}
-			return RedirectToAction(nameof(Index));
 		}
 
 

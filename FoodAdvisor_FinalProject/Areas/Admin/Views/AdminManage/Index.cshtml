@@ -50,6 +50,7 @@
 				<td>@user.IsManager</td>
 				<td>
 					<form method="post" asp-action="UpdateRole" asp-controller="AdminManage" asp-area="Admin" class="role-form">
+						@Html.AntiForgeryToken()
 						<select name="roleName" class="role-dropdown">
 							@foreach (var role in allRoles)
 							{
@@ -62,6 +63,7 @@
 				</td>
 				<td>
 					<form method="post" asp-action="RemoveRole" asp-controller="AdminManage" asp-area="Admin" class="role-form">
+						@Html.AntiForgeryToken()
 						<select name="roleName" class="role-dropdown">
 							@foreach (var role in user.CurrentRoles)
 							{
@@ -88,6 +90,7 @@
 					else if (user.IsManager == true)
 					{
 						<form method="post" asp-action="RemoveManager" asp-controller="AdminManage" asp-area="Admin" class="role-form">
+							@Html.AntiForgeryToken()
 							<input type="hidden" name="userId" value="@user.Id" />
 							<button type="submit" class="delete-button">❌Remove Manager</button>
 						</form>
@@ -95,6 +98,7 @@
 				</td>
 				<td>
 					<form method="post" asp-action="Delete" asp-controller="AdminManage" asp-area="Admin" class="delete-form">
+						@Html.AntiForgeryToken()
 						<input type="hidden" name="userId" value="@user.Id" />
 						<button type="submit" class="delete-button">🗑 Delete User</button>
 					</form>

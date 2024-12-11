@@ -27,6 +27,7 @@ namespace FoodAdvisor_FinalProject.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> UpdateRole(string userId, string roleName)
 		{
 			Guid userGuid = Guid.Empty;
@@ -45,6 +46,7 @@ namespace FoodAdvisor_FinalProject.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> RemoveRole(string userId, string roleName)
 		{
 			Guid userGuid = Guid.Empty;
@@ -63,6 +65,7 @@ namespace FoodAdvisor_FinalProject.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(string userId)
 		{
 			Guid userGuid = Guid.Empty;
@@ -81,6 +84,7 @@ namespace FoodAdvisor_FinalProject.Areas.Admin.Controllers
 
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> RemoveManager(string userId)
 		{
 			Guid userGuid = Guid.Empty;

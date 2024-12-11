@@ -3,7 +3,7 @@ using FoodAdvisor.Data.Repository.Interfaces;
 using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.RecepieFavouritesViewModels;
 using Microsoft.EntityFrameworkCore;
-
+using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor.Data.Services
 {
@@ -45,16 +45,16 @@ namespace FoodAdvisor.Data.Services
 
             UserRecepie newFavoriteRecepie = new UserRecepie();
 
-            if (alreaduAddedToFavourites == false)
+            if (alreaduAddedToFavourites == true)
             {
-                newFavoriteRecepie.ApplicationUserId = userId;
-                newFavoriteRecepie.RecepieId = recepieGuid;
-
-                await this.userRecepieRepository.AddAsync(newFavoriteRecepie!);
-                return true;
+				throw new Exception(FavoritesErrorMessage);
+				
             }
+			newFavoriteRecepie.ApplicationUserId = userId;
+			newFavoriteRecepie.RecepieId = recepieGuid;
 
-            return false;
+			await this.userRecepieRepository.AddAsync(newFavoriteRecepie!);
+			return true;
         }
 
         public async Task<IEnumerable<RecepieFavouritesIndexViewModel>> InedexGetAllFavouritesAsync(string userId)

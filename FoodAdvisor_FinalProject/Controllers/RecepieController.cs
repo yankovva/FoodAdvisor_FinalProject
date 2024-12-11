@@ -1,26 +1,21 @@
 ﻿using FoodAdvisor.Data;
 using FoodAdvisor.Data.Models;
 using FoodAdvisor.Data.Services.Interfaces;
-using FoodAdvisor.ViewModels;
-using FoodAdvisor.ViewModels.CommentViewModel;
 using FoodAdvisor.ViewModels.RecepiesViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using static FoodAdvisor.Infrastructure.ClaimsPrincipalExtension;
 using static FoodAdvisor.Common.ErrorMessages;
 
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
+	[Authorize]
 	public class RecepieController : BaseController
 	{
 		private readonly FoodAdvisorDbContext dbContext;
 		private readonly IRecepieService recepieService;
 		private readonly IManagerService managerService;
-		private readonly IWebHostEnvironment enviorment;
 		private readonly IRecepieFavouritesService recepieFavouritesService;
 
 
@@ -37,7 +32,6 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Index(FilterIndexRecipeViewModel model)
 		{
-
 			IEnumerable<RecepieIndexViewModel> recipes =
 			   await this.recepieService.IndexGetAllRecepiesAsync(model);
 
@@ -65,63 +59,88 @@ namespace FoodAdvisor_FinalProject.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Add()
 		{
-			string? userId = this.GetCurrentUserId();
 			AddRecepieViewModel model = new AddRecepieViewModel();
 			model.Categories = await GetCategories();
 			model.Dificulty = await GetDificulty();
 			return View(model);
 		}
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Add(AddRecepieViewModel model, IFormFile file)
 		{
-			string? userId = this.GetCurrentUserId();
-
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
 			if (!ModelState.IsValid)
 			{
 				model.Categories = await GetCategories();
 				model.Dificulty = await GetDificulty();
+				TempData[SuccessMessage] = InvalidModelStateErrorMessage;
 				return View(model);			
 			}
 
-			await this.recepieService.AddRecepiesAsync(model, Guid.Parse(userId!),file);
-			TempData[SuccessMessage] = "Successfully added recipe!";
+			await this.recepieService.AddRecepiesAsync(model, userId,file);
+			TempData[SuccessMessage] = AddingWasSuccesfullMessage;
 			return RedirectToAction(nameof(Index));
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> Details(string id)
 		{
-			DetailsRecepieViewModel model = await this.recepieService
+			try
+			{
+				DetailsRecepieViewModel model = await this.recepieService
 				.GetRecepietDetailsAsync(id);
 
-			if (model == null)
+				if (model == null)
+				{
+					TempData[ErrorMessage] = EntityNotFoundMessage;
+					return RedirectToAction(nameof(Index));
+				}
+
+				return View(model);
+			}
+			catch (ArgumentException ex)
 			{
+				TempData[ErrorMessage] = ex.Message; ;
 				return RedirectToAction(nameof(Index));
 			}
-
-			return View(model);
+			
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> Delete(string id)
 		{
-			DeleteRecepieViewModel model = await this.recepieService
+			DeleteRecepieViewModel model = null!;
+			try
+			{
+				 model = await this.recepieService
 				.DeleteRecepieViewAsync(id);
+			}
+			catch (ArgumentException ex)
+			{
+				TempData[ErrorMessage] = ex.Message;
+				return RedirectToAction(nameof(Index));
+			}
 			return View(model);
 		}
 
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Delete(DeleteRecepieViewModel model)
 		{
 			bool isDeleted = await this.recepieService
 				.DeleteRecepieAsync(model);
 			if (isDeleted == false)
 			{
-				//TODO: ADD MESSAGE
+				TempData[ErrorMessage] = EntityNotFoundMessage;
 				return View(model);
 			}
-
+			TempData[SuccessMessage] = DeletingWasSuccesfullMessage;
 			return RedirectToAction(nameof(Index));
 		}
 
@@ -132,6 +151,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 			bool isGuidValid = this.IsGuidValid(id, ref recepieGuid);
 			if (!isGuidValid)
 			{
+				TempData[ErrorMessage] = InvalidGuidMessage;
 				return this.RedirectToAction(nameof(Index));
 			}
 
@@ -139,36 +159,50 @@ namespace FoodAdvisor_FinalProject.Controllers
 				.EditRecepieViewAsync (recepieGuid);
 			if (model == null)
 			{
+				TempData[ErrorMessage] = EntityNotFoundMessage;
 				return this.RedirectToAction(nameof(Index));
 			}
 			model.Categories = await GetCategories();
 			model.Dificulty = await GetDificulty();
-
 			return View(model);
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(AddRecepieViewModel model, string id, IFormFile file)
 		{
 			if (ModelState.IsValid == false)
 			{
 				model.Categories = await GetCategories();
 				model.Dificulty = await GetDificulty();
+				TempData[ErrorMessage] = InvalidModelStateErrorMessage;
 				return View(model);
 			}
-
-			Guid userGuid = Guid.Parse(GetCurrentUserId());
-
-			bool isUpdated = await this.recepieService
-				.EditRecepieAsync(model,id, userGuid,file);
-
-			if (isUpdated == false)
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
 			{
-				//TODO: ADD MESSAGE
-				return View(model);
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
 			}
+			try
+			{
+				bool isUpdated = await this.recepieService
+			 .EditRecepieAsync(model, id, userId, file);
 
-			return RedirectToAction(nameof(Index));
+				if (isUpdated == false)
+				{
+					TempData[ErrorMessage] = UnexpectedErrorMessage;
+					return View(model);
+				}
+				TempData[ErrorMessage] = EditingWasSuccesfullMessage;
+				return RedirectToAction(nameof(Details), new {Id = id});
+			}
+			catch (ArgumentException ex)
+			{
+				TempData[ErrorMessage] = ex.Message;
+				return RedirectToAction(nameof(Index));
+			}
+			
 		}
 
 

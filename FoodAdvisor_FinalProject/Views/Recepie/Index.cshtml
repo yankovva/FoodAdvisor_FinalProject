@@ -11,7 +11,9 @@
 <link rel="stylesheet" href="~/css/site-entity-index.css" asp-append-version="true" />
 
 <a asp-controller="Recepie" asp-action="Add" method="get" class="btn btn-success mb-4">Add Your Recepie!</a>
+
 <form method="get" asp-action="Index" class="filter-search-div">
+
 	<div class="row">
 		<div class="col">
 			<div class="form-group">
@@ -67,27 +69,7 @@
 		</div>
 	</div>
 </form>
-@*<div class="filter-search-div">
 
-	<div class="order-div">
-		<p>Order by: </p>
-		<div class="dropdown">
-			<button class="dropbtn"><i class="bi bi-border-width"></i></button>
-			<div class="dropdown-content">
-				<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><i class="bi bi-arrows-vertical"></i>Name</a>
-				<a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><i class="bi bi-arrows-vertical"></i>Date</a>
-				<a asp-action="Index" asp-route-sortOrder="@ViewData["DificultySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><i class="bi bi-arrows-vertical"></i>DificultyLevel</a>
-			</div>
-		</div>
-	</div>
-	<div class="search-container">
-		<form method="get" asp-controller="Recepie" asp-action="Index">
-			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey; border-radius: 10px;width: 15em;">
-			<button type="submit"><i class="fa fa-search"></i></button>
-		</form>
-	</div>
-</div>
-*@
 <div class="row">
 	@if (Model.Recipes !=  null)
 	{
@@ -98,6 +80,7 @@
 					<div>
 						<img class="header" src="@recepie.ImageURL" alt="/@NoImage">
 						<form method="post" asp-controller="RecepieFavourites" asp-action="AddToFavourites" asp-route-id="@recepie.Id">
+							@Html.AntiForgeryToken()
 							<input type="hidden" name="id" value="@recepie.Id" />
 							<button type="submit" class="icon-heart"><i class="fa-solid fa-heart"></i></button>
 						</form>

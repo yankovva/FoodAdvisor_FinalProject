@@ -28,6 +28,7 @@
 				<div style="display:flex; gap:1em; flex-wrap:wrap;">
 				<h1>@recepie.Name</h1>
 				<form asp-controller="RecepieFavourites" asp-action="RemoveFromFavourites" asp-route-id="@recepie.Id" method="post" class="d-inline">
+							@Html.AntiForgeryToken()
 					<input type="hidden" name="recepieId" value="@recepie.Id" />
 					<button type="submit" class="btn" ><i class="fa-solid fa-heart-circle-minus"></i></button>
 				</form>

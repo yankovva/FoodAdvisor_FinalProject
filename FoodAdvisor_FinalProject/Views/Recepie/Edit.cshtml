@@ -9,6 +9,7 @@
 <div class="form-wrapper">
 	<h2>Edit Recepie! </h2>
 	<form asp-action="Edit" method="post" enctype="multipart/form-data" class="form-add-entity">
+		@Html.AntiForgeryToken()
 		<div class="form-group">
 			<label asp-for="@Model.Name" class="form-label-add-edit">Recepie Name</label>
 			<input asp-for="@Model.Name" class="form-control" aria-required="true" />

@@ -91,26 +91,6 @@
 </form>
 
 
-@*<div class="filter-search-div">
-	<div class="order-div">
-		<p>Order by: </p>
-		<div class="dropdown">
-			<button class="dropbtn"><i class="bi bi-border-width"></i></button>
-			<div class="dropdown-content">
-				<a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]"><i class="bi bi-arrows-vertical"></i>Name</a>
-
-			</div>
-		</div>
-	</div>
-	<div class="search-container">
-		<form method="get" asp-controller="Restaurant" asp-action="Index">
-			<input type="text" placeholder="Search.." name="searchItem" value="@ViewData["CurrentFilter"]" style="height: 40px;border: 2px solid lightgrey; border-radius: 10px;width: 15em;">
-			<button type="submit"><i class="fa fa-search"></i></button>
-		</form>
-	</div>
-</div>
-*@
-
 <div class="row">
 	@if (Model.Restaurants != null)
 	{
@@ -121,6 +101,7 @@
 					<div>
 						<img class="header" src="@restaurant.ImageURL" alt="@NoImage">
 						<form asp-controller="RestaurantFavourites" asp-action="AddToFavourites" asp-route-id="@restaurant.Id" method="post">
+							@Html.AntiForgeryToken()
 							<input type="hidden" name="id" value="@restaurant.Id" />
 							<button type="submit" class="icon-heart"><i type="submit" class="fa-solid fa-heart"></i></button>
 						</form>

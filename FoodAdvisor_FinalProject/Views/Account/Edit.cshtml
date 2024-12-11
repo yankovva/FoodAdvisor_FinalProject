@@ -56,6 +56,7 @@
 		<div class="col-xl-4">
 			<!-- Profile picture card-->
 			<form method="post" asp-action="UpdateImage" method="post" enctype="multipart/form-data">
+				@Html.AntiForgeryToken()
 				<div class="card mb-4 mb-xl-0">
 					<div class="card-header">Profile Picture</div>
 					<div class="card-body text-center">
@@ -76,6 +77,7 @@
 				<div class="card-header">Account Details</div>
 				<div class="card-body">
 					<form asp-action="Edit" asp-controller="Account" method="post">
+						@Html.AntiForgeryToken()
 						<!-- Form Group (username)-->
 						<div class="mb-3">
 							<label asp-for="@Model.UserName" class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>

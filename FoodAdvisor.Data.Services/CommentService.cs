@@ -20,10 +20,9 @@ namespace FoodAdvisor.Data.Services
         }
         public async Task<bool> AddAsync(string? recepieId, string? restaurantId, Guid userId, AddCommentViewModel model)
         {
-
             if (model.Message == null)
             {
-                return false;
+                throw new ArgumentException("Comment message can not be empty!");
             }
 
             Comment comment = new()
@@ -41,8 +40,8 @@ namespace FoodAdvisor.Data.Services
                 if (isGuidValid)
                 {
                     recepieGuid = Guid.Parse(recepieId);
-                }
-                 comment.RecepieId = recepieGuid;
+					comment.RecepieId = recepieGuid;
+				}
             }
             else if (restaurantId != null)
             {
@@ -50,9 +49,9 @@ namespace FoodAdvisor.Data.Services
                 if (isGuidValid)
                 {
                     restaurantGuid = Guid.Parse(restaurantId);
-                }
-                comment.RestaurantId = restaurantGuid;
-                    
+					comment.RestaurantId = restaurantGuid;
+				}
+                 
             }
             else if (restaurantId == null && recepieId == null)
             {

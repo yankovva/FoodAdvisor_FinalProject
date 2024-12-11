@@ -1,7 +1,10 @@
-﻿using FoodAdvisor.Data.Services.Interfaces;
+﻿using FoodAdvisor.Common;
+using FoodAdvisor.Data.Services.Interfaces;
 using FoodAdvisor.ViewModels.CommentViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static FoodAdvisor.Common.EntityValidationConstants;
+using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor_FinalProject.Controllers
 {
@@ -16,37 +19,58 @@ namespace FoodAdvisor_FinalProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(string? recepieId, string? restaurantId, [Bind("Message")] AddCommentViewModel model)
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Add(string? recepieId, string? restaurantId, [Bind("Message")] AddCommentViewModel model)
         {
-            Guid userguid = Guid.Parse(GetCurrentUserId()!);
-
-            bool isAdded = await this.commentServie
-                .AddAsync(recepieId,restaurantId, userguid, model);
-
-            if (isAdded == false)
+			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
+			try
             {
-                //TODO: Add a message
-                if (recepieId != null)
-                {
-                    return RedirectToAction("Details", "Recepie", new { id = recepieId });
-                }
-                else if (restaurantId != null)
-                {
-                    return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
-                }
-            }
+				bool isAdded = await this.commentServie
+				.AddAsync(recepieId, restaurantId, userId, model);
 
-            if (recepieId != null)
+				if (isAdded == false)
+				{
+					if (recepieId != null)
+					{
+						TempData[ErrorMessage] = EntityNotFoundMessage;
+						return RedirectToAction("Details", "Recepie", new { id = recepieId });
+					}
+					else if (restaurantId != null)
+					{
+						TempData[ErrorMessage] = EntityNotFoundMessage;
+						return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
+					}
+				}
+				if (recepieId != null)
+				{
+					TempData[SuccessMessage] = CommentAddingSuccesfullMessage;
+					return RedirectToAction("Details", "Recepie", new { id = recepieId });
+				}
+				TempData[SuccessMessage] = CommentAddingSuccesfullMessage;
+				return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
+			}
+            catch (ArgumentException ex)
             {
-                return RedirectToAction("Details", "Recepie", new { id = recepieId });
-            }
-            
-              return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
-            
-        }
+				TempData[WarningMessage] = ex.Message;
+			}
+
+			if (recepieId != null)
+			{
+				return RedirectToAction("Details", "Recepie", new { id = recepieId });
+			}
+			return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
+
+
+		}
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string commentId, string? recepieId, string? restaurantId)
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Delete(string commentId, string? recepieId, string? restaurantId)
         {
 
             bool isDeleted = await this.commentServie
@@ -54,23 +78,27 @@ namespace FoodAdvisor_FinalProject.Controllers
 
             if (isDeleted == false)
             {
-                //TODO: Add a message
+                
                 if (recepieId != null)
-                {
-                    return RedirectToAction("Details", "Recipes", new { id = recepieId });
+				{
+					TempData[ErrorMessage] = InvalidGuidMessage;
+					return RedirectToAction("Details", "Recepie", new { id = recepieId });
                 }
                 else if (restaurantId != null)
                 {
-                    return RedirectToAction("Details", "Restaurants", new { id = restaurantId });
+					TempData[ErrorMessage] = InvalidGuidMessage;
+					return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
                 }
             }
 
             if (recepieId != null)
             {
-                return RedirectToAction("Details", "Recipes", new { id = recepieId });
+				TempData[SuccessMessage] = DeletingWasSuccesfullMessage;
+				return RedirectToAction("Details", "Recepie", new { id = recepieId });
             }
 
-            return RedirectToAction("Details", "Restaurants", new { id = restaurantId });
+			TempData[SuccessMessage] = DeletingWasSuccesfullMessage;
+			return RedirectToAction("Details", "Restaurant", new { id = restaurantId });
         }
     }
 }

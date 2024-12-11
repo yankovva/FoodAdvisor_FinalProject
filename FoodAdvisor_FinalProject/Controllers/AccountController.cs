@@ -2,6 +2,9 @@
 using FoodAdvisor.ViewModels.AccountViemModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using System.Security.Principal;
+using static FoodAdvisor.Common.EntityValidationConstants;
 using static FoodAdvisor.Common.ErrorMessages;
 
 namespace FoodAdvisor_FinalProject.Controllers
@@ -21,8 +24,8 @@ namespace FoodAdvisor_FinalProject.Controllers
 			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
 			if (userId == Guid.Empty)
 			{
-				TempData[ErrorMessage] = "An unexpected error occurred. Please try again later or contact support.";
-                return RedirectToAction("Index", "Home");
+				TempData[ErrorMessage] = GeneralErrorMessage;
+                return RedirectToAction("/Identity/Account/Login");
 			}
 
 			var model = await this.accountService
@@ -30,7 +33,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (model == null)
 			{
-				TempData[ErrorMessage] = "No user found with the provided details. Please check your information and try again.";
+				TempData[ErrorMessage] = EntityNotFoundMessage;
 
                 return RedirectToAction("Index", "Home");
 			}
@@ -42,13 +45,18 @@ namespace FoodAdvisor_FinalProject.Controllers
 		public async Task<IActionResult> Edit()
 		{
 			Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+			if (userId == Guid.Empty)
+			{
+				TempData[ErrorMessage] = GeneralErrorMessage;
+				return RedirectToAction("/Identity/Account/Login");
+			}
 
 			var model = await this.accountService
 				.GetEditUserViewAsync(userId);
 
 			if (model == null)
 			{
-                TempData[ErrorMessage] = "No user found with the provided details. Please check your information and try again.";
+                TempData[ErrorMessage] = InvalidGuidMessage;
                 return  RedirectToAction("Index", "Home");
 			}
 
@@ -56,11 +64,12 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(EditUserViewModel model, string id)
 		{
 			if (ModelState.IsValid == false)
 			{
-				TempData[ErrorMessage]= "The data provided is invalid. Please ensure all fields are filled out correctly and try again.";
+				TempData[ErrorMessage]= InvalidModelStateErrorMessage;
 
                 return View(model);
 			}
@@ -70,7 +79,7 @@ namespace FoodAdvisor_FinalProject.Controllers
 
 			if (isEdited == false)
 			{
-                TempData[ErrorMessage] = "An unexpected error occurred. Please try again later or contact support.";
+                TempData[ErrorMessage] = UnexpectedErrorMessage;
                 return View(model);
             }
 
@@ -78,18 +87,24 @@ namespace FoodAdvisor_FinalProject.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> UpdateImage(IFormFile file)
 		{
 			try
 			{
-                Guid userGuid = Guid.Parse(GetCurrentUserId()!);
+				Guid userId = Guid.Parse(this.GetCurrentUserId()!);
+				if (userId == Guid.Empty)
+				{
+					TempData[ErrorMessage] = GeneralErrorMessage;
+					return RedirectToAction("/Identity/Account/Login");
+				}
 
-                bool isUpdated = await this.accountService
-                    .UpdateProfilePictureAsync(file, userGuid);
+				bool isUpdated = await this.accountService
+                    .UpdateProfilePictureAsync(file, userId);
 
                 if (isUpdated == false)
                 {
-                    TempData[ErrorMessage] = "Unable to update the profile picture.User not found";
+                    TempData[ErrorMessage] = EntityNotFoundMessage;
 					return RedirectToAction(nameof(Index));
 				}
 

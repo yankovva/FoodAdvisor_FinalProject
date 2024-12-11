@@ -57,6 +57,7 @@
 			{
 				<div id="comment-form">
 					<form asp-controller="Comment" asp-action="Add" method="post">
+						@Html.AntiForgeryToken()
 						<h6>Add Comment!</h6>
 						<textarea class="form-control" aria-label="With textarea" name="Message" style="width:700px;"></textarea>
 						<input type="hidden" name="restaurantId" class="form-control" value="@Model.Id" />
@@ -70,9 +71,10 @@
 					<div class="commenteer-info">
 						<img class="commenter-img" src="/@comment.ProfilePicture">
 						<p style="margin-bottom: 0;">@comment.UserName</p>
-						@if (comment.UserId == Model.PublisherId )
+						@if (comment.UserName == User?.Identity?.Name)
 						{
 							<form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" class="d-inline">
+								@Html.AntiForgeryToken()
 								<input type="hidden" name="commentId" value="@comment.Id" />
 								<input type="hidden" name="restaurantId" value="@Model.Id" />
 								<button type="submit" class="delete-comment-button"><p class="fa-solid fa-trash"></p></button>
